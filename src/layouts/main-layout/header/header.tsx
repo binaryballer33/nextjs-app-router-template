@@ -1,7 +1,11 @@
 'use client'
 
+import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlined'
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined'
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import {
   AppBar,
   Avatar,
@@ -14,13 +18,16 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { DividerLight } from 'src/components/base/styles/card'
 import { useDialog } from 'src/hooks/use-dialog'
 import { useMobileNav } from 'src/hooks/use-mobile-nav'
 import { usePopover } from 'src/hooks/use-popover'
-import { useMenuItems } from 'src/router/navbar'
+import { NavBarItem } from 'src/models/menu-item'
+import { routes } from 'src/router/routes'
 import { neutral } from 'src/theme/theme'
-import { Menu } from './desktop-navbar/desktop-navbar'
+import { DesktopNavBar } from './desktop-navbar/desktop-navbar'
 import { MobileNavBar } from './mobile-navbar/mobile-navbar'
 import LanguageDropdown from './navbar-icons/language-icon/language-icon-dropdown'
 import { Logo } from './navbar-icons/logo/logo'
@@ -28,12 +35,65 @@ import { ProfileIconDropdown } from './navbar-icons/profile-icon-dropdown/profil
 import { BasicSpotlightSearch } from './navbar-icons/search-icon/search-icon'
 import ThemeModeToggler from './navbar-icons/theme-mode-toggler/theme-mode-toggler'
 
+// manage the navbar items, their title, icons and routes from here. This is for both desktop and mobile navbars
+export const useNavBarItems = (): NavBarItem[] => {
+  const { t } = useTranslation()
+  return useMemo(() => {
+    return [
+      {
+        title: t('Dashboard'),
+        icon: <DashboardOutlinedIcon />,
+        route: routes.dummy,
+        subMenu: [
+          { title: t('Performance'), route: routes.dummy },
+          { title: t('KPIs'), route: routes.dummy },
+          {
+            title: t('Management'),
+            subMenu: [
+              {
+                title: t('Departments'),
+                route: routes.dummy,
+              },
+              {
+                title: t('Personnel'),
+                route: routes.dummy,
+              },
+            ],
+          },
+          { title: t('Strategy'), route: routes.dummy },
+        ],
+      },
+      {
+        title: t('Corporate'),
+        icon: <BusinessCenterOutlinedIcon />,
+        route: '/shells/stacked-shell-top-nav-wide',
+        subMenu: [
+          { title: t('Team Structure'), route: '/shells/stacked-shell-top-nav-wide' },
+          { title: t('Projects'), route: routes.dummy },
+        ],
+      },
+      {
+        title: t('Community'),
+        icon: <PeopleOutlineIcon />,
+        route: routes.dummy,
+        subMenu: [
+          { title: t('Members'), route: routes.dummy },
+          { title: t('Events'), route: routes.dummy },
+        ],
+      },
+      { title: t('Settings'), icon: <SettingsOutlinedIcon />, route: routes.dummy },
+    ]
+  }, [t])
+}
+
 const HeaderWrapper = styled(AppBar)(({ theme }) => ({
   display: 'flex',
   position: 'relative',
   background: 'transparent',
   color: theme.palette.mode === 'dark' ? neutral[100] : neutral[900],
   zIndex: 6,
+  paddingLeft: theme.spacing(1),
+  paddingRight: theme.spacing(1),
 }))
 
 export const Header = () => {
@@ -42,13 +102,14 @@ export const Header = () => {
   const popover = usePopover<HTMLButtonElement>()
   const theme = useTheme()
   const dialog = useDialog()
-  const menuItems = useMenuItems()
+  const navbar_items = useNavBarItems()
   const { handleClose, handleOpen, open } = useMobileNav()
 
   return (
     <>
       <HeaderWrapper role="banner" elevation={0}>
         <Stack py={3} flex={1} direction="row" justifyContent="space-between" alignItems="center">
+          {/* Desktop NavBar Section */}
           <Stack
             direction="row"
             divider={
@@ -67,8 +128,12 @@ export const Header = () => {
             <Box sx={{ transform: 'scale(.86)' }}>
               <Logo dark isLinkStatic />
             </Box>
-            {lgUp && <Menu menuItems={menuItems} />}
+
+            {/* Desktop NavBar */}
+            {lgUp && <DesktopNavBar navbar_items={navbar_items} />}
           </Stack>
+
+          {/* Header Icons Section */}
           <Stack
             direction="row"
             divider={
@@ -170,15 +235,18 @@ export const Header = () => {
             )}
           </Stack>
 
-          <BasicSpotlightSearch onClose={dialog.handleClose} open={dialog.open} />
+          {/* NavBar Dropdowns and Overlays */}
+          <>
+            <BasicSpotlightSearch onClose={dialog.handleClose} open={dialog.open} />
 
-          <ProfileIconDropdown
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'center' }}
-            anchorEl={popover.anchorRef.current}
-            onClose={popover.handleClose}
-            open={popover.open}
-          />
+            <ProfileIconDropdown
+              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+              anchorEl={popover.anchorRef.current}
+              onClose={popover.handleClose}
+              open={popover.open}
+            />
+          </>
         </Stack>
       </HeaderWrapper>
 
@@ -201,7 +269,7 @@ export const Header = () => {
           }}
           variant="temporary"
         >
-          <MobileNavBar />
+          <MobileNavBar navbar_items={navbar_items} />
         </SwipeableDrawer>
       )}
     </>

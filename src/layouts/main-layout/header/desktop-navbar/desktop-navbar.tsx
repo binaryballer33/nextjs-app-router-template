@@ -1,10 +1,10 @@
 'use client'
 
 import { Box, Stack } from '@mui/material'
-import { MenuItem } from 'src/models/menuItem'
+import { NavBarItem } from 'src/models/menu-item'
 import { DesktopNavBarItem } from './desktop-navbar-item'
 
-const isRouteActive = (route?: string, currentPath?: string, subMenu?: MenuItem[]): boolean => {
+const isRouteActive = (route?: string, currentPath?: string, subMenu?: NavBarItem[]): boolean => {
   if (route && route === currentPath) return true
   if (subMenu) {
     for (let item of subMenu) {
@@ -16,17 +16,17 @@ const isRouteActive = (route?: string, currentPath?: string, subMenu?: MenuItem[
   return false
 }
 
-interface DesktopNavbarProps {
-  menuItems?: MenuItem[]
+interface DesktopNavBarProps {
+  navbar_items?: NavBarItem[]
 }
 
-export const Menu: React.FC<DesktopNavbarProps> = ({ menuItems }) => {
-  if (!menuItems) return null
+export const DesktopNavBar: React.FC<DesktopNavBarProps> = ({ navbar_items }) => {
+  if (!navbar_items) return null
 
   return (
     <Box position={'relative'}>
       <Stack spacing={0} alignItems="center" flexDirection="row" position={'sticky'} top={0}>
-        {menuItems.map((item, index) => (
+        {navbar_items.map((item, index) => (
           <DesktopNavBarItem key={index} item={item} />
         ))}
       </Stack>

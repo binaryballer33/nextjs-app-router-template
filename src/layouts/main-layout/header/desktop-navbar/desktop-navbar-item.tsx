@@ -5,9 +5,9 @@ import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone'
 import { alpha, Box, Button, Paper, Popper } from '@mui/material'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { FC, useRef, useState } from 'react'
-import { MenuItem } from 'src/models/menuItem'
+import { NavBarItem } from 'src/models/menu-item'
 
-const isRouteActive = (route?: string, currentPath?: string, subMenu?: MenuItem[]): boolean => {
+const isRouteActive = (route?: string, currentPath?: string, subMenu?: NavBarItem[]): boolean => {
   if (route && route === currentPath) return true
   if (subMenu) {
     for (let item of subMenu) {
@@ -19,17 +19,19 @@ const isRouteActive = (route?: string, currentPath?: string, subMenu?: MenuItem[
   return false
 }
 
-export const DesktopNavBarItem: FC<{
-  item: MenuItem
+type DesktopNavBarItemProps = {
+  item: NavBarItem
   isSub?: boolean
-}> = ({ item, isSub }) => {
+}
+
+export const DesktopNavBarItem: FC<DesktopNavBarItemProps> = ({ item: navbar_item, isSub }) => {
   const router = useRouter()
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const anchorRef = useRef(null)
-  const isActive = item.route ? isRouteActive(item.route, pathname, item.subMenu) : false
-  const placement = isSub && item.subMenu ? 'right-start' : item.subMenu ? 'bottom-start' : 'bottom-start'
+  const isActive = navbar_item.route ? isRouteActive(navbar_item.route, pathname, navbar_item.subMenu) : false
+  const placement = isSub && navbar_item.subMenu ? 'right-start' : navbar_item.subMenu ? 'bottom-start' : 'bottom-start'
 
   const commonProps = {
     onMouseEnter: () => {
@@ -52,8 +54,8 @@ export const DesktopNavBarItem: FC<{
           zIndex: 3,
 
           '& > .MuiButton-root': {
-            borderBottomLeftRadius: isSub && item.subMenu ? 6 : item.subMenu ? 0 : 6,
-            borderBottomRightRadius: isSub && item.subMenu ? 6 : item.subMenu ? 0 : 6,
+            borderBottomLeftRadius: isSub && navbar_item.subMenu ? 6 : navbar_item.subMenu ? 0 : 6,
+            borderBottomRightRadius: isSub && navbar_item.subMenu ? 6 : navbar_item.subMenu ? 0 : 6,
             zIndex: 13,
           },
         },
@@ -63,10 +65,10 @@ export const DesktopNavBarItem: FC<{
     >
       {isSub ? (
         <Button
-          startIcon={item.icon ? item.icon : null}
+          startIcon={navbar_item.icon ? navbar_item.icon : null}
           fullWidth
-          endIcon={item.subMenu ? <ChevronRightTwoToneIcon fontSize="small" /> : null}
-          onClick={() => item.route && router.push(item.route)}
+          endIcon={navbar_item.subMenu ? <ChevronRightTwoToneIcon fontSize="small" /> : null}
+          onClick={() => navbar_item.route && router.push(navbar_item.route)}
           sx={{
             justifyContent: 'space-between',
             fontWeight: 600,
@@ -85,13 +87,13 @@ export const DesktopNavBarItem: FC<{
             backgroundColor: 'transparent',
           }}
         >
-          {item.title}
+          {navbar_item.title}
         </Button>
       ) : (
         <Button
-          endIcon={item.subMenu ? <ExpandMoreTwoToneIcon fontSize="small" /> : null}
-          startIcon={item.icon ? item.icon : null}
-          onClick={() => item.route && router.push(item.route)}
+          endIcon={navbar_item.subMenu ? <ExpandMoreTwoToneIcon fontSize="small" /> : null}
+          startIcon={navbar_item.icon ? navbar_item.icon : null}
+          onClick={() => navbar_item.route && router.push(navbar_item.route)}
           {...commonProps}
           sx={{
             p: (theme) => theme.spacing(0.9, 1.5, 0.9, 1.8),
@@ -124,10 +126,10 @@ export const DesktopNavBarItem: FC<{
             },
           }}
         >
-          {item.title ? item.title : null}
+          {navbar_item.title ? navbar_item.title : null}
         </Button>
       )}
-      {item.subMenu && (
+      {navbar_item.subMenu && (
         <Popper
           open={menuOpen}
           anchorEl={anchorRef.current}
@@ -140,7 +142,7 @@ export const DesktopNavBarItem: FC<{
             elevation={23}
             sx={{
               borderRadius: '6px',
-              borderTopLeftRadius: isSub && item.subMenu ? 6 : item.subMenu ? 0 : 6,
+              borderTopLeftRadius: isSub && navbar_item.subMenu ? 6 : navbar_item.subMenu ? 0 : 6,
               minWidth: 240,
               backgroundColor: 'background.paper',
               maxWidth: 320,
@@ -148,7 +150,7 @@ export const DesktopNavBarItem: FC<{
               p: 2,
             }}
           >
-            {item.subMenu.map((subItem, index) => (
+            {navbar_item.subMenu.map((subItem, index) => (
               <DesktopNavBarItem key={index} item={subItem} isSub />
             ))}
           </Paper>

@@ -13,11 +13,11 @@ import {
 import { usePathname } from 'next/navigation'
 import { FC, useState } from 'react'
 import { RouterLink } from 'src/components/base/router-link'
-import { MenuItem } from 'src/models/menuItem'
+import { NavBarItem } from 'src/models/menu-item'
 import { neutral } from 'src/theme/theme'
 
-interface NavItemProps {
-  item: MenuItem
+interface NavBarItemProps {
+  item: NavBarItem
 }
 
 const SubMenu = styled(List)<ListProps<'div', { component: 'div' }>>(({ theme }) => ({
@@ -105,7 +105,7 @@ export const ListItemButtonWrapper = styled(ListItemButton)(({ theme }) => ({
   },
 }))
 
-export const MobileNavBarNavItem: FC<NavItemProps> = ({ item }) => {
+export const MobileNavBarNavItem: FC<NavBarItemProps> = ({ item }) => {
   const { title, icon, route, subMenu } = item
   const pathname = usePathname()
   const isActive = route && pathname.includes(route)

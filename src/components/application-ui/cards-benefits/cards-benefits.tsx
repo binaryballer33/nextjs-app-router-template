@@ -146,6 +146,7 @@ const CardsBenefits = (): JSX.Element => {
             data-aos-delay={i * 100}
             data-aos-offset={100}
             data-aos-duration={600}
+            sx={{ ':hover': { color: 'primary.main' } }}
           >
             <Box display={'flex'} flexDirection={'column'}>
               <Box
@@ -155,6 +156,7 @@ const CardsBenefits = (): JSX.Element => {
                 marginBottom={2}
                 bgcolor={theme.palette.primary.main}
                 color={theme.palette.background.paper}
+                sx={{ ':hover': { color: 'secondary.dark' } }}
               >
                 {item.icon}
               </Box>

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import React, { FC } from 'react'
 import { Logo } from 'src/components/base/logo'
 import { Scrollbar } from 'src/components/base/scrollbar'
-import { MenuItem } from 'src/models/menuItem'
-import { useMenuItems } from 'src/router/navbar'
+import { NavBarItem } from 'src/models/menu-item'
 import { neutral } from 'src/theme/theme'
 import { SIDEBAR_WIDTH } from 'src/theme/utils'
 import { MobileNavBarNavItem } from './mobile-navbar-nav-item'
@@ -17,8 +16,8 @@ const MobileSidebarWrapper = styled(Box)(({ theme }) => ({
   background: theme.palette.mode === 'dark' ? neutral[900] : neutral[100],
 }))
 
-interface SidebarNavMenuProps {
-  menuItems?: MenuItem[]
+interface MobileNavBarProps {
+  navbar_items?: NavBarItem[]
 }
 
 const ListSubheaderWrapper = styled(ListSubheader)<ListProps<'div', { component: 'div' }>>(({ theme }) => ({
@@ -31,9 +30,9 @@ const ListSubheaderWrapper = styled(ListSubheader)<ListProps<'div', { component:
   padding: theme.spacing(0, 2),
 }))
 
-export const MobileNavBar: FC<SidebarNavMenuProps> = () => {
+export const MobileNavBar: FC<MobileNavBarProps> = ({ navbar_items }) => {
   const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
-  const menuItems = useMenuItems()
+  if (!navbar_items) return null
 
   return (
     <MobileSidebarWrapper
@@ -50,7 +49,7 @@ export const MobileNavBar: FC<SidebarNavMenuProps> = () => {
       <Box>
         <Box flex={1} overflow="auto" position="relative" zIndex={6}>
           <Scrollbar dark>
-            {menuItems.map((menuItem) => (
+            {navbar_items.map((menuItem) => (
               <Box key={menuItem.title}>
                 <List
                   component="nav"
@@ -72,5 +71,5 @@ export const MobileNavBar: FC<SidebarNavMenuProps> = () => {
 }
 
 MobileNavBar.propTypes = {
-  menuItems: PropTypes.array,
+  navbar_items: PropTypes.array,
 }
