@@ -1,4 +1,4 @@
-import { Box, styled } from '@mui/material';
+import { Box, styled } from '@mui/material'
 
 export const InlineBadge = styled(Box)(() => ({
   display: 'flex',
@@ -7,4 +7,4 @@ export const InlineBadge = styled(Box)(() => ({
     position: 'static',
     transform: 'none',
   },
-}));
+}))

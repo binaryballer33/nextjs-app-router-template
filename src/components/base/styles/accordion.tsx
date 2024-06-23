@@ -1,4 +1,4 @@
-import { Accordion, alpha, styled } from '@mui/material';
+import { Accordion, alpha, styled } from '@mui/material'
 
 export const AccordionAlternate = styled(Accordion)(({ theme }) => ({
   '.MuiAccordionSummary-root': {
@@ -8,9 +8,7 @@ export const AccordionAlternate = styled(Accordion)(({ theme }) => ({
 
     '&:hover': {
       backgroundColor:
-        theme.palette.mode === 'dark'
-          ? alpha(theme.palette.neutral[25], 0.02)
-          : theme.palette.neutral[25],
+        theme.palette.mode === 'dark' ? alpha(theme.palette.neutral[25], 0.02) : theme.palette.neutral[25],
     },
 
     '.MuiAccordionSummary-expandIconWrapper': {
@@ -31,7 +29,7 @@ export const AccordionAlternate = styled(Accordion)(({ theme }) => ({
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(90deg)',
   },
-}));
+}))
 
 export const AccordionPrimary = styled(Accordion)(({ theme }) => ({
   '.MuiAccordionSummary-expandIconWrapper': {
@@ -54,10 +52,7 @@ export const AccordionPrimary = styled(Accordion)(({ theme }) => ({
   },
 
   '.MuiAccordionSummary-root:hover': {
-    backgroundColor:
-      theme.palette.mode === 'dark'
-        ? alpha(theme.palette.neutral[25], 0.02)
-        : theme.palette.neutral[25],
+    backgroundColor: theme.palette.mode === 'dark' ? alpha(theme.palette.neutral[25], 0.02) : theme.palette.neutral[25],
   },
 
   '.MuiAccordionSummary-root, .MuiAccordionDetails-root': {
@@ -65,10 +60,7 @@ export const AccordionPrimary = styled(Accordion)(({ theme }) => ({
   },
 
   '&.Mui-expanded': {
-    backgroundColor:
-      theme.palette.mode === 'dark'
-        ? alpha(theme.palette.neutral[25], 0.02)
-        : theme.palette.neutral[25],
+    backgroundColor: theme.palette.mode === 'dark' ? alpha(theme.palette.neutral[25], 0.02) : theme.palette.neutral[25],
 
     '.MuiAccordionSummary-content .MuiTypography-root': {
       color: theme.palette.primary.main,
@@ -78,7 +70,7 @@ export const AccordionPrimary = styled(Accordion)(({ theme }) => ({
       borderLeftColor: theme.palette.primary.main,
     },
   },
-}));
+}))
 
 export const AccordionPlus = styled(Accordion)(({ theme }) => ({
   '.MuiAccordionSummary-expandIconWrapper': {
@@ -92,8 +84,7 @@ export const AccordionPlus = styled(Accordion)(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:
-      theme.palette.mode === 'dark' ? theme.palette.neutral[100] : theme.palette.neutral[900],
+    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.neutral[100] : theme.palette.neutral[900],
     color: theme.palette.mode === 'dark' ? theme.palette.common.black : theme.palette.common.white,
   },
 
@@ -114,7 +105,7 @@ export const AccordionPlus = styled(Accordion)(({ theme }) => ({
       marginRight: theme.spacing(1),
     },
   },
-}));
+}))
 
 export const AccordionMinimal = styled(Accordion)(({ theme }) => ({
   borderRadius: '0px !important',
@@ -128,8 +119,7 @@ export const AccordionMinimal = styled(Accordion)(({ theme }) => ({
     margin: theme.spacing(2),
 
     '&:hover': {
-      backgroundColor:
-        theme.palette.mode === 'dark' ? alpha(theme.palette.neutral[50], 0.02) : 'neutral.50',
+      backgroundColor: theme.palette.mode === 'dark' ? alpha(theme.palette.neutral[50], 0.02) : 'neutral.50',
     },
   },
 
@@ -140,4 +130,4 @@ export const AccordionMinimal = styled(Accordion)(({ theme }) => ({
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(180deg)',
   },
-}));
+}))

@@ -1,4 +1,4 @@
-import { alpha, styled, Table, TableHead, TableRow } from '@mui/material';
+import { alpha, styled, Table, TableHead, TableRow } from '@mui/material'
 
 export const TableWrapper = styled(Table)(({ theme }) => ({
   'thead tr th': {
@@ -38,11 +38,11 @@ export const TableWrapper = styled(Table)(({ theme }) => ({
     background: alpha(theme.palette.primary.main, 0.02),
     borderColor: `${alpha(theme.palette.common.black, 0.25)} !important`,
   },
-}));
+}))
 
 export const TableRowDivider = styled(TableRow)(({ theme }) => ({
   height: theme.spacing(2),
-}));
+}))
 
 export const TableHeadWrapper = styled(TableHead)(({ theme }) => ({
   '.MuiTableCell-root': {
@@ -56,4 +56,4 @@ export const TableHeadWrapper = styled(TableHead)(({ theme }) => ({
   '.MuiTableRow-root': {
     background: 'transparent',
   },
-}));
+}))

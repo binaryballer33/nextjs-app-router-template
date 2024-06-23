@@ -32,7 +32,7 @@ const createStyledTooltip = (colorKey: keyof Theme['palette']) => {
           color: color.main,
         },
       }
-    }
+    },
   )
 }
 

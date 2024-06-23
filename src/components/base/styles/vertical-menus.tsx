@@ -1,7 +1,7 @@
-import { alpha, MenuList, styled } from '@mui/material';
+import { alpha, MenuList, styled } from '@mui/material'
 
-type Variant = 'pills' | 'square' | 'indicator' | 'rounded';
-type Color = 'primary' | 'secondary' | 'error' | 'success';
+type Variant = 'pills' | 'square' | 'indicator' | 'rounded'
+type Color = 'primary' | 'secondary' | 'error' | 'success'
 
 const generateBaseStyles = (theme: any, color: Color, variant: Variant) => {
   const commonStyles = {
@@ -18,24 +18,24 @@ const generateBaseStyles = (theme: any, color: Color, variant: Variant) => {
       background: alpha(theme.palette[color].main, 0.06),
       color: theme.palette[color].main,
     },
-  };
+  }
 
   switch (variant) {
     case 'pills':
       return {
         ...commonStyles,
         borderRadius: '50px',
-      };
+      }
     case 'rounded':
       return {
         ...commonStyles,
         borderRadius: theme.shape.borderRadius,
-      };
+      }
     case 'square':
       return {
         ...commonStyles,
         borderRadius: 0,
-      };
+      }
     case 'indicator':
       return {
         ...commonStyles,
@@ -67,46 +67,46 @@ const generateBaseStyles = (theme: any, color: Color, variant: Variant) => {
             top: 0,
           },
         },
-      };
+      }
   }
-};
+}
 
 export const MenuListWrapperPillsSecondary = styled(MenuList)(({ theme }) => ({
   '& .MuiMenuItem-root': generateBaseStyles(theme, 'secondary', 'pills'),
-}));
+}))
 
 export const MenuListWrapperPillsPrimary = styled(MenuList)(({ theme }) => ({
   '& .MuiMenuItem-root': generateBaseStyles(theme, 'primary', 'pills'),
-}));
+}))
 
 export const MenuListWrapperRoundedSecondary = styled(MenuList)(({ theme }) => ({
   '& .MuiMenuItem-root': generateBaseStyles(theme, 'secondary', 'rounded'),
-}));
+}))
 
 export const MenuListWrapperRoundedPrimary = styled(MenuList)(({ theme }) => ({
   '& .MuiMenuItem-root': generateBaseStyles(theme, 'primary', 'rounded'),
-}));
+}))
 
 export const MenuListWrapperSquareSecondary = styled(MenuList)(({ theme }) => ({
   '& .MuiMenuItem-root': generateBaseStyles(theme, 'secondary', 'square'),
-}));
+}))
 
 export const MenuListWrapperSquarePrimary = styled(MenuList)(({ theme }) => ({
   '& .MuiMenuItem-root': generateBaseStyles(theme, 'primary', 'square'),
-}));
+}))
 
 export const MenuListWrapperIndicatorPrimary = styled(MenuList)(({ theme }) => ({
   '& .MuiMenuItem-root': generateBaseStyles(theme, 'primary', 'indicator'),
-}));
+}))
 
 export const MenuListWrapperIndicatorSecondary = styled(MenuList)(({ theme }) => ({
   '& .MuiMenuItem-root': generateBaseStyles(theme, 'secondary', 'indicator'),
-}));
+}))
 
 export const MenuListWrapperIndicatorSuccess = styled(MenuList)(({ theme }) => ({
   '& .MuiMenuItem-root': generateBaseStyles(theme, 'success', 'indicator'),
-}));
+}))
 
 export const MenuListWrapperIndicatorError = styled(MenuList)(({ theme }) => ({
   '& .MuiMenuItem-root': generateBaseStyles(theme, 'error', 'indicator'),
-}));
+}))

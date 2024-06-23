@@ -1,4 +1,4 @@
-import { alpha, styled, Tabs } from '@mui/material';
+import { alpha, styled, Tabs } from '@mui/material'
 
 export const TabsLineAlternate = styled(Tabs)(({ theme }) => ({
   '.MuiTabs-indicator': {
@@ -15,7 +15,7 @@ export const TabsLineAlternate = styled(Tabs)(({ theme }) => ({
       background: theme.palette.secondary.main,
     },
   },
-}));
+}))
 
 export const TabsRounded = styled(Tabs)(({ theme }) => ({
   overflow: 'visible',
@@ -60,7 +60,7 @@ export const TabsRounded = styled(Tabs)(({ theme }) => ({
       background: alpha(theme.palette.primary.main, 0.08),
     },
   },
-}));
+}))
 
 export const TabsShadow = styled(Tabs)(({ theme }) => ({
   overflow: 'visible',
@@ -106,7 +106,7 @@ export const TabsShadow = styled(Tabs)(({ theme }) => ({
       boxShadow: theme.shadows[1],
     },
   },
-}));
+}))
 
 export const TabsAlternate = styled(Tabs)(({ theme }) => ({
   overflow: 'visible',
@@ -152,7 +152,7 @@ export const TabsAlternate = styled(Tabs)(({ theme }) => ({
       boxShadow: theme.shadows[1],
     },
   },
-}));
+}))
 
 export const TabsPills = styled(Tabs)(({ theme }) => ({
   overflow: 'visible',
@@ -198,4 +198,4 @@ export const TabsPills = styled(Tabs)(({ theme }) => ({
       background: alpha(theme.palette.primary.main, 0.08),
     },
   },
-}));
+}))

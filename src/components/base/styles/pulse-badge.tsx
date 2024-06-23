@@ -1,15 +1,15 @@
-import { Badge, styled } from '@mui/material';
-import { ReactNode } from 'react';
+import { Badge, styled } from '@mui/material'
+import { ReactNode } from 'react'
 
-type BadgeColor = 'success' | 'error' | 'primary' | 'secondary' | 'warning' | 'info';
+type BadgeColor = 'success' | 'error' | 'primary' | 'secondary' | 'warning' | 'info'
 
 interface PulseBadgeProps {
-  color?: BadgeColor;
-  children?: ReactNode;
+  color?: BadgeColor
+  children?: ReactNode
 }
 
 export const PulseBadge = styled(Badge)<PulseBadgeProps>(({ theme, color }) => {
-  const computedColor = color ? theme.palette[color].main : theme.palette.success.main;
+  const computedColor = color ? theme.palette[color].main : theme.palette.success.main
 
   return {
     '& .MuiBadge-badge': {
@@ -38,5 +38,5 @@ export const PulseBadge = styled(Badge)<PulseBadgeProps>(({ theme, color }) => {
         opacity: 0,
       },
     },
-  };
-});
+  }
+})

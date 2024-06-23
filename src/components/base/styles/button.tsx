@@ -1,4 +1,4 @@
-import { alpha, Button, styled } from '@mui/material';
+import { alpha, Button, styled } from '@mui/material'
 
 export const ButtonLight = styled(Button)(({ theme }) => ({
   background: alpha(theme.palette.common.white, 0.08),
@@ -17,4 +17,4 @@ export const ButtonLight = styled(Button)(({ theme }) => ({
       borderColor: alpha(theme.palette.common.white, 0.16),
     },
   },
-}));
+}))

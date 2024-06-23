@@ -6,6 +6,8 @@ import AvatarAccordion from 'src/components/application-ui/accordions/avatar/ava
 import CardsBenefits from 'src/components/application-ui/cards-benefits/cards-benefits'
 import FinancialStatus from 'src/components/application-ui/financial-status/financial-status'
 import AlternateTabs from 'src/components/application-ui/tabs/alternate/alternate'
+import UserTabs from 'src/components/application-ui/tabs/users-listing/user-tabs'
+import { users } from 'src/components/application-ui/tabs/users-listing/users-mock-data'
 import Container from 'src/components/base/container'
 import PageHeading from 'src/components/base/page-heading'
 import { MainLayout } from 'src/layouts/main-layout'
@@ -41,6 +43,9 @@ function Page() {
 
       <Container>
         <FinancialStatus />
+      </Container>
+      <Container>
+        <UserTabs users={users} />
       </Container>
     </MainLayout>
   )

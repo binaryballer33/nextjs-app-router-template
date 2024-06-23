@@ -1,15 +1,15 @@
-import { alpha, Button, styled } from '@mui/material';
-import { ReactNode } from 'react';
+import { alpha, Button, styled } from '@mui/material'
+import { ReactNode } from 'react'
 
-type ButtonColor = 'primary' | 'error' | 'success' | 'secondary' | 'warning' | 'info';
+type ButtonColor = 'primary' | 'error' | 'success' | 'secondary' | 'warning' | 'info'
 
 interface ButtonColorProps {
-  color?: ButtonColor;
-  children?: ReactNode;
+  color?: ButtonColor
+  children?: ReactNode
 }
 
 export const ButtonSoft = styled(Button)<ButtonColorProps>(({ theme, color }) => {
-  const computedColor = color ? theme.palette[color].main : theme.palette.primary.main;
+  const computedColor = color ? theme.palette[color].main : theme.palette.primary.main
 
   return {
     backgroundColor: alpha(computedColor, 0.08),
@@ -23,5 +23,5 @@ export const ButtonSoft = styled(Button)<ButtonColorProps>(({ theme, color }) =>
     '&:disabled': {
       backgroundColor: alpha(theme.palette.action.disabledBackground, 0.3),
     },
-  };
-});
+  }
+})

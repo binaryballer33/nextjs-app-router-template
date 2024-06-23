@@ -1,20 +1,20 @@
-import { Card, styled } from '@mui/material';
-import { ReactNode } from 'react';
+import { Card, styled } from '@mui/material'
+import { ReactNode } from 'react'
 
-export type BorderColor = 'primary' | 'error' | 'success' | 'secondary' | 'warning' | 'info';
-type BorderPosition = 'top' | 'bottom';
+export type BorderColor = 'primary' | 'error' | 'success' | 'secondary' | 'warning' | 'info'
+type BorderPosition = 'top' | 'bottom'
 
 interface CardBorderColorProps {
-  borderColor?: BorderColor;
-  borderPosition?: BorderPosition;
-  children?: ReactNode;
+  borderColor?: BorderColor
+  borderPosition?: BorderPosition
+  children?: ReactNode
 }
 
 export const CardBorderColor = styled(Card, {
   shouldForwardProp: (prop) => prop !== 'borderColor' && prop !== 'borderPosition',
 })<CardBorderColorProps>(({ theme, borderColor, borderPosition }) => {
-  const computedColor = borderColor ? theme.palette[borderColor].main : theme.palette.primary.main;
-  const defaultBorderPosition = borderPosition || 'bottom';
+  const computedColor = borderColor ? theme.palette[borderColor].main : theme.palette.primary.main
+  const defaultBorderPosition = borderPosition || 'bottom'
 
   const styles: any = {
     position: 'relative',
@@ -41,7 +41,7 @@ export const CardBorderColor = styled(Card, {
             borderBottomRightRadius: 'inherit',
           }),
     },
-  };
+  }
 
-  return styles;
-});
+  return styles
+})

@@ -1,4 +1,4 @@
-import { alpha, lighten, ListItemButton, styled } from '@mui/material';
+import { alpha, lighten, ListItemButton, styled } from '@mui/material'
 
 export const ListItemButtonWrapper = styled(ListItemButton)(({ theme }) => ({
   transform: 'scale(1)',
@@ -23,7 +23,7 @@ export const ListItemButtonWrapper = styled(ListItemButton)(({ theme }) => ({
     borderBottomRightRadius: theme.shape.borderRadius,
     borderBottomLeftRadius: theme.shape.borderRadius,
   },
-}));
+}))
 
 export const ListItemButtonWrapperLight = styled(ListItemButton)(({ theme }) => ({
   background: 'transparent',
@@ -32,4 +32,4 @@ export const ListItemButtonWrapperLight = styled(ListItemButton)(({ theme }) => 
   '&:hover': {
     background: alpha(theme.palette.background.paper, 0.06),
   },
-}));
+}))

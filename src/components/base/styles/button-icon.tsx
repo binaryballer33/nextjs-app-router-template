@@ -1,4 +1,4 @@
-import { Button, styled } from '@mui/material';
+import { Button, styled } from '@mui/material'
 
 export const ButtonIcon = styled(Button)(({ theme }) => ({
   minWidth: 0,
@@ -11,4 +11,4 @@ export const ButtonIcon = styled(Button)(({ theme }) => ({
   '&.MuiButton-sizeSmall': {
     padding: theme.spacing(0.638),
   },
-}));
+}))

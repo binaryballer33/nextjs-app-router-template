@@ -1,4 +1,4 @@
-import { Card, styled } from '@mui/material';
+import { Card, styled } from '@mui/material'
 
 export const FullCalendarWrapper = styled(Card)(({ theme }) => {
   return {
@@ -15,8 +15,7 @@ export const FullCalendarWrapper = styled(Card)(({ theme }) => {
       '--fc-list-event-hover-bg-color': theme.palette.background.default,
       '--fc-neutral-bg-color': theme.palette.background.default,
       '--fc-page-bg-color': theme.palette.background.default,
-      '--fc-today-bg-color':
-        theme.palette.mode === 'dark' ? theme.palette.neutral[900] : theme.palette.neutral[100],
+      '--fc-today-bg-color': theme.palette.mode === 'dark' ? theme.palette.neutral[900] : theme.palette.neutral[100],
     },
     '& .fc .fc-col-header-cell-cushion': {
       paddingBottom: '10px',
@@ -61,5 +60,5 @@ export const FullCalendarWrapper = styled(Card)(({ theme }) => {
     '& .fc-list': {
       borderColor: 'transparent',
     },
-  };
-});
+  }
+})

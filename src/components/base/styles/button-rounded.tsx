@@ -1,4 +1,4 @@
-import { Button, styled } from '@mui/material';
+import { Button, styled } from '@mui/material'
 
 export const ButtonRounded = styled(Button)(() => ({
   display: 'flex',
@@ -7,4 +7,4 @@ export const ButtonRounded = styled(Button)(() => ({
     position: 'static',
     transform: 'none',
   },
-}));
+}))
