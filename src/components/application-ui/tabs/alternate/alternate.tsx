@@ -7,12 +7,13 @@ import {
   Divider,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Stack,
   Tab,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import React from 'react'
+import React, { SyntheticEvent } from 'react'
 import PlaceholderBox from 'src/components/base/placeholder-box'
 import { TabsAlternate } from 'src/components/base/styles/tabs'
 
@@ -26,13 +27,7 @@ function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+    <div role="tabpanel" hidden={value !== index}>
       {value === index && <Box sx={{ p: 3, minHeight: 300 }}>{children}</Box>}
     </div>
   )
@@ -50,13 +45,9 @@ const AlternateTabs = () => {
   const smUp = useMediaQuery(theme.breakpoints.up('sm'))
   const [value, setValue] = React.useState(0)
 
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue)
-  }
-
-  const handleSelectChange = (event) => {
-    setValue(event.target.value)
-  }
+  // need event even if not used or component does not work
+  const handleTabChange = (event: SyntheticEvent, newValue: number) => setValue(newValue)
+  const handleSelectChange = (event: SelectChangeEvent<number>) => setValue(Number(event.target.value))
 
   return (
     <Stack
@@ -108,17 +99,23 @@ const AlternateTabs = () => {
           }
         />
         <Divider />
+
+        {/* Tab 1 */}
         <CustomTabPanel value={value} index={0}>
           <Stack spacing={2}>
             <PlaceholderBox height={300} />
           </Stack>
         </CustomTabPanel>
+
+        {/* Tab 2 */}
         <CustomTabPanel value={value} index={1}>
           <Stack spacing={2}>
             <PlaceholderBox height={150} />
             <PlaceholderBox height={150} />
           </Stack>
         </CustomTabPanel>
+
+        {/* Tab 3 */}
         <CustomTabPanel value={value} index={2}>
           <Stack spacing={2}>
             <PlaceholderBox height={100} />
@@ -126,6 +123,8 @@ const AlternateTabs = () => {
             <PlaceholderBox height={100} />
           </Stack>
         </CustomTabPanel>
+
+        {/* Tab 4 */}
         <CustomTabPanel value={value} index={3}>
           <Stack spacing={2}>
             <PlaceholderBox height={100} />

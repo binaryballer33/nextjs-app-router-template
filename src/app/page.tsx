@@ -28,15 +28,15 @@ function Page() {
       </Container>
 
       <Container>
-        <AvatarAccordion />
-      </Container>
-
-      <Container>
         <AlternateTabs />
       </Container>
 
       <Container>
         <CardsBenefits />
+      </Container>
+
+      <Container>
+        <AvatarAccordion />
       </Container>
 
       <Container>
