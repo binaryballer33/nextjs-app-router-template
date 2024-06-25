@@ -6,7 +6,7 @@ import { Box, Button, Container, Divider, Stack, Typography } from '@mui/materia
 import { useTranslation } from 'react-i18next'
 import { RouterLink } from 'src/components/base/router-link'
 import { AvatarState } from 'src/components/base/styles/avatar'
-import { routes } from 'src/router/routes'
+import { routes } from 'src/router/navigation-routes'
 
 const Page = () => {
   const { t } = useTranslation()

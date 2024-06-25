@@ -5,7 +5,7 @@ export const LoginSchema = z.object({
   password: z.string().min(8, 'Password must be at least 8 characters'),
 })
 
-export const initialLoginFormState: TLoginSchema = {
+export const initialLoginFormState: Login = {
   email: '',
   password: '',
 }
@@ -24,7 +24,7 @@ export const RegisterSchema = z
     path: ['confirmPassword'],
   })
 
-export const initialRegisterFormState: TRegisterSchema = {
+export const initialRegisterFormState: Register = {
   firstname: '',
   lastname: '',
   email: '',
@@ -32,5 +32,5 @@ export const initialRegisterFormState: TRegisterSchema = {
   confirmPassword: '',
 }
 
-export type TLoginSchema = z.infer<typeof LoginSchema>
-export type TRegisterSchema = z.infer<typeof RegisterSchema>
+export type Login = z.infer<typeof LoginSchema>
+export type Register = z.infer<typeof RegisterSchema>
