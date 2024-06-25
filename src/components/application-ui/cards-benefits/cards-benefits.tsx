@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid'
 import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 const mock = [
   {
@@ -132,6 +133,7 @@ const mock = [
 
 const CardsBenefits = (): JSX.Element => {
   const theme = useTheme()
+  const { t } = useTranslation()
 
   return (
     <Grid container spacing={4}>
@@ -161,9 +163,9 @@ const CardsBenefits = (): JSX.Element => {
                 {item.icon}
               </Box>
               <Typography variant={'h6'} gutterBottom sx={{ fontWeight: 500 }}>
-                {item.title}
+                {t(item.title)}
               </Typography>
-              <Typography color="text.secondary">{item.subtitle}</Typography>
+              <Typography color="text.secondary">{t(item.subtitle)}</Typography>
             </Box>
           </Box>
         </Grid>

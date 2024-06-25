@@ -55,6 +55,26 @@ export const ae = {
   'Sign Out': 'تسجيل الخروج',
   'Software Engineer': 'مهندس برمجيات',
 
+  // benefits
+  Themeable: 'قابل للتخصيص',
+  'Customize any part of our components to match your design needs.':
+    'قم بتخصيص أي جزء من مكوناتنا لتلبية احتياجات التصميم الخاصة بك.',
+  'Light and dark UI': 'واجهة مستخدم فاتحة ومظلمة',
+  'Optimized for multiple color modes. Use light or dark, your choice.':
+    'محسّن لأوضاع ألوان متعددة. استخدم الفاتح أو الداكن، حسب اختيارك.',
+  Composable: 'قابل للتأليف',
+  'Designed with composition in mind. Compose new components with ease.':
+    'مصمم مع وضع التركيب في الاعتبار. أنشئ مكونات جديدة بسهولة.',
+  'Developer experience': 'تجربة المطور',
+  'Guaranteed to boost your productivity when building your app or website.':
+    'مضمون لتعزيز إنتاجيتك عند بناء تطبيقك أو موقعك.',
+  'Continuous updates': 'تحديثات مستمرة',
+  'We continually deploy improvements and new updates to theFront.':
+    'نقوم بنشر التحسينات والتحديثات الجديدة باستمرار إلى theFront.',
+  'Free support': 'دعم مجاني',
+  '6 months of free technical support to help you build your website faster.':
+    '6 أشهر من الدعم الفني المجاني لمساعدتك في إنشاء موقعك بشكل أسرع.',
+
   // footer
   'Subscribe to our newsletter': 'اشترك في نشرتنا الإخبارية',
   'The latest news, articles, and resources, sent to your inbox weekly.':

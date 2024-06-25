@@ -56,6 +56,24 @@ export const fr = {
   'Sign Out': 'Déconnexion',
   'Software Engineer': 'Ingénieur logiciel',
 
+  // benefits
+  Themeable: 'Thématisable',
+  'Customize any part of our components to match your design needs.':
+    "Personnalisez n'importe quelle partie de nos composants pour répondre à vos besoins en matière de design.",
+  'Light and dark UI': 'Interface utilisateur claire et sombre',
+  'Optimized for multiple color modes. Use light or dark, your choice.':
+    'Optimisé pour plusieurs modes de couleur. Utilisez clair ou sombre, à votre choix.',
+  Composable: 'Composable',
+  'Designed with composition in mind. Compose new components with ease.':
+    "Conçu avec la composition à l'esprit. Composez de nouveaux composants facilement.",
+  'Developer experience': 'Expérience développeur',
+  'Guaranteed to boost your productivity when building your app or website.':
+    'Garanti pour augmenter votre productivité lors de la création de votre application ou site web.',
+  'Continuous updates': 'Mises à jour continues',
+  'We continually deploy improvements and new updates to theFront.':
+    'Nous déployons continuellement des améliorations et de nouvelles mises à jour pour theFront.',
+  'Free support': 'Support gratuit',
+
   // footer
   'Subscribe to our newsletter': 'Abonnez-vous à notre newsletter',
   'The latest news, articles, and resources, sent to your inbox weekly.':

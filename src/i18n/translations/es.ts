@@ -42,6 +42,26 @@ export const es = {
   Integrations: 'Integraciones',
   Support: 'Soporte',
 
+  // benefits
+  Themeable: 'Personalizable',
+  'Customize any part of our components to match your design needs.':
+    'Personaliza cualquier parte de nuestros componentes para satisfacer tus necesidades de diseño.',
+  'Light and dark UI': 'Interfaz clara y oscura',
+  'Optimized for multiple color modes. Use light or dark, your choice.':
+    'Optimizado para múltiples modos de color. Usa claro u oscuro, tu elección.',
+  Composable: 'Componible',
+  'Designed with composition in mind. Compose new components with ease.':
+    'Diseñado pensando en la composición. Crea nuevos componentes con facilidad.',
+  'Developer experience': 'Experiencia del desarrollador',
+  'Guaranteed to boost your productivity when building your app or website.':
+    'Garantizado para aumentar tu productividad al construir tu aplicación o sitio web.',
+  'Continuous updates': 'Actualizaciones continuas',
+  'We continually deploy improvements and new updates to theFront.':
+    'Desplegamos continuamente mejoras y nuevas actualizaciones para theFront.',
+  'Free support': 'Soporte gratuito',
+  '6 months of free technical support to help you build your website faster.':
+    '6 meses de soporte técnico gratuito para ayudarte a crear tu sitio web más rápido.',
+
   // page not found
   'Page not found': 'Página no encontrada',
   'We moved the content to a different page': 'Hemos trasladado el contenido a una página diferente',

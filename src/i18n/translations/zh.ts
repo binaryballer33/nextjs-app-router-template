@@ -56,6 +56,23 @@ export const zh = {
   'Sign Out': '登出',
   'Software Engineer': '软件工程师',
 
+  // benefits
+  Themeable: '可定制主题',
+  'Customize any part of our components to match your design needs.': '自定义我们组件的任何部分以满足您的设计需求。',
+  'Light and dark UI': '明暗界面',
+  'Optimized for multiple color modes. Use light or dark, your choice.':
+    '针对多种颜色模式进行了优化。使用明亮或黑暗，由您选择。',
+  Composable: '可组合',
+  'Designed with composition in mind. Compose new components with ease.': '设计时考虑了组合。轻松组合新组件。',
+  'Developer experience': '开发者体验',
+  'Guaranteed to boost your productivity when building your app or website.':
+    '确保在构建应用程序或网站时提高您的生产力。',
+  'Continuous updates': '持续更新',
+  'We continually deploy improvements and new updates to theFront.': '我们不断地对theFront进行改进和更新。',
+  'Free support': '免费支持',
+  '6 months of free technical support to help you build your website faster.':
+    '提供6个月的免费技术支持，帮助您更快地构建网站。',
+
   // footer
   'Subscribe to our newsletter': '订阅我们的通讯',
   'The latest news, articles, and resources, sent to your inbox weekly.':

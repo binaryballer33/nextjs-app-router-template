@@ -56,6 +56,26 @@ export const pt = {
   'Sign Out': 'Sair',
   'Software Engineer': 'Engenheiro de software',
 
+  // benefits
+  Themeable: 'Personalizável',
+  'Customize any part of our components to match your design needs.':
+    'Personalize qualquer parte dos nossos componentes para atender às suas necessidades de design.',
+  'Light and dark UI': 'Interface clara e escura',
+  'Optimized for multiple color modes. Use light or dark, your choice.':
+    'Otimizado para vários modos de cor. Use claro ou escuro, a sua escolha.',
+  Composable: 'Componível',
+  'Designed with composition in mind. Compose new components with ease.':
+    'Projetado com a composição em mente. Componha novos componentes com facilidade.',
+  'Developer experience': 'Experiência do desenvolvedor',
+  'Guaranteed to boost your productivity when building your app or website.':
+    'Garantido para aumentar sua produtividade ao construir seu aplicativo ou site.',
+  'Continuous updates': 'Atualizações contínuas',
+  'We continually deploy improvements and new updates to theFront.':
+    'Nós continuamente implantamos melhorias e novas atualizações para o theFront.',
+  'Free support': 'Suporte gratuito',
+  '6 months of free technical support to help you build your website faster.':
+    '6 meses de suporte técnico gratuito para ajudá-lo a criar seu site mais rapidamente.',
+
   // footer
   'Subscribe to our newsletter': 'Inscreva-se na nossa newsletter',
   'The latest news, articles, and resources, sent to your inbox weekly.':
