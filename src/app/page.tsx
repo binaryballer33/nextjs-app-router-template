@@ -2,6 +2,7 @@
 
 import { Box, Divider, Typography } from '@mui/material'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import AvatarAccordion from 'src/components/application-ui/accordions/avatar/avatar'
 import CardsBenefits from 'src/components/application-ui/cards-benefits/cards-benefits'
 import FinancialStatus from 'src/components/application-ui/financial-status/financial-status'
@@ -13,6 +14,7 @@ import PageHeading from 'src/components/base/page-heading'
 import { MainLayout } from 'src/layouts/main-layout'
 
 function Page() {
+  const { t } = useTranslation()
   return (
     <MainLayout>
       <Container>
@@ -22,7 +24,7 @@ function Page() {
             <Box my={2}>
               <Divider sx={{ width: { xs: 1, md: '75%' }, mb: 2 }} />
               <Typography variant="body1" color="textSecondary" sx={{ textAlign: { xs: 'center', md: 'left' } }}>
-                This is a sample page
+                {t('This is a sample page')}
               </Typography>
             </Box>
           }

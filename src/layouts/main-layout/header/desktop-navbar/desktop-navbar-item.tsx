@@ -143,9 +143,9 @@ export const DesktopNavBarItem: FC<DesktopNavBarItemProps> = ({ item: navbar_ite
             sx={{
               borderRadius: '6px',
               borderTopLeftRadius: isSub && navbar_item.subMenu ? 6 : navbar_item.subMenu ? 0 : 6,
-              minWidth: 240,
+              minWidth: 'max-content',
               backgroundColor: 'background.paper',
-              maxWidth: 320,
+              maxWidth: 400,
               mt: '-1px',
               p: 2,
             }}

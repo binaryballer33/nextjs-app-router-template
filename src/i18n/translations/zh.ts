@@ -46,6 +46,16 @@ export const zh = {
   'We moved the content to a different page': '我们已将内容移至不同页面',
   'Go to homepage': '前往首页',
 
+  'Home Page': '首页',
+  'This is a sample page': '这是一个示例页面',
+  'Navigation tabs': '导航标签',
+  'My Profile': '我的资料',
+  'Profile settings': '资料设置',
+  Cart: '购物车',
+  Orders: '订单',
+  'Sign Out': '登出',
+  'Software Engineer': '软件工程师',
+
   // footer
   'Subscribe to our newsletter': '订阅我们的通讯',
   'The latest news, articles, and resources, sent to your inbox weekly.':

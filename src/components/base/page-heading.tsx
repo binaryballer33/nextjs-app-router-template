@@ -1,15 +1,16 @@
-import { Stack, SxProps, Theme, Typography, useMediaQuery } from '@mui/material';
-import React, { ReactNode } from 'react';
+import { Stack, SxProps, Theme, Typography, useMediaQuery } from '@mui/material'
+import React, { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface PageHeadingProps {
-  iconBox?: ReactNode;
-  title: string;
-  description?: string;
-  topSection?: ReactNode;
-  bottomSection?: ReactNode;
-  actions?: ReactNode;
-  background?: string;
-  sx?: SxProps<Theme>;
+  iconBox?: ReactNode
+  title: string
+  description?: string
+  topSection?: ReactNode
+  bottomSection?: ReactNode
+  actions?: ReactNode
+  background?: string
+  sx?: SxProps<Theme>
 }
 
 const PageHeading: React.FC<PageHeadingProps> = ({
@@ -22,7 +23,8 @@ const PageHeading: React.FC<PageHeadingProps> = ({
   background,
   sx,
 }) => {
-  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
+  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+  const { t } = useTranslation()
 
   return (
     <Stack sx={{ backgroundColor: background, ...sx }}>
@@ -43,26 +45,14 @@ const PageHeading: React.FC<PageHeadingProps> = ({
           overflow="hidden"
         >
           {iconBox}
-          <Stack
-            textAlign={{ xs: 'center', md: 'left' }}
-            spacing={0.3}
-            overflow="hidden"
-          >
+          <Stack textAlign={{ xs: 'center', md: 'left' }} spacing={0.3} overflow="hidden">
             {topSection}
-            <Typography
-              variant="h3"
-              noWrap
-            >
-              {title}
+            <Typography variant="h3" noWrap>
+              {t(title)}
             </Typography>
             {description && (
-              <Typography
-                variant="h5"
-                color="text.secondary"
-                fontWeight={400}
-                noWrap={mdUp && true}
-              >
-                {description}
+              <Typography variant="h5" color="text.secondary" fontWeight={400} noWrap={mdUp && true}>
+                {t(description)}
               </Typography>
             )}
           </Stack>
@@ -71,7 +61,7 @@ const PageHeading: React.FC<PageHeadingProps> = ({
       </Stack>
       {bottomSection}
     </Stack>
-  );
-};
+  )
+}
 
-export default PageHeading;
+export default PageHeading

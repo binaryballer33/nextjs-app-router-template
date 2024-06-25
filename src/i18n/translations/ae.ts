@@ -45,6 +45,16 @@ export const ae = {
   Integrations: 'التكاملات',
   Support: 'الدعم',
 
+  'Home Page': 'الصفحة الرئيسية',
+  'This is a sample page': 'هذه صفحة نموذجية',
+  'Navigation tabs': 'علامات التبويب التنقلية',
+  'My Profile': 'ملفي الشخصي',
+  'Profile settings': 'إعدادات الملف الشخصي',
+  Cart: 'العربة',
+  Orders: 'الطلبات',
+  'Sign Out': 'تسجيل الخروج',
+  'Software Engineer': 'مهندس برمجيات',
+
   // footer
   'Subscribe to our newsletter': 'اشترك في نشرتنا الإخبارية',
   'The latest news, articles, and resources, sent to your inbox weekly.':

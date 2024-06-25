@@ -1,6 +1,13 @@
 import { Avatar, Badge, Box, Typography } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+
+const user = {
+  name: 'Shaquille Mandy',
+  role: 'Software Engineer',
+}
 
 const ProfileIconDropdownAvatar = () => {
+  const { t } = useTranslation()
   return (
     <Box display="flex" alignItems="center">
       <Badge
@@ -25,7 +32,7 @@ const ProfileIconDropdownAvatar = () => {
           Shaquille Mandy
         </Typography>
         <Typography variant="subtitle1" color="text.secondary" noWrap>
-          Software Engineer
+          {t(user.role)}
         </Typography>
       </Box>
     </Box>

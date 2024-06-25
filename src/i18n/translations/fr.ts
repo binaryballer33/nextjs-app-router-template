@@ -46,6 +46,16 @@ export const fr = {
   'We moved the content to a different page': 'Nous avons déplacé le contenu vers une autre page',
   'Go to homepage': "Aller à la page d'accueil",
 
+  'Home Page': "Page d'accueil",
+  'This is a sample page': "Ceci est une page d'exemple",
+  'Navigation tabs': 'Onglets de navigation',
+  'My Profile': 'Mon profil',
+  'Profile settings': 'Paramètres du profil',
+  Cart: 'Panier',
+  Orders: 'Commandes',
+  'Sign Out': 'Déconnexion',
+  'Software Engineer': 'Ingénieur logiciel',
+
   // footer
   'Subscribe to our newsletter': 'Abonnez-vous à notre newsletter',
   'The latest news, articles, and resources, sent to your inbox weekly.':

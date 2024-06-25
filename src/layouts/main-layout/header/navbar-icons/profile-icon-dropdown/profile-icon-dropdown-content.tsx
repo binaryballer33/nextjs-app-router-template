@@ -99,7 +99,7 @@ export const ProfileIconDropdown: FC<ProfileDropdownProps> = (props) => {
               primaryTypographyProps={{
                 fontWeight: 500,
               }}
-              primary={item}
+              primary={t(item)}
             />
             <ChevronRightTwoToneIcon />
           </MenuItem>
@@ -119,7 +119,7 @@ export const ProfileIconDropdown: FC<ProfileDropdownProps> = (props) => {
                 mr: 1,
               }}
             />
-            {t('Sign out')}
+            {t('Sign Out')}
           </Button>
         </Box>
       </Menu>

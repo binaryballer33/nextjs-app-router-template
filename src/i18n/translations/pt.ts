@@ -46,6 +46,16 @@ export const pt = {
   'We moved the content to a different page': 'Movemos o conteúdo para uma página diferente',
   'Go to homepage': 'Ir para a página inicial',
 
+  'Home Page': 'Página Inicial',
+  'This is a sample page': 'Esta é uma página de exemplo',
+  'Navigation tabs': 'Guias de navegação',
+  'My Profile': 'Meu perfil',
+  'Profile settings': 'Configurações do perfil',
+  Cart: 'Carrinho',
+  Orders: 'Pedidos',
+  'Sign Out': 'Sair',
+  'Software Engineer': 'Engenheiro de software',
+
   // footer
   'Subscribe to our newsletter': 'Inscreva-se na nossa newsletter',
   'The latest news, articles, and resources, sent to your inbox weekly.':

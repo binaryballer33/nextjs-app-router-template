@@ -47,6 +47,16 @@ export const de = {
   Integrations: 'Integrationen',
   Support: 'Unterstützung',
 
+  'Home Page': 'Startseite',
+  'This is a sample page': 'Dies ist eine Beispielseite',
+  'Navigation tabs': 'Navigationstabs',
+  'My Profile': 'Mein Profil',
+  'Profile settings': 'Profileinstellungen',
+  Cart: 'Warenkorb',
+  Orders: 'Bestellungen',
+  'Sign Out': 'Abmelden',
+  'Software Engineer': 'Software-Ingenieur',
+
   // footer
   'Subscribe to our newsletter': 'Abonnieren Sie unseren Newsletter',
   'The latest news, articles, and resources, sent to your inbox weekly.':
