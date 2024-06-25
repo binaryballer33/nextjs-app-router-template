@@ -1,8 +1,8 @@
 import DarkModeTwoToneIcon from '@mui/icons-material/DarkModeTwoTone'
 import LightModeTwoToneIcon from '@mui/icons-material/LightModeTwoTone'
 import { alpha, Button, useTheme } from '@mui/material'
-import { useDispatch } from 'react-redux'
 import { toggleTheme } from 'src/slices/theme'
+import { useDispatch } from 'src/store'
 
 function ThemeModeToggler() {
   const theme = useTheme()

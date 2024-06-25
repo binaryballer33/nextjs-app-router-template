@@ -6,15 +6,15 @@ import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { useEffect, type FC, type ReactNode } from 'react'
-import { Provider as ReduxProvider, useSelector } from 'react-redux'
+import { Provider as ReduxProvider } from 'react-redux'
 import { Toastr } from 'src/components/base/toastr' // for notifications
-import { store } from 'src/store'
+import { store, useSelector } from 'src/store'
 import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
 import 'src/i18n/i18n' // for multilanguage support
 import 'src/global.css' // for global styles
 import 'aos/dist/aos.css' // for animations and transitions on scroll
 import AOS from 'aos'
-import { RootState } from 'src/models/redux/root-state'
+import { AuthProvider } from 'src/contexts/auth/supabase/auth-context'
 import { darkTheme, lightTheme } from 'src/theme/theme'
 
 type ThemeProviderProps = {
@@ -22,7 +22,7 @@ type ThemeProviderProps = {
 }
 
 const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const { mode } = useSelector((state: RootState) => state.theme)
+  const { mode } = useSelector((state) => state.theme)
   const theme = mode === 'dark' ? darkTheme : lightTheme
 
   useEffect(() => {
@@ -66,7 +66,10 @@ export const Layout: FC<LayoutProps> = ({ children }: LayoutProps) => {
     <NextAppDirEmotionCacheProvider options={{ key: 'mandy-tec' }}>
       <ReduxProvider store={store}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
+          {/* Once Supabase project is creating and you have the api keys you can uncomment the AuthProvider */}
+          {/* <AuthProvider> */}
           <ThemeProvider>{children}</ThemeProvider>
+          {/* </AuthProvider> */}
         </LocalizationProvider>
       </ReduxProvider>
     </NextAppDirEmotionCacheProvider>
