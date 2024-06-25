@@ -33,7 +33,7 @@ export const de = {
   'Create product': 'Produkt erstellen',
   'Invoice details': 'Rechnungsdetails',
   'Switch Language': 'Sprache wechseln',
-  'Language changed to German': 'Sprache auf Deutsch geändert',
+  'Language changed to English': 'Sprache auf Deutsch geändert',
   Export: 'Exportieren',
   'Generate and access various reports': 'Verschiedene Berichte generieren und darauf zugreifen',
-};
+}

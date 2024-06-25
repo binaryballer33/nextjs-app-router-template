@@ -13,7 +13,7 @@ import {
 import { usePathname } from 'next/navigation'
 import { FC, useState } from 'react'
 import { RouterLink } from 'src/components/base/router-link'
-import { NavBarItem } from 'src/models/menu-item'
+import { NavBarItem } from 'src/models/navbar-item'
 import { neutral } from 'src/theme/theme'
 
 interface NavBarItemProps {

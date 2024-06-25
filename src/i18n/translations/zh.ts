@@ -36,4 +36,4 @@ export const zh = {
   'Language changed to English': '语言更改为阿拉伯语',
   Export: '导出',
   'Generate and access various reports': '生成并访问各种报告',
-};
+}
