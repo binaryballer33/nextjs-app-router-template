@@ -36,4 +36,4 @@ export const es = {
   'Language changed to English': 'Idioma cambiado a español',
   Export: 'Exportar',
   'Generate and access various reports': 'Generar y acceder a varios informes',
-};
+}

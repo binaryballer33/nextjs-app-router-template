@@ -1,11 +1,11 @@
 'use client'
 
-import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlined'
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined'
+import AppsTwoToneIcon from '@mui/icons-material/AppsTwoTone'
+import BusinessCenterTwoToneIcon from '@mui/icons-material/BusinessCenterTwoTone'
+import DashboardTwoToneIcon from '@mui/icons-material/DashboardTwoTone'
+import LayersTwoToneIcon from '@mui/icons-material/LayersTwoTone'
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
-import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import {
   AppBar,
   Avatar,
@@ -18,7 +18,6 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DividerLight } from 'src/components/base/styles/card'
 import { useDialog } from 'src/hooks/use-dialog'
@@ -35,55 +34,153 @@ import { ProfileIconDropdown } from './navbar-icons/profile-icon-dropdown/profil
 import { BasicSpotlightSearch } from './navbar-icons/search-icon/search-icon'
 import ThemeModeToggler from './navbar-icons/theme-mode-toggler/theme-mode-toggler'
 
+// TODO: fix issue on mobile menu where if there are too many links, the height overflow does not scroll
 // manage the navbar items, their title, icons and routes from here. This is for both desktop and mobile navbars
-export const useNavBarItems = (): NavBarItem[] => {
+const useNavBarItems = (): NavBarItem[] => {
   const { t } = useTranslation()
-  return useMemo(() => {
-    return [
-      {
-        title: t('Dashboard'),
-        icon: <DashboardOutlinedIcon />,
-        route: routes.dummy,
-        subMenu: [
-          { title: t('Performance'), route: routes.dummy },
-          { title: t('KPIs'), route: routes.dummy },
-          {
-            title: t('Management'),
-            subMenu: [
-              {
-                title: t('Departments'),
-                route: routes.dummy,
-              },
-              {
-                title: t('Personnel'),
-                route: routes.dummy,
-              },
-            ],
-          },
-          { title: t('Strategy'), route: routes.dummy },
-        ],
-      },
-      {
-        title: t('Corporate'),
-        icon: <BusinessCenterOutlinedIcon />,
-        route: '/shells/stacked-shell-top-nav-wide',
-        subMenu: [
-          { title: t('Team Structure'), route: '/shells/stacked-shell-top-nav-wide' },
-          { title: t('Projects'), route: routes.dummy },
-        ],
-      },
-      {
-        title: t('Community'),
-        icon: <PeopleOutlineIcon />,
-        route: routes.dummy,
-        subMenu: [
-          { title: t('Members'), route: routes.dummy },
-          { title: t('Events'), route: routes.dummy },
-        ],
-      },
-      { title: t('Settings'), icon: <SettingsOutlinedIcon />, route: routes.dummy },
-    ]
-  }, [t])
+
+  return [
+    {
+      title: t('Dashboards'),
+      icon: <DashboardTwoToneIcon />,
+      route: routes.dummy,
+      subMenu: [
+        {
+          title: t('Reports'),
+          route: routes.dummy,
+        },
+        {
+          title: t('Expenses'),
+          route: routes.dummy,
+        },
+        {
+          title: t('Statistics'),
+          route: routes.dummy,
+        },
+        {
+          title: t('Automation'),
+          route: routes.dummy,
+        },
+        {
+          title: t('Analytics'),
+          route: routes.dummy,
+        },
+        {
+          title: t('Hospital'),
+          route: routes.dummy,
+        },
+        {
+          title: t('Helpdesk'),
+          route: routes.dummy,
+        },
+        {
+          title: t('Monitoring'),
+          route: routes.dummy,
+        },
+      ],
+    },
+    {
+      title: t('Applications'),
+      icon: <AppsTwoToneIcon />,
+      route: routes.dummy,
+      subMenu: [
+        {
+          title: t('Calendar'),
+          route: routes.dummy,
+        },
+        {
+          title: t('File manager'),
+          route: routes.dummy,
+        },
+        {
+          title: t('Jobs platform'),
+          route: routes.dummy,
+        },
+        {
+          title: t('Mailbox'),
+          route: routes.dummy,
+        },
+        {
+          title: t('Messenger'),
+          route: routes.dummy,
+        },
+        {
+          title: t('Projects board'),
+          route: routes.dummy,
+        },
+        {
+          title: t('Tasks'),
+          route: routes.dummy,
+        },
+      ],
+    },
+    {
+      title: t('Management'),
+      icon: <BusinessCenterTwoToneIcon />,
+      route: routes.dummy,
+      subMenu: [
+        {
+          title: t('Users'),
+          route: routes.dummy,
+          subMenu: [
+            {
+              title: t('Listing'),
+              route: routes.dummy,
+            },
+            {
+              title: t('User profile'),
+              route: routes.dummy,
+            },
+          ],
+        },
+        {
+          title: t('Projects'),
+          route: routes.dummy,
+        },
+        {
+          title: t('Commerce'),
+          route: routes.dummy,
+          subMenu: [
+            {
+              title: t('Shop front'),
+              route: routes.dummy,
+            },
+            {
+              title: t('Shop listing'),
+              route: routes.dummy,
+            },
+            {
+              title: t('Product details'),
+              route: routes.dummy,
+            },
+            {
+              title: t('Create product'),
+              route: routes.dummy,
+            },
+          ],
+        },
+        {
+          title: t('Invoices'),
+          route: routes.dummy,
+          subMenu: [
+            {
+              title: t('Listing'),
+              route: routes.dummy,
+            },
+            {
+              title: t('Invoice details'),
+              route: routes.dummy,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: t('Settings'),
+      icon: <LayersTwoToneIcon />,
+      route: routes.dummy,
+    },
+  ]
 }
 
 const HeaderWrapper = styled(AppBar)(({ theme }) => ({
