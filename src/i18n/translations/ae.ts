@@ -25,7 +25,6 @@ export const ae = {
   Messenger: 'ماسنجر',
   'Projects board': 'لوحة المشاريع',
   Tasks: 'المهام',
-  Listings: 'القوائم',
   'User profile': 'ملف المستخدم',
   'Shop front': 'واجهة المتجر',
   'Shop listing': 'قائمة المتجر',
@@ -36,4 +35,11 @@ export const ae = {
   'Language changed to English': 'تغيرت اللغة إلى العربية',
   Export: 'تصدير',
   'Generate and access various reports': 'توليد والوصول إلى تقارير متعددة',
-};
+  Settings: 'الإعدادات',
+  Listing: 'قائمة',
+
+  // page not found
+  'Page not found': 'الصفحة غير موجودة',
+  'We moved the content to a different page': 'لقد نقلنا المحتوى إلى صفحة مختلفة',
+  'Go to homepage': 'الذهاب إلى الصفحة الرئيسية',
+}

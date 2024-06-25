@@ -36,4 +36,11 @@ export const fr = {
   'Language changed to English': 'Langue changée en français',
   Export: 'Exporter',
   'Generate and access various reports': 'Générer et accéder à divers rapports',
-};
+  Settings: 'Paramètres',
+  Listing: 'Liste',
+
+  // page not found
+  'Page not found': 'Page non trouvée',
+  'We moved the content to a different page': 'Nous avons déplacé le contenu vers une autre page',
+  'Go to homepage': "Aller à la page d'accueil",
+}

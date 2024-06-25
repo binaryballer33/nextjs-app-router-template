@@ -6,13 +6,14 @@ import { Box, Button, Container, Divider, Stack, Typography } from '@mui/materia
 import { useTranslation } from 'react-i18next'
 import { RouterLink } from 'src/components/base/router-link'
 import { AvatarState } from 'src/components/base/styles/avatar'
+import { MainLayout } from 'src/layouts/main-layout'
 import { routes } from 'src/router/navigation-routes'
 
 const Page = () => {
   const { t } = useTranslation()
 
   return (
-    <>
+    <MainLayout>
       <Container maxWidth="sm">
         <Stack
           spacing={2}
@@ -43,10 +44,10 @@ const Page = () => {
                   px: { xs: 0, sm: 2, md: 3 },
                 }}
               >
-                Page not found
+                {t('Page not found')}
               </Typography>
               <Typography color="text.secondary" variant="h4" fontWeight={500}>
-                We moved the content to a different page
+                {t('We moved the content to a different page')}
               </Typography>
             </Box>
             <Divider>
@@ -73,7 +74,7 @@ const Page = () => {
           </Stack>
         </Stack>
       </Container>
-    </>
+    </MainLayout>
   )
 }
 

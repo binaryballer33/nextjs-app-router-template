@@ -36,4 +36,11 @@ export const zh = {
   'Language changed to English': '语言更改为阿拉伯语',
   Export: '导出',
   'Generate and access various reports': '生成并访问各种报告',
+  Settings: '设置',
+  Listing: '列表',
+
+  // page not found
+  'Page not found': '未找到页面',
+  'We moved the content to a different page': '我们已将内容移至不同页面',
+  'Go to homepage': '前往首页',
 }
