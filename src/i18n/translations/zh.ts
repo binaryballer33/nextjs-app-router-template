@@ -38,9 +38,36 @@ export const zh = {
   'Generate and access various reports': '生成并访问各种报告',
   Settings: '设置',
   Listing: '列表',
+  Integrations: '集成',
+  Support: '支持',
 
   // page not found
   'Page not found': '未找到页面',
   'We moved the content to a different page': '我们已将内容移至不同页面',
   'Go to homepage': '前往首页',
+
+  // footer
+  'Subscribe to our newsletter': '订阅我们的通讯',
+  'The latest news, articles, and resources, sent to your inbox weekly.':
+    '最新的新闻、文章和资源，每周发送到您的收件箱。',
+  'Enter your email': '输入您的电子邮件',
+  Subscribe: '订阅',
+  'MANDYTEC LLC': 'MANDYTEC LLC',
+  Solutions: '解决方案',
+  Marketing: '市场营销',
+  Insights: '洞察',
+  Pricing: '定价',
+  Guides: '指南',
+  'API Status': 'API 状态',
+  Company: '公司',
+  About: '关于',
+  Blog: '博客',
+  Jobs: '工作',
+  Press: '新闻',
+  Partners: '合作伙伴',
+  Legal: '法律',
+  Claim: '索赔',
+  Privacy: '隐私',
+  Terms: '条款',
+  '© 2023 MANDYTEC LLC, Inc. All rights reserved.': '© 2023 MANDYTEC LLC, Inc. 版权所有',
 }

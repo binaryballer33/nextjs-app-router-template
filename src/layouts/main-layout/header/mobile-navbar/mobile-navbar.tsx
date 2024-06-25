@@ -14,6 +14,7 @@ const MobileSidebarWrapper = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   color: theme.palette.mode === 'dark' ? neutral[100] : neutral[900],
   background: theme.palette.mode === 'dark' ? neutral[900] : neutral[100],
+  overflow: 'auto',
 }))
 
 interface MobileNavBarProps {

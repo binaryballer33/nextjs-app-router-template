@@ -38,9 +38,36 @@ export const fr = {
   'Generate and access various reports': 'Générer et accéder à divers rapports',
   Settings: 'Paramètres',
   Listing: 'Liste',
+  Integrations: 'Intégrations',
+  Support: 'Support',
 
   // page not found
   'Page not found': 'Page non trouvée',
   'We moved the content to a different page': 'Nous avons déplacé le contenu vers une autre page',
   'Go to homepage': "Aller à la page d'accueil",
+
+  // footer
+  'Subscribe to our newsletter': 'Abonnez-vous à notre newsletter',
+  'The latest news, articles, and resources, sent to your inbox weekly.':
+    'Les dernières nouvelles, articles et ressources, envoyés à votre boîte de réception chaque semaine.',
+  'Enter your email': 'Entrez votre email',
+  Subscribe: "S'abonner",
+  'MANDYTEC LLC': 'MANDYTEC LLC',
+  Solutions: 'Solutions',
+  Marketing: 'Marketing',
+  Insights: 'Perspectives',
+  Pricing: 'Tarification',
+  Guides: 'Guides',
+  'API Status': "État de l'API",
+  Company: 'Entreprise',
+  About: 'À propos',
+  Blog: 'Blog',
+  Jobs: 'Emplois',
+  Press: 'Presse',
+  Partners: 'Partenaires',
+  Legal: 'Légal',
+  Claim: 'Réclamation',
+  Privacy: 'Confidentialité',
+  Terms: 'Termes',
+  '© 2023 MANDYTEC LLC, Inc. All rights reserved.': '© 2023 MANDYTEC LLC, Inc. Tous droits réservés.',
 }

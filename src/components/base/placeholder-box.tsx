@@ -1,21 +1,23 @@
-import { alpha, Box, SxProps, Theme, Typography, useTheme } from '@mui/material';
-import { FC } from 'react';
+import { alpha, Box, SxProps, Theme, Typography, useTheme } from '@mui/material'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface PlaceholderBoxProps {
-  title?: string;
-  height?: number;
-  fixedHeight?: number;
-  flex?: number;
-  dark?: boolean;
-  disableHover?: boolean;
-  sx?: SxProps<Theme>;
+  title?: string
+  height?: number
+  fixedHeight?: number
+  flex?: number
+  dark?: boolean
+  disableHover?: boolean
+  sx?: SxProps<Theme>
 }
 
 const PlaceholderBox: FC<PlaceholderBoxProps> = (props) => {
-  const { title, height, disableHover, fixedHeight, flex, dark = false, sx, ...other } = props;
-  const theme = useTheme();
+  const { title, height, disableHover, fixedHeight, flex, dark = false, sx, ...other } = props
+  const { t } = useTranslation()
+  const theme = useTheme()
 
-  const isDarkMode = theme.palette.mode === 'dark' || dark;
+  const isDarkMode = theme.palette.mode === 'dark' || dark
 
   const darkBackground = `repeating-linear-gradient(
     -55deg,
@@ -23,7 +25,7 @@ const PlaceholderBox: FC<PlaceholderBoxProps> = (props) => {
     ${alpha(theme.palette.common.black, 0.3)} 4px,
     ${alpha(theme.palette.neutral[900], 0.3)} 4px,
     ${alpha(theme.palette.neutral[900], 0.3)} 8px
-  )`;
+  )`
 
   const lightBackground = `repeating-linear-gradient(
     -55deg,
@@ -31,7 +33,7 @@ const PlaceholderBox: FC<PlaceholderBoxProps> = (props) => {
     ${alpha(theme.palette.common.white, 0.7)} 4px,
     ${alpha(theme.palette.neutral[100], 0.7)} 4px,
     ${alpha(theme.palette.neutral[100], 0.7)} 8px
-  )`;
+  )`
 
   return (
     <Box
@@ -62,11 +64,11 @@ const PlaceholderBox: FC<PlaceholderBoxProps> = (props) => {
     >
       {title && (
         <Typography variant="h3" fontWeight={600}>
-          {title}
+          {t(title)}
         </Typography>
       )}
     </Box>
-  );
-};
+  )
+}
 
-export default PlaceholderBox;
+export default PlaceholderBox

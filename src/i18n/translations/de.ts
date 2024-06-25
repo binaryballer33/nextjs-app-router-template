@@ -43,4 +43,31 @@ export const de = {
   'Page not found': 'Seite nicht gefunden',
   'We moved the content to a different page': 'Wir haben den Inhalt auf eine andere Seite verschoben',
   'Go to homepage': 'Zur Startseite gehen',
+
+  Integrations: 'Integrationen',
+  Support: 'Unterstützung',
+
+  // footer
+  'Subscribe to our newsletter': 'Abonnieren Sie unseren Newsletter',
+  'The latest news, articles, and resources, sent to your inbox weekly.':
+    'Die neuesten Nachrichten, Artikel und Ressourcen, wöchentlich in Ihren Posteingang gesendet.',
+  'Enter your email': 'Geben Sie Ihre E-Mail ein',
+  Subscribe: 'Abonnieren',
+  'MANDYTEC LLC': 'MANDYTEC LLC',
+  Solutions: 'Lösungen',
+  Marketing: 'Marketing',
+  Insights: 'Einblicke',
+  Pricing: 'Preise',
+  Guides: 'Anleitungen',
+  'API Status': 'API-Status',
+  Company: 'Unternehmen',
+  About: 'Über',
+  Blog: 'Blog',
+  Jobs: 'Jobs',
+  Press: 'Presse',
+  Partners: 'Partner',
+  Legal: 'Legal',
+  Claim: 'Anspruch',
+  Privacy: 'Datenschutz',
+  Terms: 'Bedingungen',
 }

@@ -34,7 +34,6 @@ import { ProfileIconDropdown } from './navbar-icons/profile-icon-dropdown/profil
 import { BasicSpotlightSearch } from './navbar-icons/search-icon/search-icon'
 import ThemeModeToggler from './navbar-icons/theme-mode-toggler/theme-mode-toggler'
 
-// TODO: fix issue on mobile menu where if there are too many links, the height overflow does not scroll
 // manage the navbar items, their title, icons and routes from here. This is for both desktop and mobile navbars
 const useNavBarItems = (): NavBarItem[] => {
   const { t } = useTranslation()
@@ -185,10 +184,11 @@ const useNavBarItems = (): NavBarItem[] => {
 
 const HeaderWrapper = styled(AppBar)(({ theme }) => ({
   display: 'flex',
-  position: 'relative',
-  background: 'transparent',
+  position: 'sticky',
+  top: 0,
+  background: theme.palette.background.default,
   color: theme.palette.mode === 'dark' ? neutral[100] : neutral[900],
-  zIndex: 6,
+  zIndex: 10,
   paddingLeft: theme.spacing(1),
   paddingRight: theme.spacing(1),
 }))

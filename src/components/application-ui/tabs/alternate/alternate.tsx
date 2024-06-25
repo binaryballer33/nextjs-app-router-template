@@ -14,6 +14,7 @@ import {
   useTheme,
 } from '@mui/material'
 import React, { SyntheticEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import PlaceholderBox from 'src/components/base/placeholder-box'
 import { TabsAlternate } from 'src/components/base/styles/tabs'
 
@@ -44,6 +45,7 @@ const AlternateTabs = () => {
   const theme = useTheme()
   const smUp = useMediaQuery(theme.breakpoints.up('sm'))
   const [value, setValue] = React.useState(0)
+  const { t } = useTranslation()
 
   // need event even if not used or component does not work
   const handleTabChange = (event: SyntheticEvent, newValue: number) => setValue(newValue)
@@ -61,7 +63,7 @@ const AlternateTabs = () => {
           width: '100%',
         }}
       >
-        <CardHeader title="Navigation tabs" />
+        <CardHeader title={t('Navigation tabs')} />
         <Divider />
         <CardHeader
           sx={{
@@ -82,18 +84,18 @@ const AlternateTabs = () => {
                   textColor="secondary"
                   indicatorColor="secondary"
                 >
-                  <Tab label="Analytics" {...a11yProps(0)} />
-                  <Tab label="Integrations" {...a11yProps(1)} />
-                  <Tab label="Settings" {...a11yProps(2)} />
-                  <Tab label="Support" {...a11yProps(3)} />
+                  <Tab label={t('Analytics')} {...a11yProps(0)} />
+                  <Tab label={t('Integrations')} {...a11yProps(1)} />
+                  <Tab label={t('Settings')} {...a11yProps(2)} />
+                  <Tab label={t('Support')} {...a11yProps(3)} />
                 </TabsAlternate>
               </>
             ) : (
               <Select value={value} onChange={handleSelectChange} fullWidth>
-                <MenuItem value={0}>Analytics</MenuItem>
-                <MenuItem value={1}>Integrations</MenuItem>
-                <MenuItem value={2}>Settings</MenuItem>
-                <MenuItem value={3}>Support</MenuItem>
+                <MenuItem value={0}>{t('Analytics')}</MenuItem>
+                <MenuItem value={1}>{t('Integrations')}</MenuItem>
+                <MenuItem value={2}>{t('Settings')}</MenuItem>
+                <MenuItem value={3}>{t('Support')}</MenuItem>
               </Select>
             )
           }
