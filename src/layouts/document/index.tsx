@@ -67,9 +67,9 @@ export const Layout: FC<LayoutProps> = ({ children }: LayoutProps) => {
       <ReduxProvider store={store}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           {/* Once Supabase project is creating and you have the api keys you can uncomment the AuthProvider */}
-          {/* <AuthProvider> */}
-          <ThemeProvider>{children}</ThemeProvider>
-          {/* </AuthProvider> */}
+          <AuthProvider>
+            <ThemeProvider>{children}</ThemeProvider>
+          </AuthProvider>
         </LocalizationProvider>
       </ReduxProvider>
     </NextAppDirEmotionCacheProvider>

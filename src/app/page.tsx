@@ -15,6 +15,7 @@ import { MainLayout } from 'src/layouts/main-layout'
 
 function Page() {
   const { t } = useTranslation()
+
   return (
     <MainLayout>
       <Container>
@@ -25,6 +26,9 @@ function Page() {
               <Divider sx={{ width: { xs: 1, md: '75%' }, mb: 2 }} />
               <Typography variant="body1" color="textSecondary" sx={{ textAlign: { xs: 'center', md: 'left' } }}>
                 {t('This is a sample page')}
+              </Typography>
+              <Typography variant="body1" color="textSecondary" sx={{ textAlign: { xs: 'center', md: 'left' } }}>
+                {}
               </Typography>
             </Box>
           }
