@@ -16,6 +16,7 @@ import {
   Typography,
 } from '@mui/material'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { AccordionAlternate } from 'src/components/base/styles/accordion'
 
 interface AccordionItem {
@@ -28,6 +29,7 @@ interface AccordionItem {
 }
 
 const AlternateTabs = () => {
+  const { t } = useTranslation()
   const [expandedAccordion, setExpandedAccordion] = React.useState<number | null>(null)
 
   const accordionData: AccordionItem[] = [
@@ -41,11 +43,11 @@ const AlternateTabs = () => {
     },
     {
       name: 'Megan Nicole',
-      jobTitle: 'Dr. Pediatrician',
+      jobTitle: 'Pediatrician',
       avatarSrc: '/avatars/5.png',
       email: 'megan_nichole@gmail.com',
       salary: '$333,333',
-      resumeFile: 'resume_pediatrician_doctor.pdf',
+      resumeFile: 'resume_pediatrician.pdf',
     },
   ]
 
@@ -69,7 +71,7 @@ const AlternateTabs = () => {
                   {item.name}
                 </Typography>
                 <Typography variant="subtitle2" color="text.secondary" noWrap>
-                  {item.jobTitle}
+                  {t(item.jobTitle)}
                 </Typography>
               </Box>
             </Box>
@@ -77,17 +79,17 @@ const AlternateTabs = () => {
           <AccordionDetails>
             <Stack mb={2} spacing={1} direction="row">
               <Button size="small" variant="outlined" color="primary">
-                View profile
+                {t('View profile')}
               </Button>
               <Button size="small" variant="outlined" color="secondary">
-                Edit details
+                {t('Edit details')}
               </Button>
             </Stack>
             <Card elevation={0} variant="outlined">
               <ListItem>
                 <ListItemText
                   primaryTypographyProps={{ variant: 'h6' }}
-                  primary="Email address"
+                  primary={t('Email address')}
                   secondary={item.email}
                 />
               </ListItem>
@@ -95,7 +97,7 @@ const AlternateTabs = () => {
               <ListItem>
                 <ListItemText
                   primaryTypographyProps={{ variant: 'h6' }}
-                  primary="Salary expectation"
+                  primary={t('Salary expectation')}
                   secondary={item.salary}
                 />
               </ListItem>
@@ -106,7 +108,7 @@ const AlternateTabs = () => {
                     <DownloadIcon />
                   </IconButton>
                 </ListItemIcon>
-                <ListItemText primaryTypographyProps={{ noWrap: true }} primary={item.resumeFile} />
+                <ListItemText primaryTypographyProps={{ noWrap: true }} primary={t(item.resumeFile)} />
               </ListItem>
             </Card>
           </AccordionDetails>

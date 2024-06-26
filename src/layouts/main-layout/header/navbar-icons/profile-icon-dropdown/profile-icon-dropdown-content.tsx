@@ -1,13 +1,22 @@
-import ChevronRightTwoToneIcon from '@mui/icons-material/ChevronRightTwoTone'
+import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone'
-import { alpha, Box, Button, Divider, ListItemText, Menu, MenuItem, Typography, useTheme } from '@mui/material'
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
+import ReceiptIcon from '@mui/icons-material/Receipt'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import { alpha, Box, Button, Divider, ListItemText, Menu, MenuItem, useTheme } from '@mui/material'
 import PropTypes from 'prop-types'
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { NavBarItem } from 'src/models/navbar-item'
 import { neutral } from 'src/theme/theme'
 import AvatarTitleDescriptionAlternate from './profile-icon-avatar-title-description'
 
-const menuItems = ['My Profile', 'Profile settings', 'Cart', 'Orders']
+const profile_icon_dropdown_nav_items: NavBarItem[] = [
+  { title: 'My Profile', icon: <AccountBoxIcon /> },
+  { title: 'Profile settings', icon: <ManageAccountsIcon /> },
+  { title: 'Cart', icon: <ShoppingCartIcon /> },
+  { title: 'Orders', icon: <ReceiptIcon /> },
+]
 
 interface Origin {
   vertical: 'top' | 'bottom' | 'center'
@@ -83,11 +92,11 @@ export const ProfileIconDropdown: FC<ProfileDropdownProps> = (props) => {
           <AvatarTitleDescriptionAlternate />
         </Box>
         <Divider sx={{ mb: 1 }} />
-        {menuItems.map((item) => (
+        {profile_icon_dropdown_nav_items.map((item) => (
           <MenuItem
             component="div"
-            selected={item === 'Email Notifications'}
-            key={item}
+            selected={item.title === 'Email Notifications'}
+            key={item.title}
             onClick={onClose}
             sx={{
               '&:hover .MuiListItemText-primary': {
@@ -99,9 +108,9 @@ export const ProfileIconDropdown: FC<ProfileDropdownProps> = (props) => {
               primaryTypographyProps={{
                 fontWeight: 500,
               }}
-              primary={t(item)}
+              primary={t(item.title)}
             />
-            <ChevronRightTwoToneIcon />
+            {item.icon}
           </MenuItem>
         ))}
         <Divider />

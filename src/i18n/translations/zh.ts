@@ -73,6 +73,49 @@ export const zh = {
   '6 months of free technical support to help you build your website faster.':
     '提供6个月的免费技术支持，帮助您更快地构建网站。',
 
+  Administrator: '管理员',
+  'Digital Marketing Manager': '数字营销经理',
+  Subscriber: '订阅者',
+  'Senior Software Engineer': '高级软件工程师',
+  Customer: '客户',
+  'Project Manager': '项目经理',
+  'Creative Director': '创意总监',
+  'IT Analyst': 'IT 分析师',
+  'Business Development Manager': '业务发展经理',
+  'Human Resources Coordinator': '人力资源协调员',
+  'Account Executive': '客户主管',
+  'Graphic Designer': '平面设计师',
+  'Research Scientist': '研究科学家',
+  Income: '收入',
+  'Monthly Financial Status': '每月财务状况',
+  Completed: '已完成',
+  Cancelled: '已取消',
+  'Download Report': '下载报告',
+  "Check how you're doing financially for current month": '检查你当月的财务状况',
+
+  Administrators: '管理员',
+  Customers: '客户',
+  'All users': '所有用户',
+  Subscribers: '订阅者',
+  'Filter results': '筛选结果',
+
+  Username: '用户名',
+  Name: '姓名',
+  Email: '电子邮件',
+  Posts: '帖子',
+  Location: '位置',
+  Role: '角色',
+  Actions: '操作',
+  Search: '搜索',
+
+  'Email address': '电子邮件地址',
+  'View profile': '查看个人资料',
+  'Edit details': '编辑详细资料',
+  'Salary expectation': '薪资期望',
+  'resume_full_stack_developer.pdf': '全栈开发者简历.pdf',
+  'resume_pediatrician.pdf': '儿科医生简历.pdf',
+  Pediatrician: '儿科医生',
+
   // footer
   'Subscribe to our newsletter': '订阅我们的通讯',
   'The latest news, articles, and resources, sent to your inbox weekly.':
@@ -96,5 +139,5 @@ export const zh = {
   Claim: '索赔',
   Privacy: '隐私',
   Terms: '条款',
-  '© 2023 MANDYTEC LLC, Inc. All rights reserved.': '© 2023 MANDYTEC LLC, Inc. 版权所有',
+  '2023 MANDYTEC LLC, Inc. All rights reserved.': '2023 MANDYTEC LLC, Inc. 版权所有',
 }

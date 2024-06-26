@@ -15,6 +15,7 @@ import {
   styled,
   SwipeableDrawer,
   Theme,
+  Tooltip,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
@@ -263,7 +264,9 @@ export const Header = () => {
                       },
                     }}
                   >
-                    <SearchRoundedIcon />
+                    <Tooltip title="Search The Page">
+                      <SearchRoundedIcon />
+                    </Tooltip>
                   </IconButton>
                 </>
               )}
@@ -285,31 +288,33 @@ export const Header = () => {
             <ThemeModeToggler />
 
             {/* Profile Icon */}
-            <IconButton
-              id="profile-button"
-              color="primary"
-              sx={{
-                p: 0,
-                '&:hover': {
-                  boxShadow: `0 0 0 3px ${theme.palette.primary.main}`,
-                },
-              }}
-              aria-controls={popover.open ? 'profile-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={popover.open ? 'true' : undefined}
-              onClick={popover.handleOpen}
-              ref={popover.anchorRef}
-            >
-              <Avatar
-                alt={'Shaquille Mandy'}
-                src={''}
+            <Tooltip title="User">
+              <IconButton
+                id="profile-button"
+                color="primary"
                 sx={{
-                  borderRadius: 'inherit',
-                  height: 36,
-                  width: 36,
+                  p: 0,
+                  '&:hover': {
+                    boxShadow: `0 0 0 3px ${theme.palette.primary.main}`,
+                  },
                 }}
-              />
-            </IconButton>
+                aria-controls={popover.open ? 'profile-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={popover.open ? 'true' : undefined}
+                onClick={popover.handleOpen}
+                ref={popover.anchorRef}
+              >
+                <Avatar
+                  alt={'Shaquille Mandy'}
+                  src={''}
+                  sx={{
+                    borderRadius: 'inherit',
+                    height: 36,
+                    width: 36,
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
 
             {/* Show Mobile Menu Icon Button */}
             {!lgUp && (

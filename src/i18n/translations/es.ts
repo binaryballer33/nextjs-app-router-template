@@ -77,6 +77,50 @@ export const es = {
   'Sign Out': 'Cerrar sesión',
   'Software Engineer': 'Ingeniero de software',
 
+  Administrator: 'Administrador',
+  'Digital Marketing Manager': 'Gerente de Marketing Digital',
+  Subscriber: 'Suscriptor',
+  'Senior Software Engineer': 'Ingeniero de Software Senior',
+  Customer: 'Cliente',
+  'Project Manager': 'Gerente de Proyecto',
+  'Creative Director': 'Director Creativo',
+  'IT Analyst': 'Analista de TI',
+  'Business Development Manager': 'Gerente de Desarrollo de Negocios',
+  'Human Resources Coordinator': 'Coordinador de Recursos Humanos',
+  'Account Executive': 'Ejecutivo de Cuenta',
+  'Graphic Designer': 'Diseñador Gráfico',
+  'Research Scientist': 'Científico de Investigación',
+  Income: 'Ingreso',
+  'Monthly Financial Status': 'Estado Financiero Mensual',
+  Completed: 'Completado',
+  Cancelled: 'Cancelado',
+  'Download Report': 'Descargar Informe',
+  "Check how you're doing financially for current month":
+    'Verifique cómo le está yendo financieramente en el mes actual',
+
+  Administrators: 'Administradores',
+  Customers: 'Clientes',
+  'All users': 'Todos los usuarios',
+  Subscribers: 'Suscriptores',
+  'Filter results': 'Filtrar resultados',
+
+  Username: 'Nombre de usuario',
+  Name: 'Nombre',
+  Email: 'Correo electrónico',
+  Posts: 'Publicaciones',
+  Location: 'Ubicación',
+  Role: 'Rol',
+  Actions: 'Acciones',
+  Search: 'Buscar',
+
+  'Email address': 'Dirección de correo electrónico',
+  'View profile': 'Ver perfil',
+  'Edit details': 'Editar detalles',
+  'Salary expectation': 'Expectativa salarial',
+  'resume_full_stack_developer.pdf': 'curriculum_desarrollador_full_stack.pdf',
+  'resume_pediatrician.pdf': 'curriculum_médico_pediatra.pdf',
+  Pediatrician: 'Pediatra',
+
   // footer
   'Subscribe to our newsletter': 'Suscríbete a nuestro boletín',
   'The latest news, articles, and resources, sent to your inbox weekly.':
@@ -100,5 +144,5 @@ export const es = {
   Claim: 'Reclamo',
   Privacy: 'Privacidad',
   Terms: 'Términos',
-  '© 2023 MANDYTEC LLC, Inc. All rights reserved.': '© 2023 MANDYTEC LLC, Inc. Todos los derechos reservados.',
+  '2023 MANDYTEC LLC, Inc. All rights reserved.': '2023 MANDYTEC LLC, Inc. Todos los derechos reservados.',
 }

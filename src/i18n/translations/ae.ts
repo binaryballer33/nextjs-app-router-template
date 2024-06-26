@@ -75,6 +75,49 @@ export const ae = {
   '6 months of free technical support to help you build your website faster.':
     '6 أشهر من الدعم الفني المجاني لمساعدتك في إنشاء موقعك بشكل أسرع.',
 
+  Administrator: 'مدير',
+  'Digital Marketing Manager': 'مدير التسويق الرقمي',
+  Subscriber: 'مشترك',
+  'Senior Software Engineer': 'مهندس برمجيات أول',
+  Customer: 'عميل',
+  'Project Manager': 'مدير مشروع',
+  'Creative Director': 'مدير إبداعي',
+  'IT Analyst': 'محلل تكنولوجيا المعلومات',
+  'Business Development Manager': 'مدير تطوير الأعمال',
+  'Human Resources Coordinator': 'منسق الموارد البشرية',
+  'Account Executive': 'تنفيذي حساب',
+  'Graphic Designer': 'مصمم جرافيك',
+  'Research Scientist': 'باحث علمي',
+  Income: 'دخل',
+  'Monthly Financial Status': 'الوضع المالي الشهري',
+  Completed: 'مكتمل',
+  Cancelled: 'ملغى',
+  'Download Report': 'تنزيل التقرير',
+  "Check how you're doing financially for current month": 'تحقق من حالتك المالية للشهر الحالي',
+
+  Administrators: 'المسؤولون',
+  Customers: 'العملاء',
+  'All users': 'جميع المستخدمين',
+  Subscribers: 'المشتركون',
+  'Filter results': 'تصفية النتائج',
+
+  Username: 'اسم المستخدم',
+  Name: 'الاسم',
+  Email: 'البريد الإلكتروني',
+  Posts: 'المشاركات',
+  Location: 'الموقع',
+  Role: 'الدور',
+  Actions: 'الإجراءات',
+  Search: 'بحث',
+
+  'Email address': 'عنوان البريد الإلكتروني',
+  'View profile': 'عرض الملف الشخصي',
+  'Edit details': 'تحرير التفاصيل',
+  'Salary expectation': 'توقعات الراتب',
+  'resume_full_stack_developer.pdf': 'السيرة_الذاتية_لمطور_البرمجيات_الكاملة.pdf',
+  'resume_pediatrician.pdf': 'السيرة_الذاتية_لطبيب_الأطفال.pdf',
+  Pediatrician: 'طبيب أطفال',
+
   // footer
   'Subscribe to our newsletter': 'اشترك في نشرتنا الإخبارية',
   'The latest news, articles, and resources, sent to your inbox weekly.':
@@ -98,5 +141,5 @@ export const ae = {
   Claim: 'مطالبة',
   Privacy: 'خصوصية',
   Terms: 'الشروط',
-  '© 2023 MANDYTEC LLC, Inc. All rights reserved.': '© 2023 MANDYTEC LLC, Inc. جميع الحقوق محفوظة',
+  '2023 MANDYTEC LLC, Inc. All rights reserved.': '2023 MANDYTEC LLC, Inc. جميع الحقوق محفوظة',
 }

@@ -92,25 +92,24 @@ interface UserCounts {
   subscriber: number
 }
 
-const getUserRoleLabel = (userRole: string): JSX.Element => {
+const getUserRoleLabel = (userRole: string) => {
   const map = {
     admin: {
       text: 'Administrator',
-      color: 'error',
+      color: 'primary',
     },
     customer: {
       text: 'Customer',
-      color: 'info',
+      color: 'secondary',
     },
     subscriber: {
       text: 'Subscriber',
-      color: 'warning',
+      color: 'success',
     },
   }
 
-  const { text, color }: any = map[userRole]
-
-  return <Chip color={color} label={text} />
+  const { text, color } = map[userRole]
+  return { text, color }
 }
 
 const applyFilters = (users: User[], query: string, filters: Filters): User[] => {
@@ -296,7 +295,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
               value={tab.value}
               label={
                 <>
-                  {tab.label}
+                  {t(tab.label)}
                   <Chip label={tab.count} size="small" />
                 </>
               }
@@ -312,7 +311,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
         >
           {tabs.map((tab) => (
             <MenuItem key={tab.value} value={tab.value}>
-              {tab.label}
+              {t(tab.label)}
             </MenuItem>
           ))}
         </Select>
@@ -443,6 +442,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
                     </TableHead>
                     <TableBody>
                       {paginatedUsers.map((user) => {
+                        const { text, color } = getUserRoleLabel(user.role as string)
                         const isUserSelected = selectedItems.includes(user.id)
                         return (
                           <TableRow hover key={user.id} selected={isUserSelected}>
@@ -476,7 +476,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
                                     {user.name}
                                   </Link>
                                   <Typography noWrap variant="subtitle2" color="text.secondary">
-                                    {user.jobtitle}
+                                    {t(user.jobtitle as string)}
                                   </Typography>
                                 </Box>
                               </Box>
@@ -488,9 +488,11 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
                               <Typography fontWeight={600}>{user.posts}</Typography>
                             </TableCell>
                             <TableCell>
-                              <Typography>{user.location}</Typography>
+                              <Typography>{t(user.location as string)}</Typography>
                             </TableCell>
-                            <TableCell>{getUserRoleLabel(user.role)}</TableCell>
+                            <TableCell>
+                              <Chip color={color} label={t(text)} />
+                            </TableCell>
                             <TableCell align="center">
                               <Typography noWrap>
                                 <Tooltip title={t('View')} arrow>
@@ -558,6 +560,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
                 <>
                   <Grid container spacing={{ xs: 2, sm: 3 }}>
                     {paginatedUsers.map((user) => {
+                      const { text, color } = getUserRoleLabel(user.role as string)
                       const isUserSelected = selectedItems.includes(user.id)
 
                       return (
@@ -574,7 +577,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
                               }}
                             >
                               <Box px={2} pt={2} display="flex" alignItems="flex-start" justifyContent="space-between">
-                                {getUserRoleLabel(user.role)}
+                                <Chip color={color} label={t(text)} />
                                 <IconButton
                                   color="primary"
                                   sx={{
@@ -615,7 +618,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
                                     }}
                                     variant="subtitle2"
                                   >
-                                    {user.jobtitle}
+                                    {t(user.jobtitle as string)}
                                   </Typography>
                                   <Typography
                                     sx={{
@@ -666,10 +669,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
                     }}
                   >
                     <Box>
-                      <Typography component="span" variant="subtitle1">
-                        {t('Showing')}
-                      </Typography>{' '}
-                      <b>{limit}</b> {t('of')} <b>{filteredUsers.length}</b> <b>{t('users')}</b>
+                      <b>{limit}</b> {t('of')} <b>{filteredUsers.length}</b> <b>{t('Users')}</b>
                     </Box>
                     <TablePagination
                       component="div"

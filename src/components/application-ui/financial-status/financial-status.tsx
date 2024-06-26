@@ -257,13 +257,13 @@ function FinancialStatus() {
               series={[
                 {
                   data: generateRandomData(),
-                  label: 'Completeted',
+                  label: t('Completed'),
                   stack: 'total',
                   color: theme.palette.primary.dark,
                 },
                 {
                   data: generateRandomData(),
-                  label: 'Cancelled',
+                  label: t('Cancelled'),
                   stack: 'total',
                   color: theme.palette.secondary.dark,
                 },
@@ -338,7 +338,7 @@ function FinancialStatus() {
               variant="contained"
               startIcon={<PieChartTwoToneIcon />}
             >
-              {t('Download report')}
+              {t('Download Report')}
             </Button>
           </Box>
         </Grid>

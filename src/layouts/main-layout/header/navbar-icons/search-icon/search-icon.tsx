@@ -30,6 +30,7 @@ import {
 } from '@mui/material'
 import PropTypes from 'prop-types'
 import React, { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { AvatarState } from 'src/components/base/styles/avatar'
 import { neutral } from 'src/theme/theme'
 import { Category, dummyData, iconMapping, Item } from './search-icon-mock-search-data'
@@ -41,6 +42,7 @@ interface BasicSpotlightSearchProps {
 
 export const BasicSpotlightSearch: FC<BasicSpotlightSearchProps> = (props) => {
   const { onClose, open = false, ...other } = props
+  const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState('')
   const [filteredItems, setFilteredItems] = useState<Item[]>([])
   const [loading, setLoading] = useState(false)
@@ -80,7 +82,7 @@ export const BasicSpotlightSearch: FC<BasicSpotlightSearchProps> = (props) => {
       groups[item.category].push(item)
       return groups
     },
-    {} as Record<Category, Item[]>
+    {} as Record<Category, Item[]>,
   )
 
   const handleToggleCategory = (category: string) => {
@@ -265,7 +267,7 @@ export const BasicSpotlightSearch: FC<BasicSpotlightSearchProps> = (props) => {
             type="text"
             autoComplete="off"
             fullWidth
-            placeholder="Search"
+            placeholder={t('Search')}
             value={searchTerm}
             onChange={handleSearch}
             startAdornment={

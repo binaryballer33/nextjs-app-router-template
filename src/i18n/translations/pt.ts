@@ -76,6 +76,49 @@ export const pt = {
   '6 months of free technical support to help you build your website faster.':
     '6 meses de suporte técnico gratuito para ajudá-lo a criar seu site mais rapidamente.',
 
+  Administrator: 'Administrador',
+  'Digital Marketing Manager': 'Gerente de Marketing Digital',
+  Subscriber: 'Assinante',
+  'Senior Software Engineer': 'Engenheiro de Software Sênior',
+  Customer: 'Cliente',
+  'Project Manager': 'Gerente de Projetos',
+  'Creative Director': 'Diretor Criativo',
+  'IT Analyst': 'Analista de TI',
+  'Business Development Manager': 'Gerente de Desenvolvimento de Negócios',
+  'Human Resources Coordinator': 'Coordenador de Recursos Humanos',
+  'Account Executive': 'Executivo de Contas',
+  'Graphic Designer': 'Designer Gráfico',
+  'Research Scientist': 'Cientista de Pesquisa',
+  Income: 'Renda',
+  'Monthly Financial Status': 'Status Financeiro Mensal',
+  Completed: 'Concluído',
+  Cancelled: 'Cancelado',
+  'Download Report': 'Baixar Relatório',
+  "Check how you're doing financially for current month": 'Verifique como você está financeiramente no mês atual',
+
+  Administrators: 'Administradores',
+  Customers: 'Clientes',
+  'All users': 'Todos os usuários',
+  Subscribers: 'Assinantes',
+  'Filter results': 'Filtrar resultados',
+
+  Username: 'Nome de usuário',
+  Name: 'Nome',
+  Email: 'E-mail',
+  Posts: 'Publicações',
+  Location: 'Localização',
+  Role: 'Função',
+  Actions: 'Ações',
+  Search: 'Procurar',
+
+  'Email address': 'Endereço de email',
+  'View profile': 'Ver perfil',
+  'Edit details': 'Editar detalhes',
+  'Salary expectation': 'Expectativa salarial',
+  'resume_full_stack_developer.pdf': 'currículo_desenvolvedor_full_stack.pdf',
+  'resume_pediatrician.pdf': 'currículo_médico_pediatra.pdf',
+  Pediatrician: 'Pediatra',
+
   // footer
   'Subscribe to our newsletter': 'Inscreva-se na nossa newsletter',
   'The latest news, articles, and resources, sent to your inbox weekly.':
@@ -99,5 +142,5 @@ export const pt = {
   Claim: 'Reclamação',
   Privacy: 'Privacidade',
   Terms: 'Termos',
-  '© 2023 MANDYTEC LLC, Inc. All rights reserved.': '© 2023 MANDYTEC LLC, Inc. Todos os direitos reservados.',
+  '2023 MANDYTEC LLC, Inc. All rights reserved.': '2023 MANDYTEC LLC, Inc. Todos os direitos reservados.',
 }

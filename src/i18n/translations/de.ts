@@ -77,6 +77,50 @@ export const de = {
   '6 months of free technical support to help you build your website faster.':
     '6 Monate kostenloser technischer Support, um Ihnen zu helfen, Ihre Website schneller zu erstellen.',
 
+  Administrator: 'Administrator',
+  'Digital Marketing Manager': 'Manager für Digitales Marketing',
+  Subscriber: 'Abonnent',
+  'Senior Software Engineer': 'Senior Softwareentwickler',
+  Customer: 'Kunde',
+  'Project Manager': 'Projektmanager',
+  'Creative Director': 'Kreativdirektor',
+  'IT Analyst': 'IT-Analyst',
+  'Business Development Manager': 'Geschäftsentwicklungsleiter',
+  'Human Resources Coordinator': 'Personalkoordinator',
+  'Account Executive': 'Kundenbetreuer',
+  'Graphic Designer': 'Grafikdesigner',
+  'Research Scientist': 'Forschung Wissenschaftler',
+  Income: 'Einkommen',
+  'Monthly Financial Status': 'Monatlicher Finanzstatus',
+  Completed: 'Abgeschlossen',
+  Cancelled: 'Abgebrochen',
+  'Download Report': 'Bericht Herunterladen',
+  "Check how you're doing financially for current month":
+    'Überprüfen Sie, wie es Ihnen finanziell im aktuellen Monat geht',
+
+  Administrators: 'Administratoren',
+  Customers: 'Kunden',
+  'All users': 'Alle Benutzer',
+  Subscribers: 'Abonnenten',
+  'Filter results': 'Ergebnisse filtern',
+
+  Username: 'Benutzername',
+  Name: 'Name',
+  Email: 'E-Mail',
+  Posts: 'Beiträge',
+  Location: 'Ort',
+  Role: 'Rolle',
+  Actions: 'Aktionen',
+  Search: 'Suche',
+
+  'Email address': 'E-Mail-Adresse',
+  'View profile': 'Profil anzeigen',
+  'Edit details': 'Details bearbeiten',
+  'Salary expectation': 'Gehaltsvorstellung',
+  'resume_full_stack_developer.pdf': 'Lebenslauf_full_stack_entwickler.pdf',
+  'resume_pediatrician.pdf': 'Lebenslauf_kinderarzt.pdf',
+  Pediatrician: 'Kinderarzt',
+
   // footer
   'Subscribe to our newsletter': 'Abonnieren Sie unseren Newsletter',
   'The latest news, articles, and resources, sent to your inbox weekly.':
@@ -100,4 +144,5 @@ export const de = {
   Claim: 'Anspruch',
   Privacy: 'Datenschutz',
   Terms: 'Bedingungen',
+  '2023 MANDYTEC LLC, Inc. All rights reserved.': '2023 MANDYTEC LLC, Inc. Alle Rechte vorbehalten.',
 }
