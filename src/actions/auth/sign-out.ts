@@ -4,18 +4,14 @@ import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-export async function register(formData: FormData) {
+export async function signOut() {
   const supabase = createClient()
+  console.log('signing out')
 
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  }
-
-  const { error } = await supabase.auth.signUp(data)
+  const { error } = await supabase.auth.signOut()
 
   if (error) {
-    console.debug('Error signing up', error)
+    console.debug('Error signing out', error)
     redirect('/error')
   }
 

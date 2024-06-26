@@ -4,6 +4,7 @@ import AppsTwoToneIcon from '@mui/icons-material/AppsTwoTone'
 import BusinessCenterTwoToneIcon from '@mui/icons-material/BusinessCenterTwoTone'
 import DashboardTwoToneIcon from '@mui/icons-material/DashboardTwoTone'
 import LayersTwoToneIcon from '@mui/icons-material/LayersTwoTone'
+import LockIcon from '@mui/icons-material/Lock'
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import {
@@ -16,9 +17,13 @@ import {
   SwipeableDrawer,
   Theme,
   Tooltip,
+  Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
+import { UserResponse } from '@supabase/supabase-js'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DividerLight } from 'src/components/base/styles/card'
 import { useDialog } from 'src/hooks/use-dialog'
@@ -27,6 +32,7 @@ import { usePopover } from 'src/hooks/use-popover'
 import { NavBarItem } from 'src/models/navbar-item'
 import { routes } from 'src/router/navigation-routes'
 import { neutral } from 'src/theme/theme'
+import { createClient } from 'src/utils/supabase/client'
 import { DesktopNavBar } from './desktop-navbar/desktop-navbar'
 import { MobileNavBar } from './mobile-navbar/mobile-navbar'
 import LanguageDropdown from './navbar-icons/language-icon/language-icon-dropdown'
@@ -202,6 +208,21 @@ export const Header = () => {
   const dialog = useDialog()
   const navbar_items = useNavBarItems()
   const { handleClose, handleOpen, open } = useMobileNav()
+  const supabaseClient = createClient()
+  const [user, setUser] = useState<UserResponse | null>(null)
+  const router = useRouter()
+
+  useEffect(() => {
+    async function getUser() {
+      const { data, error } = await supabaseClient.auth.getUser()
+      if (error || !data?.user) {
+        // router.push('/login')
+      } else {
+        setUser(data.user as any)
+      }
+    }
+    getUser()
+  }, [supabaseClient.auth, router])
 
   return (
     <>
@@ -287,34 +308,42 @@ export const Header = () => {
 
             <ThemeModeToggler />
 
-            {/* Profile Icon */}
-            <Tooltip title="User">
-              <IconButton
-                id="profile-button"
-                color="primary"
-                sx={{
-                  p: 0,
-                  '&:hover': {
-                    boxShadow: `0 0 0 3px ${theme.palette.primary.main}`,
-                  },
-                }}
-                aria-controls={popover.open ? 'profile-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={popover.open ? 'true' : undefined}
-                onClick={popover.handleOpen}
-                ref={popover.anchorRef}
-              >
-                <Avatar
-                  alt={'Shaquille Mandy'}
-                  src={''}
+            {/* Login Icon & Profile Icon */}
+            {user ? (
+              <Tooltip title="User">
+                <IconButton
+                  id="profile-button"
+                  color="primary"
                   sx={{
-                    borderRadius: 'inherit',
-                    height: 36,
-                    width: 36,
+                    p: 0,
+                    '&:hover': {
+                      boxShadow: `0 0 0 3px ${theme.palette.primary.main}`,
+                    },
                   }}
-                />
-              </IconButton>
-            </Tooltip>
+                  aria-controls={popover.open ? 'profile-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={popover.open ? 'true' : undefined}
+                  onClick={popover.handleOpen}
+                  ref={popover.anchorRef}
+                >
+                  <Avatar
+                    alt={'Shaquille Mandy'}
+                    src={''}
+                    sx={{
+                      borderRadius: 'inherit',
+                      height: 36,
+                      width: 36,
+                    }}
+                  />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Tooltip title="Login">
+                <IconButton onClick={() => router.push('/login')}>
+                  <LockIcon color="primary" />
+                </IconButton>
+              </Tooltip>
+            )}
 
             {/* Show Mobile Menu Icon Button */}
             {!lgUp && (

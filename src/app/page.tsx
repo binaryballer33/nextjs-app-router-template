@@ -47,12 +47,12 @@ function Page() {
         <AvatarAccordion />
       </Container>
 
-      <Container>
+      {/* <Container>
         <FinancialStatus />
       </Container>
       <Container>
         <UserTabs users={users} />
-      </Container>
+      </Container> */}
     </MainLayout>
   )
 }

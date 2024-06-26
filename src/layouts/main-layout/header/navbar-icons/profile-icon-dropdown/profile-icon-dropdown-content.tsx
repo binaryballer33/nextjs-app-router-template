@@ -7,6 +7,7 @@ import { alpha, Box, Button, Divider, ListItemText, Menu, MenuItem, useTheme } f
 import PropTypes from 'prop-types'
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { signOut } from 'src/actions/auth/sign-out'
 import { NavBarItem } from 'src/models/navbar-item'
 import { neutral } from 'src/theme/theme'
 import AvatarTitleDescriptionAlternate from './profile-icon-avatar-title-description'
@@ -115,14 +116,7 @@ export const ProfileIconDropdown: FC<ProfileDropdownProps> = (props) => {
         ))}
         <Divider />
         <Box m={1}>
-          <Button
-            color="secondary"
-            fullWidth
-            onClick={(): void => {
-              onClose?.()
-              handleSignOut().catch(() => {})
-            }}
-          >
+          <Button color="secondary" fullWidth onClick={() => signOut()}>
             <LockOpenTwoToneIcon
               sx={{
                 mr: 1,
