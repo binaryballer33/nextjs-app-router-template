@@ -20,9 +20,8 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { UserResponse } from '@supabase/supabase-js'
 import { useRouter } from 'next/navigation'
-import { use, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DividerLight } from 'src/components/base/styles/card'
 import { useAuth } from 'src/hooks/use-auth'
@@ -31,9 +30,7 @@ import { useMobileNav } from 'src/hooks/use-mobile-nav'
 import { usePopover } from 'src/hooks/use-popover'
 import { NavBarItem } from 'src/models/navbar-item'
 import { routes } from 'src/router/navigation-routes'
-import { useSelector } from 'src/store'
 import { neutral } from 'src/theme/theme'
-import { createClient } from 'src/utils/supabase/client'
 import { DesktopNavBar } from './desktop-navbar/desktop-navbar'
 import { MobileNavBar } from './mobile-navbar/mobile-navbar'
 import LanguageDropdown from './navbar-icons/language-icon/language-icon-dropdown'
@@ -202,14 +199,14 @@ const HeaderWrapper = styled(AppBar)(({ theme }) => ({
 }))
 
 export const Header = () => {
+  const router = useRouter()
   const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'))
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'))
-  const popover = usePopover<HTMLButtonElement>()
   const theme = useTheme()
   const dialog = useDialog()
   const navbar_items = useNavBarItems()
+  const popover = usePopover<HTMLButtonElement>()
   const { handleClose, handleOpen, open } = useMobileNav()
-  const router = useRouter()
   const { user } = useAuth()
 
   return (
@@ -358,7 +355,7 @@ export const Header = () => {
           </Stack>
 
           {/* NavBar Dropdowns and Overlays */}
-          <>
+          <Fragment>
             <BasicSpotlightSearch onClose={dialog.handleClose} open={dialog.open} />
 
             <ProfileIconDropdown
@@ -368,7 +365,7 @@ export const Header = () => {
               onClose={popover.handleClose}
               open={popover.open}
             />
-          </>
+          </Fragment>
         </Stack>
       </HeaderWrapper>
 

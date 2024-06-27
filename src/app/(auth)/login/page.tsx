@@ -30,59 +30,29 @@ import { login } from 'src/actions/auth/login'
 import { RouterLink } from 'src/components/base/router-link'
 import { ButtonIcon } from 'src/components/base/styles/button-icon'
 import { useAuth } from 'src/hooks/use-auth'
+import { oAuthProviders } from 'src/models/forms/common'
+import { defaultValuesLoginForm, LoginForm, LoginFormSchema } from 'src/models/forms/login'
+import { OAuthProvider } from 'src/models/forms/register'
 import { routes } from 'src/router/navigation-routes'
 import { createClient as createSupabaseClient } from 'src/utils/supabase/client'
-import { z as zod } from 'zod'
 
-interface OAuthProvider {
-  id: 'google' | 'github'
-  name: string
-  logo: string
-}
-
-const oAuthProviders = [
-  {
-    id: 'google',
-    name: 'Google',
-    logo: '/placeholders/logo/google-icon.svg',
-  },
-  {
-    id: 'github',
-    name: 'Github',
-    logo: '/placeholders/logo/github-icon.svg',
-  },
-] satisfies OAuthProvider[]
-
-const LoginFormSchema = zod.object({
-  email: zod.string().min(1, { message: 'Email is required' }).email(),
-  password: zod.string().min(1, { message: 'Password is required' }),
-})
-
-export type LoginForm = zod.infer<typeof LoginFormSchema>
-
-const defaultValues = {
-  email: '',
-  password: '',
-} satisfies LoginForm
-
-function AuthSupabaseLoginForm(): React.JSX.Element {
+function LoginPage(): React.JSX.Element {
   const [supabaseClient] = useState(createSupabaseClient())
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [showPassword, setShowPassword] = useState(false)
 
-  const { checkSession } = useAuth()
-  const { t } = useTranslation()
   const router = useRouter()
   const theme = useTheme()
+  const { t } = useTranslation()
+  const { checkSession } = useAuth()
 
   const {
     register,
     handleSubmit,
-    setError,
-    reset,
+    reset: resetFormFields,
     formState: { errors },
   } = useForm<LoginForm>({
-    defaultValues,
+    defaultValues: defaultValuesLoginForm,
     resolver: zodResolver(LoginFormSchema),
   })
 
@@ -112,18 +82,18 @@ function AuthSupabaseLoginForm(): React.JSX.Element {
   )
 
   const onSubmit = useCallback(
-    async (values: LoginForm): Promise<void> => {
-      reset() // Reset the form to clear the inputs
-
+    async (credentials: LoginForm): Promise<void> => {
       setIsLoading(true) // Set loading state to true for disabling buttons and changing UI
-      await login(values) // Call the login action to sign in the user with supabase
+      resetFormFields() // Reset the form to clear the inputs
+
+      await login(credentials) // Call the login action to sign in the user with supabase
 
       setIsLoading(false)
       await checkSession() // Check the session to update the user context with our auth provider
 
       router.refresh() // Refresh the page to update the UI with the new user context, only doing rereshes on auth changes
     },
-    [reset, router, checkSession],
+    [resetFormFields, router, checkSession],
   )
 
   const handlePasswordVisibility = () => setShowPassword(!showPassword)
@@ -140,15 +110,21 @@ function AuthSupabaseLoginForm(): React.JSX.Element {
   }))
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ display: 'flex', flexDirection: 'column', minHeight: '75dvh', padding: '64px 0px' }}
+    >
+      {/* Form Header */}
       <Container maxWidth="sm">
-        <Typography align="center" variant="h3" gutterBottom>
+        <Typography align="center" variant="h4" gutterBottom>
           {t('Sign in')}
         </Typography>
-        <Typography align="center" variant="h6" fontWeight={400}>
+        <Typography align="center" variant="body1" fontWeight={400}>
           {t('Access your account and continue your journey')}
         </Typography>
       </Container>
+
+      {/* Form Content */}
       <Stack mt={{ xs: 2, sm: 3 }} justifyContent="center" alignItems="center" spacing={{ xs: 2, sm: 3 }}>
         {/* OAuth Sign In Buttons */}
         <Container maxWidth="sm">
@@ -172,10 +148,12 @@ function AuthSupabaseLoginForm(): React.JSX.Element {
           </Stack>
         </Container>
 
+        {/* OAuth / Email Password Divider */}
         <Divider flexItem>
           <Typography variant="subtitle1">{t('Sign In With Email Below')}</Typography>
         </Divider>
 
+        {/* Form Inputs Below */}
         <Container maxWidth="sm">
           <Grid container spacing={2}>
             {/* Email Input */}
@@ -185,6 +163,7 @@ function AuthSupabaseLoginForm(): React.JSX.Element {
                   {t('Email')}
                 </Typography>
                 <FilledInput
+                  autoComplete="username"
                   hiddenLabel
                   {...register('email')}
                   type="email"
@@ -207,6 +186,7 @@ function AuthSupabaseLoginForm(): React.JSX.Element {
                   {t('Password')}
                 </Typography>
                 <FilledInput
+                  autoComplete="current-password"
                   hiddenLabel
                   {...register('password')}
                   type={showPassword ? 'text' : 'password'}
@@ -270,4 +250,4 @@ function AuthSupabaseLoginForm(): React.JSX.Element {
   )
 }
 
-export default AuthSupabaseLoginForm
+export default LoginPage

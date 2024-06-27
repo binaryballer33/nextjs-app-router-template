@@ -58,8 +58,8 @@ export function AuthProvider({ children }: AuthProviderProps): React.JSX.Element
       await checkSession().catch(() => {})
       setState((prev) => ({ ...prev, isLoading: false }))
     })().catch(() => {})
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- Expected
-  }, [])
+  }, [checkSession])
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- Expected
 
   return (
     <UserContext.Provider

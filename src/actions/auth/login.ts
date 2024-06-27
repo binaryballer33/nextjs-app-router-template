@@ -3,10 +3,10 @@
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { LoginForm } from 'src/app/(auth)/login/page'
+import { LoginForm } from 'src/models/forms/login'
 
-export async function login(formData: LoginForm) {
-  const { email, password } = formData
+export async function login(credentials: LoginForm) {
+  const { email, password } = credentials
   const supabase = createClient()
 
   const { error } = await supabase.auth.signInWithPassword({
