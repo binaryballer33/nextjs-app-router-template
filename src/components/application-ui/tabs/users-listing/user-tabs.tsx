@@ -76,7 +76,7 @@ interface ResultsProps {
 }
 
 interface Filters {
-  role?: string
+  role?: string | null
 }
 
 interface Tab {
@@ -104,10 +104,10 @@ const getUserRoleLabel = (userRole: string) => {
     },
     subscriber: {
       text: 'Subscriber',
-      color: 'success',
+      color: 'info',
     },
   }
-
+  //@ts-ignore
   const { text, color } = map[userRole]
   return { text, color }
 }
@@ -136,6 +136,7 @@ const applyFilters = (users: User[], query: string, filters: Filters): User[] =>
     }
 
     Object.keys(filters).forEach((key) => {
+      //@ts-ignore
       const value = filters[key]
 
       if (value && user[key] !== value) {
@@ -193,11 +194,11 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
   const [filters, setFilters] = useState<Filters>({
     role: null,
   })
-  const handleTabsChange = (_event: SyntheticEvent, tabsValue: unknown) => {
-    let value = null
+  const handleTabsChange = (_event: SyntheticEvent, tabsValue: string) => {
+    let value: string | null = null
 
     if (tabsValue !== 'all') {
-      value = tabsValue
+      value = tabsValue as string
     }
 
     setFilters((prevFilters) => ({

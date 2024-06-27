@@ -1,13 +1,10 @@
-import React from 'react'
-import { UserContext } from 'src/contexts/auth/supabase/auth-context'
-import { AuthContextValue } from 'src/contexts/auth/types'
+import { useContext } from 'react'
+import { UserContext } from 'src/contexts/auth-context'
 
-export function useAuth(): AuthContextValue {
-  const context = React.useContext(UserContext)
+export function useAuth() {
+  const context = useContext(UserContext)
 
-  if (!context) {
-    throw new Error('useAuth must be used within a AuthProvider')
-  }
+  if (!context) throw new Error('useAuth must be used within a AuthProvider')
 
   return context
 }

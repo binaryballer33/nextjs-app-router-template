@@ -19,6 +19,6 @@ export async function register(formData: FormData) {
     redirect('/error')
   }
 
-  revalidatePath('/', 'layout')
+  revalidatePath('/')
   redirect('/')
 }

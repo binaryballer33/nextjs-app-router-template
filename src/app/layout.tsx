@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from 'next/'
 import { ReactNode } from 'react'
 import { NProgress } from 'src/components/base/nprogress'
-import { Layout as LayoutForProviders } from 'src/layouts/document'
+import { Layout as ProvidersLayout } from 'src/layouts/document'
+import { MainLayout } from 'src/layouts/main-layout'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,10 +25,12 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <html>
       <body>
-        <LayoutForProviders>
-          {children}
-          <NProgress />
-        </LayoutForProviders>
+        <ProvidersLayout>
+          <MainLayout>
+            {children}
+            <NProgress />
+          </MainLayout>
+        </ProvidersLayout>
       </body>
     </html>
   )

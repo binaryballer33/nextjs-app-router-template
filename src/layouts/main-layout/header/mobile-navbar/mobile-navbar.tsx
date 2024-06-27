@@ -1,8 +1,8 @@
 import { Box, List, ListProps, ListSubheader, styled, Theme, useMediaQuery } from '@mui/material'
 import PropTypes from 'prop-types'
 import React, { FC } from 'react'
-import { Logo } from 'src/components/base/logo'
 import { Scrollbar } from 'src/components/base/scrollbar'
+import { Logo } from 'src/layouts/main-layout/header/navbar-icons/logo/logo'
 import { NavBarItem } from 'src/models/navbar-item'
 import { neutral } from 'src/theme/theme'
 import { SIDEBAR_WIDTH } from 'src/theme/utils'
@@ -44,7 +44,7 @@ export const MobileNavBar: FC<MobileNavBarProps> = ({ navbar_items }) => {
       }}
     >
       <Box p={2} display="flex" justifyContent={{ xs: 'flex-start', lg: 'space-between' }} alignItems="center">
-        <Logo dark isLinkStatic />
+        <Logo />
       </Box>
 
       <Box>

@@ -13,7 +13,7 @@ export const useMobileNav = () => {
 
   useEffect(() => {
     handlePathnameChange()
-  }, [pathname])
+  }, [handlePathnameChange, pathname])
 
   const handleOpen = useCallback((): void => {
     setOpen(true)

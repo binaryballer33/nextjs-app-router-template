@@ -13,6 +13,7 @@ import { type NextRequest } from 'next/server'
     Passing the refreshed Auth token to the browser, so it replaces the old token. This is accomplished with response.cookies.set
 */
 
+// just a wrapper around the updateSession middleware and a config matcher to filter out the paths where the middleware shouldn't run
 export async function middleware(request: NextRequest) {
   return await updateSession(request)
 }

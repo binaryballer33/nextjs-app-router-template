@@ -2,6 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import { type EmailOtpType } from '@supabase/supabase-js'
 import { NextResponse, type NextRequest } from 'next/server'
 
+// when a user signs up, they are sent an email with a link to verify their email address, this route handles the verification
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const token_hash = searchParams.get('token_hash')

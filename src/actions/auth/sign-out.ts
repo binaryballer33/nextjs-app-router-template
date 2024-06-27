@@ -6,7 +6,6 @@ import { redirect } from 'next/navigation'
 
 export async function signOut() {
   const supabase = createClient()
-  console.log('signing out')
 
   const { error } = await supabase.auth.signOut()
 
@@ -15,6 +14,6 @@ export async function signOut() {
     redirect('/error')
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/')
+  revalidatePath('/')
+  redirect('/sign-out')
 }

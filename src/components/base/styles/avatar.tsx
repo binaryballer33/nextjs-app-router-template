@@ -51,6 +51,7 @@ const getStateStyles = (theme: Theme, state?: AvatarStateProps['state'], useShad
       break
   }
 
+  //@ts-ignore
   return { backgroundColor, boxShadow, color }
 }
 

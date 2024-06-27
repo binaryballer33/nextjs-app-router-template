@@ -7,14 +7,14 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { useEffect, type FC, type ReactNode } from 'react'
 import { Provider as ReduxProvider } from 'react-redux'
-import { Toastr } from 'src/components/base/toastr' // for notifications
+import { Toastr } from 'src/components/base/toastr' // for notification overlays
 import { store, useSelector } from 'src/store'
 import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
 import 'src/i18n/i18n' // for multilanguage support
 import 'src/global.css' // for global styles
 import 'aos/dist/aos.css' // for animations and transitions on scroll
 import AOS from 'aos'
-import { AuthProvider } from 'src/contexts/auth/supabase/auth-context'
+import { AuthProvider } from 'src/contexts/auth-context' // for authentication with Supabase
 import { darkTheme, lightTheme } from 'src/theme/theme'
 
 type ThemeProviderProps = {

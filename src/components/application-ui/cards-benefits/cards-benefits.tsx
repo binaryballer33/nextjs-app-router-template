@@ -150,7 +150,16 @@ const CardsBenefits = (): JSX.Element => {
             data-aos-duration={600}
             sx={{ ':hover': { color: 'primary.main' } }}
           >
-            <Box display={'flex'} flexDirection={'column'}>
+            <Box
+              display={'flex'}
+              flexDirection={'column'}
+              sx={{
+                transition: 'opacity, transform ease 0.3s !important',
+                '&:hover': {
+                  transform: 'scale(1.1)',
+                },
+              }}
+            >
               <Box
                 component={Avatar}
                 width={50}

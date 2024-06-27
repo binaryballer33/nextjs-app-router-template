@@ -1,7 +1,15 @@
+'use client'
+
 import React from 'react'
 import type { User } from 'src/models/user'
 import { createClient as createSupabaseClient } from 'src/utils/supabase/client'
-import type { AuthContextValue } from '../types'
+
+export interface AuthContextValue {
+  user: User | null
+  error: string | null
+  isLoading: boolean
+  checkSession: () => Promise<void>
+}
 
 export const UserContext = React.createContext<AuthContextValue | undefined>(undefined)
 
@@ -21,13 +29,18 @@ export function AuthProvider({ children }: AuthProviderProps): React.JSX.Element
     isLoading: true,
   })
 
+  // auth provider loads and checks the session and upates the state of the user
   const checkSession = React.useCallback(async (): Promise<void> => {
     try {
       const { data, error } = await supabaseClient.auth.getSession()
 
       if (error) {
         console.error(error)
-        setState((prev) => ({ ...prev, user: null, error: 'Something went wrong' }))
+        setState((prev) => ({
+          ...prev,
+          user: null,
+          error: `Error With Checking Session In Auth Provider ${error.message}`,
+        }))
         return
       }
 
@@ -36,9 +49,9 @@ export function AuthProvider({ children }: AuthProviderProps): React.JSX.Element
       }
     } catch (err) {
       console.error(err)
-      setState((prev) => ({ ...prev, user: null, error: 'Something went wrong' }))
+      setState((prev) => ({ ...prev, user: null, error: `Error With Checking Session In Auth Provider ${err}` }))
     }
-  }, [supabaseClient])
+  }, [supabaseClient.auth])
 
   React.useEffect(() => {
     ;(async () => {

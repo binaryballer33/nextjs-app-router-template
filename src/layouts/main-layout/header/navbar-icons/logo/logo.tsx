@@ -1,26 +1,8 @@
 import { alpha, Badge, Box, Link, Typography, useTheme } from '@mui/material'
 import { RouterLink } from 'src/components/base/router-link'
 
-interface LogoProps {
-  dark?: boolean
-  isLinkStatic?: boolean
-}
-
-export const Logo = ({ dark = false, isLinkStatic = false }: LogoProps) => {
+export const Logo = () => {
   const theme = useTheme()
-
-  const color = dark
-    ? theme.palette.common.white
-    : theme.palette.mode === 'dark'
-      ? theme.palette.common.white
-      : theme.palette.common.black
-
-  const linkProps = isLinkStatic
-    ? {
-        href: '',
-        onClick: (e: { preventDefault: () => any }) => e.preventDefault(),
-      }
-    : { href: '/' }
 
   return (
     <Box
@@ -38,9 +20,9 @@ export const Logo = ({ dark = false, isLinkStatic = false }: LogoProps) => {
     >
       <Link
         component={RouterLink}
-        {...linkProps}
+        href="/"
         sx={{
-          color: color,
+          color: 'primary',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -67,7 +49,7 @@ export const Logo = ({ dark = false, isLinkStatic = false }: LogoProps) => {
             },
           }}
           overlap="circular"
-          color={dark ? 'success' : 'info'}
+          color="secondary"
           badgeContent="1.0"
         >
           <Box

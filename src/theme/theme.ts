@@ -56,6 +56,11 @@ let lightTheme = createTheme({
       dark: colors.blue[900],
     },
     secondary: {
+      main: colors.teal[600],
+      light: colors.teal[400],
+      dark: colors.teal[800],
+    },
+    info: {
       main: colors.deepPurple[700],
       light: colors.deepPurple[400],
       dark: colors.deepPurple[900],
@@ -85,6 +90,11 @@ let darkTheme = createTheme({
       dark: colors.teal[500],
     },
     secondary: {
+      main: colors.blue[700],
+      light: colors.blue[500],
+      dark: colors.blue[900],
+    },
+    info: {
       main: colors.deepPurple[300],
       light: colors.deepPurple[100],
       dark: colors.deepPurple[500],

@@ -3,10 +3,10 @@
 import AppsTwoToneIcon from '@mui/icons-material/AppsTwoTone'
 import BusinessCenterTwoToneIcon from '@mui/icons-material/BusinessCenterTwoTone'
 import DashboardTwoToneIcon from '@mui/icons-material/DashboardTwoTone'
-import LayersTwoToneIcon from '@mui/icons-material/LayersTwoTone'
 import LockIcon from '@mui/icons-material/Lock'
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
+import SettingsIcon from '@mui/icons-material/Settings'
 import {
   AppBar,
   Avatar,
@@ -17,20 +17,21 @@ import {
   SwipeableDrawer,
   Theme,
   Tooltip,
-  Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
 import { UserResponse } from '@supabase/supabase-js'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DividerLight } from 'src/components/base/styles/card'
+import { useAuth } from 'src/hooks/use-auth'
 import { useDialog } from 'src/hooks/use-dialog'
 import { useMobileNav } from 'src/hooks/use-mobile-nav'
 import { usePopover } from 'src/hooks/use-popover'
 import { NavBarItem } from 'src/models/navbar-item'
 import { routes } from 'src/router/navigation-routes'
+import { useSelector } from 'src/store'
 import { neutral } from 'src/theme/theme'
 import { createClient } from 'src/utils/supabase/client'
 import { DesktopNavBar } from './desktop-navbar/desktop-navbar'
@@ -183,7 +184,7 @@ const useNavBarItems = (): NavBarItem[] => {
     },
     {
       title: t('Settings'),
-      icon: <LayersTwoToneIcon />,
+      icon: <SettingsIcon />,
       route: routes.dummy,
     },
   ]
@@ -208,21 +209,8 @@ export const Header = () => {
   const dialog = useDialog()
   const navbar_items = useNavBarItems()
   const { handleClose, handleOpen, open } = useMobileNav()
-  const supabaseClient = createClient()
-  const [user, setUser] = useState<UserResponse | null>(null)
   const router = useRouter()
-
-  useEffect(() => {
-    async function getUser() {
-      const { data, error } = await supabaseClient.auth.getUser()
-      if (error || !data?.user) {
-        // router.push('/login')
-      } else {
-        setUser(data.user as any)
-      }
-    }
-    getUser()
-  }, [supabaseClient.auth, router])
+  const { user } = useAuth()
 
   return (
     <>
@@ -245,7 +233,7 @@ export const Header = () => {
             spacing={2}
           >
             <Box sx={{ transform: 'scale(.86)' }}>
-              <Logo dark isLinkStatic />
+              <Logo />
             </Box>
 
             {/* Desktop NavBar */}
@@ -268,45 +256,48 @@ export const Header = () => {
             alignItems="center"
             spacing={{ xs: 1, sm: 2 }}
           >
-            <Stack display="flex" spacing={1} direction="row" alignItems="center">
-              {smUp && (
-                <>
-                  <IconButton
-                    onClick={dialog.handleOpen}
-                    color="inherit"
-                    sx={{
-                      '&:hover': {
-                        background: theme.palette.primary.main,
-                        color: theme.palette.primary.contrastText,
-                      },
-                      p: 1,
-                      '& .MuiSvgIcon-root': {
-                        fontSize: 22,
-                      },
-                    }}
-                  >
-                    <Tooltip title="Search The Page">
-                      <SearchRoundedIcon />
-                    </Tooltip>
-                  </IconButton>
-                </>
-              )}
-            </Stack>
+            {/* Other Header Icons */}
+            <>
+              <Stack display="flex" spacing={1} direction="row" alignItems="center">
+                {smUp && (
+                  <>
+                    <IconButton
+                      onClick={dialog.handleOpen}
+                      color="inherit"
+                      sx={{
+                        '&:hover': {
+                          background: theme.palette.primary.main,
+                          color: theme.palette.primary.contrastText,
+                        },
+                        p: 1,
+                        '& .MuiSvgIcon-root': {
+                          fontSize: 22,
+                        },
+                      }}
+                    >
+                      <Tooltip title="Search The Page">
+                        <SearchRoundedIcon />
+                      </Tooltip>
+                    </IconButton>
+                  </>
+                )}
+              </Stack>
 
-            <LanguageDropdown
-              sx={{
-                '&:hover': {
-                  background: theme.palette.primary.main,
-                  color: theme.palette.primary.contrastText,
-                },
-                p: 1,
-                '& .MuiSvgIcon-root': {
-                  fontSize: 22,
-                },
-              }}
-            />
+              <LanguageDropdown
+                sx={{
+                  '&:hover': {
+                    background: theme.palette.primary.main,
+                    color: theme.palette.primary.contrastText,
+                  },
+                  p: 1,
+                  '& .MuiSvgIcon-root': {
+                    fontSize: 22,
+                  },
+                }}
+              />
 
-            <ThemeModeToggler />
+              <ThemeModeToggler />
+            </>
 
             {/* Login Icon & Profile Icon */}
             {user ? (

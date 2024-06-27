@@ -57,6 +57,7 @@ const PlaceholderBox: FC<PlaceholderBoxProps> = (props) => {
             : dark
               ? theme.palette.neutral[400]
               : theme.palette.neutral[25],
+          //@ts-ignore
           boxShadow: !disableHover && theme.shadows[7],
         },
       }}

@@ -4,10 +4,12 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import ReceiptIcon from '@mui/icons-material/Receipt'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { alpha, Box, Button, Divider, ListItemText, Menu, MenuItem, useTheme } from '@mui/material'
+import { useRouter } from 'next/navigation'
 import PropTypes from 'prop-types'
-import React, { FC } from 'react'
+import React, { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { signOut } from 'src/actions/auth/sign-out'
+import { useAuth } from 'src/hooks/use-auth'
 import { NavBarItem } from 'src/models/navbar-item'
 import { neutral } from 'src/theme/theme'
 import AvatarTitleDescriptionAlternate from './profile-icon-avatar-title-description'
@@ -34,11 +36,18 @@ interface ProfileDropdownProps {
 
 export const ProfileIconDropdown: FC<ProfileDropdownProps> = (props) => {
   const { anchorEl, onClose, open, ...other } = props
-
+  const router = useRouter()
   const theme = useTheme()
+  const { checkSession } = useAuth()
   const { t } = useTranslation()
 
-  const handleSignOut = React.useCallback(async (): Promise<void> => {}, [])
+  const handleSignOut = useCallback(async (): Promise<void> => {
+    await signOut()
+    onClose && onClose()
+
+    await checkSession()
+    router.refresh()
+  }, [checkSession, onClose, router])
 
   return (
     <>
@@ -116,7 +125,7 @@ export const ProfileIconDropdown: FC<ProfileDropdownProps> = (props) => {
         ))}
         <Divider />
         <Box m={1}>
-          <Button color="secondary" fullWidth onClick={() => signOut()}>
+          <Button color="secondary" fullWidth onClick={handleSignOut}>
             <LockOpenTwoToneIcon
               sx={{
                 mr: 1,

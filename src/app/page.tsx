@@ -13,11 +13,17 @@ import Container from 'src/components/base/container'
 import PageHeading from 'src/components/base/page-heading'
 import { MainLayout } from 'src/layouts/main-layout'
 
+/*
+  TODO:
+  at the moment, when a user logs in or signs out, the page does not update the header icon to reflect the user's logged-in status
+  it will update the header icon only if i specifically refresh the page or if i make the page children of the MainLayout component
+  but if i put the main layout component in the layout.tsx file, then the page will not update the header icon to reflect the user's logged-in status
+*/
 function Page() {
   const { t } = useTranslation()
 
   return (
-    <MainLayout>
+    <>
       <Container>
         <PageHeading
           title="Home Page"
@@ -26,9 +32,6 @@ function Page() {
               <Divider sx={{ width: { xs: 1, md: '75%' }, mb: 2 }} />
               <Typography variant="body1" color="textSecondary" sx={{ textAlign: { xs: 'center', md: 'left' } }}>
                 {t('This is a sample page')}
-              </Typography>
-              <Typography variant="body1" color="textSecondary" sx={{ textAlign: { xs: 'center', md: 'left' } }}>
-                {}
               </Typography>
             </Box>
           }
@@ -53,7 +56,7 @@ function Page() {
       <Container>
         <UserTabs users={users} />
       </Container> */}
-    </MainLayout>
+    </>
   )
 }
 
