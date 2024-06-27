@@ -166,39 +166,45 @@ function RegisterPage(): JSX.Element {
           {/* Form Inputs Below */}
           <Container maxWidth="sm">
             <Grid container spacing={2}>
-              {/* First And Last Name */}
-              <Grid xs={12}>
-                <FormControl fullWidth>
-                  <Typography variant="h6" gutterBottom component="label" htmlFor="firstname-input" fontWeight={500}>
-                    {t('Full name')}
-                  </Typography>
-                  <Grid container spacing={{ xs: 2, md: 3 }}>
-                    <Grid xs={12} sm={6}>
-                      <FilledInput
-                        error={Boolean(errors.firstname)}
-                        hiddenLabel
-                        {...registerInputField('firstname')}
-                        id="firstname-input"
-                        fullWidth
-                        placeholder={t('First name')}
-                      />
+              {/* Full Name Header */}
+              <Typography pl={1} variant="h6" gutterBottom component="label" htmlFor="firstname-input" fontWeight={500}>
+                {t('Full name')}
+              </Typography>
 
-                      {errors.firstname && <FormHelperText>{errors.firstname.message}</FormHelperText>}
-                    </Grid>
-                    <Grid xs={12} sm={6}>
-                      <FilledInput
-                        error={Boolean(errors.lastname)}
-                        hiddenLabel
-                        {...registerInputField('lastname')}
-                        fullWidth
-                        id="lastname-input"
-                        placeholder={t('Last name')}
-                      />
-                      {errors.lastname && <FormHelperText>{t(errors.lastname.message as string)}</FormHelperText>}
-                    </Grid>
-                  </Grid>
-                </FormControl>
-              </Grid>
+              {/* First And Last Name Inputs */}
+              <Box minWidth={1} display={'flex'}>
+                {/* First Name */}
+                <Grid xs={6}>
+                  <FormControl fullWidth>
+                    <FilledInput
+                      error={Boolean(errors.firstname)}
+                      hiddenLabel
+                      {...registerInputField('firstname')}
+                      id="firstname-input"
+                      fullWidth
+                      placeholder={t('First name')}
+                      autoComplete="firstname"
+                    />
+                    {errors.firstname && <FormHelperText>{errors.firstname.message}</FormHelperText>}
+                  </FormControl>
+                </Grid>
+
+                {/* Last Name */}
+                <Grid xs={6}>
+                  <FormControl fullWidth>
+                    <FilledInput
+                      error={Boolean(errors.lastname)}
+                      hiddenLabel
+                      {...registerInputField('lastname')}
+                      id="lastname-input"
+                      fullWidth
+                      placeholder={t('Last name')}
+                      autoComplete="lastname"
+                    />
+                    {errors.lastname && <FormHelperText>{t(errors.lastname.message as string)}</FormHelperText>}
+                  </FormControl>
+                </Grid>
+              </Box>
 
               {/* Email Input */}
               <Grid xs={12}>
@@ -213,6 +219,7 @@ function RegisterPage(): JSX.Element {
                     id="email-input"
                     placeholder={t('Write your email')}
                     startAdornment={<InputAdornment position="start"></InputAdornment>}
+                    autoComplete="email"
                   />
                   {errors.email && <FormHelperText>{t(errors.email.message as string)}</FormHelperText>}
                 </FormControl>
@@ -247,6 +254,7 @@ function RegisterPage(): JSX.Element {
                         </ButtonIcon>
                       </InputAdornment>
                     }
+                    autoComplete="password"
                   />
                   {errors.password && <FormHelperText>{errors.password.message}</FormHelperText>}
                 </FormControl>
@@ -287,6 +295,7 @@ function RegisterPage(): JSX.Element {
                         </ButtonIcon>
                       </InputAdornment>
                     }
+                    autoComplete="confirm-password"
                   />
                   {errors.confirmPassword && <FormHelperText>{errors.confirmPassword.message}</FormHelperText>}
                 </FormControl>
