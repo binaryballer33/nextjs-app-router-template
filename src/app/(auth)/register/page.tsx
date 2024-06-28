@@ -1,9 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
   Alert,
   Box,
@@ -11,12 +8,10 @@ import {
   Checkbox,
   Container,
   Divider,
-  FilledInput,
   FormControl,
   FormControlLabel,
   FormHelperText,
   Unstable_Grid2 as Grid,
-  InputAdornment,
   Link,
   Stack,
   Typography,
@@ -30,17 +25,22 @@ import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { register } from 'src/actions/auth/register'
 import { RouterLink } from 'src/components/base/router-link'
-import { ButtonIcon } from 'src/components/base/styles/button-icon'
 import { useAuth } from 'src/hooks/use-auth'
 import { oAuthProviders } from 'src/models/forms/common'
 import { defaultValuesRegisterForm, OAuthProvider, RegisterForm, RegisterSchema } from 'src/models/forms/register'
 import { routes } from 'src/router/navigation-routes'
 import { createClient as createSupabaseClient } from 'src/utils/supabase/client'
+import RegisterFormInput from './register-form-input'
 
+/*
+  TODO: there's a mui warning in the chrome dev tools, figuer out how to fix it later,
+  it doesn't affect the functionality of the app
+
+  You can duplicate the error by toggling the password visibility icon in the register or login form
+*/
 function RegisterPage(): JSX.Element {
   const [supabaseClient] = useState(createSupabaseClient())
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [showPassword, setShowPassword] = useState(false)
 
   const router = useRouter()
   const theme = useTheme()
@@ -51,6 +51,8 @@ function RegisterPage(): JSX.Element {
     register: registerInputField,
     handleSubmit,
     reset: resetFormFields,
+    watch: watchFormField,
+    setValue: setFormValue,
     formState: { errors },
   } = useForm<RegisterForm>({
     defaultValues: defaultValuesRegisterForm,
@@ -108,7 +110,8 @@ function RegisterPage(): JSX.Element {
     [resetFormFields, router, checkSession],
   )
 
-  const handlePasswordVisibility = () => setShowPassword(!showPassword)
+  let inputFields = Object.keys(defaultValuesRegisterForm) // get the text fields from the initial form state
+  inputFields = inputFields.filter((inputName) => inputName !== 'terms') // don't create an input field for the terms checkbox
 
   const isDarkMode = theme.palette.mode === 'dark'
   const updatedOAuthProviders = oAuthProviders.map((provider) => ({
@@ -159,149 +162,26 @@ function RegisterPage(): JSX.Element {
           </Container>
 
           {/* OAuth / Email Password Divider */}
-          <Divider flexItem>
+          <Divider sx={{ width: '75%' }}>
             <Typography variant="subtitle1">{t('Or Register With Email Below')}</Typography>
           </Divider>
 
           {/* Form Inputs Below */}
           <Container maxWidth="sm">
             <Grid container spacing={2}>
-              {/* Full Name Header */}
-              <Typography pl={1} variant="h6" gutterBottom component="label" htmlFor="firstname-input" fontWeight={500}>
-                {t('Full name')}
-              </Typography>
+              {/* Input Fields For Firstname, Lastname, Email, Password And Confirm Password */}
+              {inputFields.map((inputName) => (
+                <RegisterFormInput
+                  key={inputName}
+                  register={registerInputField}
+                  watchFormField={watchFormField}
+                  setFormValue={setFormValue}
+                  errors={errors}
+                  inputName={inputName as keyof RegisterForm}
+                />
+              ))}
 
-              {/* First And Last Name Inputs */}
-              <Box minWidth={1} display={'flex'}>
-                {/* First Name */}
-                <Grid xs={6}>
-                  <FormControl fullWidth>
-                    <FilledInput
-                      error={Boolean(errors.firstname)}
-                      hiddenLabel
-                      {...registerInputField('firstname')}
-                      id="firstname-input"
-                      fullWidth
-                      placeholder={t('First name')}
-                      autoComplete="firstname"
-                    />
-                    {errors.firstname && <FormHelperText>{errors.firstname.message}</FormHelperText>}
-                  </FormControl>
-                </Grid>
-
-                {/* Last Name */}
-                <Grid xs={6}>
-                  <FormControl fullWidth>
-                    <FilledInput
-                      error={Boolean(errors.lastname)}
-                      hiddenLabel
-                      {...registerInputField('lastname')}
-                      id="lastname-input"
-                      fullWidth
-                      placeholder={t('Last name')}
-                      autoComplete="lastname"
-                    />
-                    {errors.lastname && <FormHelperText>{t(errors.lastname.message as string)}</FormHelperText>}
-                  </FormControl>
-                </Grid>
-              </Box>
-
-              {/* Email Input */}
-              <Grid xs={12}>
-                <FormControl fullWidth error={Boolean(errors.email)}>
-                  <Typography variant="h6" gutterBottom component="label" htmlFor="email-input" fontWeight={500}>
-                    {t('Email')}
-                  </Typography>
-                  <FilledInput
-                    {...registerInputField('email')}
-                    type="email"
-                    hiddenLabel
-                    id="email-input"
-                    placeholder={t('Write your email')}
-                    startAdornment={<InputAdornment position="start"></InputAdornment>}
-                    autoComplete="email"
-                  />
-                  {errors.email && <FormHelperText>{t(errors.email.message as string)}</FormHelperText>}
-                </FormControl>
-              </Grid>
-
-              {/* Password Input */}
-              <Grid xs={12}>
-                <FormControl fullWidth error={Boolean(errors.password)}>
-                  <Typography variant="h6" gutterBottom component="label" htmlFor="password-input" fontWeight={500}>
-                    {t('Password')}
-                  </Typography>
-                  <FilledInput
-                    {...registerInputField('password')}
-                    type={showPassword ? 'text' : 'password'}
-                    hiddenLabel
-                    id="password-input"
-                    placeholder={t('Write your password')}
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <MailOutlineRoundedIcon fontSize="small" />
-                      </InputAdornment>
-                    }
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <ButtonIcon
-                          variant="outlined"
-                          color="secondary"
-                          sx={{ mr: -0.3 }}
-                          onClick={handlePasswordVisibility}
-                        >
-                          {showPassword ? <VisibilityOff fontSize="inherit" /> : <Visibility fontSize="inherit" />}
-                        </ButtonIcon>
-                      </InputAdornment>
-                    }
-                    autoComplete="password"
-                  />
-                  {errors.password && <FormHelperText>{errors.password.message}</FormHelperText>}
-                </FormControl>
-              </Grid>
-
-              {/* Confirm Password Input */}
-              <Grid xs={12}>
-                <FormControl fullWidth error={Boolean(errors.confirmPassword)}>
-                  <Typography
-                    variant="h6"
-                    gutterBottom
-                    component="label"
-                    htmlFor="confirmPassword-input"
-                    fontWeight={500}
-                  >
-                    {t('Confirm Password')}
-                  </Typography>
-                  <FilledInput
-                    {...registerInputField('confirmPassword')}
-                    type={showPassword ? 'text' : 'password'}
-                    hiddenLabel
-                    id="confirmPassword-input"
-                    placeholder={t('Write your password again')}
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <MailOutlineRoundedIcon fontSize="small" />
-                      </InputAdornment>
-                    }
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <ButtonIcon
-                          variant="outlined"
-                          color="secondary"
-                          sx={{ mr: -0.3 }}
-                          onClick={handlePasswordVisibility}
-                        >
-                          {showPassword ? <VisibilityOff fontSize="inherit" /> : <Visibility fontSize="inherit" />}
-                        </ButtonIcon>
-                      </InputAdornment>
-                    }
-                    autoComplete="confirm-password"
-                  />
-                  {errors.confirmPassword && <FormHelperText>{errors.confirmPassword.message}</FormHelperText>}
-                </FormControl>
-              </Grid>
-
-              {/* Terms And Conditions */}
+              {/* Terms Conditions And Clear Form Button */}
               <Grid xs={12}>
                 <Box alignItems="center" display="flex" justifyContent="space-between">
                   <FormControl error={Boolean(errors.terms)}>
@@ -315,6 +195,11 @@ function RegisterPage(): JSX.Element {
                     />
                     {errors.terms && <FormHelperText>{errors.terms.message}</FormHelperText>}
                   </FormControl>
+
+                  {/* Reset Form Button */}
+                  <Button disabled={isLoading} variant="outlined" size="small" onClick={() => resetFormFields()}>
+                    {t('Clear Form')}
+                  </Button>
                 </Box>
               </Grid>
 

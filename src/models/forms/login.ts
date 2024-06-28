@@ -6,8 +6,8 @@ export const defaultValuesLoginForm = {
 } satisfies LoginForm
 
 export const LoginFormSchema = zod.object({
-  email: zod.string().min(1, { message: 'Email is required' }).email(),
-  password: zod.string().min(1, { message: 'Password is required' }),
+  email: zod.string().min(5, { message: 'Email Must Be At Least 5 Characters' }).email(),
+  password: zod.string().min(6, { message: 'Password Must Be At Least 6 Characters' }),
 })
 
 export type LoginForm = zod.infer<typeof LoginFormSchema>

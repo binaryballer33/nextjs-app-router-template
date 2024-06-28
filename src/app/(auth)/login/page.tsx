@@ -1,20 +1,13 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
   Alert,
   Box,
   Button,
   Container,
   Divider,
-  FilledInput,
-  FormControl,
-  FormHelperText,
   Unstable_Grid2 as Grid,
-  InputAdornment,
   Link,
   Stack,
   Typography,
@@ -28,18 +21,23 @@ import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { login } from 'src/actions/auth/login'
 import { RouterLink } from 'src/components/base/router-link'
-import { ButtonIcon } from 'src/components/base/styles/button-icon'
 import { useAuth } from 'src/hooks/use-auth'
 import { oAuthProviders } from 'src/models/forms/common'
 import { defaultValuesLoginForm, LoginForm, LoginFormSchema } from 'src/models/forms/login'
 import { OAuthProvider } from 'src/models/forms/register'
 import { routes } from 'src/router/navigation-routes'
 import { createClient as createSupabaseClient } from 'src/utils/supabase/client'
+import LoginFormInput from './login-form-input'
 
+/*
+  TODO: there's a mui warning in the chrome dev tools, figuer out how to fix it later,
+  it doesn't affect the functionality of the app
+
+  You can duplicate the error by toggling the password visibility icon in the register or login form
+*/
 function LoginPage(): React.JSX.Element {
   const [supabaseClient] = useState(createSupabaseClient())
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [showPassword, setShowPassword] = useState(false)
 
   const router = useRouter()
   const theme = useTheme()
@@ -47,9 +45,11 @@ function LoginPage(): React.JSX.Element {
   const { checkSession } = useAuth()
 
   const {
-    register,
+    register: registerInputField,
     handleSubmit,
     reset: resetFormFields,
+    watch: watchFormField,
+    setValue: setFormValue,
     formState: { errors },
   } = useForm<LoginForm>({
     defaultValues: defaultValuesLoginForm,
@@ -96,8 +96,7 @@ function LoginPage(): React.JSX.Element {
     [resetFormFields, router, checkSession],
   )
 
-  const handlePasswordVisibility = () => setShowPassword(!showPassword)
-
+  const inputFields = Object.keys(defaultValuesLoginForm) // get the text fields from the initial form state
   const isDarkMode = theme.palette.mode === 'dark'
   const updatedOAuthProviders = oAuthProviders.map((provider) => ({
     ...provider,
@@ -149,72 +148,37 @@ function LoginPage(): React.JSX.Element {
         </Container>
 
         {/* OAuth / Email Password Divider */}
-        <Divider flexItem>
-          <Typography variant="subtitle1">{t('Sign In With Email Below')}</Typography>
+        <Divider sx={{ width: '75%' }}>
+          <Typography variant="subtitle1">{t('Or Sign In With Email Below')}</Typography>
         </Divider>
 
         {/* Form Inputs Below */}
         <Container maxWidth="sm">
           <Grid container spacing={2}>
-            {/* Email Input */}
-            <Grid xs={12}>
-              <FormControl fullWidth error={Boolean(errors.email)}>
-                <Typography variant="h6" gutterBottom component="label" htmlFor="email-input" fontWeight={500}>
-                  {t('Email')}
-                </Typography>
-                <FilledInput
-                  autoComplete="username"
-                  hiddenLabel
-                  {...register('email')}
-                  type="email"
-                  id="email-input"
-                  placeholder="Email Address"
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <MailOutlineRoundedIcon fontSize="small" />
-                    </InputAdornment>
-                  }
-                />
-                {errors.email && <FormHelperText>{t(errors.email.message as string)}</FormHelperText>}
-              </FormControl>
-            </Grid>
+            {/* Email And Password Inputs */}
+            {inputFields.map((inputName) => (
+              <LoginFormInput
+                key={inputName}
+                register={registerInputField}
+                errors={errors}
+                inputName={inputName as keyof LoginForm}
+                placeholder={inputName}
+                watchFormField={watchFormField}
+                setFormValue={setFormValue}
+              />
+            ))}
 
-            {/* Password Input */}
-            <Grid xs={12}>
-              <FormControl fullWidth error={Boolean(errors.password)}>
-                <Typography variant="h6" gutterBottom component="label" htmlFor="password-input" fontWeight={500}>
-                  {t('Password')}
-                </Typography>
-                <FilledInput
-                  autoComplete="current-password"
-                  hiddenLabel
-                  {...register('password')}
-                  type={showPassword ? 'text' : 'password'}
-                  id="password-input"
-                  placeholder={t('Write your password')}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <ButtonIcon
-                        variant="outlined"
-                        color="secondary"
-                        sx={{ mr: -0.8 }}
-                        onClick={handlePasswordVisibility}
-                      >
-                        {showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
-                      </ButtonIcon>
-                    </InputAdornment>
-                  }
-                />
-                {errors.password && <FormHelperText>{t(errors.password.message as string)}</FormHelperText>}
-              </FormControl>
-            </Grid>
-
-            {/* Recover Password Link */}
+            {/* Recover Password Link and Clear Form Button */}
             <Grid xs={12}>
               <Box alignItems="center" display="flex" justifyContent="space-between">
                 <Link component={RouterLink} href={routes.index} underline="hover">
                   {t('Recover password')}
                 </Link>
+
+                {/* Reset Form Button */}
+                <Button disabled={isLoading} variant="outlined" size="small" onClick={() => resetFormFields()}>
+                  {t('Clear Form')}
+                </Button>
               </Box>
             </Grid>
 
