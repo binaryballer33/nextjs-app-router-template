@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import { createContext, ReactNode, useCallback, useEffect, useState } from 'react'
 import type { User } from 'src/models/user'
 import { createClient as createSupabaseClient } from 'src/utils/supabase/client'
 
@@ -11,15 +11,15 @@ export interface AuthContextValue {
   checkSession: () => Promise<void>
 }
 
-export const UserContext = React.createContext<AuthContextValue | undefined>(undefined)
+export const UserContext = createContext<AuthContextValue | undefined>(undefined)
 
 interface AuthProviderProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
-export function AuthProvider({ children }: AuthProviderProps): React.JSX.Element {
-  const [supabaseClient] = React.useState(createSupabaseClient())
-  const [state, setState] = React.useState<{
+export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
+  const [supabaseClient] = useState(createSupabaseClient())
+  const [state, setState] = useState<{
     user: User | null
     error: string | null
     isLoading: boolean
@@ -30,7 +30,7 @@ export function AuthProvider({ children }: AuthProviderProps): React.JSX.Element
   })
 
   // auth provider loads and checks the session and upates the state of the user
-  const checkSession = React.useCallback(async (): Promise<void> => {
+  const checkSession = useCallback(async (): Promise<void> => {
     try {
       const { data, error } = await supabaseClient.auth.getSession()
 
@@ -57,13 +57,13 @@ export function AuthProvider({ children }: AuthProviderProps): React.JSX.Element
     }
   }, [supabaseClient.auth])
 
-  React.useEffect(() => {
+  useEffect(() => {
     ;(async () => {
       await checkSession().catch(() => {})
       setState((prev) => ({ ...prev, isLoading: false }))
     })().catch(() => {})
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Expected
   }, [checkSession])
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- Expected
 
   return (
     <UserContext.Provider

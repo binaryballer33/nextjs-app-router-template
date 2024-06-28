@@ -42,9 +42,9 @@ export const ProfileIconDropdown: FC<ProfileDropdownProps> = (props) => {
   const { t } = useTranslation()
 
   const handleSignOut = useCallback(async (): Promise<void> => {
-    onClose && onClose()
-    await signOut()
-    await checkSession()
+    onClose && onClose() // close the profile dropdown
+    await signOut() // sign out the user with supabase
+    await checkSession() // refresh the auth state to reflect the user being signed out
   }, [checkSession, onClose])
 
   return (
