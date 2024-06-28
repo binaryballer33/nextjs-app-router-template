@@ -109,7 +109,9 @@ export default RegisterFormInput
 // does all the text transformations for the input fields to make them look better, keep that logic out of the component
 const useGetAllTypographies = (inputName: keyof RegisterForm) => {
   const inputNameTypography = transformInputName(inputName)
+
   const tooltipTypopgraphy = inputName === 'confirmPassword' ? inputNameTypography.toLowerCase() : inputName
+
   const placeholderTypography =
     inputName === 'confirmPassword' ? 'Write your password again' : `Write your ${inputNameTypography.toLowerCase()}`
 

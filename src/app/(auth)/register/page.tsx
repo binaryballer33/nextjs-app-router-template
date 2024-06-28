@@ -110,6 +110,10 @@ function RegisterPage(): JSX.Element {
     [resetFormFields, router, checkSession],
   )
 
+  const handleClearForm = useCallback(() => {
+    resetFormFields()
+  }, [resetFormFields])
+
   let inputFields = Object.keys(defaultValuesRegisterForm) // get the text fields from the initial form state
   inputFields = inputFields.filter((inputName) => inputName !== 'terms') // don't create an input field for the terms checkbox
 
@@ -187,17 +191,13 @@ function RegisterPage(): JSX.Element {
                   <FormControl error={Boolean(errors.terms)}>
                     <FormControlLabel
                       control={<Checkbox {...registerInputField('terms')} name="terms" color="primary" />}
-                      label={
-                        <>
-                          <Typography variant="body1">{t('I accept the Terms and Conditions')}</Typography>
-                        </>
-                      }
+                      label={<Typography variant="body1">{t('I accept the Terms and Conditions')}</Typography>}
                     />
                     {errors.terms && <FormHelperText>{errors.terms.message}</FormHelperText>}
                   </FormControl>
 
                   {/* Reset Form Button */}
-                  <Button disabled={isLoading} variant="outlined" size="small" onClick={() => resetFormFields()}>
+                  <Button disabled={isLoading} variant="outlined" size="small" onClick={handleClearForm}>
                     {t('Clear Form')}
                   </Button>
                 </Box>
