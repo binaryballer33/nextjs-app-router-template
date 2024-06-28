@@ -13,7 +13,10 @@ export const useMobileNav = () => {
 
   useEffect(() => {
     handlePathnameChange()
-  }, [handlePathnameChange, pathname])
+
+    // IMPORTANT: This effect should only run when the pathname changes, altering this will break mobile nav functionality
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname])
 
   const handleOpen = useCallback((): void => {
     setOpen(true)
