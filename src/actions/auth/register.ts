@@ -1,9 +1,9 @@
 'use server'
 
-import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { RegisterForm } from 'src/models/forms/register'
+import { createClient } from 'src/utils/supabase/server'
 
 export async function register(credentials: RegisterForm) {
   const supabase = createClient()
@@ -17,12 +17,10 @@ export async function register(credentials: RegisterForm) {
   })
 
   if (error) {
-    console.debug('Error signing up', error)
-    redirect('/error')
+    console.debug('Error signing up', error.message)
   }
 
   revalidatePath('/')
+  redirect('/')
   return { data, error }
-
-  // redirect('/')
 }

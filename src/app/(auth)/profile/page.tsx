@@ -1,7 +1,7 @@
-import { createClient } from '@/utils/supabase/server'
 import { Typography } from '@mui/material'
 import { redirect } from 'next/navigation'
 import FullScreenCenteredContainer from 'src/components/base/full-height-width-centered-container'
+import { createClient } from 'src/utils/supabase/server'
 
 export default async function PrivatePage() {
   const supabase = createClient()

@@ -4,7 +4,7 @@ import { Button, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import FullScreenCenteredContainer from 'src/components/base/full-height-width-centered-container'
 
-export default function ErrorPage() {
+function Page() {
   const router = useRouter()
 
   return (
@@ -19,3 +19,5 @@ export default function ErrorPage() {
     </FullScreenCenteredContainer>
   )
 }
+
+export default Page

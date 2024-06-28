@@ -1,9 +1,9 @@
 'use server'
 
-import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { LoginForm } from 'src/models/forms/login'
+import { createClient } from 'src/utils/supabase/server'
 
 export async function login(credentials: LoginForm) {
   const { email, password } = credentials
@@ -16,9 +16,9 @@ export async function login(credentials: LoginForm) {
 
   if (error) {
     console.debug('Error signing in', error.message)
-    redirect('/error')
+    throw new Error('Error signing in')
   }
 
   revalidatePath('/')
-  redirect('/logged-in')
+  redirect('/profile')
 }

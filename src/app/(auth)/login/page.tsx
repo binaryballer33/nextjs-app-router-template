@@ -14,7 +14,6 @@ import {
   useTheme,
 } from '@mui/material'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -39,7 +38,6 @@ function LoginPage(): React.JSX.Element {
   const [supabaseClient] = useState(createSupabaseClient())
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const router = useRouter()
   const theme = useTheme()
   const { t } = useTranslation()
   const { checkSession } = useAuth()

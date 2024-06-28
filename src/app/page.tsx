@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Divider, Typography } from '@mui/material'
+import { Box, Button, Divider, Typography } from '@mui/material'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import AvatarAccordion from 'src/components/application-ui/accordions/avatar/avatar'
