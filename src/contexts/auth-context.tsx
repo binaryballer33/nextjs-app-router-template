@@ -45,7 +45,11 @@ export function AuthProvider({ children }: AuthProviderProps): React.JSX.Element
       }
 
       if (data?.session?.user) {
+        // if there is a user in the session, set the user to the user in the session
         setState((prev) => ({ ...prev, user: data.session.user as unknown as User, error: null }))
+      } else {
+        // if there is no user in the session, set the user to null
+        setState((prev) => ({ ...prev, user: null, error: null }))
       }
     } catch (err) {
       console.error(err)

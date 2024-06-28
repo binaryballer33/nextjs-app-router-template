@@ -93,17 +93,11 @@ function RegisterPage(): JSX.Element {
 
       setIsLoading(false)
 
-      if (data?.session) {
-        await checkSession()
+      // will update the user state if supabase has a auth session
+      if (data?.session) await checkSession()
 
-        router.refresh()
-        return
-      }
-
-      if (data.user) {
-        router.push(`${routes.index}`)
-        return
-      }
+      // if
+      if (data.session?.user) router.push(`${routes.index}`)
 
       setIsLoading(false)
     },

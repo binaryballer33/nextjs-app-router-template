@@ -1,10 +1,11 @@
+'use client'
+
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone'
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import ReceiptIcon from '@mui/icons-material/Receipt'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { alpha, Box, Button, Divider, ListItemText, Menu, MenuItem, useTheme } from '@mui/material'
-import { useRouter } from 'next/navigation'
 import PropTypes from 'prop-types'
 import React, { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -36,18 +37,15 @@ interface ProfileDropdownProps {
 
 export const ProfileIconDropdown: FC<ProfileDropdownProps> = (props) => {
   const { anchorEl, onClose, open, ...other } = props
-  const router = useRouter()
   const theme = useTheme()
   const { checkSession } = useAuth()
   const { t } = useTranslation()
 
   const handleSignOut = useCallback(async (): Promise<void> => {
-    await signOut()
     onClose && onClose()
-
+    await signOut()
     await checkSession()
-    router.refresh()
-  }, [checkSession, onClose, router])
+  }, [checkSession, onClose])
 
   return (
     <>

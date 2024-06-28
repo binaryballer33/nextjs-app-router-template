@@ -11,7 +11,6 @@ import UserTabs from 'src/components/application-ui/tabs/users-listing/user-tabs
 import { users } from 'src/components/application-ui/tabs/users-listing/users-mock-data'
 import Container from 'src/components/base/container'
 import PageHeading from 'src/components/base/page-heading'
-import { MainLayout } from 'src/layouts/main-layout'
 
 /*
   TODO:

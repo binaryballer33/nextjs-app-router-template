@@ -90,10 +90,8 @@ function LoginPage(): React.JSX.Element {
 
       setIsLoading(false)
       await checkSession() // Check the session to update the user context with our auth provider
-
-      router.refresh() // Refresh the page to update the UI with the new user context, only doing rereshes on auth changes
     },
-    [resetFormFields, router, checkSession],
+    [resetFormFields, checkSession],
   )
 
   const inputFields = Object.keys(defaultValuesLoginForm) // get the text fields from the initial form state
