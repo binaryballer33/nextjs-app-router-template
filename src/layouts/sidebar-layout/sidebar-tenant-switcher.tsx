@@ -1,7 +1,6 @@
 import CheckTwoToneIcon from '@mui/icons-material/CheckTwoTone'
 import KeyboardArrowDownTwoToneIcon from '@mui/icons-material/KeyboardArrowDownTwoTone'
 import {
-  alpha,
   Avatar,
   Badge,
   Box,
@@ -18,7 +17,6 @@ import {
   useTheme,
 } from '@mui/material'
 import React, { useState } from 'react'
-import { neutral } from 'src/theme/theme'
 
 interface Tenant {
   id: number
@@ -40,13 +38,9 @@ const TenantSwitcher: React.FC<Props> = ({ tenants, sidebarCollapsed, isHovered,
   const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
   const theme = useTheme()
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget)
 
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
+  const handleClose = () => setAnchorEl(null)
 
   const handleTenantSelect = (tenant: Tenant) => {
     onSwitch(tenant)

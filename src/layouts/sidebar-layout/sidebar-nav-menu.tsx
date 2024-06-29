@@ -175,22 +175,22 @@ interface SidebarNavMenuProps {
   menuItems?: NavBarItem[]
 }
 
-export const SidebarNavMenu: FC<SidebarNavMenuProps> = ({ menuItems = [] }) => {
+export const SidebarNavMenu: FC<SidebarNavMenuProps> = ({ menuItems: navbar_items = [] }) => {
   const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   return (
     <Box>
-      {menuItems.map((menuItem) => (
-        <div key={menuItem.title}>
+      {navbar_items.map((navbar_item) => (
+        <div key={navbar_item.title}>
           <List
             component="nav"
             subheader={
               <ListSubheaderWrapper component="div" disableSticky={!mdUp}>
-                {menuItem.title}
+                {navbar_item.title}
               </ListSubheaderWrapper>
             }
           >
-            {menuItem.subMenu?.map((subItem) => <NavItem key={subItem.title} item={subItem} />)}
+            {navbar_item.subMenu?.map((subItem) => <NavItem key={subItem.title} item={subItem} />)}
           </List>
         </div>
       ))}

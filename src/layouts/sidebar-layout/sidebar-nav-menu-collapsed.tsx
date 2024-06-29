@@ -49,10 +49,10 @@ interface SidebarNavMenuCollapsedProps {
 export const SidebarNavMenuCollapsed: FC<SidebarNavMenuCollapsedProps> = ({ navbar_items = [] }) => {
   return (
     <Box>
-      {navbar_items.map((menuItem) => (
-        <div key={menuItem.title}>
+      {navbar_items.map((navbar_itme) => (
+        <div key={navbar_itme.title}>
           <List component="nav">
-            {menuItem.subMenu?.map((subItem) => <NavItem key={subItem.title} item={subItem} />)}
+            {navbar_itme.subMenu?.map((subItem) => <NavItem key={subItem.title} item={subItem} />)}
           </List>
         </div>
       ))}

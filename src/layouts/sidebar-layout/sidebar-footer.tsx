@@ -1,6 +1,4 @@
-import EventTwoToneIcon from '@mui/icons-material/EventTwoTone'
-import PowerSettingsNewTwoToneIcon from '@mui/icons-material/PowerSettingsNewTwoTone'
-import SmsTwoToneIcon from '@mui/icons-material/SmsTwoTone'
+import { ExitToApp, Settings, ShoppingCart } from '@mui/icons-material'
 import { alpha, IconButton, Stack, useTheme } from '@mui/material'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -51,9 +49,9 @@ const SidebarFooter: FC = () => {
       zIndex={6}
       position="relative"
     >
-      <FooterButton icon={<EventTwoToneIcon fontSize="small" />} tooltipText="Events Calendar" />
-      <FooterButton icon={<SmsTwoToneIcon fontSize="small" />} tooltipText="Messenger" />
-      <FooterButton icon={<PowerSettingsNewTwoToneIcon fontSize="small" />} tooltipText="Logout" />
+      <FooterButton icon={<Settings fontSize="small" />} tooltipText="Account Settings" />
+      <FooterButton icon={<ShoppingCart fontSize="small" />} tooltipText="Cart" />
+      <FooterButton icon={<ExitToApp fontSize="small" />} tooltipText="Logout" />
     </Stack>
   )
 }

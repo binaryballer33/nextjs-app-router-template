@@ -18,7 +18,6 @@ import { Scrollbar } from 'src/components/base/scrollbar'
 import { useSidebarContext } from 'src/contexts/sidebar-context'
 import { useAuth } from 'src/hooks/use-auth'
 import { NavBarItem } from 'src/models/navbar-item'
-import { neutral } from 'src/theme/theme'
 import { SIDEBAR_WIDTH, SIDEBAR_WIDTH_COLLAPSED } from 'src/theme/utils'
 import SidebarFooter from './sidebar-footer'
 import { SidebarNavMenu } from './sidebar-nav-menu'
@@ -41,7 +40,6 @@ interface SidebarProps {
 
 export const Sidebar: FC<SidebarProps> = (props) => {
   const { onClose, onOpen, menuItems, open, ...other } = props
-  const { user } = useAuth()
 
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'))
   const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
@@ -68,26 +66,10 @@ export const Sidebar: FC<SidebarProps> = (props) => {
   ]
 
   const [currentTenant, setCurrentTenant] = useState(sampleTenants[0])
-
-  const handleTenantSwitch = (tenant: any) => {
-    setCurrentTenant(tenant)
-  }
-
-  const { isSidebarCollapsed, isSidebarHovered, toggleSidebarCollapsed, toggleSidebarHover } = useSidebarContext()
-
-  const handleMouseEnter = () => {
-    toggleSidebarHover(true)
-  }
-
-  const handleMouseLeave = () => {
-    toggleSidebarHover(false)
-  }
-
-  const handleCollapseSidebar = () => {
-    toggleSidebarCollapsed()
-  }
-
+  const handleTenantSwitch = (tenant: any) => setCurrentTenant(tenant)
+  const { user } = useAuth()
   const theme = useTheme()
+  const { isSidebarCollapsed, isSidebarHovered, toggleSidebarCollapsed, toggleSidebarHover } = useSidebarContext()
 
   const sidebarContent = (
     <SidebarWrapper
@@ -126,7 +108,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
         display="flex"
         justifyContent={{
           xs: 'flex-start',
-          lg: mdUp && isSidebarCollapsed ? (isSidebarHovered ? 'space-between' : 'center') : 'space-between',
+          md: mdUp && isSidebarCollapsed ? (isSidebarHovered ? 'space-between' : 'center') : 'space-between',
         }}
         alignItems="center"
       >
@@ -134,7 +116,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
           Welcome {user?.email.slice(0, user?.email.indexOf('@'))}
         </Typography>
 
-        {lgUp && (
+        {mdUp && (
           <IconButton
             sx={{
               display: mdUp && isSidebarCollapsed ? (isSidebarHovered ? 'flex' : 'none') : 'flex',
@@ -152,7 +134,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
               },
             }}
             size="small"
-            onClick={handleCollapseSidebar}
+            onClick={toggleSidebarCollapsed}
           >
             {isSidebarCollapsed ? (
               <KeyboardArrowRightTwoToneIcon fontSize="small" />
@@ -187,7 +169,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
     </SidebarWrapper>
   )
 
-  if (lgUp) {
+  if (mdUp) {
     return (
       <Drawer
         anchor="left"
@@ -195,8 +177,8 @@ export const Sidebar: FC<SidebarProps> = (props) => {
         ModalProps={{
           keepMounted: true,
         }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={() => toggleSidebarHover(true)}
+        onMouseLeave={() => toggleSidebarHover(false)}
         PaperProps={{
           // @ts-ignore
           sx: {
@@ -227,8 +209,8 @@ export const Sidebar: FC<SidebarProps> = (props) => {
   return (
     <SwipeableDrawer
       anchor="left"
-      onClose={onClose}
-      onOpen={onOpen}
+      onClose={onClose || (() => {})}
+      onOpen={onOpen || (() => {})}
       open={open}
       ModalProps={{
         keepMounted: true,
