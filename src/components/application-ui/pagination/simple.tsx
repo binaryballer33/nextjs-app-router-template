@@ -23,14 +23,10 @@ interface PaginationActionsProps {
 }
 
 export const PaginationActions: React.FC<PaginationActionsProps> = ({ count, page, onPageChange }) => {
-  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, page - 1)
-  }
-
-  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, page + 1)
-  }
   const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'))
+
+  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => onPageChange(event, page - 1)
+  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => onPageChange(event, page + 1)
 
   return (
     <Stack direction="row" spacing={1}>

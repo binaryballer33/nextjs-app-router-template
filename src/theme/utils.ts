@@ -1,5 +1,6 @@
 // Extended Sidebar Layout
 export const SIDEBAR_WIDTH = 250
+export const SIDEBAR_WIDTH_PROFILE_PAGE = 350
 export const SIDEBAR_WIDTH_COLLAPSED = 100
 export const HEADER_HEIGHT = 54
 

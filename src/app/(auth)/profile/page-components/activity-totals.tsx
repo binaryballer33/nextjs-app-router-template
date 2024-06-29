@@ -8,107 +8,72 @@ import { AvatarState } from 'src/components/base/styles/avatar'
 function ActivityTotals() {
   const { t } = useTranslation()
 
+  const activity = [
+    {
+      title: t('Orders'),
+      total: 485,
+      lists: 8,
+      icon: <ShoppingBagTwoToneIcon fontSize="small" />,
+    },
+    {
+      title: t('Favorites'),
+      total: 64,
+      lists: 15,
+      icon: <FavoriteTwoToneIcon fontSize="small" />,
+    },
+    {
+      title: t('Reviews'),
+      total: 642,
+      lists: 21,
+      icon: <StarTwoToneIcon fontSize="small" />,
+    },
+  ]
+
   return (
-    <Card>
-      <CardHeader title={t('Activity')} />
+    <Card sx={{ maxWidth: '95%' }}>
+      <CardHeader title={t('Activity')} sx={{ textAlign: 'center' }} />
       <Divider />
-      <Box px={2} py={{ xs: 2, sm: 3 }} display="flex" alignItems="flex-start">
-        <AvatarState
-          state="primary"
-          isSoft
-          sx={{
-            width: 42,
-            height: 42,
-          }}
-        >
-          <ShoppingBagTwoToneIcon fontSize="small" />
-        </AvatarState>
-        <Box pl={2} flex={1}>
-          <Typography sx={{ pt: 0.7 }} variant="h3">
-            {t('Orders')}
-          </Typography>
 
-          <Box pt={1} display="flex">
-            <Box pr={3} minWidth={180}>
-              <Typography gutterBottom variant="caption" fontSize={16} color="text.secondary">
-                {t('Total')}
+      {/* Activities */}
+      <Box px={2} py={{ xs: 2, sm: 3 }} display="flex" alignItems="flex-start" flexDirection={'column'}>
+        {activity.map((item, index) => (
+          <>
+            {/* Avatar And Title */}
+            <Box display={'flex'}>
+              <AvatarState
+                state="primary"
+                isSoft
+                sx={{
+                  width: 42,
+                  height: 42,
+                }}
+              >
+                {item.icon}
+              </AvatarState>
+              <Typography sx={{ pt: 0.7, ml: 2 }} variant="h5">
+                {item.title}
               </Typography>
-              <Typography variant="h2">485</Typography>
             </Box>
-            <Box display={{ xs: 'none', lg: 'block' }}>
-              <Typography gutterBottom variant="caption" fontSize={16} color="text.secondary">
-                {t('Failed')}
-              </Typography>
-              <Typography variant="h2">8</Typography>
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-      <Divider />
-      <Box px={2} py={{ xs: 2, sm: 3 }} display="flex" alignItems="flex-start">
-        <AvatarState
-          state="primary"
-          isSoft
-          sx={{
-            width: 42,
-            height: 42,
-          }}
-        >
-          <FavoriteTwoToneIcon fontSize="small" />
-        </AvatarState>
-        <Box pl={2} flex={1}>
-          <Typography sx={{ pt: 0.7 }} variant="h3">
-            {t('Favourites')}
-          </Typography>
 
-          <Box pt={1} display="flex">
-            <Box pr={3} minWidth={180}>
-              <Typography gutterBottom variant="caption" fontSize={16} color="text.secondary">
-                {t('Products')}
-              </Typography>
-              <Typography variant="h2">64</Typography>
+            {/* Category Totals */}
+            <Box pl={1} pt={1} display="flex" justifyContent={'space-between'} minWidth={1}>
+              <Box pr={3}>
+                <Typography gutterBottom variant="caption" fontSize={16} color="text.secondary">
+                  {t('Total')}
+                </Typography>
+                <Typography variant="h4">{item.total}</Typography>
+              </Box>
+              <Box display={{ xs: 'none', lg: 'block' }}>
+                <Typography gutterBottom variant="caption" fontSize={16} color="text.secondary">
+                  {t('Lists')}
+                </Typography>
+                <Typography variant="h4">{item.lists}</Typography>
+              </Box>
             </Box>
-            <Box display={{ xs: 'none', lg: 'block' }}>
-              <Typography gutterBottom variant="caption" fontSize={16} color="text.secondary">
-                {t('Lists')}
-              </Typography>
-              <Typography variant="h2">15</Typography>
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-      <Divider />
-      <Box px={2} py={{ xs: 2, sm: 3 }} display="flex" alignItems="flex-start">
-        <AvatarState
-          state="primary"
-          isSoft
-          sx={{
-            width: 42,
-            height: 42,
-          }}
-        >
-          <StarTwoToneIcon fontSize="small" />
-        </AvatarState>
-        <Box pl={2} flex={1}>
-          <Typography sx={{ pt: 0.7 }} variant="h3">
-            {t('Reviews')}
-          </Typography>
 
-          <Box pt={1} display="flex">
-            <Box pr={3} minWidth={180}>
-              <Typography gutterBottom variant="caption" fontSize={16} color="text.secondary">
-                {t('Total')}
-              </Typography>
-              <Typography variant="h2">642</Typography>
-            </Box>
-            <Box display={{ xs: 'none', lg: 'block' }}>
-              <Typography gutterBottom variant="caption" fontSize={16} color="text.secondary">
-                {t('Useful')}
-              </Typography>
-              <Typography variant="h2">21</Typography>
-            </Box>
-          </Box>
-        </Box>
+            <Divider sx={{ minWidth: 1, py: 1 }} />
+          </>
+        ))}
       </Box>
     </Card>
   )

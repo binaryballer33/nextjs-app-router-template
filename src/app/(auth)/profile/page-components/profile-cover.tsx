@@ -93,20 +93,6 @@ const ProfileCover: FC<ProfileCoverProps> = ({ user }) => {
   return (
     <>
       <Box display="flex" alignItems="center" mb={{ xs: 2, sm: 3 }}>
-        <Tooltip arrow placement="top" title={t('Go back')}>
-          <ButtonSoft
-            color="primary"
-            sx={{
-              p: 0,
-              width: 44,
-              height: 44,
-              minWidth: 0,
-              mr: 2,
-            }}
-          >
-            <ArrowBackTwoToneIcon />
-          </ButtonSoft>
-        </Tooltip>
         <Box>
           <Typography variant="h3" component="h3" sx={{ pb: 0.5 }}>
             {`${user.name}'s ${t('profile')}`}

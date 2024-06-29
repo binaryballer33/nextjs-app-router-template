@@ -14,11 +14,12 @@ import {
 } from '@mui/material'
 import PropTypes from 'prop-types'
 import { FC, useState } from 'react'
+import ActivityTotals from 'src/app/(auth)/profile/page-components/activity-totals'
 import { Scrollbar } from 'src/components/base/scrollbar'
 import { useSidebarContext } from 'src/contexts/sidebar-context'
 import { useAuth } from 'src/hooks/use-auth'
 import { NavBarItem } from 'src/models/navbar-item'
-import { SIDEBAR_WIDTH, SIDEBAR_WIDTH_COLLAPSED } from 'src/theme/utils'
+import { SIDEBAR_WIDTH_COLLAPSED, SIDEBAR_WIDTH_PROFILE_PAGE } from 'src/theme/utils'
 import SidebarFooter from './sidebar-footer'
 import { SidebarNavMenu } from './sidebar-nav-menu'
 import { SidebarNavMenuCollapsed } from './sidebar-nav-menu-collapsed'
@@ -77,7 +78,11 @@ export const Sidebar: FC<SidebarProps> = (props) => {
       role="navigation"
       sx={{
         width:
-          mdUp && isSidebarCollapsed ? (isSidebarHovered ? SIDEBAR_WIDTH : SIDEBAR_WIDTH_COLLAPSED) : SIDEBAR_WIDTH,
+          mdUp && isSidebarCollapsed
+            ? isSidebarHovered
+              ? SIDEBAR_WIDTH_PROFILE_PAGE
+              : SIDEBAR_WIDTH_COLLAPSED
+            : SIDEBAR_WIDTH_PROFILE_PAGE,
 
         '&::before': {
           content: '""',
@@ -143,6 +148,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
 
       <Box flex={1} overflow="auto" position="relative" zIndex={6}>
         <Scrollbar dark>
+          {/* Item Switcher */}
           <TenantSwitcher
             sidebarCollapsed={isSidebarCollapsed}
             isHovered={isSidebarHovered}
@@ -150,6 +156,8 @@ export const Sidebar: FC<SidebarProps> = (props) => {
             currentTenant={currentTenant}
             onSwitch={handleTenantSwitch}
           />
+
+          {/* Show SideBarMenu And SideBarMenuCollasped */}
           {mdUp && isSidebarCollapsed ? (
             isSidebarHovered ? (
               <SidebarNavMenu menuItems={menuItems} />
@@ -159,6 +167,9 @@ export const Sidebar: FC<SidebarProps> = (props) => {
           ) : (
             <SidebarNavMenu menuItems={menuItems} />
           )}
+
+          {/* Activity Totals */}
+          <ActivityTotals />
         </Scrollbar>
       </Box>
       {mdUp && isSidebarCollapsed ? isSidebarHovered && <SidebarFooter /> : <SidebarFooter />}
@@ -185,7 +196,11 @@ export const Sidebar: FC<SidebarProps> = (props) => {
             zIndex: 5,
             borderRight: `1px solid ${theme.palette.divider}`,
             backgroundColor: theme.palette.background.default,
-            width: isSidebarCollapsed ? (isSidebarHovered ? SIDEBAR_WIDTH : SIDEBAR_WIDTH_COLLAPSED) : SIDEBAR_WIDTH,
+            width: isSidebarCollapsed
+              ? isSidebarHovered
+                ? SIDEBAR_WIDTH_PROFILE_PAGE
+                : SIDEBAR_WIDTH_COLLAPSED
+              : SIDEBAR_WIDTH_PROFILE_PAGE,
             boxShadow: (theme) =>
               isSidebarCollapsed ? (isSidebarHovered ? theme.shadows[24] : theme.shadows[0]) : theme.shadows[0],
 

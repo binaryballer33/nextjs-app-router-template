@@ -74,7 +74,7 @@ const TenantSwitcher: React.FC<Props> = ({ tenants, sidebarCollapsed, isHovered,
   )
 
   return (
-    <Box px={2} py={1.5}>
+    <Box pr={2} py={1.5}>
       <Badge
         color="secondary"
         anchorOrigin={{
