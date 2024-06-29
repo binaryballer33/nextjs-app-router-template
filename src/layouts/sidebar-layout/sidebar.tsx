@@ -81,9 +81,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
 
         '&::before': {
           content: '""',
-          backgroundImage: `radial-gradient(circle, ${alpha(theme.palette.primary.main, 0.06)} 0%, transparent 65%)`,
           width: '280px',
-
           height: '250px',
           position: 'absolute',
           top: '-95px',
@@ -92,9 +90,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
         },
         '&::after': {
           content: '""',
-          backgroundImage: `radial-gradient(circle, ${alpha(theme.palette.primary.main, 0.08)} 0%, transparent 65%)`,
           width: '280px',
-
           height: '250px',
           position: 'absolute',
           bottom: '-95px',
@@ -116,7 +112,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
           Welcome {user?.email.slice(0, user?.email.indexOf('@'))}
         </Typography>
 
-        {mdUp && (
+        {lgUp && (
           <IconButton
             sx={{
               display: mdUp && isSidebarCollapsed ? (isSidebarHovered ? 'flex' : 'none') : 'flex',
@@ -169,7 +165,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
     </SidebarWrapper>
   )
 
-  if (mdUp) {
+  if (lgUp) {
     return (
       <Drawer
         anchor="left"

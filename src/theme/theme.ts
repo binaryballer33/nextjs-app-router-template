@@ -1,6 +1,7 @@
 import { colors, lighten, NeutralColors, PaletteMode } from '@mui/material'
 import { createTheme, responsiveFontSizes } from '@mui/material/styles'
 import { modified_components } from './modified-components'
+import { modified_typography } from './modified-typography'
 
 declare module '@mui/material/styles' {
   export interface NeutralColors {
@@ -47,7 +48,8 @@ export const neutral: NeutralColors = {
 }
 
 let lightTheme = createTheme({
-  // components: modified_components(),
+  typography: modified_typography(),
+  components: modified_components(),
   palette: {
     mode: 'light' as PaletteMode,
     primary: {
@@ -81,7 +83,8 @@ let lightTheme = createTheme({
 lightTheme = responsiveFontSizes(lightTheme)
 
 let darkTheme = createTheme({
-  // components: modified_components(),
+  typography: modified_typography(),
+  components: modified_components(),
   palette: {
     mode: 'dark' as PaletteMode,
     primary: {

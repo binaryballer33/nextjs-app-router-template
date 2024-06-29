@@ -839,7 +839,7 @@ export const modified_components = (): Components => {
     MuiIconButton: {
       styleOverrides: {
         root: {
-          borderRadius: theme.shape.borderRadius,
+          borderRadius: '50%',
           transition: 'none',
           '.MuiTouchRipple-root > *': {
             display: 'none',

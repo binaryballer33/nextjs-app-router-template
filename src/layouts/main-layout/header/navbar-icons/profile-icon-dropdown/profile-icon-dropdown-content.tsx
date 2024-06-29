@@ -51,6 +51,11 @@ export const ProfileIconDropdown: FC<ProfileDropdownProps> = (props) => {
     await checkSession() // refresh the auth state to reflect the user being signed out
   }, [checkSession, onClose])
 
+  const handleNavItemClick = (route: string): void => {
+    onClose && onClose()
+    router.push(route)
+  }
+
   return (
     <>
       <Menu
@@ -111,7 +116,7 @@ export const ProfileIconDropdown: FC<ProfileDropdownProps> = (props) => {
             component="div"
             selected={item.title === 'Email Notifications'}
             key={item.title}
-            onClick={() => router.push(item.route!)}
+            onClick={() => handleNavItemClick(item.route!)}
             sx={{
               '&:hover .MuiListItemText-primary': {
                 color: theme.palette.mode === 'dark' ? 'text.primary' : 'primary.main',
@@ -128,6 +133,8 @@ export const ProfileIconDropdown: FC<ProfileDropdownProps> = (props) => {
           </MenuItem>
         ))}
         <Divider />
+
+        {/* Sign Out Link */}
         <Box m={1}>
           <Button color="secondary" fullWidth onClick={handleSignOut}>
             <LockOpenTwoToneIcon

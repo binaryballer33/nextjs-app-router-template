@@ -1,5 +1,6 @@
 import { Stack, Typography } from '@mui/material'
 import { checkLoginStatusServer } from 'src/utils/helper-functions'
+import UserProfile from './page-components/user-profile'
 
 export default async function PrivatePage() {
   const { data, supabaseServerClient } = await checkLoginStatusServer()
@@ -13,13 +14,14 @@ export default async function PrivatePage() {
   const accountCreationDate = dateFormatter.format(new Date(data.user.confirmed_at!))
 
   return (
-    <Stack gap={2} minWidth={1}>
-      <Typography variant="h5" color={'primary'}>
-        Last Sign In: {lastSignIn}
-      </Typography>
-      <Typography variant="h5" color={'primary'}>
-        Account Created: {accountCreationDate}
-      </Typography>
-    </Stack>
+    <UserProfile />
+    // <Stack gap={2} minWidth={1}>
+    //   <Typography variant="h5" color={'primary'}>
+    //     Last Sign In: {lastSignIn}
+    //   </Typography>
+    //   <Typography variant="h5" color={'primary'}>
+    //     Account Created: {accountCreationDate}
+    //   </Typography>
+    // </Stack>
   )
 }

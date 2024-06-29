@@ -49,9 +49,9 @@ const SidebarFooter: FC = () => {
       zIndex={6}
       position="relative"
     >
-      <FooterButton icon={<Settings fontSize="small" />} tooltipText="Account Settings" />
-      <FooterButton icon={<ShoppingCart fontSize="small" />} tooltipText="Cart" />
-      <FooterButton icon={<ExitToApp fontSize="small" />} tooltipText="Logout" />
+      <FooterButton icon={<Settings fontSize="small" color="primary" />} tooltipText="Account Settings" />
+      <FooterButton icon={<ShoppingCart fontSize="small" color="primary" />} tooltipText="Cart" />
+      <FooterButton icon={<ExitToApp fontSize="small" color="primary" />} tooltipText="Logout" />
     </Stack>
   )
 }
