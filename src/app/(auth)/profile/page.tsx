@@ -1,15 +1,8 @@
-import { Typography } from '@mui/material'
-import { redirect } from 'next/navigation'
-import FullScreenCenteredContainer from 'src/components/base/full-height-width-centered-container'
-import { createClient } from 'src/utils/supabase/server'
+import { Stack, Typography } from '@mui/material'
+import { checkLoginStatusServer } from 'src/utils/helper-functions'
 
 export default async function PrivatePage() {
-  const supabase = createClient()
-
-  const { data, error } = await supabase.auth.getUser()
-  if (error || !data?.user) {
-    redirect('/login')
-  }
+  const { data, supabaseServerClient } = await checkLoginStatusServer()
 
   const dateFormatter = new Intl.DateTimeFormat('en-US', {
     dateStyle: 'full',
@@ -20,16 +13,13 @@ export default async function PrivatePage() {
   const accountCreationDate = dateFormatter.format(new Date(data.user.confirmed_at!))
 
   return (
-    <FullScreenCenteredContainer>
-      <Typography variant="h4" color={'primary'}>
-        Hello {data.user.email}
-      </Typography>
-      <Typography variant="h4" color={'primary'}>
+    <Stack gap={2} minWidth={1}>
+      <Typography variant="h5" color={'primary'}>
         Last Sign In: {lastSignIn}
       </Typography>
-      <Typography variant="h4" color={'primary'}>
+      <Typography variant="h5" color={'primary'}>
         Account Created: {accountCreationDate}
       </Typography>
-    </FullScreenCenteredContainer>
+    </Stack>
   )
 }

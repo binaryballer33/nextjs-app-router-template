@@ -15,6 +15,8 @@ import 'src/global.css' // for global styles
 import 'aos/dist/aos.css' // for animations and transitions on scroll
 import AOS from 'aos'
 import { AuthProvider } from 'src/contexts/auth-context' // for authentication with Supabase
+
+import { SidebarProvider } from 'src/contexts/sidebar-context'
 import { darkTheme, lightTheme } from 'src/theme/theme'
 
 type ThemeProviderProps = {
@@ -68,7 +70,9 @@ export const Layout: FC<LayoutProps> = ({ children }: LayoutProps) => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           {/* Once Supabase project is creating and you have the api keys you can uncomment the AuthProvider */}
           <AuthProvider>
-            <ThemeProvider>{children}</ThemeProvider>
+            <SidebarProvider>
+              <ThemeProvider>{children}</ThemeProvider>
+            </SidebarProvider>
           </AuthProvider>
         </LocalizationProvider>
       </ReduxProvider>

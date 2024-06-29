@@ -6,20 +6,22 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import ReceiptIcon from '@mui/icons-material/Receipt'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { alpha, Box, Button, Divider, ListItemText, Menu, MenuItem, useTheme } from '@mui/material'
+import { useRouter } from 'next/navigation'
 import PropTypes from 'prop-types'
 import React, { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { signOut } from 'src/actions/auth/sign-out'
 import { useAuth } from 'src/hooks/use-auth'
 import { NavBarItem } from 'src/models/navbar-item'
+import { routes } from 'src/router/navigation-routes'
 import { neutral } from 'src/theme/theme'
 import AvatarTitleDescriptionAlternate from './profile-icon-avatar-title-description'
 
 const profile_icon_dropdown_nav_items: NavBarItem[] = [
-  { title: 'My Profile', icon: <AccountBoxIcon /> },
-  { title: 'Profile settings', icon: <ManageAccountsIcon /> },
-  { title: 'Cart', icon: <ShoppingCartIcon /> },
-  { title: 'Orders', icon: <ReceiptIcon /> },
+  { title: 'My Profile', icon: <AccountBoxIcon />, route: routes.user.profile },
+  { title: 'Profile settings', icon: <ManageAccountsIcon />, route: routes.dummy },
+  { title: 'Cart', icon: <ShoppingCartIcon />, route: routes.dummy },
+  { title: 'Orders', icon: <ReceiptIcon />, route: routes.dummy },
 ]
 
 interface Origin {
@@ -37,6 +39,8 @@ interface ProfileDropdownProps {
 
 export const ProfileIconDropdown: FC<ProfileDropdownProps> = (props) => {
   const { anchorEl, onClose, open, ...other } = props
+
+  const router = useRouter()
   const theme = useTheme()
   const { checkSession } = useAuth()
   const { t } = useTranslation()
@@ -100,12 +104,14 @@ export const ProfileIconDropdown: FC<ProfileDropdownProps> = (props) => {
           <AvatarTitleDescriptionAlternate />
         </Box>
         <Divider sx={{ mb: 1 }} />
+
+        {/* Profile Icon Dropdown Profile Links */}
         {profile_icon_dropdown_nav_items.map((item) => (
           <MenuItem
             component="div"
             selected={item.title === 'Email Notifications'}
             key={item.title}
-            onClick={onClose}
+            onClick={() => router.push(item.route!)}
             sx={{
               '&:hover .MuiListItemText-primary': {
                 color: theme.palette.mode === 'dark' ? 'text.primary' : 'primary.main',

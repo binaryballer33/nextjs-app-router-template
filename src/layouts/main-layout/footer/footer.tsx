@@ -49,7 +49,7 @@ export default function Footer() {
 
   return (
     <footer>
-      <Box sx={{ pt: 8, pb: 6 }}>
+      <Box py={4}>
         <Box width={'95%'} m={'auto'}>
           <Divider sx={{ mb: 6, border: '1' }} />
           <Grid container justifyContent="space-between" alignItems="center" sx={{ mt: 2, mb: 10, pt: 4 }}>

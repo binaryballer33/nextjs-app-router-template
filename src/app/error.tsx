@@ -1,7 +1,7 @@
 'use client'
 
 import { Button, Typography } from '@mui/material'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import FullScreenCenteredContainer from 'src/components/base/full-height-width-centered-container'
 
 function Page() {
