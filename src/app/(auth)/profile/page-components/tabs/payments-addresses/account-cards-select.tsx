@@ -109,7 +109,7 @@ const MyCardsSelect = () => {
                     },
                   }}
                 >
-                  <Image src={item.image} alt={item.title} width={1} height={1} />
+                  <Image src={item.image} alt={item.title} width={24} height={24} />
                 </Card>
                 <Box flex={1}>
                   <Typography variant="h4" fontWeight={500} lineHeight={1} gutterBottom>
