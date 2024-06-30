@@ -1,7 +1,6 @@
 'use client'
 
 import { Box, Divider, Switch, Typography } from '@mui/material'
-import React, { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import AvatarAccordion from 'src/components/application-ui/accordions/avatar/avatar'
 import CardsBenefits from 'src/components/application-ui/cards-benefits/cards-benefits'
@@ -12,6 +11,7 @@ import Container from 'src/components/base/container'
 import PageHeading from 'src/components/base/page-heading'
 import { mock_users } from 'src/mocks/user-mocks'
 
+// TODO: add prisma and basic crud operations to the project
 function Page() {
   const { t } = useTranslation()
 
