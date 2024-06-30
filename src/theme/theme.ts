@@ -48,7 +48,7 @@ export const neutral: NeutralColors = {
 }
 
 let lightTheme = createTheme({
-  typography: modified_typography(),
+  // typography: modified_typography(),
   components: modified_components(),
   palette: {
     mode: 'light' as PaletteMode,
@@ -83,7 +83,7 @@ let lightTheme = createTheme({
 lightTheme = responsiveFontSizes(lightTheme)
 
 let darkTheme = createTheme({
-  typography: modified_typography(),
+  // typography: modified_typography(),
   components: modified_components(),
   palette: {
     mode: 'dark' as PaletteMode,

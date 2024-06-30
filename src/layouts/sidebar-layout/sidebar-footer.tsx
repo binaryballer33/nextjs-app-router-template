@@ -23,7 +23,7 @@ const FooterButton: FC<TooltipProps> = ({ icon, tooltipText }) => {
           textAlign: 'left',
           borderWidth: 1,
           borderStyle: 'solid',
-          borderColor: alpha(neutral[600], 0.2),
+          borderColor: theme.palette.primary.dark,
           '&:hover': {
             color: theme.palette.text.primary,
             background: alpha(theme.palette.primary.main, 0.1),

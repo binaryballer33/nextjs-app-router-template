@@ -10,6 +10,7 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
+  styled,
   Switch,
   Typography,
   useTheme,
@@ -18,6 +19,12 @@ import { useTranslation } from 'react-i18next'
 import { AvatarState } from 'src/components/base/styles/avatar'
 import { ButtonSoft } from 'src/components/base/styles/button-soft'
 import SecurityLogs from './security-logs'
+
+const StyledSwitch = styled(Switch)(({ theme }) => ({
+  '& .MuiSwitch-switchBase.Mui-checked': {
+    color: 'white',
+  },
+}))
 
 function SettingsSecurity() {
   const { t } = useTranslation()
@@ -35,7 +42,7 @@ function SettingsSecurity() {
     >
       <Grid xs={12}>
         <Box pb={2}>
-          <Typography variant="h3">{t('Social Accounts')}</Typography>
+          <Typography variant="h5">{t('Social Accounts')}</Typography>
           <Typography variant="subtitle1" color="text.secondary">
             {t('Manage connected social accounts options')}
           </Typography>
@@ -167,7 +174,7 @@ function SettingsSecurity() {
       </Grid>
       <Grid xs={12}>
         <Box pb={2}>
-          <Typography variant="h3">{t('Security')}</Typography>
+          <Typography variant="h5">{t('Security')}</Typography>
           <Typography variant="subtitle1" color="text.secondary">
             {t('Change your security preferences below')}
           </Typography>
@@ -221,7 +228,7 @@ function SettingsSecurity() {
                 primary={t('Two-factor authentication')}
                 secondary={t('Enable PIN verification for all sign in attempts')}
               />
-              <Switch id="checkedD" name="checkedD" color="primary" />
+              <StyledSwitch id="checkedD" name="checkedD" color="primary" />
             </ListItem>
           </List>
         </Card>

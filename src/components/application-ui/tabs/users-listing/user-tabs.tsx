@@ -45,8 +45,8 @@ import { ChangeEvent, FC, MouseEvent, SyntheticEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonIcon } from 'src/components/base/styles/button-icon'
 import { TabsShadow } from 'src/components/base/styles/tabs'
+import { User } from 'src/mocks/user-mocks'
 import BulkDelete from './bulk-delete'
-import { User } from './users-mock-data'
 
 export const CardWrapper = styled(Card)(
   ({ theme }) => `

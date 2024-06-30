@@ -48,7 +48,7 @@ function ActivityTab() {
             <MoreHorizTwoToneIcon />
           </IconButton>
         }
-        titleTypographyProps={{ variant: 'h5' }}
+        titleTypographyProps={{ variant: 'h6' }}
         subheaderTypographyProps={{ variant: 'subtitle2' }}
         title="Allison Lipshutz"
         subheader={
@@ -74,7 +74,7 @@ function ActivityTab() {
         py={{ xs: 2, sm: 3 }}
         p={2}
       >
-        <Typography variant="h4" fontWeight={500}>
+        <Typography variant="h6" fontWeight={500}>
           Welcome to organizing your remote office for maximum productivity.
         </Typography>
       </Box>
@@ -82,11 +82,11 @@ function ActivityTab() {
         sx={{
           minHeight: 284,
         }}
-        image="/placeholders/covers/6.jpg"
+        image="/placeholders/covers/1.jpg"
         title="Card Cover"
       />
       <Box py={{ xs: 2, sm: 3 }} p={2}>
-        <Link underline="hover" variant="h3" color="text.primary" href="" onClick={(e) => e.preventDefault()}>
+        <Link underline="hover" variant="h6" color="text.primary" href="" onClick={(e) => e.preventDefault()}>
           Organizing Your Remote Office for Maximum Productivity
         </Link>
         <Typography variant="subtitle1" sx={{ pt: 0.5 }}>

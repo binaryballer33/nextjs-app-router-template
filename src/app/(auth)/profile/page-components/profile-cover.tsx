@@ -14,7 +14,6 @@ import {
   Stack,
   styled,
   Theme,
-  Tooltip,
   Typography,
   useMediaQuery,
 } from '@mui/material'
@@ -22,9 +21,8 @@ import PropTypes from 'prop-types'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonIcon } from 'src/components/base/styles/button-icon'
-import { ButtonSoft } from 'src/components/base/styles/button-soft'
 import { VisuallyHiddenInputNative } from 'src/components/base/styles/visually-hidden'
-import { User } from './mock-data'
+import { User } from 'src/mocks/user-mocks'
 
 const AvatarWrapper = styled(Card)(
   ({ theme }) => `
@@ -104,10 +102,10 @@ const ProfileCover: FC<ProfileCoverProps> = ({ user }) => {
       </Box>
       <CardCover>
         <CardMedia image={user.coverImg} />
-        <CardCoverAction>
+        <CardCoverAction sx={{ position: 'absolute', top: 10, right: { xs: 12, sm: 10 } }}>
           <VisuallyHiddenInputNative accept="image/*" id="change-cover" multiple type="file" />
           <label htmlFor="change-cover">
-            <Button startIcon={<UploadTwoToneIcon />} variant="outlined" color="secondary" component="span">
+            <Button startIcon={<UploadTwoToneIcon />} variant="contained" color="primary" component="span">
               {t('Change cover')}
             </Button>
           </label>

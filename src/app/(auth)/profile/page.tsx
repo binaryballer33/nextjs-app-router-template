@@ -1,4 +1,3 @@
-import { Stack, Typography } from '@mui/material'
 import { checkLoginStatusServer } from 'src/utils/helper-functions'
 import UserProfile from './page-components/user-profile'
 

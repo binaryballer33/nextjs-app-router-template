@@ -37,7 +37,7 @@ function ActivityTotals() {
       {/* Activities */}
       <Box px={2} py={{ xs: 2, sm: 3 }} display="flex" alignItems="flex-start" flexDirection={'column'}>
         {activity.map((item, index) => (
-          <>
+          <Box flex={1} key={index} minWidth={1}>
             {/* Avatar And Title */}
             <Box display={'flex'}>
               <AvatarState
@@ -72,7 +72,7 @@ function ActivityTotals() {
             </Box>
 
             <Divider sx={{ minWidth: 1, py: 1 }} />
-          </>
+          </Box>
         ))}
       </Box>
     </Card>

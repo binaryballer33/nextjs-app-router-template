@@ -25,7 +25,7 @@ interface NavItemProps {
 }
 
 const ListSubheaderWrapper = styled(ListSubheader)<ListProps<'div', { component: 'div' }>>(({ theme }) => ({
-  background: neutral[900],
+  background: theme.palette.background.default,
   textTransform: 'uppercase',
   fontWeight: 500,
   fontSize: 13,
@@ -41,9 +41,6 @@ export const ListItemButtonWrapper = styled(ListItemButton)(({ theme }) => ({
   fontWeight: 600,
   fontSize: 14,
   marginBottom: '2px',
-  borderWidth: 1,
-  borderStyle: 'solid',
-  borderColor: 'primary',
   padding: theme.spacing(0.8, 1, 0.8, 2),
 
   '& .MuiListItemIcon-root': {
@@ -57,7 +54,7 @@ export const ListItemButtonWrapper = styled(ListItemButton)(({ theme }) => ({
 
   '&:hover': {
     color: theme.palette.text.primary,
-    background: alpha(theme.palette.primary.main, 0.1),
+    background: theme.palette.background.paper,
     borderColor: theme.palette.primary.main,
 
     '& .MuiListItemIcon-root': {
@@ -71,7 +68,7 @@ export const ListItemButtonWrapper = styled(ListItemButton)(({ theme }) => ({
 
   '&.Mui-selected, &.Mui-selected:hover': {
     color: theme.palette.text.primary,
-    background: alpha(theme.palette.primary.main, 0.1),
+    background: theme.palette.primary.main,
     borderColor: theme.palette.primary.main,
 
     '& .MuiListItemIcon-root': {
@@ -93,7 +90,7 @@ const SubMenu = styled(List)<ListProps<'div', { component: 'div' }>>(({ theme })
 
     '&::before': {
       content: '" "',
-      background: neutral[100],
+      background: theme.palette.primary.main,
       opacity: 0,
       position: 'absolute',
       left: theme.spacing(2.8),
@@ -172,10 +169,10 @@ const NavItem: React.FC<NavItemProps> = ({ item }) => {
 }
 
 interface SidebarNavMenuProps {
-  menuItems?: NavBarItem[]
+  navbar_items?: NavBarItem[]
 }
 
-export const SidebarNavMenu: FC<SidebarNavMenuProps> = ({ menuItems: navbar_items = [] }) => {
+export const SidebarNavMenu: FC<SidebarNavMenuProps> = ({ navbar_items = [] }) => {
   const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   return (
@@ -199,5 +196,5 @@ export const SidebarNavMenu: FC<SidebarNavMenuProps> = ({ menuItems: navbar_item
 }
 
 SidebarNavMenu.propTypes = {
-  menuItems: PropTypes.array,
+  navbar_items: PropTypes.array,
 }

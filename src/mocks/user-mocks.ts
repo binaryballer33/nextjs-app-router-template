@@ -14,22 +14,22 @@ export interface User {
   [key: string]: any
 }
 
-export const user: User = {
+export const mock_user: User = {
   id: '1',
-  name: 'Alice Johnson',
-  avatar: '/avatars/1.png',
-  email: 'alice.johnson@example.com',
-  jobtitle: 'Digital Marketing Manager',
-  username: 'AliceMktg',
-  location: 'Newport City',
+  name: 'Shaquille Mandy',
+  avatar: '/avatars/3.png',
+  email: 'binaryballer@example.com',
+  jobtitle: 'Software Engineer',
+  username: 'binaryballer',
+  location: 'Tampa, FL',
   role: 'admin',
-  coverImg: '/placeholders/covers/1.jpg',
-  followers: '1234',
-  description: 'Passionate about digital marketing trends and social media strategies.',
-  posts: '15',
+  coverImg: '/placeholders/covers/5.jpg',
+  followers: '813',
+  description: 'Passionate Building And Breaking Things. Hooper / Coder / World Traveler.',
+  posts: '23',
 }
 
-export const users: User[] = [
+export const mock_users: User[] = [
   {
     id: '1',
     name: 'Alice Johnson',
@@ -37,7 +37,7 @@ export const users: User[] = [
     email: 'alice.johnson@example.com',
     jobtitle: 'Digital Marketing Manager',
     username: 'AliceMktg',
-    location: 'Newport City',
+    location: 'Tampa, FL',
     role: 'admin',
     coverImg: '/placeholders/covers/1.jpg',
     followers: '1234',

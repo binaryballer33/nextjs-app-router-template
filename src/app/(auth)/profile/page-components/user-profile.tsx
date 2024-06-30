@@ -4,8 +4,7 @@ import { Box, Container, Unstable_Grid2 as Grid, MenuItem, Select, Tab, useMedia
 import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TabsPills } from 'src/components/base/styles/tabs'
-import ActivityTotals from './activity-totals'
-import { mock_user, User } from './mock-data'
+import { mock_user, User } from 'src/mocks/user-mocks'
 import ProfileCover from './profile-cover'
 import ActivityCard from './tabs/activity-card'
 import EditProfileDetails from './tabs/edit-profile-details'
@@ -25,6 +24,7 @@ function UserProfile() {
 
   const handleSelectChange = (event: ChangeEvent<{ value: unknown }>) => setCurrentTab(event.target.value as number)
 
+  // the tabs that will be displayed, array has their tab name(label) and tab order(value)
   const tabs = [
     { value: 0, label: t('Notifications') },
     { value: 1, label: t('Edit Profile') },
@@ -47,7 +47,7 @@ function UserProfile() {
             </Grid>
 
             {/* Tab User Profile Settings */}
-            <Grid xs={12}>
+            <Grid xs={12} sx={{ mt: 6 }}>
               {smUp ? (
                 <TabsPills
                   onChange={handleTabsChange}

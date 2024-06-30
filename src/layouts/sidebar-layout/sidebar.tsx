@@ -1,7 +1,6 @@
 import KeyboardArrowLeftTwoToneIcon from '@mui/icons-material/KeyboardArrowLeftTwoTone'
 import KeyboardArrowRightTwoToneIcon from '@mui/icons-material/KeyboardArrowRightTwoTone'
 import {
-  alpha,
   Box,
   Drawer,
   IconButton,
@@ -36,11 +35,11 @@ interface SidebarProps {
   onClose?: () => void
   onOpen?: () => void
   open?: boolean
-  menuItems?: NavBarItem[]
+  navbar_items?: NavBarItem[]
 }
 
 export const Sidebar: FC<SidebarProps> = (props) => {
-  const { onClose, onOpen, menuItems, open, ...other } = props
+  const { onClose, onOpen, navbar_items, open, ...other } = props
 
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'))
   const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
@@ -113,10 +112,12 @@ export const Sidebar: FC<SidebarProps> = (props) => {
         }}
         alignItems="center"
       >
+        {/* SideBar Header */}
         <Typography variant="body1" color="primary">
           Welcome {user?.email.slice(0, user?.email.indexOf('@'))}
         </Typography>
 
+        {/* Show Arrow IconButton */}
         {lgUp && (
           <IconButton
             sx={{
@@ -146,36 +147,46 @@ export const Sidebar: FC<SidebarProps> = (props) => {
         )}
       </Box>
 
+      {/* Sidebar Content Area */}
       <Box flex={1} overflow="auto" position="relative" zIndex={6}>
         <Scrollbar dark>
-          {/* Item Switcher */}
-          <TenantSwitcher
-            sidebarCollapsed={isSidebarCollapsed}
-            isHovered={isSidebarHovered}
-            tenants={sampleTenants}
-            currentTenant={currentTenant}
-            onSwitch={handleTenantSwitch}
-          />
-
           {/* Show SideBarMenu And SideBarMenuCollasped */}
           {mdUp && isSidebarCollapsed ? (
             isSidebarHovered ? (
-              <SidebarNavMenu menuItems={menuItems} />
+              <SidebarNavMenu navbar_items={navbar_items} />
             ) : (
-              <SidebarNavMenuCollapsed navbar_items={menuItems} />
+              <SidebarNavMenuCollapsed navbar_items={navbar_items} />
             )
           ) : (
-            <SidebarNavMenu menuItems={menuItems} />
+            <SidebarNavMenu navbar_items={navbar_items} />
           )}
 
-          {/* Activity Totals */}
-          <ActivityTotals />
+          {/*
+              Show if medium screen and up with sidebar not collasped
+              also show if medium screen and up with the sidebar collasped and you hover,
+          */}
+          {mdUp && (!isSidebarCollapsed || (isSidebarCollapsed && isSidebarHovered)) && (
+            <>
+              {/* Item Switcher */}
+              <TenantSwitcher
+                sidebarCollapsed={isSidebarCollapsed}
+                isHovered={isSidebarHovered}
+                tenants={sampleTenants}
+                currentTenant={currentTenant}
+                onSwitch={handleTenantSwitch}
+              />
+
+              {/* Activity Totals */}
+              <ActivityTotals />
+            </>
+          )}
         </Scrollbar>
       </Box>
       {mdUp && isSidebarCollapsed ? isSidebarHovered && <SidebarFooter /> : <SidebarFooter />}
     </SidebarWrapper>
   )
 
+  // Show Sidebar On Large Screens
   if (lgUp) {
     return (
       <Drawer
@@ -189,7 +200,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
         PaperProps={{
           // @ts-ignore
           sx: {
-            overflow: 'hidden',
+            overflow: 'scroll',
             border: 0,
             top: '90px !important', // places the sidebar below the header
             left: '24px !important',
@@ -245,5 +256,4 @@ Sidebar.propTypes = {
   onOpen: PropTypes.func,
   onClose: PropTypes.func,
   open: PropTypes.bool,
-  menuItems: PropTypes.array,
 }

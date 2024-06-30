@@ -6,41 +6,42 @@ import {
   List,
   ListItem,
   ListItemText,
+  styled,
   Switch,
   Typography,
-} from '@mui/material';
-import { ChangeEvent, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+} from '@mui/material'
+import { ChangeEvent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
+const StyledSwitch = styled(Switch)(({ theme }) => ({
+  '& .MuiSwitch-switchBase.Mui-checked': {
+    color: 'white',
+  },
+}))
 
 function SettingsNotifications() {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   const [state, setState] = useState({
     checkedA: true,
     checkedB: false,
     checkedC: true,
     checkedD: false,
-  });
+  })
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setState({
       ...state,
       [event.target.name]: event.target.checked,
-    });
-  };
+    })
+  }
 
   return (
-    <Grid
-      container
-      spacing={{ xs: 2, sm: 3 }}
-    >
+    <Grid container spacing={{ xs: 2, sm: 3 }}>
       <Grid xs={12}>
         <Box pb={2}>
-          <Typography variant="h3">{t('Account')}</Typography>
-          <Typography
-            variant="subtitle1"
-            color="text.secondary"
-          >
+          <Typography variant="h5">{t('Account')}</Typography>
+          <Typography variant="subtitle1" color="text.secondary">
             {t('Choose what notifications you want to receive')}
           </Typography>
         </Box>
@@ -49,7 +50,7 @@ function SettingsNotifications() {
             <ListItem>
               <ListItemText
                 primaryTypographyProps={{
-                  variant: 'h5',
+                  variant: 'h6',
                   component: 'label',
                   htmlFor: 'checkedA',
                 }}
@@ -61,7 +62,7 @@ function SettingsNotifications() {
                 primary={t('Widthdraw Activity')}
                 secondary={t('Receive an email when a widthdrawal is made')}
               />
-              <Switch
+              <StyledSwitch
                 color="primary"
                 checked={state.checkedA}
                 onChange={handleChange}
@@ -73,7 +74,7 @@ function SettingsNotifications() {
             <ListItem>
               <ListItemText
                 primaryTypographyProps={{
-                  variant: 'h5',
+                  variant: 'h6',
                   component: 'label',
                   htmlFor: 'checkedB',
                 }}
@@ -85,7 +86,7 @@ function SettingsNotifications() {
                 primary={t('Weekly Report')}
                 secondary={t('Receive account status weekly report in your inbox')}
               />
-              <Switch
+              <StyledSwitch
                 color="primary"
                 checked={state.checkedB}
                 onChange={handleChange}
@@ -98,11 +99,8 @@ function SettingsNotifications() {
       </Grid>
       <Grid xs={12}>
         <Box pb={2}>
-          <Typography variant="h3">{t('Orders')}</Typography>
-          <Typography
-            variant="subtitle1"
-            color="text.secondary"
-          >
+          <Typography variant="h5">{t('Orders')}</Typography>
+          <Typography variant="subtitle1" color="text.secondary">
             {t('Receive email notifications related to your orders activity')}
           </Typography>
         </Box>
@@ -111,7 +109,7 @@ function SettingsNotifications() {
             <ListItem>
               <ListItemText
                 primaryTypographyProps={{
-                  variant: 'h5',
+                  variant: 'h6',
                   component: 'label',
                   htmlFor: 'checkedC',
                 }}
@@ -123,18 +121,13 @@ function SettingsNotifications() {
                 primary={t('Failed Payment')}
                 secondary={t('Get a message when a payment fails')}
               />
-              <Switch
-                color="primary"
-                checked={state.checkedC}
-                onChange={handleChange}
-                name="checkedC"
-              />
+              <StyledSwitch color="primary" checked={state.checkedC} onChange={handleChange} name="checkedC" />
             </ListItem>
             <Divider component="li" />
             <ListItem>
               <ListItemText
                 primaryTypographyProps={{
-                  variant: 'h5',
+                  variant: 'h6',
                   component: 'label',
                   htmlFor: 'checkedD',
                 }}
@@ -146,18 +139,13 @@ function SettingsNotifications() {
                 primary={t('Order Status Update')}
                 secondary={t('Whenever an order is updated, get a notification on your phone')}
               />
-              <Switch
-                color="primary"
-                checked={state.checkedD}
-                onChange={handleChange}
-                name="checkedD"
-              />
+              <StyledSwitch color="primary" checked={state.checkedD} onChange={handleChange} name="checkedD" />
             </ListItem>
           </List>
         </Card>
       </Grid>
     </Grid>
-  );
+  )
 }
 
-export default SettingsNotifications;
+export default SettingsNotifications
