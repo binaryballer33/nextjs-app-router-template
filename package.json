@@ -8,9 +8,9 @@
     "start": "next start",
     "linter": "next lint",
     "linter:fix": "next lint --fix",
-    "formatter:check": "prettier --check \"**/*.{js,jsx,ts,tsx,mdx}\" --cache",
+    "formatter": "prettier --check \"**/*.{js,jsx,ts,tsx,mdx}\" --cache",
     "formatter:write": "prettier --write \"**/*.{js,jsx,ts,tsx,mdx}\" --cache",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -58,6 +58,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
     "eslint-plugin-prettier": "^5.1.3",
+    "husky": "^9.0.11",
     "prettier": "^3.3.2",
     "typescript": "^5"
   }

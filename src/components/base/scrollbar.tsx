@@ -1,17 +1,17 @@
-import { alpha, styled, useTheme } from '@mui/material';
-import PropTypes from 'prop-types';
-import { FC, ReactNode } from 'react';
-import SimpleBar from 'simplebar-react';
+import { alpha, styled, useTheme } from '@mui/material'
+import PropTypes from 'prop-types'
+import { FC, ReactNode } from 'react'
+import SimpleBar from 'simplebar-react'
 
-const ScrollbarWrapper = styled(SimpleBar)(() => ({}));
+const ScrollbarWrapper = styled(SimpleBar)(() => ({}))
 
 interface ScrollbarProps {
-  children?: ReactNode;
-  dark?: boolean;
+  children?: ReactNode
+  dark?: boolean
 }
 
 export const Scrollbar: FC<ScrollbarProps> = ({ dark, children, ...rest }) => {
-  const theme = useTheme();
+  const theme = useTheme()
 
   return (
     <ScrollbarWrapper
@@ -48,10 +48,10 @@ export const Scrollbar: FC<ScrollbarProps> = ({ dark, children, ...rest }) => {
     >
       {children}
     </ScrollbarWrapper>
-  );
-};
+  )
+}
 
 Scrollbar.propTypes = {
   children: PropTypes.node,
   dark: PropTypes.bool,
-};
+}

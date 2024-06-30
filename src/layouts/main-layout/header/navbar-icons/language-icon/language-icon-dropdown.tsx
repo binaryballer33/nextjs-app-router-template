@@ -90,7 +90,7 @@ const LanguageDropdown: FC<LanguageDropdownProps> = ({ color = 'inherit', sx = {
       })
       handleClose()
     },
-    [i18n, t]
+    [i18n, t],
   )
 
   return (

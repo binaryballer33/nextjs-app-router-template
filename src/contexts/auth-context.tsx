@@ -62,7 +62,6 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       await checkSession().catch(() => {})
       setState((prev) => ({ ...prev, isLoading: false }))
     })().catch(() => {})
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- Expected
   }, [checkSession])
 
   return (

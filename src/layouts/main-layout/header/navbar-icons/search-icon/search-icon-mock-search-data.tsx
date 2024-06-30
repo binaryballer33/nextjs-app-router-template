@@ -1,19 +1,19 @@
-import { SvgIconComponent } from '@mui/icons-material';
-import AccessTimeTwoTone from '@mui/icons-material/AccessTimeTwoTone';
-import ArticleTwoTone from '@mui/icons-material/ArticleTwoTone';
-import AssignmentTwoTone from '@mui/icons-material/AssignmentTwoTone';
-import BookTwoTone from '@mui/icons-material/BookTwoTone';
-import BrushTwoTone from '@mui/icons-material/BrushTwoTone';
-import CategoryTwoTone from '@mui/icons-material/CategoryTwoTone';
-import DashboardTwoTone from '@mui/icons-material/DashboardTwoTone';
-import EmojiEventsTwoTone from '@mui/icons-material/EmojiEventsTwoTone';
-import EventTwoTone from '@mui/icons-material/EventTwoTone';
-import FeedbackTwoTone from '@mui/icons-material/FeedbackTwoTone';
-import FolderTwoTone from '@mui/icons-material/FolderTwoTone';
-import PeopleTwoTone from '@mui/icons-material/PeopleTwoTone';
-import ReceiptTwoTone from '@mui/icons-material/ReceiptTwoTone';
-import SlideshowTwoTone from '@mui/icons-material/SlideshowTwoTone';
-import TableChartTwoTone from '@mui/icons-material/TableChartTwoTone';
+import { SvgIconComponent } from '@mui/icons-material'
+import AccessTimeTwoTone from '@mui/icons-material/AccessTimeTwoTone'
+import ArticleTwoTone from '@mui/icons-material/ArticleTwoTone'
+import AssignmentTwoTone from '@mui/icons-material/AssignmentTwoTone'
+import BookTwoTone from '@mui/icons-material/BookTwoTone'
+import BrushTwoTone from '@mui/icons-material/BrushTwoTone'
+import CategoryTwoTone from '@mui/icons-material/CategoryTwoTone'
+import DashboardTwoTone from '@mui/icons-material/DashboardTwoTone'
+import EmojiEventsTwoTone from '@mui/icons-material/EmojiEventsTwoTone'
+import EventTwoTone from '@mui/icons-material/EventTwoTone'
+import FeedbackTwoTone from '@mui/icons-material/FeedbackTwoTone'
+import FolderTwoTone from '@mui/icons-material/FolderTwoTone'
+import PeopleTwoTone from '@mui/icons-material/PeopleTwoTone'
+import ReceiptTwoTone from '@mui/icons-material/ReceiptTwoTone'
+import SlideshowTwoTone from '@mui/icons-material/SlideshowTwoTone'
+import TableChartTwoTone from '@mui/icons-material/TableChartTwoTone'
 
 export const iconMapping: { [key: string]: SvgIconComponent } = {
   SlideshowTwoTone,
@@ -31,16 +31,16 @@ export const iconMapping: { [key: string]: SvgIconComponent } = {
   PeopleTwoTone,
   CategoryTwoTone,
   EmojiEventsTwoTone,
-};
+}
 
-export type Category = 'folders' | 'files' | 'applications' | 'users' | 'images';
+export type Category = 'folders' | 'files' | 'applications' | 'users' | 'images'
 
 export interface Item {
-  id: number;
-  title: string;
-  description: string;
-  avatar: string;
-  category: Category;
+  id: number
+  title: string
+  description: string
+  avatar: string
+  category: Category
 }
 
 export const dummyData: Item[] = [
@@ -341,4 +341,4 @@ export const dummyData: Item[] = [
     avatar: '/placeholders/spotlight-search/volunteer-day.png',
     category: 'images',
   },
-];
+]
