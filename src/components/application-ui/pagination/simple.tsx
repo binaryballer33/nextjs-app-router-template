@@ -116,6 +116,7 @@ const Component = () => {
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={handleChangeRowsPerPage}
           rowsPerPageOptions={[]}
+          // @ts-ignore
           ActionsComponent={PaginationActions}
         />
       </CardActions>
