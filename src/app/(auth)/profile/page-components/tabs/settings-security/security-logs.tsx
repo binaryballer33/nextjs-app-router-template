@@ -1,4 +1,4 @@
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
+import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone"
 import {
   Card,
   CardActions,
@@ -15,13 +15,13 @@ import {
   Tooltip,
   Typography,
   useTheme,
-} from '@mui/material'
-import { format, subDays, subHours, subWeeks } from 'date-fns'
-import { ChangeEvent, MouseEvent, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { PaginationActions } from 'src/components/application-ui/pagination/simple'
+} from "@mui/material"
+import { format, subDays, subHours, subWeeks } from "date-fns"
+import { ChangeEvent, MouseEvent, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { PaginationActions } from "src/components/application-ui/pagination/simple"
 
-function SettingsSecurity() {
+export default function SettingsSecurity() {
   const { t } = useTranslation()
   const theme = useTheme()
 
@@ -40,37 +40,37 @@ function SettingsSecurity() {
   const logs = [
     {
       id: 1,
-      browser: ' Safari/537.36',
-      ipaddress: '3.70.73.142',
-      location: 'United States',
+      browser: " Safari/537.36",
+      ipaddress: "3.70.73.142",
+      location: "United States",
       date: subDays(new Date(), 2).getTime(),
     },
     {
       id: 2,
-      browser: 'Chrome/36.0.1985.67',
-      ipaddress: '138.13.136.179',
-      location: 'China',
+      browser: "Chrome/36.0.1985.67",
+      ipaddress: "138.13.136.179",
+      location: "China",
       date: subDays(new Date(), 6).getTime(),
     },
     {
       id: 3,
-      browser: 'Googlebot/2.1',
-      ipaddress: '119.229.170.253',
-      location: 'China',
+      browser: "Googlebot/2.1",
+      ipaddress: "119.229.170.253",
+      location: "China",
       date: subHours(new Date(), 15).getTime(),
     },
     {
       id: 4,
-      browser: 'AppleWebKit/535.1',
-      ipaddress: '206.8.99.49',
-      location: 'Philippines',
+      browser: "AppleWebKit/535.1",
+      ipaddress: "206.8.99.49",
+      location: "Philippines",
       date: subDays(new Date(), 4).getTime(),
     },
     {
       id: 5,
-      browser: 'Mozilla/5.0',
-      ipaddress: '235.40.59.85',
-      location: 'China',
+      browser: "Mozilla/5.0",
+      ipaddress: "235.40.59.85",
+      location: "China",
       date: subWeeks(new Date(), 3).getTime(),
     },
   ]
@@ -80,25 +80,25 @@ function SettingsSecurity() {
       <CardHeader
         subheaderTypographyProps={{}}
         titleTypographyProps={{}}
-        title={t('Access Logs')}
-        subheader={t('Recent sign in activity logs')}
+        title={t("Access Logs")}
+        subheader={t("Recent sign in activity logs")}
       />
       <Divider />
       <TableContainer
         sx={{
           td: {
-            whiteSpace: 'nowrap',
+            whiteSpace: "nowrap",
           },
         }}
       >
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>{t('Browser')}</TableCell>
-              <TableCell>{t('IP Address')}</TableCell>
-              <TableCell>{t('Location')}</TableCell>
-              <TableCell>{t('Date/Time')}</TableCell>
-              <TableCell align="right">{t('Actions')}</TableCell>
+              <TableCell>{t("Browser")}</TableCell>
+              <TableCell>{t("IP Address")}</TableCell>
+              <TableCell>{t("Location")}</TableCell>
+              <TableCell>{t("Date/Time")}</TableCell>
+              <TableCell align="right">{t("Actions")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -107,12 +107,12 @@ function SettingsSecurity() {
                 <TableCell>{log.browser}</TableCell>
                 <TableCell>{log.ipaddress}</TableCell>
                 <TableCell>{log.location}</TableCell>
-                <TableCell>{format(log.date, 'dd MMMM, yyyy - h:mm:ss a')}</TableCell>
+                <TableCell>{format(log.date, "dd MMMM, yyyy - h:mm:ss a")}</TableCell>
                 <TableCell align="right">
-                  <Tooltip placement="top" title={t('Delete')} arrow>
+                  <Tooltip placement="top" title={t("Delete")} arrow>
                     <IconButton
                       sx={{
-                        '&:hover': {},
+                        "&:hover": {},
                         color: theme.palette.error.main,
                       }}
                       color="inherit"
@@ -130,12 +130,12 @@ function SettingsSecurity() {
       <CardActions
         sx={{
           p: 2,
-          '.MuiTablePagination-toolbar': {
-            justifyContent: 'space-between',
+          ".MuiTablePagination-toolbar": {
+            justifyContent: "space-between",
           },
 
-          '.MuiTablePagination-spacer': {
-            display: 'none',
+          ".MuiTablePagination-spacer": {
+            display: "none",
           },
         }}
       >
@@ -157,5 +157,3 @@ function SettingsSecurity() {
     </Card>
   )
 }
-
-export default SettingsSecurity

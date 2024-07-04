@@ -4,7 +4,6 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -12,12 +11,15 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "noEmit": true,
+    "noUnusedLocals": true, // Warns about unused local variables
+    "noUnusedParameters": true, // Warns about unused function parameters
+    "noImplicitAny": false,
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "noImplicitAny": false,
     "paths": {
       "src/*": ["./src/*"]
     }

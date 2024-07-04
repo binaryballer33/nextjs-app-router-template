@@ -1,7 +1,51 @@
 {
-  "extends": ["next/core-web-vitals", "prettier"],
+  "env": {
+    "node": true,
+    "es2021": true,
+    "browser": true
+  },
+  "globals": {
+    "React": true
+  },
+  "extends": ["airbnb", "prettier", "eslint:recommended", "next/core-web-vitals"],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module",
+    "ecmaFeatures": { "jsx": true }
+  },
+  "plugins": ["prettier"],
   "rules": {
-    "react/display-name": "off",
-    "import/no-named-as-default-member": "off"
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "curly": ["error", "multi"],
+    "import/extensions": "off",
+    "import/prefer-default-export": "warn",
+    "semi": 0, // let prettier handle this
+    "indent": "off", // let prettier handle this
+    "max-len": "off", // let prettier handle this
+    "comma-dangle": "off", // let prettier handle this
+    "operator-linebreak": "off", // let prettier handle this
+
+    "react/jsx-no-target-blank": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-one-expression-per-line": "off", // let prettier handle this
+    "react/jsx-props-no-spreading": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/button-has-type": "off",
+    "react/forbid-prop-types": "off",
+    "react/require-default-props": "off", // let typescript handle this
+    "react/jsx-indent": "off", // let prettier handle this
+
+    "no-shadow": "off",
+    "no-case-declarations": "off",
+    "no-redeclare": "off", // let typescript handle this
+    "no-unused-expressions": "off",
+    "no-unused-vars": "off", // let typescript handle this
+    "no-param-reassign": "off",
+
+    "arrow-body-style": "off",
+    "object-curly-newline": "off", // let prettier handle this
+    "function-paren-newline": "off", // let prettier handle this
+    "implicit-arrow-linebreak": "off", // let prettier handle this
+    "nonblock-statement-body-position": "off" // let prettier handle this
   }
 }

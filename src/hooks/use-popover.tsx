@@ -1,6 +1,6 @@
-import { MutableRefObject, useCallback, useRef, useState } from 'react'
+import { MutableRefObject, useCallback, useRef, useState } from "react"
 
-interface PopoverController<T> {
+type PopoverController<T> = {
   anchorRef: MutableRefObject<T | null>
   handleOpen: () => void
   handleClose: () => void
@@ -8,7 +8,7 @@ interface PopoverController<T> {
   open: boolean
 }
 
-export function usePopover<T = HTMLElement>(): PopoverController<T> {
+export default function usePopover<T = HTMLElement>(): PopoverController<T> {
   const anchorRef = useRef<T | null>(null)
   const [open, setOpen] = useState<boolean>(false)
 

@@ -1,5 +1,5 @@
-import DownloadIcon from '@mui/icons-material/Download'
-import KeyboardArrowRightTwoToneIcon from '@mui/icons-material/KeyboardArrowRightTwoTone'
+import DownloadIcon from "@mui/icons-material/Download"
+import KeyboardArrowRightTwoToneIcon from "@mui/icons-material/KeyboardArrowRightTwoTone"
 import {
   AccordionDetails,
   AccordionSummary,
@@ -14,12 +14,12 @@ import {
   ListItemText,
   Stack,
   Typography,
-} from '@mui/material'
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { AccordionAlternate } from 'src/components/base/styles/accordion'
+} from "@mui/material"
+import { SyntheticEvent, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { AccordionAlternate } from "src/components/base/styles/accordion"
 
-interface AccordionItem {
+type AccordionItem = {
   name: string
   jobTitle: string
   avatarSrc: string
@@ -28,37 +28,41 @@ interface AccordionItem {
   resumeFile: string
 }
 
-const AlternateTabs = () => {
+function AlternateTabs() {
   const { t } = useTranslation()
-  const [expandedAccordion, setExpandedAccordion] = React.useState<number | null>(null)
+  const [expandedAccordion, setExpandedAccordion] = useState<number | null>(null)
 
   const accordionData: AccordionItem[] = [
     {
-      name: 'Shaquille Mandy',
-      jobTitle: 'Software Engineer',
-      avatarSrc: '/avatars/4.png',
-      email: 'binaryballer33@gmail.com',
-      salary: '$250,000',
-      resumeFile: 'resume_full_stack_developer.pdf',
+      name: "Shaquille Mandy",
+      jobTitle: "Software Engineer",
+      avatarSrc: "/avatars/4.png",
+      email: "binaryballer33@gmail.com",
+      salary: "$250,000",
+      resumeFile: "resume_full_stack_developer.pdf",
     },
     {
-      name: 'Megan Nicole',
-      jobTitle: 'Pediatrician',
-      avatarSrc: '/avatars/5.png',
-      email: 'megan_nichole@gmail.com',
-      salary: '$333,333',
-      resumeFile: 'resume_pediatrician.pdf',
+      name: "Megan Nicole",
+      jobTitle: "Pediatrician",
+      avatarSrc: "/avatars/5.png",
+      email: "megan_nichole@gmail.com",
+      salary: "$333,333",
+      resumeFile: "resume_pediatrician.pdf",
     },
   ]
 
-  const handleAccordionToggle = (index: number) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+  const handleAccordionToggle = (index: number) => (_event: SyntheticEvent, isExpanded: boolean) => {
     setExpandedAccordion(isExpanded ? index : null)
   }
 
   return (
     <>
       {accordionData.map((item, index) => (
-        <AccordionAlternate expanded={expandedAccordion === index} onChange={handleAccordionToggle(index)} key={index}>
+        <AccordionAlternate
+          expanded={expandedAccordion === index}
+          onChange={handleAccordionToggle(index)}
+          key={item.email}
+        >
           <AccordionSummary
             expandIcon={<KeyboardArrowRightTwoToneIcon />}
             aria-controls={`panel${index + 1}a-content`}
@@ -79,25 +83,25 @@ const AlternateTabs = () => {
           <AccordionDetails>
             <Stack mb={2} spacing={1} direction="row">
               <Button size="small" variant="outlined" color="primary">
-                {t('View profile')}
+                {t("View profile")}
               </Button>
               <Button size="small" variant="outlined" color="secondary">
-                {t('Edit details')}
+                {t("Edit details")}
               </Button>
             </Stack>
             <Card elevation={0} variant="outlined">
               <ListItem>
                 <ListItemText
-                  primaryTypographyProps={{ variant: 'h6' }}
-                  primary={t('Email address')}
+                  primaryTypographyProps={{ variant: "h6" }}
+                  primary={t("Email address")}
                   secondary={item.email}
                 />
               </ListItem>
               <Divider />
               <ListItem>
                 <ListItemText
-                  primaryTypographyProps={{ variant: 'h6' }}
-                  primary={t('Salary expectation')}
+                  primaryTypographyProps={{ variant: "h6" }}
+                  primary={t("Salary expectation")}
                   secondary={item.salary}
                 />
               </ListItem>

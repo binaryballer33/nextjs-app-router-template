@@ -1,145 +1,145 @@
-import AppsTwoToneIcon from '@mui/icons-material/AppsTwoTone'
-import BusinessCenterTwoToneIcon from '@mui/icons-material/BusinessCenterTwoTone'
-import DashboardTwoToneIcon from '@mui/icons-material/DashboardTwoTone'
-import SettingsIcon from '@mui/icons-material/Settings'
-import { useTranslation } from 'react-i18next'
-import { NavBarItem } from 'src/models/navbar-item'
-import { routes } from 'src/router/navigation-routes'
+import AppsTwoToneIcon from "@mui/icons-material/AppsTwoTone"
+import BusinessCenterTwoToneIcon from "@mui/icons-material/BusinessCenterTwoTone"
+import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone"
+import SettingsIcon from "@mui/icons-material/Settings"
+import { useTranslation } from "react-i18next"
+import { NavBarItem } from "src/models/navbar-item"
+import routes from "src/router/navigation-routes"
 
 // manage the navbar items, their title, icons and routes from here. This is for both desktop and mobile navbars
-export const useHorizontalNavBarItems = (): NavBarItem[] => {
+const useHorizontalNavBarItems = (): NavBarItem[] => {
   const { t } = useTranslation()
 
   return [
     {
-      title: t('Dashboards'),
+      title: t("Dashboards"),
       icon: <DashboardTwoToneIcon />,
       route: routes.dummy,
       subMenu: [
         {
-          title: t('Reports'),
+          title: t("Reports"),
           route: routes.dummy,
         },
         {
-          title: t('Expenses'),
+          title: t("Expenses"),
           route: routes.dummy,
         },
         {
-          title: t('Statistics'),
+          title: t("Statistics"),
           route: routes.dummy,
         },
         {
-          title: t('Automation'),
+          title: t("Automation"),
           route: routes.dummy,
         },
         {
-          title: t('Analytics'),
+          title: t("Analytics"),
           route: routes.dummy,
         },
         {
-          title: t('Hospital'),
+          title: t("Hospital"),
           route: routes.dummy,
         },
         {
-          title: t('Helpdesk'),
+          title: t("Helpdesk"),
           route: routes.dummy,
         },
         {
-          title: t('Monitoring'),
+          title: t("Monitoring"),
           route: routes.dummy,
         },
       ],
     },
     {
-      title: t('Applications'),
+      title: t("Applications"),
       icon: <AppsTwoToneIcon />,
       route: routes.dummy,
       subMenu: [
         {
-          title: t('Calendar'),
+          title: t("Calendar"),
           route: routes.dummy,
         },
         {
-          title: t('File manager'),
+          title: t("File manager"),
           route: routes.dummy,
         },
         {
-          title: t('Jobs platform'),
+          title: t("Jobs platform"),
           route: routes.dummy,
         },
         {
-          title: t('Mailbox'),
+          title: t("Mailbox"),
           route: routes.dummy,
         },
         {
-          title: t('Messenger'),
+          title: t("Messenger"),
           route: routes.dummy,
         },
         {
-          title: t('Projects board'),
+          title: t("Projects board"),
           route: routes.dummy,
         },
         {
-          title: t('Tasks'),
+          title: t("Tasks"),
           route: routes.dummy,
         },
       ],
     },
     {
-      title: t('Management'),
+      title: t("Management"),
       icon: <BusinessCenterTwoToneIcon />,
       route: routes.dummy,
       subMenu: [
         {
-          title: t('Users'),
+          title: t("Users"),
           route: routes.dummy,
           subMenu: [
             {
-              title: t('Listing'),
+              title: t("Listing"),
               route: routes.dummy,
             },
             {
-              title: t('User profile'),
+              title: t("User profile"),
               route: routes.dummy,
             },
           ],
         },
         {
-          title: t('Projects'),
+          title: t("Projects"),
           route: routes.dummy,
         },
         {
-          title: t('Commerce'),
+          title: t("Commerce"),
           route: routes.dummy,
           subMenu: [
             {
-              title: t('Shop front'),
+              title: t("Shop front"),
               route: routes.dummy,
             },
             {
-              title: t('Shop listing'),
+              title: t("Shop listing"),
               route: routes.dummy,
             },
             {
-              title: t('Product details'),
+              title: t("Product details"),
               route: routes.dummy,
             },
             {
-              title: t('Create product'),
+              title: t("Create product"),
               route: routes.dummy,
             },
           ],
         },
         {
-          title: t('Invoices'),
+          title: t("Invoices"),
           route: routes.dummy,
           subMenu: [
             {
-              title: t('Listing'),
+              title: t("Listing"),
               route: routes.dummy,
             },
             {
-              title: t('Invoice details'),
+              title: t("Invoice details"),
               route: routes.dummy,
             },
           ],
@@ -147,9 +147,11 @@ export const useHorizontalNavBarItems = (): NavBarItem[] => {
       ],
     },
     {
-      title: t('Settings'),
+      title: t("Settings"),
       icon: <SettingsIcon />,
       route: routes.dummy,
     },
   ]
 }
+
+export default useHorizontalNavBarItems

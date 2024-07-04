@@ -1,9 +1,8 @@
-import { colors, lighten, NeutralColors, PaletteMode } from '@mui/material'
-import { createTheme, responsiveFontSizes } from '@mui/material/styles'
-import { modified_components } from './modified-components'
-import { modified_typography } from './modified-typography'
+import { colors, lighten, NeutralColors, PaletteMode } from "@mui/material"
+import { createTheme, responsiveFontSizes } from "@mui/material/styles"
+import { modifiedComponents } from "./modified-components"
 
-declare module '@mui/material/styles' {
+declare module "@mui/material/styles" {
   export interface NeutralColors {
     25: string
     50: string
@@ -27,10 +26,12 @@ declare module '@mui/material/styles' {
   }
 }
 
+export type PaletteColorKey = "success" | "error" | "warning" | "info" | "primary" | "secondary"
+
 const common = {
-  white: '#ffffff',
-  black: '#151821',
-  neutral: '#14191e',
+  white: "#ffffff",
+  black: "#151821",
+  neutral: "#14191e",
 }
 
 export const neutral: NeutralColors = {
@@ -47,74 +48,74 @@ export const neutral: NeutralColors = {
   900: common.neutral,
 }
 
-let lightTheme = createTheme({
-  // typography: modified_typography(),
-  components: modified_components(),
-  palette: {
-    mode: 'light' as PaletteMode,
-    primary: {
-      main: colors.blue[700],
-      light: colors.blue[400],
-      dark: colors.blue[900],
+const lightTheme = responsiveFontSizes(
+  createTheme({
+    // typography: modified_typography(),
+    components: modifiedComponents(),
+    palette: {
+      mode: "light" as PaletteMode,
+      primary: {
+        main: colors.blue[700],
+        light: colors.blue[400],
+        dark: colors.blue[900],
+      },
+      secondary: {
+        main: colors.teal[600],
+        light: colors.teal[400],
+        dark: colors.teal[800],
+      },
+      info: {
+        main: colors.deepPurple[700],
+        light: colors.deepPurple[400],
+        dark: colors.deepPurple[900],
+      },
+      neutral,
+      background: {
+        default: colors.grey[300], // Light grey
+        paper: lighten(colors.grey[200], 0.01),
+      },
+      text: {
+        primary: colors.common.black,
+        secondary: colors.grey[800],
+      },
+      divider: colors.grey[400],
     },
-    secondary: {
-      main: colors.teal[600],
-      light: colors.teal[400],
-      dark: colors.teal[800],
-    },
-    info: {
-      main: colors.deepPurple[700],
-      light: colors.deepPurple[400],
-      dark: colors.deepPurple[900],
-    },
-    neutral: neutral,
-    background: {
-      default: colors.grey[300], // Light grey
-      paper: lighten(colors.grey[200], 0.01),
-    },
-    text: {
-      primary: colors.common.black,
-      secondary: colors.grey[800],
-    },
-    divider: colors.grey[400],
-  },
-})
+  }),
+)
 
-lightTheme = responsiveFontSizes(lightTheme)
-
-let darkTheme = createTheme({
-  // typography: modified_typography(),
-  components: modified_components(),
-  palette: {
-    mode: 'dark' as PaletteMode,
-    primary: {
-      main: colors.teal[300],
-      light: colors.teal[100],
-      dark: colors.teal[500],
+const darkTheme = responsiveFontSizes(
+  createTheme({
+    // typography: modified_typography(),
+    components: modifiedComponents(),
+    palette: {
+      mode: "dark" as PaletteMode,
+      primary: {
+        main: colors.teal[300],
+        light: colors.teal[100],
+        dark: colors.teal[500],
+      },
+      secondary: {
+        main: colors.blue[700],
+        light: colors.blue[500],
+        dark: colors.blue[900],
+      },
+      info: {
+        main: colors.deepPurple[300],
+        light: colors.deepPurple[100],
+        dark: colors.deepPurple[500],
+      },
+      neutral,
+      background: {
+        default: neutral[900],
+        paper: lighten(neutral[900], 0.033),
+      },
+      text: {
+        primary: colors.common.white,
+        secondary: colors.grey[400],
+      },
+      divider: colors.grey[700],
     },
-    secondary: {
-      main: colors.blue[700],
-      light: colors.blue[500],
-      dark: colors.blue[900],
-    },
-    info: {
-      main: colors.deepPurple[300],
-      light: colors.deepPurple[100],
-      dark: colors.deepPurple[500],
-    },
-    neutral: neutral,
-    background: {
-      default: neutral[900],
-      paper: lighten(neutral[900], 0.033),
-    },
-    text: {
-      primary: colors.common.white,
-      secondary: colors.grey[400],
-    },
-    divider: colors.grey[700],
-  },
-})
-
-darkTheme = responsiveFontSizes(darkTheme)
+  }),
+)
 
 export { lightTheme, darkTheme }

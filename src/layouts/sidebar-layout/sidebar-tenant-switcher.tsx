@@ -1,5 +1,5 @@
-import CheckTwoToneIcon from '@mui/icons-material/CheckTwoTone'
-import KeyboardArrowDownTwoToneIcon from '@mui/icons-material/KeyboardArrowDownTwoTone'
+import CheckTwoToneIcon from "@mui/icons-material/CheckTwoTone"
+import KeyboardArrowDownTwoToneIcon from "@mui/icons-material/KeyboardArrowDownTwoTone"
 import {
   Avatar,
   Badge,
@@ -15,17 +15,17 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from '@mui/material'
-import React, { useState } from 'react'
+} from "@mui/material"
+import { MouseEvent, useState } from "react"
 
-interface Tenant {
+type Tenant = {
   id: number
   name: string
   logo: string
   description: string
 }
 
-interface Props {
+type Props = {
   tenants: Tenant[]
   isHovered: boolean
   sidebarCollapsed: boolean
@@ -33,12 +33,13 @@ interface Props {
   onSwitch: (tenant: Tenant) => void
 }
 
-const TenantSwitcher: React.FC<Props> = ({ tenants, sidebarCollapsed, isHovered, currentTenant, onSwitch }) => {
+function TenantSwitcher(props: Props) {
+  const { tenants, sidebarCollapsed, isHovered, currentTenant, onSwitch } = props
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
   const theme = useTheme()
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget)
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget)
 
   const handleClose = () => setAnchorEl(null)
 
@@ -78,14 +79,14 @@ const TenantSwitcher: React.FC<Props> = ({ tenants, sidebarCollapsed, isHovered,
       <Badge
         color="secondary"
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
+          vertical: "top",
+          horizontal: "right",
         }}
         sx={{
-          display: 'flex',
-          '.MuiBadge-badge': {
-            animation: 'pulse 1s infinite',
-            transition: (theme) => theme.transitions.create(['all']),
+          display: "flex",
+          ".MuiBadge-badge": {
+            animation: "pulse 1s infinite",
+            transition: (theme) => theme.transitions.create(["all"]),
           },
         }}
         variant="dot"
@@ -99,15 +100,15 @@ const TenantSwitcher: React.FC<Props> = ({ tenants, sidebarCollapsed, isHovered,
           onClick={handleClick}
           sx={{
             background: theme.palette.background.paper,
-            color: 'primary',
-            textAlign: 'left',
+            color: "primary",
+            textAlign: "left",
             minWidth: 40,
             px: 1.2,
             borderWidth: 1,
-            borderStyle: 'solid',
+            borderStyle: "solid",
             borderColor: theme.palette.background.paper,
-            '&:hover': {
-              color: 'primary.dark',
+            "&:hover": {
+              color: "primary.dark",
               background: theme.palette.background.paper,
               borderColor: theme.palette.background.paper,
             },
@@ -121,13 +122,13 @@ const TenantSwitcher: React.FC<Props> = ({ tenants, sidebarCollapsed, isHovered,
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        transformOrigin={{ vertical: "top", horizontal: "center" }}
         slotProps={{
           paper: {
             sx: {
               width: 380,
-              '.MuiList-root': {
+              ".MuiList-root": {
                 p: 0,
               },
             },
@@ -148,7 +149,7 @@ const TenantSwitcher: React.FC<Props> = ({ tenants, sidebarCollapsed, isHovered,
               selected={currentTenant.id === tenant.id}
               sx={{
                 pl: 1,
-                borderRadius: (theme) => theme.shape.borderRadius + 'px',
+                borderRadius: (theme) => `${theme.shape.borderRadius}px`,
               }}
               key={tenant.id}
               onClick={() => handleTenantSelect(tenant)}

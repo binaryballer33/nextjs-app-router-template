@@ -1,21 +1,21 @@
-'use client'
+"use client"
 
-import WarningTwoToneIcon from '@mui/icons-material/WarningTwoTone'
-import WestRoundedIcon from '@mui/icons-material/WestRounded'
-import { Box, Button, Container, Divider, Stack, Typography } from '@mui/material'
-import { useTranslation } from 'react-i18next'
-import { RouterLink } from 'src/components/base/router-link'
-import { AvatarState } from 'src/components/base/styles/avatar'
-import { routes } from 'src/router/navigation-routes'
+import WarningTwoToneIcon from "@mui/icons-material/WarningTwoTone"
+import WestRoundedIcon from "@mui/icons-material/WestRounded"
+import { Box, Button, Container, Divider, Stack, Typography } from "@mui/material"
+import { useTranslation } from "react-i18next"
+import RouterLink from "src/components/base/router-link"
+import { AvatarState } from "src/components/base/styles/avatar"
+import routes from "src/router/navigation-routes"
 
-const Page = () => {
+function Page() {
   const { t } = useTranslation()
 
   return (
     <Container maxWidth="sm">
       <Stack
         spacing={2}
-        height={'100dvh'}
+        height="100dvh"
         justifyContent="center"
         alignItems="center"
         direction="column"
@@ -42,10 +42,10 @@ const Page = () => {
                 px: { xs: 0, sm: 2, md: 3 },
               }}
             >
-              {t('Page not found')}
+              {t("Page not found")}
             </Typography>
             <Typography color="text.secondary" variant="h4" fontWeight={500}>
-              {t('We moved the content to a different page')}
+              {t("We moved the content to a different page")}
             </Typography>
           </Box>
           <Divider>
@@ -54,7 +54,7 @@ const Page = () => {
                 borderWidth: 4,
                 width: 60,
                 borderRadius: 22,
-                borderColor: 'primary.main',
+                borderColor: "primary.main",
               }}
             />
           </Divider>
@@ -66,7 +66,7 @@ const Page = () => {
               href={routes.index}
               startIcon={<WestRoundedIcon />}
             >
-              {t('Go to homepage')}
+              {t("Go to homepage")}
             </Button>
           </Box>
         </Stack>

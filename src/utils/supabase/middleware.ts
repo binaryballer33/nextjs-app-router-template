@@ -1,6 +1,6 @@
-import { createServerClient } from '@supabase/ssr'
-import { NextResponse, type NextRequest } from 'next/server'
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from '../secrets'
+import { createServerClient } from "@supabase/ssr"
+import { NextResponse, type NextRequest } from "next/server"
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from "../secrets"
 
 /*
   Docs: https://supabase.com/docs/guides/auth/server-side/nextjs
@@ -13,7 +13,7 @@ import { SUPABASE_ANON_KEY, SUPABASE_URL } from '../secrets'
 
     Passing the refreshed Auth token to the browser, so it replaces the old token. This is accomplished with response.cookies.set
 */
-export async function updateSession(request: NextRequest) {
+export default async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   })
@@ -25,7 +25,7 @@ export async function updateSession(request: NextRequest) {
       },
       setAll(cookiesToSet) {
         // Set the cookies on the request object
-        cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
+        cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
 
         // Create a new response object with the request object that has the updated cookies
         supabaseResponse = NextResponse.next({
@@ -41,13 +41,11 @@ export async function updateSession(request: NextRequest) {
   // IMPORTANT: Avoid writing any logic between createServerClient and
   // supabase.auth.getUser(). A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
-  const { data: user, error } = await supabase.auth.getUser()
-
-  if (!user) {
-    // no user, potentially respond by redirecting the user to the login page
-    return NextResponse.redirect('/login')
-  }
+  if (!user) return NextResponse.redirect(new URL("/login", request.url))
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
   // creating a new response object with NextResponse.next() make sure to:
@@ -61,6 +59,5 @@ export async function updateSession(request: NextRequest) {
   //    return myNewResponse
   // If this is not done, you may be causing the browser and server to go out
   // of sync and terminate the user's session prematurely!
-
   return supabaseResponse
 }

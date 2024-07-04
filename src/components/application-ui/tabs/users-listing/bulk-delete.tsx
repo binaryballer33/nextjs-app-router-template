@@ -1,7 +1,7 @@
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
-import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded'
-import ReplayRoundedIcon from '@mui/icons-material/ReplayRounded'
-import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded'
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded"
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded"
+import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded"
+import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded"
 import {
   alpha,
   Box,
@@ -16,19 +16,19 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from '@mui/material'
-import React from 'react'
-import toast from 'react-hot-toast'
-import { useTranslation } from 'react-i18next'
-import { AvatarState } from 'src/components/base/styles/avatar'
-import { ButtonIcon } from 'src/components/base/styles/button-icon'
-import AlertDialogContent from './alert-dialog-content'
+} from "@mui/material"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
+import { AvatarState } from "src/components/base/styles/avatar"
+import ButtonIcon from "src/components/base/styles/button-icon"
+import AlertDialogContent from "./alert-dialog-content"
 
-const BulkDelete = () => {
+function BulkDelete() {
   const { t } = useTranslation()
   const theme = useTheme()
-  const smUp = useMediaQuery(theme.breakpoints.up('sm'))
-  const [open, setOpen] = React.useState(false)
+  const smUp = useMediaQuery(theme.breakpoints.up("sm"))
+  const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -42,10 +42,10 @@ const BulkDelete = () => {
     setOpen(false)
     toast.custom(
       (t) => (
-        <Card elevation={21} className={`${t.visible ? 'animate-enter' : 'animate-leave'}`}>
+        <Card elevation={21} className={`${t.visible ? "animate-enter" : "animate-leave"}`}>
           <Box
             sx={{
-              position: 'relative',
+              position: "relative",
               minWidth: 320,
               maxWidth: 340,
             }}
@@ -54,7 +54,7 @@ const BulkDelete = () => {
               color="primary"
               sx={{
                 p: 0.2,
-                position: 'absolute',
+                position: "absolute",
                 right: (theme) => theme.spacing(1),
                 top: (theme) => theme.spacing(1),
               }}
@@ -67,10 +67,10 @@ const BulkDelete = () => {
               sx={{
                 px: 2,
                 py: 1.5,
-                display: 'flex',
-                transition: 'none',
-                alignItems: 'flex-start',
-                '&:hover': {
+                display: "flex",
+                transition: "none",
+                alignItems: "flex-start",
+                "&:hover": {
                   backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.01),
                 },
               }}
@@ -100,7 +100,7 @@ const BulkDelete = () => {
                     color="secondary"
                     size="small"
                     sx={{
-                      color: 'primary.main',
+                      color: "primary.main",
                     }}
                     startIcon={<ReplayRoundedIcon fontSize="small" />}
                     onClick={() => toast.dismiss(t.id)}
@@ -114,7 +114,7 @@ const BulkDelete = () => {
         </Card>
       ),
       {
-        position: 'top-right',
+        position: "top-right",
       },
     )
   }
@@ -127,17 +127,17 @@ const BulkDelete = () => {
           color="secondary"
           size="small"
           startIcon={<DeleteOutlineRoundedIcon fontSize="small" />}
-          sx={{ color: 'error.main' }}
+          sx={{ color: "error.main" }}
           onClick={handleClickOpen}
         >
-          {t('Delete selected')}
+          {t("Delete selected")}
         </Button>
       ) : (
-        <Tooltip arrow placement="top" title={t('Delete selected')}>
+        <Tooltip arrow placement="top" title={t("Delete selected")}>
           <ButtonIcon
             variant="outlined"
             color="error"
-            sx={{ color: 'error.main' }}
+            sx={{ color: "error.main" }}
             size="small"
             startIcon={<DeleteOutlineRoundedIcon fontSize="small" />}
             onClick={handleClickOpen}
@@ -151,8 +151,8 @@ const BulkDelete = () => {
         maxWidth="sm"
         fullWidth
         sx={{
-          '.MuiDialog-container': {
-            alignItems: { xs: 'flex-end', sm: 'center' },
+          ".MuiDialog-container": {
+            alignItems: { xs: "flex-end", sm: "center" },
           },
         }}
       >
@@ -162,10 +162,10 @@ const BulkDelete = () => {
         <DialogActions
           sx={{
             backgroundColor: (theme) =>
-              theme.palette.mode === 'dark' ? alpha(theme.palette.neutral[25], 0.02) : 'neutral.25',
-            flexDirection: { xs: 'column-reverse', sm: 'row' },
+              theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.02) : "neutral.25",
+            flexDirection: { xs: "column-reverse", sm: "row" },
 
-            '& > :not(:first-of-type)': {
+            "& > :not(:first-of-type)": {
               marginLeft: { xs: 0, sm: theme.spacing(1) },
               marginBottom: { xs: theme.spacing(1), sm: 0 },
             },

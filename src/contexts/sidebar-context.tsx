@@ -1,8 +1,8 @@
-import { usePathname } from 'next/navigation'
-import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react'
+import { usePathname } from "next/navigation"
+import { createContext, ReactNode, useContext, useEffect, useState } from "react"
 
 // Context structure
-interface SidebarContextType {
+type SidebarContextType = {
   isSidebarCollapsed: boolean
   isSidebarHovered: boolean
   toggleSidebarCollapsed: () => void
@@ -11,11 +11,11 @@ interface SidebarContextType {
 
 const SidebarContext = createContext<SidebarContextType>(null!)
 
-interface SidebarProviderProps {
+type SidebarProviderProps = {
   children: ReactNode
 }
 
-export const SidebarProvider: React.FC<SidebarProviderProps> = ({ children }) => {
+export default function SidebarProvider({ children }: SidebarProviderProps) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const [isSidebarHovered, setIsSidebarHovered] = useState(false)
   const pathname = usePathname()
@@ -27,20 +27,18 @@ export const SidebarProvider: React.FC<SidebarProviderProps> = ({ children }) =>
 
   // Handle hover state persistence on route changes
   useEffect(() => {
-    if (isSidebarCollapsed) {
-      setIsSidebarHovered(false)
-    }
+    if (isSidebarCollapsed) setIsSidebarHovered(false)
   }, [pathname, isSidebarCollapsed])
 
   // Toggle hover state
   const toggleSidebarHover = (hovered: boolean) => {
-    if (isSidebarCollapsed) {
-      setIsSidebarHovered(hovered)
-    }
+    if (isSidebarCollapsed) setIsSidebarHovered(hovered)
   }
 
   return (
     <SidebarContext.Provider
+      // TODO: come back and fix this
+      // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{ isSidebarCollapsed, isSidebarHovered, toggleSidebarCollapsed, toggleSidebarHover }}
     >
       {children}

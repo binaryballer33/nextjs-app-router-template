@@ -1,10 +1,11 @@
-'use client'
+"use client"
 
-import { createContext, ReactNode, useCallback, useEffect, useState } from 'react'
-import type { User } from 'src/models/user'
-import { createClient as createSupabaseClient } from 'src/utils/supabase/client'
+/* eslint-disable no-console */
+import { createContext, ReactNode, useCallback, useEffect, useState } from "react"
+import type { User } from "src/models/user"
+import createSupabaseClient from "src/utils/supabase/client"
 
-export interface AuthContextValue {
+export type AuthContextValue = {
   user: User | null
   error: string | null
   isLoading: boolean
@@ -13,11 +14,11 @@ export interface AuthContextValue {
 
 export const UserContext = createContext<AuthContextValue | undefined>(undefined)
 
-interface AuthProviderProps {
+type AuthProviderProps = {
   children: ReactNode
 }
 
-export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
+export default function AuthProvider({ children }: AuthProviderProps) {
   const [supabaseClient] = useState(createSupabaseClient())
   const [state, setState] = useState<{
     user: User | null
@@ -44,20 +45,20 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
         return
       }
 
-      if (data?.session?.user) {
+      if (data?.session?.user)
         // if there is a user in the session, set the user to the user in the session
         setState((prev) => ({ ...prev, user: data.session.user as unknown as User, error: null }))
-      } else {
-        // if there is no user in the session, set the user to null
-        setState((prev) => ({ ...prev, user: null, error: null }))
-      }
+      // if there is no user in the session, set the user to null
+      else setState((prev) => ({ ...prev, user: null, error: null }))
     } catch (err) {
       console.error(err)
       setState((prev) => ({ ...prev, user: null, error: `Error With Checking Session In Auth Provider ${err}` }))
     }
   }, [supabaseClient.auth])
 
+  // TODO: come back and figure these issues out
   useEffect(() => {
+    // eslint-disable-next-line no-extra-semi
     ;(async () => {
       await checkSession().catch(() => {})
       setState((prev) => ({ ...prev, isLoading: false }))
@@ -66,6 +67,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
 
   return (
     <UserContext.Provider
+      // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
         ...state,
         checkSession,

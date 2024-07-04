@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import LockIcon from '@mui/icons-material/Lock'
-import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
+import LockIcon from "@mui/icons-material/Lock"
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded"
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded"
 import {
   AppBar,
   Avatar,
@@ -15,42 +15,41 @@ import {
   Tooltip,
   useMediaQuery,
   useTheme,
-} from '@mui/material'
-import { useRouter } from 'next/navigation'
-import { Fragment } from 'react'
-import { DividerLight } from 'src/components/base/styles/card'
-import { useAuth } from 'src/hooks/use-auth'
-import { useDialog } from 'src/hooks/use-dialog'
-import { useMobileNav } from 'src/hooks/use-mobile-nav'
-import { usePopover } from 'src/hooks/use-popover'
-import { useHorizontalNavBarItems } from 'src/router/horizontal-navbar-routes'
-import { neutral } from 'src/theme/theme'
-import { DesktopNavBar } from './desktop-navbar/desktop-navbar'
-import { MobileNavBar } from './mobile-navbar/mobile-navbar'
-import LanguageDropdown from './navbar-icons/language-icon/language-icon-dropdown'
-import { Logo } from './navbar-icons/logo/logo'
-import { ProfileIconDropdown } from './navbar-icons/profile-icon-dropdown/profile-icon-dropdown-content'
-import { BasicSpotlightSearch } from './navbar-icons/search-icon/search-icon'
-import ThemeModeToggler from './navbar-icons/theme-mode-toggler/theme-mode-toggler'
+} from "@mui/material"
+import { useRouter } from "next/navigation"
+import { DividerLight } from "src/components/base/styles/card"
+import useAuth from "src/hooks/use-auth"
+import useDialog from "src/hooks/use-dialog"
+import useMobileNav from "src/hooks/use-mobile-nav"
+import usePopover from "src/hooks/use-popover"
+import useHorizontalNavBarItems from "src/router/horizontal-navbar-routes"
+import { neutral } from "src/theme/theme"
+import DesktopNavBar from "./desktop-navbar/desktop-navbar"
+import MobileNavBar from "./mobile-navbar/mobile-navbar"
+import LanguageDropdown from "./navbar-icons/language-icon/language-icon-dropdown"
+import Logo from "./navbar-icons/logo/logo"
+import ProfileIconDropdown from "./navbar-icons/profile-icon-dropdown/profile-icon-dropdown-content"
+import BasicSpotlightSearch from "./navbar-icons/search-icon/search-icon"
+import ThemeModeToggler from "./navbar-icons/theme-mode-toggler/theme-mode-toggler"
 
 const HeaderWrapper = styled(AppBar)(({ theme }) => ({
-  display: 'flex',
-  position: 'sticky',
+  display: "flex",
+  position: "sticky",
   top: 0,
   background: theme.palette.background.default,
-  color: theme.palette.mode === 'dark' ? neutral[100] : neutral[900],
+  color: theme.palette.mode === "dark" ? neutral[100] : neutral[900],
   zIndex: 10,
   paddingLeft: theme.spacing(1),
   paddingRight: theme.spacing(1),
 }))
 
-export const Header = () => {
+export default function Header() {
   const router = useRouter()
-  const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'))
-  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'))
+  const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"))
+  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("lg"))
   const theme = useTheme()
   const dialog = useDialog()
-  const navbar_items = useHorizontalNavBarItems()
+  const navbarItems = useHorizontalNavBarItems()
   const popover = usePopover<HTMLButtonElement>()
   const { handleClose, handleOpen, open } = useMobileNav()
   const { user } = useAuth()
@@ -66,7 +65,7 @@ export const Header = () => {
               <DividerLight
                 sx={{
                   height: 24,
-                  alignSelf: 'center',
+                  alignSelf: "center",
                 }}
                 orientation="vertical"
                 flexItem
@@ -75,12 +74,12 @@ export const Header = () => {
             alignItems="center"
             spacing={2}
           >
-            <Box sx={{ transform: 'scale(.86)' }}>
+            <Box sx={{ transform: "scale(.86)" }}>
               <Logo />
             </Box>
 
             {/* Desktop NavBar */}
-            {lgUp && <DesktopNavBar navbar_items={navbar_items} />}
+            {lgUp && <DesktopNavBar navbarItems={navbarItems} />}
           </Stack>
 
           {/* Header Icons Section */}
@@ -90,7 +89,7 @@ export const Header = () => {
               <DividerLight
                 sx={{
                   height: 24,
-                  alignSelf: 'center',
+                  alignSelf: "center",
                 }}
                 orientation="vertical"
                 flexItem
@@ -103,37 +102,35 @@ export const Header = () => {
             <>
               <Stack display="flex" spacing={1} direction="row" alignItems="center">
                 {smUp && (
-                  <>
-                    <IconButton
-                      onClick={dialog.handleOpen}
-                      color="inherit"
-                      sx={{
-                        '&:hover': {
-                          background: theme.palette.primary.main,
-                          color: theme.palette.primary.contrastText,
-                        },
-                        p: 1,
-                        '& .MuiSvgIcon-root': {
-                          fontSize: 22,
-                        },
-                      }}
-                    >
-                      <Tooltip title="Search The Page">
-                        <SearchRoundedIcon />
-                      </Tooltip>
-                    </IconButton>
-                  </>
+                  <IconButton
+                    onClick={dialog.handleOpen}
+                    color="inherit"
+                    sx={{
+                      "&:hover": {
+                        background: theme.palette.primary.main,
+                        color: theme.palette.primary.contrastText,
+                      },
+                      p: 1,
+                      "& .MuiSvgIcon-root": {
+                        fontSize: 22,
+                      },
+                    }}
+                  >
+                    <Tooltip title="Search The Page">
+                      <SearchRoundedIcon />
+                    </Tooltip>
+                  </IconButton>
                 )}
               </Stack>
 
               <LanguageDropdown
                 sx={{
-                  '&:hover': {
+                  "&:hover": {
                     background: theme.palette.primary.main,
                     color: theme.palette.primary.contrastText,
                   },
                   p: 1,
-                  '& .MuiSvgIcon-root': {
+                  "& .MuiSvgIcon-root": {
                     fontSize: 22,
                   },
                 }}
@@ -150,21 +147,21 @@ export const Header = () => {
                   color="primary"
                   sx={{
                     p: 0,
-                    '&:hover': {
+                    "&:hover": {
                       boxShadow: `0 0 0 3px ${theme.palette.primary.main}`,
                     },
                   }}
-                  aria-controls={popover.open ? 'profile-menu' : undefined}
+                  aria-controls={popover.open ? "profile-menu" : undefined}
                   aria-haspopup="true"
-                  aria-expanded={popover.open ? 'true' : undefined}
+                  aria-expanded={popover.open ? "true" : undefined}
                   onClick={popover.handleOpen}
                   ref={popover.anchorRef}
                 >
                   <Avatar
-                    alt={'Shaquille Mandy'}
-                    src={''}
+                    alt="Shaquille Mandy"
+                    src=""
                     sx={{
-                      borderRadius: 'inherit',
+                      borderRadius: "inherit",
                       height: 36,
                       width: 36,
                     }}
@@ -173,7 +170,7 @@ export const Header = () => {
               </Tooltip>
             ) : (
               <Tooltip title="Login">
-                <IconButton onClick={() => router.push('/login')}>
+                <IconButton onClick={() => router.push("/login")}>
                   <LockIcon color="primary" />
                 </IconButton>
               </Tooltip>
@@ -185,12 +182,12 @@ export const Header = () => {
                 onClick={handleOpen}
                 color="inherit"
                 sx={{
-                  '&:hover': {
+                  "&:hover": {
                     background: theme.palette.primary.main,
                     color: theme.palette.primary.contrastText,
                   },
                   p: 1,
-                  '& .MuiSvgIcon-root': {
+                  "& .MuiSvgIcon-root": {
                     fontSize: 22,
                   },
                 }}
@@ -201,17 +198,17 @@ export const Header = () => {
           </Stack>
 
           {/* NavBar Dropdowns and Overlays */}
-          <Fragment>
+          <>
             <BasicSpotlightSearch onClose={dialog.handleClose} open={dialog.open} />
 
             <ProfileIconDropdown
-              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-              transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+              transformOrigin={{ vertical: "top", horizontal: "center" }}
               anchorEl={popover.anchorRef.current}
               onClose={popover.handleClose}
               open={popover.open}
             />
-          </Fragment>
+          </>
         </Stack>
       </HeaderWrapper>
 
@@ -227,14 +224,14 @@ export const Header = () => {
           }}
           PaperProps={{
             sx: {
-              overflow: 'hidden',
+              overflow: "hidden",
               backgroundColor: neutral[900],
               boxShadow: (theme) => theme.shadows[0],
             },
           }}
           variant="temporary"
         >
-          <MobileNavBar navbar_items={navbar_items} />
+          <MobileNavBar navbarItems={navbarItems} />
         </SwipeableDrawer>
       )}
     </>

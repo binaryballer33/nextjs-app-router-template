@@ -1,9 +1,10 @@
-import CheckBoxOutlineBlankRoundedIcon from '@mui/icons-material/CheckBoxOutlineBlankRounded'
-import CheckBoxRoundedIcon from '@mui/icons-material/CheckBoxRounded'
-import IndeterminateCheckBoxRoundedIcon from '@mui/icons-material/IndeterminateCheckBoxRounded'
-import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded'
-import { backdropClasses, createTheme, inputLabelClasses, SliderThumb, tableCellClasses } from '@mui/material'
-import type { Components } from '@mui/material/styles/components'
+import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutlineBlankRounded"
+import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded"
+import IndeterminateCheckBoxRoundedIcon from "@mui/icons-material/IndeterminateCheckBoxRounded"
+import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded"
+import { backdropClasses, createTheme, inputLabelClasses, SliderThumb, tableCellClasses } from "@mui/material"
+import type { Components } from "@mui/material/styles/components"
+import { HTMLAttributes } from "react"
 
 // Common For Modified Components MUI Theme
 export const BORDER_RADIUS = 6
@@ -11,7 +12,7 @@ export const SPACING_UNIT = 10
 
 const theme = createTheme()
 
-interface ThumbComponentProps extends React.HTMLAttributes<unknown> {}
+type ThumbComponentProps = HTMLAttributes<unknown>
 
 function ThumbComponent(props: ThumbComponentProps) {
   const { children, ...other } = props
@@ -24,12 +25,12 @@ function ThumbComponent(props: ThumbComponentProps) {
 }
 
 // alot of modifications to the default components, use if you want to customize the default components
-export const modified_components = (): Components => {
+export const modifiedComponents = (): Components => {
   return {
     MuiChartsLegend: {
       styleOverrides: {
         root: {
-          '& .MuiChartsLegend-mark': {
+          "& .MuiChartsLegend-mark": {
             rx: BORDER_RADIUS / 2,
           },
         },
@@ -61,7 +62,7 @@ export const modified_components = (): Components => {
       styleOverrides: {
         root: {
           [`&:not(.${backdropClasses.invisible})`]: {
-            backdropFilter: 'blur(5px)',
+            backdropFilter: "blur(5px)",
           },
         },
       },
@@ -69,7 +70,7 @@ export const modified_components = (): Components => {
     MuiCircularProgress: {
       styleOverrides: {
         circle: {
-          strokeLinecap: 'round',
+          strokeLinecap: "round",
         },
       },
     },
@@ -83,25 +84,25 @@ export const modified_components = (): Components => {
           borderRadius: BORDER_RADIUS,
         },
         dashed: {
-          backgroundSize: '8px 8px',
+          backgroundSize: "8px 8px",
         },
       },
     },
     MuiTableCell: {
       styleOverrides: {
         root: {
-          padding: '18px 14px',
+          padding: "18px 14px",
         },
       },
     },
     MuiTableHead: {
       styleOverrides: {
         root: {
-          borderBottom: 'none',
+          borderBottom: "none",
           [`& .${tableCellClasses.root}`]: {
             fontSize: 13,
             lineHeight: 1,
-            textTransform: 'uppercase',
+            textTransform: "uppercase",
             paddingTop: 16,
             paddingBottom: 16,
           },
@@ -130,7 +131,7 @@ export const modified_components = (): Components => {
     MuiFormControl: {
       styleOverrides: {
         root: {
-          '& > label.MuiTypography-gutterBottom': {
+          "& > label.MuiTypography-gutterBottom": {
             marginBottom: SPACING_UNIT,
           },
         },
@@ -145,55 +146,55 @@ export const modified_components = (): Components => {
       styleOverrides: {
         root: {
           height: 6,
-          padding: '13px 0',
+          padding: "13px 0",
 
-          '& .MuiSlider-mark': {
+          "& .MuiSlider-mark": {
             height: 2,
             width: 2,
           },
 
-          '& .MuiSlider-markActive': {
+          "& .MuiSlider-markActive": {
             height: 4,
             width: 2,
           },
 
-          '& .MuiSlider-thumb': {
+          "& .MuiSlider-thumb": {
             height: 27,
             width: 27,
 
-            '& .MuiSlider-valueLabel': {
+            "& .MuiSlider-valueLabel": {
               fontWeight: 500,
               borderRadius: BORDER_RADIUS,
               minWidth: 38,
-              padding: '4px 6px',
+              padding: "4px 6px",
             },
 
-            '&:after': {
-              display: 'none',
+            "&:after": {
+              display: "none",
             },
 
-            '& i': {
+            "& i": {
               height: 6,
               width: 6,
               marginLeft: 1,
               marginRight: 1,
               borderRadius: BORDER_RADIUS,
               opacity: 0.6,
-              transition: theme.transitions.create(['opacity'], {
+              transition: theme.transitions.create(["opacity"], {
                 duration: 150,
               }),
             },
 
-            '&:hover, &.Mui-focusVisible': {
-              '& i': {
+            "&:hover, &.Mui-focusVisible": {
+              "& i": {
                 opacity: 1,
               },
             },
           },
-          '& .MuiSlider-track': {
+          "& .MuiSlider-track": {
             height: 6,
           },
-          '& .MuiSlider-rail': {
+          "& .MuiSlider-rail": {
             opacity: 1,
             height: 3,
           },
@@ -206,23 +207,23 @@ export const modified_components = (): Components => {
           width: 30,
           height: 18,
 
-          '&:active': {
-            '& .MuiSwitch-thumb': {
+          "&:active": {
+            "& .MuiSwitch-thumb": {
               width: 16,
             },
-            '& .MuiSwitch-switchBase.Mui-checked': {
-              transform: 'translateX(10px)',
+            "& .MuiSwitch-switchBase.Mui-checked": {
+              transform: "translateX(10px)",
             },
           },
-          '& .MuiSwitch-thumb': {
+          "& .MuiSwitch-thumb": {
             width: 14,
             height: 14,
           },
 
-          '& .MuiSwitch-switchBase': {
+          "& .MuiSwitch-switchBase": {
             padding: 2,
-            '&.Mui-checked': {
-              transform: 'translateX(12px)',
+            "&.Mui-checked": {
+              transform: "translateX(12px)",
             },
           },
         },
@@ -231,44 +232,44 @@ export const modified_components = (): Components => {
           height: 24,
           padding: 0,
           margin: SPACING_UNIT / 2,
-          display: 'flex',
+          display: "flex",
 
-          '&:active': {
-            '& .MuiSwitch-thumb': {
+          "&:active": {
+            "& .MuiSwitch-thumb": {
               width: 22,
             },
-            '& .MuiSwitch-switchBase.Mui-checked:not(.Mui-disabled)': {
-              transform: 'translateX(16px)',
+            "& .MuiSwitch-switchBase.Mui-checked:not(.Mui-disabled)": {
+              transform: "translateX(16px)",
             },
-            '& .MuiSwitch-switchBase.Mui-disabled .MuiSwitch-thumb': {
+            "& .MuiSwitch-switchBase.Mui-disabled .MuiSwitch-thumb": {
               width: 18,
             },
           },
-          '& .MuiSwitch-switchBase': {
+          "& .MuiSwitch-switchBase": {
             padding: 3,
-            '&.Mui-checked': {
-              transform: 'translateX(20px)',
+            "&.Mui-checked": {
+              transform: "translateX(20px)",
 
-              '& + .MuiSwitch-track': {
+              "& + .MuiSwitch-track": {
                 opacity: 1,
               },
             },
           },
-          '& .MuiSwitch-thumb': {
+          "& .MuiSwitch-thumb": {
             width: 18,
             height: 18,
             borderRadius: 32,
-            transition: theme.transitions.create(['width', 'translateX'], {
+            transition: theme.transitions.create(["width", "translateX"], {
               duration: 150,
             }),
           },
-          '& .MuiSwitch-track': {
+          "& .MuiSwitch-track": {
             borderRadius: 32,
             opacity: 1,
-            transition: theme.transitions.create(['background-color'], {
+            transition: theme.transitions.create(["background-color"], {
               duration: 150,
             }),
-            boxSizing: 'border-box',
+            boxSizing: "border-box",
           },
         },
       },
@@ -276,10 +277,10 @@ export const modified_components = (): Components => {
     MuiRadio: {
       styleOverrides: {
         root: {
-          '&:hover': {
-            backgroundColor: 'transparent',
+          "&:hover": {
+            backgroundColor: "transparent",
 
-            '& > span': {
+            "& > span": {
               borderRadius: 24,
             },
           },
@@ -321,20 +322,20 @@ export const modified_components = (): Components => {
     },
     MuiFormHelperText: {
       defaultProps: {
-        variant: 'standard',
+        variant: "standard",
       },
       styleOverrides: {
         root: {
-          textTransform: 'initial',
-          marginTop: '5px',
+          textTransform: "initial",
+          marginTop: "5px",
         },
       },
     },
     MuiInputAdornment: {
       styleOverrides: {
         root: {
-          '.MuiInputBase-root': {
-            boxShadow: 'none',
+          ".MuiInputBase-root": {
+            boxShadow: "none",
           },
         },
       },
@@ -349,17 +350,17 @@ export const modified_components = (): Components => {
             [`&.${inputLabelClasses.filled}`]: {
               fontSize: 17,
 
-              '&.MuiInputLabel-sizeSmall': {
+              "&.MuiInputLabel-sizeSmall": {
                 fontSize: 15,
               },
 
-              '&.MuiInputLabel-sizeMedium + .MuiOutlinedInput-root > .MuiOutlinedInput-input': {
+              "&.MuiInputLabel-sizeMedium + .MuiOutlinedInput-root > .MuiOutlinedInput-input": {
                 paddingTop: 24,
                 paddingBottom: 8,
                 paddingLeft: 12,
               },
 
-              '&.MuiInputLabel-sizeSmall + .MuiOutlinedInput-root .MuiOutlinedInput-input': {
+              "&.MuiInputLabel-sizeSmall + .MuiOutlinedInput-root .MuiOutlinedInput-input": {
                 paddingTop: 20,
                 paddingBottom: 6,
                 paddingLeft: 12,
@@ -378,7 +379,7 @@ export const modified_components = (): Components => {
           fontWeight: 500,
         },
         root: {
-          '&.Mui-focused': {
+          "&.Mui-focused": {
             zIndex: 1,
           },
         },
@@ -390,11 +391,11 @@ export const modified_components = (): Components => {
       },
       styleOverrides: {
         root: {
-          '& .MuiOutlinedInput-root .MuiAutocomplete-endAdornment': {
+          "& .MuiOutlinedInput-root .MuiAutocomplete-endAdornment": {
             right: 14,
           },
 
-          '& .MuiOutlinedInput-root .MuiInputBase-inputSizeSmall + .MuiAutocomplete-endAdornment': {
+          "& .MuiOutlinedInput-root .MuiInputBase-inputSizeSmall + .MuiAutocomplete-endAdornment": {
             right: 7,
           },
         },
@@ -402,7 +403,7 @@ export const modified_components = (): Components => {
         listbox: {
           padding: SPACING_UNIT,
 
-          '& .MuiAutocomplete-option': {
+          "& .MuiAutocomplete-option": {
             borderRadius: BORDER_RADIUS,
             fontWeight: 500,
           },
@@ -420,12 +421,12 @@ export const modified_components = (): Components => {
       styleOverrides: {
         root: {
           borderRadius: BORDER_RADIUS,
-          transition: 'none',
-          borderStyle: 'solid',
+          transition: "none",
+          borderStyle: "solid",
           borderWidth: 1,
-          overflow: 'hidden',
-          '&:before, &:after': {
-            display: 'none',
+          overflow: "hidden",
+          "&:before, &:after": {
+            display: "none",
           },
         },
       },
@@ -433,8 +434,8 @@ export const modified_components = (): Components => {
     MuiInput: {
       styleOverrides: {
         underline: {
-          '&:before, &:after': {
-            display: 'none',
+          "&:before, &:after": {
+            display: "none",
           },
         },
       },
@@ -445,18 +446,18 @@ export const modified_components = (): Components => {
       },
       styleOverrides: {
         outlined: {
-          '&.MuiInput-input': {
+          "&.MuiInput-input": {
             borderRadius: BORDER_RADIUS,
-            transition: 'none',
-            borderStyle: 'solid',
+            transition: "none",
+            borderStyle: "solid",
             borderWidth: 1,
-            overflow: 'hidden',
+            overflow: "hidden",
             fontWeight: 500,
             paddingLeft: 14,
             paddingRight: 14,
             paddingTop: 16,
             paddingBottom: 16,
-            '&.MuiInputBase-inputSizeSmall': {
+            "&.MuiInputBase-inputSizeSmall": {
               paddingLeft: 14,
               paddingRight: 14,
               paddingTop: 8,
@@ -471,7 +472,7 @@ export const modified_components = (): Components => {
         root: {
           paddingTop: SPACING_UNIT,
           paddingBottom: SPACING_UNIT,
-          justifyContent: 'center',
+          justifyContent: "center",
         },
       },
     },
@@ -487,18 +488,18 @@ export const modified_components = (): Components => {
     MuiTab: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
+          textTransform: "none",
           padding: 0,
           minWidth: 0,
           marginLeft: SPACING_UNIT * 1.5,
           marginRight: SPACING_UNIT * 1.5,
           fontWeight: 500,
 
-          '&:first-of-type': {
+          "&:first-of-type": {
             marginLeft: 0,
           },
 
-          '&:last-of-type': {
+          "&:last-of-type": {
             marginRight: 0,
           },
         },
@@ -507,8 +508,8 @@ export const modified_components = (): Components => {
     MuiTabs: {
       styleOverrides: {
         root: {
-          '& + .MuiDivider-root': {
-            marginTop: '-1px',
+          "& + .MuiDivider-root": {
+            marginTop: "-1px",
           },
         },
 
@@ -526,7 +527,7 @@ export const modified_components = (): Components => {
             margin: 0,
           },
 
-          '.MuiTablePagination-toolbar': {
+          ".MuiTablePagination-toolbar": {
             minHeight: 0,
             margin: 0,
             padding: 0,
@@ -534,7 +535,7 @@ export const modified_components = (): Components => {
         },
 
         actions: {
-          '.MuiButtonBase-root': {
+          ".MuiButtonBase-root": {
             padding: SPACING_UNIT / 2,
           },
         },
@@ -554,10 +555,10 @@ export const modified_components = (): Components => {
     MuiCardActionArea: {
       styleOverrides: {
         root: {
-          transition: 'none !important',
+          transition: "none !important",
         },
         focusHighlight: {
-          transition: 'none',
+          transition: "none",
         },
       },
     },
@@ -570,9 +571,9 @@ export const modified_components = (): Components => {
     MuiList: {
       styleOverrides: {
         root: {
-          '.MuiListItem-root, .MuiListItemButton-root': {
-            '&:last-of-type + .MuiDivider-root': {
-              display: 'none',
+          ".MuiListItem-root, .MuiListItemButton-root": {
+            "&:last-of-type + .MuiDivider-root": {
+              display: "none",
             },
           },
         },
@@ -582,8 +583,8 @@ export const modified_components = (): Components => {
       styleOverrides: {
         root: {
           fontWeight: 600,
-          lineHeight: '36px',
-          textTransform: 'uppercase',
+          lineHeight: "36px",
+          textTransform: "uppercase",
           fontSize: 13,
         },
       },
@@ -596,11 +597,11 @@ export const modified_components = (): Components => {
           paddingTop: `calc(${SPACING_UNIT / 1.2}px - 1px)`,
           paddingBottom: `calc(${SPACING_UNIT / 1.2}px - 1px)`,
           fontSize: 14,
-          marginTop: '1px',
-          marginBottom: '1px',
+          marginTop: "1px",
+          marginBottom: "1px",
 
-          '&:hover .MuiListItemIcon-root, &.Mui-selected .MuiListItemIcon-root': {
-            color: 'inherit',
+          "&:hover .MuiListItemIcon-root, &.Mui-selected .MuiListItemIcon-root": {
+            color: "inherit",
           },
         },
       },
@@ -608,7 +609,7 @@ export const modified_components = (): Components => {
     MuiDivider: {
       styleOverrides: {
         wrapper: {
-          display: 'flex',
+          display: "flex",
         },
       },
     },
@@ -625,7 +626,7 @@ export const modified_components = (): Components => {
         root: {
           padding: SPACING_UNIT * 2,
 
-          '&:last-child': {
+          "&:last-child": {
             paddingBottom: SPACING_UNIT * 2,
           },
         },
@@ -638,7 +639,7 @@ export const modified_components = (): Components => {
           paddingRight: SPACING_UNIT * 2,
           paddingTop: SPACING_UNIT * 1.5,
           paddingBottom: SPACING_UNIT * 1.5,
-          alignSelf: 'flex-start',
+          alignSelf: "flex-start",
         },
       },
     },
@@ -646,24 +647,24 @@ export const modified_components = (): Components => {
       styleOverrides: {
         root: {
           padding: SPACING_UNIT * 2,
-          [theme.breakpoints.down('sm')]: {
-            flexDirection: 'column',
-            alignItems: 'flex-start',
+          [theme.breakpoints.down("sm")]: {
+            flexDirection: "column",
+            alignItems: "flex-start",
           },
         },
         action: {
-          display: 'flex',
+          display: "flex",
           gap: SPACING_UNIT,
           marginRight: 0,
-          alignSelf: 'center',
-          [theme.breakpoints.down('sm')]: {
+          alignSelf: "center",
+          [theme.breakpoints.down("sm")]: {
             marginTop: SPACING_UNIT * 1.5,
-            alignSelf: 'flex-start',
+            alignSelf: "flex-start",
           },
         },
         content: {
-          overflow: 'hidden',
-          width: '100%',
+          overflow: "hidden",
+          width: "100%",
         },
       },
     },
@@ -671,19 +672,19 @@ export const modified_components = (): Components => {
       styleOverrides: {
         root: {
           borderRadius: theme.shape.borderRadius,
-          boxShadow: 'none',
-          border: '1px solid',
+          boxShadow: "none",
+          border: "1px solid",
           borderColor: theme.palette.divider,
         },
         grouped: {
           border: 0,
-          '&.Mui-disabled': {
+          "&.Mui-disabled": {
             border: 0,
           },
-          '&:not(:first-of-type)': {
+          "&:not(:first-of-type)": {
             borderRadius: theme.shape.borderRadius,
           },
-          '&:first-of-type': {
+          "&:first-of-type": {
             borderRadius: theme.shape.borderRadius,
           },
         },
@@ -695,13 +696,13 @@ export const modified_components = (): Components => {
           margin: SPACING_UNIT / 3,
           border: 0,
           borderRadius: theme.shape.borderRadius,
-          textTransform: 'none',
+          textTransform: "none",
           fontWeight: 600,
           paddingTop: SPACING_UNIT / 2,
           paddingBottom: SPACING_UNIT / 2,
           paddingLeft: SPACING_UNIT,
           paddingRight: SPACING_UNIT,
-          whiteSpace: 'nowrap',
+          whiteSpace: "nowrap",
         },
       },
     },
@@ -713,11 +714,11 @@ export const modified_components = (): Components => {
           fontWeight: 500,
         },
         deleteIcon: {
-          color: 'inherit',
+          color: "inherit",
           fontSize: 16,
           opacity: 0.8,
-          '&:hover': {
-            color: 'inherit',
+          "&:hover": {
+            color: "inherit",
             opacity: 1,
           },
         },
@@ -726,10 +727,10 @@ export const modified_components = (): Components => {
           paddingRight: SPACING_UNIT * 1.5,
         },
         avatar: {
-          borderRadius: 'inherit',
+          borderRadius: "inherit",
 
-          color: 'inherit',
-          backgroundColor: 'inherit',
+          color: "inherit",
+          backgroundColor: "inherit",
         },
         avatarMedium: {
           marginLeft: SPACING_UNIT / 3,
@@ -747,9 +748,9 @@ export const modified_components = (): Components => {
           fontWeight: 600,
           fontSize: 12,
           borderRadius: theme.shape.borderRadius,
-          transition: 'none',
-          '&:active': {
-            boxShadow: 'none',
+          transition: "none",
+          "&:active": {
+            boxShadow: "none",
           },
         },
         sizeMedium: {
@@ -758,7 +759,7 @@ export const modified_components = (): Components => {
         sizeSmall: {
           height: SPACING_UNIT * 2.5,
         },
-        //@ts-ignore
+        // @ts-ignore
         outlinedDefault: {
           borderColor: theme.palette.divider,
           borderRadius: 50,
@@ -781,7 +782,7 @@ export const modified_components = (): Components => {
     MuiListItemButton: {
       styleOverrides: {
         root: {
-          transition: 'none',
+          transition: "none",
         },
       },
     },
@@ -804,13 +805,13 @@ export const modified_components = (): Components => {
     },
     MuiLink: {
       defaultProps: {
-        underline: 'none',
+        underline: "none",
       },
     },
     MuiPaginationItem: {
       styleOverrides: {
         root: {
-          transition: 'none',
+          transition: "none",
         },
       },
     },
@@ -820,57 +821,57 @@ export const modified_components = (): Components => {
       },
       styleOverrides: {
         root: {
-          textTransform: 'none',
-          transition: 'none',
+          textTransform: "none",
+          transition: "none",
           fontWeight: 600,
         },
         sizeSmall: {
-          padding: '4px 12px',
+          padding: "4px 12px",
           fontSize: 13,
         },
         sizeMedium: {
-          padding: '8px 16px',
+          padding: "8px 16px",
         },
         sizeLarge: {
-          padding: '10px 20px',
+          padding: "10px 20px",
         },
       },
     },
     MuiIconButton: {
       styleOverrides: {
         root: {
-          borderRadius: '50%',
-          transition: 'none',
-          '.MuiTouchRipple-root > *': {
-            display: 'none',
+          borderRadius: "50%",
+          transition: "none",
+          ".MuiTouchRipple-root > *": {
+            display: "none",
           },
         },
       },
     },
     MuiCssBaseline: {
       styleOverrides: {
-        '*': {
-          boxSizing: 'border-box',
+        "*": {
+          boxSizing: "border-box",
         },
         html: {
-          MozOsxFontSmoothing: 'grayscale',
-          WebkitFontSmoothing: 'antialiased',
+          MozOsxFontSmoothing: "grayscale",
+          WebkitFontSmoothing: "antialiased",
         },
 
-        '#__next': {
-          display: 'flex',
-          minHeight: '100vh',
+        "#__next": {
+          display: "flex",
+          minHeight: "100vh",
         },
 
-        '#nprogress': {
-          pointerEvents: 'none',
+        "#nprogress": {
+          pointerEvents: "none",
         },
-        '#nprogress .bar': {
+        "#nprogress .bar": {
           height: 4,
           left: 0,
-          position: 'fixed',
+          position: "fixed",
           top: 0,
-          width: '100%',
+          width: "100%",
           zIndex: 2000,
         },
       },

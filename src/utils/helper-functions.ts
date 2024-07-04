@@ -1,6 +1,6 @@
-import { redirect } from 'next/navigation'
-import { createClient as createBrowserClient } from './supabase/client'
-import { createClient as createServerClient } from './supabase/server'
+import { redirect } from "next/navigation"
+import createBrowserClient from "./supabase/client"
+import createServerClient from "./supabase/server"
 
 /*
   SERVER COMPONENT function to check if user is logged in,
@@ -10,7 +10,7 @@ export async function checkLoginStatusServer() {
   const supabaseServerClient = createServerClient()
   const { data, error } = await supabaseServerClient.auth.getUser()
 
-  if (error || !data?.user) redirect('/login')
+  if (error || !data?.user) redirect("/login")
 
   return { data, supabaseServerClient }
 }
@@ -23,7 +23,7 @@ export async function checkLoginStatusClient() {
   const supabaseBrowserClient = createBrowserClient()
   const { data, error } = await supabaseBrowserClient.auth.getSession()
 
-  if (error || !data?.session?.user) redirect('/login')
+  if (error || !data?.session?.user) redirect("/login")
 
   return { data, supabaseBrowserClient }
 }

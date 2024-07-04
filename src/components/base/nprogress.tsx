@@ -1,26 +1,26 @@
-'use client'
+"use client"
 
-import NProgress from 'nprogress'
-import * as React from 'react'
+/* eslint-disable no-undef */
+import NProgress from "nprogress"
+import { useEffect } from "react"
 
 type PushStateInput = [data: unknown, unused: string, url?: string | URL | null | undefined]
 
-function CustomNProgress() {
-  React.useEffect(() => {
+export default function CustomNProgress() {
+  useEffect(() => {
     NProgress.configure({ showSpinner: false })
 
     const handleAnchorClick = (event: MouseEvent) => {
       const targetUrl = (event.currentTarget as HTMLAnchorElement).href
       const currentUrl = window.location.href
-      if (targetUrl !== currentUrl) {
-        NProgress.start()
-      }
+      if (targetUrl !== currentUrl) NProgress.start()
     }
 
+    // @ts-ignore
     const handleMutation: MutationCallback = () => {
-      const anchorElements: NodeListOf<HTMLAnchorElement> = document.querySelectorAll('a[href]')
+      const anchorElements: NodeListOf<HTMLAnchorElement> = document.querySelectorAll("a[href]")
 
-      anchorElements.forEach((anchor) => anchor.addEventListener('click', handleAnchorClick))
+      anchorElements.forEach((anchor) => anchor.addEventListener("click", handleAnchorClick))
     }
 
     const mutationObserver = new MutationObserver(handleMutation)
@@ -37,5 +37,3 @@ function CustomNProgress() {
 
   return null
 }
-
-export { CustomNProgress as NProgress }

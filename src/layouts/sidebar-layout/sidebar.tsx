@@ -1,5 +1,5 @@
-import KeyboardArrowLeftTwoToneIcon from '@mui/icons-material/KeyboardArrowLeftTwoTone'
-import KeyboardArrowRightTwoToneIcon from '@mui/icons-material/KeyboardArrowRightTwoTone'
+import KeyboardArrowLeftTwoToneIcon from "@mui/icons-material/KeyboardArrowLeftTwoTone"
+import KeyboardArrowRightTwoToneIcon from "@mui/icons-material/KeyboardArrowRightTwoTone"
 import {
   Box,
   Drawer,
@@ -10,58 +10,58 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from '@mui/material'
-import PropTypes from 'prop-types'
-import { FC, useState } from 'react'
-import ActivityTotals from 'src/app/(auth)/profile/page-components/activity-totals'
-import { Scrollbar } from 'src/components/base/scrollbar'
-import { useSidebarContext } from 'src/contexts/sidebar-context'
-import { useAuth } from 'src/hooks/use-auth'
-import { NavBarItem } from 'src/models/navbar-item'
-import { SIDEBAR_WIDTH_COLLAPSED, SIDEBAR_WIDTH_PROFILE_PAGE } from 'src/theme/utils'
-import SidebarFooter from './sidebar-footer'
-import { SidebarNavMenu } from './sidebar-nav-menu'
-import { SidebarNavMenuCollapsed } from './sidebar-nav-menu-collapsed'
-import TenantSwitcher from './sidebar-tenant-switcher'
+} from "@mui/material"
+import PropTypes from "prop-types"
+import { useState } from "react"
+import ActivityTotals from "src/app/(auth)/profile/page-components/activity-totals"
+import Scrollbar from "src/components/base/scrollbar"
+import { useSidebarContext } from "src/contexts/sidebar-context"
+import useAuth from "src/hooks/use-auth"
+import { NavBarItem } from "src/models/navbar-item"
+import { SIDEBAR_WIDTH_COLLAPSED, SIDEBAR_WIDTH_PROFILE_PAGE } from "src/theme/utils"
+import SidebarFooter from "./sidebar-footer"
+import SidebarNavMenu from "./sidebar-nav-menu"
+import SidebarNavMenuCollapsed from "./sidebar-nav-menu-collapsed"
+import TenantSwitcher from "./sidebar-tenant-switcher"
 
 const SidebarWrapper = styled(Box)(({ theme }) => ({
-  height: '100dvh',
+  height: "100dvh",
   color: theme.palette.text.secondary,
-  display: 'flex',
-  flexDirection: 'column',
+  display: "flex",
+  flexDirection: "column",
 }))
 
-interface SidebarProps {
+type SidebarProps = {
   onClose?: () => void
   onOpen?: () => void
   open?: boolean
-  navbar_items?: NavBarItem[]
+  navbarItems?: NavBarItem[]
 }
 
-export const Sidebar: FC<SidebarProps> = (props) => {
-  const { onClose, onOpen, navbar_items, open, ...other } = props
+export default function Sidebar(props: SidebarProps) {
+  const { onClose, onOpen, navbarItems, open, ...other } = props
 
-  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'))
-  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("lg"))
+  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
 
   const sampleTenants = [
     {
       id: 1,
-      name: 'TechSolutions',
-      logo: '/placeholders/logo/adobe.jpg',
-      description: 'A leading tech consultancy firm.',
+      name: "TechSolutions",
+      logo: "/placeholders/logo/adobe.jpg",
+      description: "A leading tech consultancy firm.",
     },
     {
       id: 2,
-      name: 'GreenGrocers',
-      logo: '/placeholders/logo/ibm.jpg',
-      description: 'Organic produce suppliers since 1990.',
+      name: "GreenGrocers",
+      logo: "/placeholders/logo/ibm.jpg",
+      description: "Organic produce suppliers since 1990.",
     },
     {
       id: 3,
-      name: 'UrbanArch',
-      logo: '/placeholders/logo/oracle.jpg',
-      description: 'Modern architectural designs and solutions.',
+      name: "UrbanArch",
+      logo: "/placeholders/logo/oracle.jpg",
+      description: "Modern architectural designs and solutions.",
     },
   ]
 
@@ -71,35 +71,65 @@ export const Sidebar: FC<SidebarProps> = (props) => {
   const theme = useTheme()
   const { isSidebarCollapsed, isSidebarHovered, toggleSidebarCollapsed, toggleSidebarHover } = useSidebarContext()
 
+  const getSidebarWidthForSidebarWrapper = () => {
+    if (mdUp && isSidebarCollapsed) return isSidebarHovered ? SIDEBAR_WIDTH_PROFILE_PAGE : SIDEBAR_WIDTH_COLLAPSED
+    return SIDEBAR_WIDTH_PROFILE_PAGE
+  }
+
+  const getSidebarWidthForDrawer = () => {
+    if (isSidebarCollapsed) return isSidebarHovered ? SIDEBAR_WIDTH_PROFILE_PAGE : SIDEBAR_WIDTH_COLLAPSED
+    return SIDEBAR_WIDTH_PROFILE_PAGE
+  }
+
+  const getBoxShadow = (theme: Theme) => {
+    if (isSidebarCollapsed) return isSidebarHovered ? theme.shadows[24] : theme.shadows[0]
+    return theme.shadows[0]
+  }
+
+  const renderSidebarNavMenu = () => {
+    if (mdUp && isSidebarCollapsed)
+      return isSidebarHovered ? (
+        <SidebarNavMenu navbarItems={navbarItems} />
+      ) : (
+        <SidebarNavMenuCollapsed navbarItems={navbarItems} />
+      )
+
+    return <SidebarNavMenu navbarItems={navbarItems} />
+  }
+
+  const getJustifyContent = () => {
+    if (mdUp && isSidebarCollapsed) return isSidebarHovered ? "space-between" : "center"
+    return "space-between"
+  }
+
+  const getDisplay = () => {
+    if (mdUp && isSidebarCollapsed) return isSidebarHovered ? "flex" : "none"
+    return "flex"
+  }
+
   const sidebarContent = (
     <SidebarWrapper
       component="nav"
       role="navigation"
       sx={{
-        width:
-          mdUp && isSidebarCollapsed
-            ? isSidebarHovered
-              ? SIDEBAR_WIDTH_PROFILE_PAGE
-              : SIDEBAR_WIDTH_COLLAPSED
-            : SIDEBAR_WIDTH_PROFILE_PAGE,
-
-        '&::before': {
+        width: getSidebarWidthForSidebarWrapper(),
+        "&::before": {
           content: '""',
-          width: '280px',
-          height: '250px',
-          position: 'absolute',
-          top: '-95px',
-          left: '-85px',
-          display: 'block',
+          width: "280px",
+          height: "250px",
+          position: "absolute",
+          top: "-95px",
+          left: "-85px",
+          display: "block",
         },
-        '&::after': {
+        "&::after": {
           content: '""',
-          width: '280px',
-          height: '250px',
-          position: 'absolute',
-          bottom: '-95px',
-          right: '-85px',
-          display: 'block',
+          width: "280px",
+          height: "250px",
+          position: "absolute",
+          bottom: "-95px",
+          right: "-85px",
+          display: "block",
         },
       }}
     >
@@ -107,29 +137,29 @@ export const Sidebar: FC<SidebarProps> = (props) => {
         p={2}
         display="flex"
         justifyContent={{
-          xs: 'flex-start',
-          md: mdUp && isSidebarCollapsed ? (isSidebarHovered ? 'space-between' : 'center') : 'space-between',
+          xs: "flex-start",
+          md: getJustifyContent(),
         }}
         alignItems="center"
       >
         {/* SideBar Header */}
         <Typography variant="body1" color="primary">
-          Welcome {user?.email.slice(0, user?.email.indexOf('@'))}
+          Welcome {user?.email.slice(0, user?.email.indexOf("@"))}
         </Typography>
 
         {/* Show Arrow IconButton */}
         {lgUp && (
           <IconButton
             sx={{
-              display: mdUp && isSidebarCollapsed ? (isSidebarHovered ? 'flex' : 'none') : 'flex',
+              display: getDisplay(),
 
               color: theme.palette.text.secondary,
-              textAlign: 'left',
+              textAlign: "left",
               borderWidth: 1,
-              borderStyle: 'solid',
+              borderStyle: "solid",
               borderColor: theme.palette.divider,
 
-              '&:hover': {
+              "&:hover": {
                 background: theme.palette.action.hover,
                 color: theme.palette.text.primary,
                 borderColor: theme.palette.divider,
@@ -150,16 +180,8 @@ export const Sidebar: FC<SidebarProps> = (props) => {
       {/* Sidebar Content Area */}
       <Box flex={1} overflow="auto" position="relative" zIndex={6}>
         <Scrollbar dark>
-          {/* Show SideBarMenu And SideBarMenuCollasped */}
-          {mdUp && isSidebarCollapsed ? (
-            isSidebarHovered ? (
-              <SidebarNavMenu navbar_items={navbar_items} />
-            ) : (
-              <SidebarNavMenuCollapsed navbar_items={navbar_items} />
-            )
-          ) : (
-            <SidebarNavMenu navbar_items={navbar_items} />
-          )}
+          {/* Render Approriate Sidebar */}
+          {renderSidebarNavMenu()}
 
           {/*
               Show if medium screen and up with sidebar not collasped
@@ -187,7 +209,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
   )
 
   // Show Sidebar On Large Screens
-  if (lgUp) {
+  if (lgUp)
     return (
       <Drawer
         anchor="left"
@@ -200,24 +222,19 @@ export const Sidebar: FC<SidebarProps> = (props) => {
         PaperProps={{
           // @ts-ignore
           sx: {
-            overflow: 'scroll',
+            overflow: "scroll",
             border: 0,
-            top: '90px !important', // places the sidebar below the header
-            left: '24px !important',
+            top: "90px !important", // places the sidebar below the header
+            left: "24px !important",
             zIndex: 5,
             borderRight: `1px solid ${theme.palette.divider}`,
             backgroundColor: theme.palette.background.default,
-            width: isSidebarCollapsed
-              ? isSidebarHovered
-                ? SIDEBAR_WIDTH_PROFILE_PAGE
-                : SIDEBAR_WIDTH_COLLAPSED
-              : SIDEBAR_WIDTH_PROFILE_PAGE,
-            boxShadow: (theme) =>
-              isSidebarCollapsed ? (isSidebarHovered ? theme.shadows[24] : theme.shadows[0]) : theme.shadows[0],
+            width: getSidebarWidthForDrawer(),
+            boxShadow: (theme) => getBoxShadow(theme),
 
-            position: isSidebarCollapsed ? 'sticky' : 'sticky',
-            height: '100dvh',
-            transition: (theme) => theme.transitions.create(['width', 'box-shadow']),
+            position: isSidebarCollapsed ? "sticky" : "sticky",
+            height: "100dvh",
+            transition: (theme) => theme.transitions.create(["width", "box-shadow"]),
           },
         }}
         variant="persistent"
@@ -226,7 +243,6 @@ export const Sidebar: FC<SidebarProps> = (props) => {
         {sidebarContent}
       </Drawer>
     )
-  }
 
   return (
     <SwipeableDrawer
@@ -240,7 +256,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
       PaperProps={{
         sx: {
           backgroundColor: theme.palette.background.default,
-          overflow: 'hidden',
+          overflow: "hidden",
           boxShadow: (theme) => theme.shadows[24],
         },
       }}

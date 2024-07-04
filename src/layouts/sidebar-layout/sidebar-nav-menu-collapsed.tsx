@@ -1,15 +1,15 @@
-import { Box, List, ListItemIcon } from '@mui/material'
-import { usePathname } from 'next/navigation'
-import React, { FC, useState } from 'react'
-import { RouterLink } from 'src/components/base/router-link'
-import { NavBarItem } from 'src/models/navbar-item'
-import { ListItemButtonWrapper } from './sidebar-nav-menu'
+import { Box, List, ListItemIcon } from "@mui/material"
+import { usePathname } from "next/navigation"
+import { useState } from "react"
+import RouterLink from "src/components/base/router-link"
+import { NavBarItem } from "src/models/navbar-item"
+import { ListItemButtonWrapper } from "./sidebar-nav-menu"
 
-interface NavItemProps {
+type NavItemProps = {
   item: NavBarItem
 }
 
-const NavItem: React.FC<NavItemProps> = ({ item }) => {
+function NavItem({ item }: NavItemProps) {
   const { icon, route, subMenu } = item
   const pathname = usePathname()
   const isActive = route && pathname.includes(route)
@@ -18,9 +18,7 @@ const NavItem: React.FC<NavItemProps> = ({ item }) => {
   const [open, setOpen] = useState(isSubMenuActive)
 
   const handleToggle = () => {
-    if (subMenu) {
-      setOpen(!open)
-    }
+    if (subMenu) setOpen(!open)
   }
 
   return (
@@ -32,9 +30,9 @@ const NavItem: React.FC<NavItemProps> = ({ item }) => {
         }}
         selected={isActive || isSubMenuActive}
         onClick={handleToggle}
-        //@ts-ignore
-        component={route ? RouterLink : 'a'}
-        href={route ? route : undefined}
+        // @ts-ignore
+        component={route ? RouterLink : "a"}
+        href={route || undefined}
       >
         {icon && <ListItemIcon>{icon}</ListItemIcon>}
       </ListItemButtonWrapper>
@@ -42,17 +40,17 @@ const NavItem: React.FC<NavItemProps> = ({ item }) => {
   )
 }
 
-interface SidebarNavMenuCollapsedProps {
-  navbar_items?: NavBarItem[]
+type SidebarNavMenuCollapsedProps = {
+  navbarItems?: NavBarItem[]
 }
 
-export const SidebarNavMenuCollapsed: FC<SidebarNavMenuCollapsedProps> = ({ navbar_items = [] }) => {
+export default function SidebarNavMenuCollapsed({ navbarItems = [] }: SidebarNavMenuCollapsedProps) {
   return (
     <Box>
-      {navbar_items.map((navbar_itme) => (
-        <div key={navbar_itme.title}>
+      {navbarItems.map((navbarItem) => (
+        <div key={navbarItem.title}>
           <List component="nav">
-            {navbar_itme.subMenu?.map((subItem) => <NavItem key={subItem.title} item={subItem} />)}
+            {navbarItem.subMenu?.map((subItem) => <NavItem key={subItem.title} item={subItem} />)}
           </List>
         </div>
       ))}

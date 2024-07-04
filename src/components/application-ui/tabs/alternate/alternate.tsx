@@ -2,7 +2,6 @@ import {
   alpha,
   Box,
   Card,
-  CardContent,
   CardHeader,
   Divider,
   MenuItem,
@@ -12,20 +11,20 @@ import {
   Tab,
   useMediaQuery,
   useTheme,
-} from '@mui/material'
-import React, { SyntheticEvent } from 'react'
-import { useTranslation } from 'react-i18next'
-import PlaceholderBox from 'src/components/base/placeholder-box'
-import { TabsAlternate } from 'src/components/base/styles/tabs'
+} from "@mui/material"
+import { ReactNode, SyntheticEvent, useState } from "react"
+import { useTranslation } from "react-i18next"
+import PlaceholderBox from "src/components/base/placeholder-box"
+import { TabsAlternate } from "src/components/base/styles/tabs"
 
-interface TabPanelProps {
-  children?: React.ReactNode
+type TabPanelProps = {
+  children?: ReactNode
   index: number
   value: number
 }
 
 function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props
+  const { children, value, index } = props
 
   return (
     <div role="tabpanel" hidden={value !== index}>
@@ -37,18 +36,18 @@ function CustomTabPanel(props: TabPanelProps) {
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   }
 }
 
-const AlternateTabs = () => {
+export default function AlternateTabs() {
   const theme = useTheme()
-  const smUp = useMediaQuery(theme.breakpoints.up('sm'))
-  const [value, setValue] = React.useState(0)
+  const smUp = useMediaQuery(theme.breakpoints.up("sm"))
+  const [value, setValue] = useState(0)
   const { t } = useTranslation()
 
   // need event even if not used or component does not work
-  const handleTabChange = (event: SyntheticEvent, newValue: number) => setValue(newValue)
+  const handleTabChange = (_event: SyntheticEvent, newValue: number) => setValue(newValue)
   const handleSelectChange = (event: SelectChangeEvent<number>) => setValue(Number(event.target.value))
 
   return (
@@ -56,46 +55,44 @@ const AlternateTabs = () => {
       justifyContent="center"
       spacing={{ xs: 2, sm: 3 }}
       alignItems="center"
-      direction={{ xs: 'column', sm: 'row' }}
+      direction={{ xs: "column", sm: "row" }}
     >
       <Card
         sx={{
-          width: '100%',
+          width: "100%",
         }}
       >
-        <CardHeader title={t('Navigation tabs')} />
+        <CardHeader title={t("Navigation tabs")} />
         <Divider />
         <CardHeader
           sx={{
             backgroundColor: (theme) =>
-              theme.palette.mode === 'dark' ? alpha(theme.palette.neutral[25], 0.02) : 'neutral.25',
-            '.MuiCardHeader-content': {
-              overflow: 'visible',
+              theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.02) : "neutral.25",
+            ".MuiCardHeader-content": {
+              overflow: "visible",
             },
           }}
           disableTypography
           title={
             smUp ? (
-              <>
-                <TabsAlternate
-                  value={Number(value)}
-                  onChange={handleTabChange}
-                  variant="fullWidth"
-                  textColor="secondary"
-                  indicatorColor="secondary"
-                >
-                  <Tab label={t('Analytics')} {...a11yProps(0)} />
-                  <Tab label={t('Integrations')} {...a11yProps(1)} />
-                  <Tab label={t('Settings')} {...a11yProps(2)} />
-                  <Tab label={t('Support')} {...a11yProps(3)} />
-                </TabsAlternate>
-              </>
+              <TabsAlternate
+                value={Number(value)}
+                onChange={handleTabChange}
+                variant="fullWidth"
+                textColor="secondary"
+                indicatorColor="secondary"
+              >
+                <Tab label={t("Analytics")} {...a11yProps(0)} />
+                <Tab label={t("Integrations")} {...a11yProps(1)} />
+                <Tab label={t("Settings")} {...a11yProps(2)} />
+                <Tab label={t("Support")} {...a11yProps(3)} />
+              </TabsAlternate>
             ) : (
               <Select value={value} onChange={handleSelectChange} fullWidth>
-                <MenuItem value={0}>{t('Analytics')}</MenuItem>
-                <MenuItem value={1}>{t('Integrations')}</MenuItem>
-                <MenuItem value={2}>{t('Settings')}</MenuItem>
-                <MenuItem value={3}>{t('Support')}</MenuItem>
+                <MenuItem value={0}>{t("Analytics")}</MenuItem>
+                <MenuItem value={1}>{t("Integrations")}</MenuItem>
+                <MenuItem value={2}>{t("Settings")}</MenuItem>
+                <MenuItem value={3}>{t("Support")}</MenuItem>
               </Select>
             )
           }
@@ -139,5 +136,3 @@ const AlternateTabs = () => {
     </Stack>
   )
 }
-
-export default AlternateTabs

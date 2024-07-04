@@ -1,12 +1,14 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable prettier/prettier */
 // TODO: fix some of the mobile issues with the table and other things like that
-import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
-import GridViewTwoToneIcon from '@mui/icons-material/GridViewTwoTone'
-import IosShareRoundedIcon from '@mui/icons-material/IosShareRounded'
-import LaunchTwoToneIcon from '@mui/icons-material/LaunchTwoTone'
-import MoreVertTwoToneIcon from '@mui/icons-material/MoreVertTwoTone'
-import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone'
-import TableRowsTwoToneIcon from '@mui/icons-material/TableRowsTwoTone'
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded"
+import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone"
+import GridViewTwoToneIcon from "@mui/icons-material/GridViewTwoTone"
+import IosShareRoundedIcon from "@mui/icons-material/IosShareRounded"
+import LaunchTwoToneIcon from "@mui/icons-material/LaunchTwoTone"
+import MoreVertTwoToneIcon from "@mui/icons-material/MoreVertTwoTone"
+import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone"
+import TableRowsTwoToneIcon from "@mui/icons-material/TableRowsTwoTone"
 import {
   alpha,
   Avatar,
@@ -38,15 +40,15 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from '@mui/material'
-import clsx from 'clsx'
-import PropTypes from 'prop-types'
-import { ChangeEvent, FC, MouseEvent, SyntheticEvent, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ButtonIcon } from 'src/components/base/styles/button-icon'
-import { TabsShadow } from 'src/components/base/styles/tabs'
-import { User } from 'src/mocks/user-mocks'
-import BulkDelete from './bulk-delete'
+} from "@mui/material"
+import clsx from "clsx"
+import PropTypes from "prop-types"
+import { ChangeEvent, MouseEvent, SyntheticEvent, useState } from "react"
+import { useTranslation } from "react-i18next"
+import ButtonIcon from "src/components/base/styles/button-icon"
+import { TabsShadow } from "src/components/base/styles/tabs"
+import { User } from "src/mocks/user-mocks"
+import BulkDelete from "./bulk-delete"
 
 export const CardWrapper = styled(Card)(
   ({ theme }) => `
@@ -71,21 +73,21 @@ export const CardWrapper = styled(Card)(
   `,
 )
 
-interface ResultsProps {
+type ResultsProps = {
   users: User[]
 }
 
-interface Filters {
+type Filters = {
   role?: string | null
 }
 
-interface Tab {
+type Tab = {
   value: string
   label: string
   count: number
 }
 
-interface UserCounts {
+type UserCounts = {
   all: number
   customer: number
   admin: number
@@ -95,19 +97,19 @@ interface UserCounts {
 const getUserRoleLabel = (userRole: string) => {
   const map = {
     admin: {
-      text: 'Administrator',
-      color: 'primary',
+      text: "Administrator",
+      color: "primary",
     },
     customer: {
-      text: 'Customer',
-      color: 'secondary',
+      text: "Customer",
+      color: "secondary",
     },
     subscriber: {
-      text: 'Subscriber',
-      color: 'info',
+      text: "Subscriber",
+      color: "info",
     },
   }
-  //@ts-ignore
+  // @ts-ignore
   const { text, color } = map[userRole]
   return { text, color }
 }
@@ -117,31 +119,23 @@ const applyFilters = (users: User[], query: string, filters: Filters): User[] =>
     let matches = true
 
     if (query) {
-      const properties = ['email', 'name', 'username']
+      const properties = ["email", "name", "username"]
       let containsQuery = false
 
       properties.forEach((property) => {
-        if (user[property].toLowerCase().includes(query.toLowerCase())) {
-          containsQuery = true
-        }
+        if (user[property].toLowerCase().includes(query.toLowerCase())) containsQuery = true
       })
 
-      if (filters.role && user.role !== filters.role) {
-        matches = false
-      }
+      if (filters.role && user.role !== filters.role) matches = false
 
-      if (!containsQuery) {
-        matches = false
-      }
+      if (!containsQuery) matches = false
     }
 
     Object.keys(filters).forEach((key) => {
-      //@ts-ignore
+      // @ts-ignore
       const value = filters[key]
 
-      if (value && user[key] !== value) {
-        matches = false
-      }
+      if (value && user[key] !== value) matches = false
     })
 
     return matches
@@ -152,54 +146,52 @@ const applyPagination = (users: User[], page: number, limit: number): User[] => 
   return users.slice(page * limit, page * limit + limit)
 }
 
-const UserTabs: FC<ResultsProps> = ({ users }) => {
+export default function UserTabs({ users }: ResultsProps) {
   const [selectedItems, setSelectedUsers] = useState<string[]>([])
   const { t } = useTranslation()
   const theme = useTheme()
-  const smUp = useMediaQuery(theme.breakpoints.up('sm'))
+  const smUp = useMediaQuery(theme.breakpoints.up("sm"))
 
   const userCounts: UserCounts = {
     all: users.length,
-    customer: users.filter((user) => user.role === 'customer').length,
-    admin: users.filter((user) => user.role === 'admin').length,
-    subscriber: users.filter((user) => user.role === 'subscriber').length,
+    customer: users.filter((user) => user.role === "customer").length,
+    admin: users.filter((user) => user.role === "admin").length,
+    subscriber: users.filter((user) => user.role === "subscriber").length,
   }
 
   const tabs: Tab[] = [
     {
-      value: 'all',
-      label: t('All users'),
+      value: "all",
+      label: t("All users"),
       count: userCounts.all,
     },
     {
-      value: 'customer',
-      label: t('Customers'),
+      value: "customer",
+      label: t("Customers"),
       count: userCounts.customer,
     },
     {
-      value: 'admin',
-      label: t('Administrators'),
+      value: "admin",
+      label: t("Administrators"),
       count: userCounts.admin,
     },
     {
-      value: 'subscriber',
-      label: t('Subscribers'),
+      value: "subscriber",
+      label: t("Subscribers"),
       count: userCounts.subscriber,
     },
   ]
 
   const [page, setPage] = useState<number>(0)
   const [limit, setLimit] = useState<number>(10)
-  const [query, setQuery] = useState<string>('')
+  const [query, setQuery] = useState<string>("")
   const [filters, setFilters] = useState<Filters>({
     role: null,
   })
   const handleTabsChange = (_event: SyntheticEvent, tabsValue: string) => {
     let value: string | null = null
 
-    if (tabsValue !== 'all') {
-      value = tabsValue as string
-    }
+    if (tabsValue !== "all") value = tabsValue as string
 
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -213,7 +205,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
 
     setFilters((prevFilters) => ({
       ...prevFilters,
-      role: selectedValue === 'all' ? null : selectedValue,
+      role: selectedValue === "all" ? null : selectedValue,
     }))
 
     setSelectedUsers([])
@@ -229,11 +221,8 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
   }
 
   const handleSelectOneUser = (_event: ChangeEvent<HTMLInputElement>, userId: string): void => {
-    if (!selectedItems.includes(userId)) {
-      setSelectedUsers((prevSelected) => [...prevSelected, userId])
-    } else {
-      setSelectedUsers((prevSelected) => prevSelected.filter((id) => id !== userId))
-    }
+    if (!selectedItems.includes(userId)) setSelectedUsers((prevSelected) => [...prevSelected, userId])
+    else setSelectedUsers((prevSelected) => prevSelected.filter((id) => id !== userId))
   }
 
   const handlePageChange = (_event: any, newPage: number): void => {
@@ -241,7 +230,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
   }
 
   const handleLimitChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setLimit(parseInt(event.target.value))
+    setLimit(parseInt(event.target.value, 10))
   }
 
   const filteredUsers = applyFilters(users, query, filters)
@@ -250,7 +239,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
   const selectedSomeUsers = selectedItems.length > 0 && selectedItems.length < users.length
   const selectedAllUsers = selectedItems.length === users.length
 
-  const [toggleView, setToggleView] = useState<string | null>('grid_view')
+  const [toggleView, setToggleView] = useState<string | null>("grid_view")
 
   const handleViewOrientation = (_event: MouseEvent<HTMLElement>, newValue: string | null) => {
     setToggleView(newValue)
@@ -261,25 +250,25 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
       {smUp ? (
         <TabsShadow
           sx={{
-            '& .MuiTab-root': {
-              flexDirection: 'row',
+            "& .MuiTab-root": {
+              flexDirection: "row",
               pr: 1,
 
-              '& .MuiChip-root': {
+              "& .MuiChip-root": {
                 ml: 1,
-                transition: theme.transitions.create(['background', 'color'], {
+                transition: theme.transitions.create(["background", "color"], {
                   duration: theme.transitions.duration.complex,
                 }),
               },
 
-              '&.Mui-selected': {
-                '& .MuiChip-root': {
+              "&.Mui-selected": {
+                "& .MuiChip-root": {
                   backgroundColor: alpha(theme.palette.primary.contrastText, 0.12),
-                  color: 'primary.contrastText',
+                  color: "primary.contrastText",
                 },
               },
 
-              '&:first-child': {
+              "&:first-child": {
                 ml: 0,
               },
             },
@@ -287,7 +276,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
           onChange={handleTabsChange}
           scrollButtons="auto"
           textColor="secondary"
-          value={filters.role || 'all'}
+          value={filters.role || "all"}
           variant="scrollable"
         >
           {tabs.map((tab) => (
@@ -305,8 +294,8 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
         </TabsShadow>
       ) : (
         <Select
-          value={filters.role || 'all'}
-          //@ts-ignore
+          value={filters.role || "all"}
+          // @ts-ignore
           onChange={handleSelectChange}
           fullWidth
         >
@@ -320,8 +309,8 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
 
       <Box display="flex" justifyContent="space-between" alignItems="center" py={2}>
         <Box display="flex" alignItems="center">
-          {toggleView === 'grid_view' && (
-            <Tooltip arrow placement="top" title={t('Select all users')}>
+          {toggleView === "grid_view" && (
+            <Tooltip arrow placement="top" title={t("Select all users")}>
               <Checkbox
                 edge="start"
                 sx={{ mr: 1 }}
@@ -336,11 +325,11 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
             <Stack direction="row" spacing={1}>
               <BulkDelete />
 
-              <Tooltip arrow placement="top" title={t('Export user list')}>
+              <Tooltip arrow placement="top" title={t("Export user list")}>
                 <ButtonIcon
                   variant="outlined"
                   color="secondary"
-                  sx={{ color: 'primary.main' }}
+                  sx={{ color: "primary.main" }}
                   size="small"
                   startIcon={<IosShareRoundedIcon fontSize="small" />}
                 />
@@ -365,11 +354,11 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
                     <IconButton
                       color="error"
                       aria-label="clear input"
-                      onClick={() => setQuery('')}
+                      onClick={() => setQuery("")}
                       edge="end"
                       size="small"
                       sx={{
-                        color: 'error.main',
+                        color: "error.main",
                       }}
                     >
                       <ClearRoundedIcon fontSize="small" />
@@ -378,7 +367,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
                 ),
               }}
               onChange={handleQueryChange}
-              placeholder={t('Filter results')}
+              placeholder={t("Filter results")}
               value={query}
               size="small"
               variant="outlined"
@@ -403,22 +392,20 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
         </ToggleButtonGroup>
       </Box>
       {paginatedUsers.length === 0 ? (
-        <>
-          <Typography
-            sx={{
-              py: { xs: 2, sm: 3, md: 6, lg: 10 },
-            }}
-            variant="h3"
-            color="text.secondary"
-            align="center"
-            fontWeight={500}
-          >
-            {t("We couldn't find any users matching your search criteria")}
-          </Typography>
-        </>
+        <Typography
+          sx={{
+            py: { xs: 2, sm: 3, md: 6, lg: 10 },
+          }}
+          variant="h3"
+          color="text.secondary"
+          align="center"
+          fontWeight={500}
+        >
+          {t("We couldn't find any users matching your search criteria")}
+        </Typography>
       ) : (
         <>
-          {toggleView === 'table_view' && (
+          {toggleView === "table_view" && (
             <>
               <Card>
                 <TableContainer>
@@ -432,13 +419,13 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
                             onChange={handleSelectAllUsers}
                           />
                         </TableCell>
-                        <TableCell>{t('Username')}</TableCell>
-                        <TableCell>{t('Name')}</TableCell>
-                        <TableCell>{t('Email')}</TableCell>
-                        <TableCell align="center">{t('Posts')}</TableCell>
-                        <TableCell>{t('Location')}</TableCell>
-                        <TableCell>{t('Role')}</TableCell>
-                        <TableCell align="center">{t('Actions')}</TableCell>
+                        <TableCell>{t("Username")}</TableCell>
+                        <TableCell>{t("Name")}</TableCell>
+                        <TableCell>{t("Email")}</TableCell>
+                        <TableCell align="center">{t("Posts")}</TableCell>
+                        <TableCell>{t("Location")}</TableCell>
+                        <TableCell>{t("Role")}</TableCell>
+                        <TableCell align="center">{t("Actions")}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -496,12 +483,12 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
                             </TableCell>
                             <TableCell align="center">
                               <Typography noWrap>
-                                <Tooltip title={t('View')} arrow>
+                                <Tooltip title={t("View")} arrow>
                                   <IconButton color="secondary">
                                     <LaunchTwoToneIcon fontSize="small" />
                                   </IconButton>
                                 </Tooltip>
-                                <Tooltip title={t('Delete')} arrow>
+                                <Tooltip title={t("Delete")} arrow>
                                   <IconButton color="secondary">
                                     <DeleteTwoToneIcon fontSize="small" />
                                   </IconButton>
@@ -518,7 +505,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
               <Box
                 pt={2}
                 sx={{
-                  '.MuiTablePagination-select': {
+                  ".MuiTablePagination-select": {
                     py: 0.55,
                   },
                 }}
@@ -533,8 +520,8 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
                   rowsPerPageOptions={[5, 10, 15]}
                   slotProps={{
                     select: {
-                      variant: 'outlined',
-                      size: 'small',
+                      variant: "outlined",
+                      size: "small",
                       sx: {
                         p: 0,
                       },
@@ -544,162 +531,152 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
               </Box>
             </>
           )}
-          {toggleView === 'grid_view' && (
-            <>
-              {paginatedUsers.length === 0 ? (
-                <Typography
-                  sx={{
-                    py: { xs: 2, sm: 3, md: 6, lg: 10 },
-                  }}
-                  variant="h3"
-                  color="text.secondary"
-                  align="center"
-                >
-                  {t("We couldn't find any users matching your search criteria")}
-                </Typography>
-              ) : (
-                <>
-                  <Grid container spacing={{ xs: 2, sm: 3 }}>
-                    {paginatedUsers.map((user) => {
-                      const { text, color } = getUserRoleLabel(user.role as string)
-                      const isUserSelected = selectedItems.includes(user.id)
+          {toggleView === "grid_view" &&
+            (paginatedUsers.length === 0 ? (
+              <Typography
+                sx={{
+                  py: { xs: 2, sm: 3, md: 6, lg: 10 },
+                }}
+                variant="h3"
+                color="text.secondary"
+                align="center"
+              >
+                {t("We couldn't find any users matching your search criteria")}
+              </Typography>
+            ) : (
+              <>
+                <Grid container spacing={{ xs: 2, sm: 3 }}>
+                  {paginatedUsers.map((user) => {
+                    const { text, color } = getUserRoleLabel(user.role as string)
+                    const isUserSelected = selectedItems.includes(user.id)
 
-                      return (
-                        <Grid xs={12} sm={6} lg={4} key={user.id}>
-                          <CardWrapper
-                            className={clsx({
-                              'Mui-selected': isUserSelected,
-                            })}
+                    return (
+                      <Grid xs={12} sm={6} lg={4} key={user.id}>
+                        <CardWrapper
+                          className={clsx({
+                            "Mui-selected": isUserSelected,
+                          })}
+                        >
+                          <Box
+                            sx={{
+                              position: "relative",
+                              zIndex: "2",
+                            }}
                           >
-                            <Box
-                              sx={{
-                                position: 'relative',
-                                zIndex: '2',
-                              }}
-                            >
-                              <Box px={2} pt={2} display="flex" alignItems="flex-start" justifyContent="space-between">
-                                <Chip color={color} label={t(text)} />
-                                <IconButton
-                                  color="primary"
-                                  sx={{
-                                    p: 0.5,
-                                  }}
-                                >
-                                  <MoreVertTwoToneIcon />
-                                </IconButton>
-                              </Box>
-                              <Box
-                                p={2}
-                                display="flex"
-                                flexDirection={{ xs: 'column', md: 'row' }}
-                                alignItems="flex-start"
+                            <Box px={2} pt={2} display="flex" alignItems="flex-start" justifyContent="space-between">
+                              <Chip color={color} label={t(text)} />
+                              <IconButton
+                                color="primary"
+                                sx={{
+                                  p: 0.5,
+                                }}
                               >
-                                <Avatar
-                                  variant="rounded"
-                                  sx={{
-                                    width: 50,
-                                    height: 50,
-                                    mr: 1.5,
-                                    mb: { xs: 2, md: 0 },
-                                  }}
-                                  src={user.avatar}
-                                />
+                                <MoreVertTwoToneIcon />
+                              </IconButton>
+                            </Box>
+                            <Box
+                              p={2}
+                              display="flex"
+                              flexDirection={{ xs: "column", md: "row" }}
+                              alignItems="flex-start"
+                            >
+                              <Avatar
+                                variant="rounded"
+                                sx={{
+                                  width: 50,
+                                  height: 50,
+                                  mr: 1.5,
+                                  mb: { xs: 2, md: 0 },
+                                }}
+                                src={user.avatar}
+                              />
+                              <Box>
                                 <Box>
-                                  <Box>
-                                    <Link variant="h6" href="" onClick={(e) => e.preventDefault()} underline="hover">
-                                      {user.name}
-                                    </Link>{' '}
-                                    <Typography component="span" variant="body2" color="text.secondary">
-                                      ({user.username})
-                                    </Typography>
-                                  </Box>
-                                  <Typography
-                                    sx={{
-                                      pt: 0.3,
-                                    }}
-                                    variant="subtitle2"
-                                  >
-                                    {t(user.jobtitle as string)}
-                                  </Typography>
-                                  <Typography
-                                    sx={{
-                                      pt: 1,
-                                    }}
-                                    variant="h6"
-                                    fontWeight={500}
-                                  >
-                                    {user.email}
+                                  <Link variant="h6" href="" onClick={(e) => e.preventDefault()} underline="hover">
+                                    {user.name}
+                                  </Link>{" "}
+                                  <Typography component="span" variant="body2" color="text.secondary">
+                                    ({user.username})
                                   </Typography>
                                 </Box>
-                              </Box>
-                              <Divider />
-                              <Box
-                                pl={2}
-                                py={1}
-                                pr={1}
-                                display="flex"
-                                alignItems="center"
-                                justifyContent="space-between"
-                              >
-                                <Typography>
-                                  <b>{user.posts}</b> {t('posts')}
+                                <Typography
+                                  sx={{
+                                    pt: 0.3,
+                                  }}
+                                  variant="subtitle2"
+                                >
+                                  {t(user.jobtitle as string)}
                                 </Typography>
-                                <Checkbox
-                                  checked={isUserSelected}
-                                  onChange={(event) => handleSelectOneUser(event, user.id)}
-                                  value={isUserSelected}
-                                />
+                                <Typography
+                                  sx={{
+                                    pt: 1,
+                                  }}
+                                  variant="h6"
+                                  fontWeight={500}
+                                >
+                                  {user.email}
+                                </Typography>
                               </Box>
                             </Box>
-                          </CardWrapper>
-                        </Grid>
-                      )
-                    })}
-                  </Grid>
-                  <Card
-                    sx={{
-                      p: 2,
-                      mt: 3,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
+                            <Divider />
+                            <Box pl={2} py={1} pr={1} display="flex" alignItems="center" justifyContent="space-between">
+                              <Typography>
+                                <b>{user.posts}</b> {t("posts")}
+                              </Typography>
+                              <Checkbox
+                                checked={isUserSelected}
+                                onChange={(event) => handleSelectOneUser(event, user.id)}
+                                value={isUserSelected}
+                              />
+                            </Box>
+                          </Box>
+                        </CardWrapper>
+                      </Grid>
+                    )
+                  })}
+                </Grid>
+                <Card
+                  sx={{
+                    p: 2,
+                    mt: 3,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
 
-                      '.MuiTablePagination-select': {
-                        py: 0.55,
+                    ".MuiTablePagination-select": {
+                      py: 0.55,
+                    },
+                  }}
+                >
+                  <Box>
+                    <b>{limit}</b> {t("of")} <b>{filteredUsers.length}</b> <b>{t("Users")}</b>
+                  </Box>
+                  <TablePagination
+                    component="div"
+                    count={filteredUsers.length}
+                    onPageChange={handlePageChange}
+                    onRowsPerPageChange={handleLimitChange}
+                    page={page}
+                    rowsPerPage={limit}
+                    labelRowsPerPage=""
+                    rowsPerPageOptions={[5, 10, 15]}
+                    slotProps={{
+                      select: {
+                        variant: "outlined",
+                        size: "small",
+                        sx: {
+                          p: 0,
+                        },
                       },
                     }}
-                  >
-                    <Box>
-                      <b>{limit}</b> {t('of')} <b>{filteredUsers.length}</b> <b>{t('Users')}</b>
-                    </Box>
-                    <TablePagination
-                      component="div"
-                      count={filteredUsers.length}
-                      onPageChange={handlePageChange}
-                      onRowsPerPageChange={handleLimitChange}
-                      page={page}
-                      rowsPerPage={limit}
-                      labelRowsPerPage=""
-                      rowsPerPageOptions={[5, 10, 15]}
-                      slotProps={{
-                        select: {
-                          variant: 'outlined',
-                          size: 'small',
-                          sx: {
-                            p: 0,
-                          },
-                        },
-                      }}
-                    />
-                  </Card>
-                </>
-              )}
-            </>
-          )}
+                  />
+                </Card>
+              </>
+            ))}
           {!toggleView && (
             <Box
               sx={{
-                textAlign: 'center',
+                textAlign: "center",
                 p: { xs: 2, sm: 3 },
               }}
             >
@@ -713,7 +690,7 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
                 }}
                 gutterBottom
               >
-                {t('Choose between table or grid views for displaying the users list.')}
+                {t("Choose between table or grid views for displaying the users list.")}
               </Typography>
             </Box>
           )}
@@ -726,5 +703,3 @@ const UserTabs: FC<ResultsProps> = ({ users }) => {
 UserTabs.propTypes = {
   users: PropTypes.array.isRequired,
 }
-
-export default UserTabs

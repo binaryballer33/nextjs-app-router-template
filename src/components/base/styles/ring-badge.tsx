@@ -1,19 +1,19 @@
-import { alpha, Badge, styled } from '@mui/material'
+import { alpha, Badge, styled } from "@mui/material"
 
-type BadgeVariant = 'colorPrimary' | 'colorSecondary' | 'colorWarning' | 'colorSuccess' | 'colorError' | 'colorInfo'
+type BadgeVariant = "colorPrimary" | "colorSecondary" | "colorWarning" | "colorSuccess" | "colorError" | "colorInfo"
 
 const badgeVariants: BadgeVariant[] = [
-  'colorPrimary',
-  'colorSecondary',
-  'colorWarning',
-  'colorSuccess',
-  'colorError',
-  'colorInfo',
+  "colorPrimary",
+  "colorSecondary",
+  "colorWarning",
+  "colorSuccess",
+  "colorError",
+  "colorInfo",
 ]
 
-export const RingBadge = styled(Badge)(({ theme }) => {
+const RingBadge = styled(Badge)(({ theme }) => {
   const styles = badgeVariants.reduce((acc, variant) => {
-    const color = variant.replace('color', '').toLowerCase()
+    const color = variant.replace("color", "").toLowerCase()
     acc[`& .MuiBadge-${variant}`] = {
       boxShadow: `0 0 0 5px ${alpha(theme.palette[color].main, 0.12)}`,
     }
@@ -22,3 +22,5 @@ export const RingBadge = styled(Badge)(({ theme }) => {
 
   return styles
 })
+
+export default RingBadge

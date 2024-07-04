@@ -1,17 +1,15 @@
-import { Stack } from '@mui/material'
-import LanguageDropdown from './language-icon-dropdown'
+import { Stack } from "@mui/material"
+import LanguageDropdown from "./language-icon-dropdown"
 
-const Component = () => {
+export default function LanguageIcon() {
   return (
     <Stack
       justifyContent="space-around"
       spacing={{ xs: 3, sm: 0, md: 3 }}
       alignItems="center"
-      direction={{ xs: 'column', sm: 'row' }}
+      direction={{ xs: "column", sm: "row" }}
     >
       <LanguageDropdown />
     </Stack>
   )
 }
-
-export default Component

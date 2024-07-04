@@ -1,5 +1,5 @@
-import { createBrowserClient } from '@supabase/ssr'
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from '../secrets'
+import { createBrowserClient } from "@supabase/ssr"
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from "../secrets"
 
 /*
   Docs: https://supabase.com/docs/guides/auth/server-side/nextjs
@@ -27,6 +27,6 @@ import { SUPABASE_ANON_KEY, SUPABASE_URL } from '../secrets'
     On the client, createBrowserClient already uses a singleton pattern, so you only ever create one instance, no matter how many times you call your createClient function.
 */
 
-export function createClient() {
+export default function createClient() {
   return createBrowserClient(SUPABASE_URL!, SUPABASE_ANON_KEY!)
 }

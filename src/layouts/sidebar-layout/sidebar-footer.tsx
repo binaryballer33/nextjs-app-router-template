@@ -1,16 +1,15 @@
-import { ExitToApp, Settings, ShoppingCart } from '@mui/icons-material'
-import { alpha, IconButton, Stack, useTheme } from '@mui/material'
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { TooltipLight } from 'src/components/base/styles/tooltips'
-import { neutral } from 'src/theme/theme'
+import { ExitToApp, Settings, ShoppingCart } from "@mui/icons-material"
+import { alpha, IconButton, Stack, useTheme } from "@mui/material"
+import { ReactNode } from "react"
+import { useTranslation } from "react-i18next"
+import { TooltipLight } from "src/components/base/styles/tooltips"
 
-interface TooltipProps {
-  icon: React.ReactNode
+type TooltipProps = {
+  icon: ReactNode
   tooltipText: string
 }
 
-const FooterButton: FC<TooltipProps> = ({ icon, tooltipText }) => {
+function FooterButton({ icon, tooltipText }: TooltipProps) {
   const { t } = useTranslation()
   const theme = useTheme()
 
@@ -20,11 +19,11 @@ const FooterButton: FC<TooltipProps> = ({ icon, tooltipText }) => {
         sx={{
           background: theme.palette.background.paper,
           color: theme.palette.text.secondary,
-          textAlign: 'left',
+          textAlign: "left",
           borderWidth: 1,
-          borderStyle: 'solid',
+          borderStyle: "solid",
           borderColor: theme.palette.primary.dark,
-          '&:hover': {
+          "&:hover": {
             color: theme.palette.text.primary,
             background: alpha(theme.palette.primary.main, 0.1),
             borderColor: theme.palette.primary.main,
@@ -37,7 +36,7 @@ const FooterButton: FC<TooltipProps> = ({ icon, tooltipText }) => {
   )
 }
 
-const SidebarFooter: FC = () => {
+function SidebarFooter() {
   return (
     <Stack
       direction="row"

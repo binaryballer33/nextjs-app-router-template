@@ -1,8 +1,7 @@
-import { alpha, Box, SxProps, Theme, Typography, useTheme } from '@mui/material'
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
+import { alpha, Box, SxProps, Theme, Typography, useTheme } from "@mui/material"
+import { useTranslation } from "react-i18next"
 
-interface PlaceholderBoxProps {
+type PlaceholderBoxProps = {
   title?: string
   height?: number
   fixedHeight?: number
@@ -12,12 +11,12 @@ interface PlaceholderBoxProps {
   sx?: SxProps<Theme>
 }
 
-const PlaceholderBox: FC<PlaceholderBoxProps> = (props) => {
+export default function PlaceholderBox(props: PlaceholderBoxProps) {
   const { title, height, disableHover, fixedHeight, flex, dark = false, sx, ...other } = props
   const { t } = useTranslation()
   const theme = useTheme()
 
-  const isDarkMode = theme.palette.mode === 'dark' || dark
+  const isDarkMode = theme.palette.mode === "dark" || dark
 
   const darkBackground = `repeating-linear-gradient(
     -55deg,
@@ -35,29 +34,30 @@ const PlaceholderBox: FC<PlaceholderBoxProps> = (props) => {
     ${alpha(theme.palette.neutral[100], 0.7)} 8px
   )`
 
+  const getBorderColor = () => {
+    if (!disableHover) return theme.palette.primary.main
+    return dark ? theme.palette.neutral[400] : theme.palette.neutral[25]
+  }
+
   return (
     <Box
       sx={{
         ...sx,
         flex: flex ? 1 : 0,
-        borderRadius: theme.shape.borderRadius + 'px',
-        borderStyle: 'dashed',
+        borderRadius: `${theme.shape.borderRadius}px`,
+        borderStyle: "dashed",
         borderWidth: 1,
-        borderColor: theme.palette.mode === 'dark' ? theme.palette.neutral[800] : theme.palette.neutral[500],
-        minHeight: height ? height : 40,
-        height: fixedHeight ? fixedHeight : '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        borderColor: theme.palette.mode === "dark" ? theme.palette.neutral[800] : theme.palette.neutral[500],
+        minHeight: height || 40,
+        height: fixedHeight || "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         background: isDarkMode ? darkBackground : lightBackground,
 
-        '&:hover': {
-          borderColor: !disableHover
-            ? theme.palette.primary.main
-            : dark
-              ? theme.palette.neutral[400]
-              : theme.palette.neutral[25],
-          //@ts-ignore
+        "&:hover": {
+          borderColor: getBorderColor(),
+          // @ts-ignore
           boxShadow: !disableHover && theme.shadows[7],
         },
       }}
@@ -71,5 +71,3 @@ const PlaceholderBox: FC<PlaceholderBoxProps> = (props) => {
     </Box>
   )
 }
-
-export default PlaceholderBox

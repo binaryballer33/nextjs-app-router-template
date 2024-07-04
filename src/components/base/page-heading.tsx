@@ -1,8 +1,8 @@
-import { Stack, SxProps, Theme, Typography, useMediaQuery } from '@mui/material'
-import React, { ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Stack, SxProps, Theme, Typography, useMediaQuery } from "@mui/material"
+import { ReactNode } from "react"
+import { useTranslation } from "react-i18next"
 
-interface PageHeadingProps {
+type PageHeadingProps = {
   iconBox?: ReactNode
   title: string
   description?: string
@@ -13,23 +13,15 @@ interface PageHeadingProps {
   sx?: SxProps<Theme>
 }
 
-const PageHeading: React.FC<PageHeadingProps> = ({
-  iconBox,
-  title,
-  description,
-  topSection,
-  bottomSection,
-  actions,
-  background,
-  sx,
-}) => {
-  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+export default function PageHeading(props: PageHeadingProps) {
+  const { iconBox, title, description, topSection, bottomSection, actions, background, sx } = props
+  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
   const { t } = useTranslation()
 
   return (
     <Stack sx={{ backgroundColor: background, ...sx }}>
       <Stack
-        direction={{ xs: 'column', md: 'row' }}
+        direction={{ xs: "column", md: "row" }}
         spacing={0}
         display="flex"
         alignItems="center"
@@ -37,7 +29,7 @@ const PageHeading: React.FC<PageHeadingProps> = ({
         width="100%"
       >
         <Stack
-          direction={{ xs: 'column', md: 'row' }}
+          direction={{ xs: "column", md: "row" }}
           className="PageTitleContent"
           spacing={2}
           display="flex"
@@ -45,7 +37,7 @@ const PageHeading: React.FC<PageHeadingProps> = ({
           overflow="hidden"
         >
           {iconBox}
-          <Stack textAlign={{ xs: 'center', md: 'left' }} spacing={0.3} overflow="hidden">
+          <Stack textAlign={{ xs: "center", md: "left" }} spacing={0.3} overflow="hidden">
             {topSection}
             <Typography variant="h3" noWrap>
               {t(title)}
@@ -63,5 +55,3 @@ const PageHeading: React.FC<PageHeadingProps> = ({
     </Stack>
   )
 }
-
-export default PageHeading
