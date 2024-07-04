@@ -1,15 +1,15 @@
-import { alpha, Avatar, AvatarProps, PaletteColor, styled, Theme } from '@mui/material'
+import { alpha, Avatar, AvatarProps, PaletteColor, styled, Theme } from "@mui/material"
 
-type PaletteColorKey = 'success' | 'error' | 'warning' | 'info' | 'primary' | 'secondary'
+type PaletteColorKey = "success" | "error" | "warning" | "info" | "primary" | "secondary"
 
-interface AvatarStateProps extends AvatarProps {
-  state?: PaletteColorKey | 'light'
+type AvatarStateProps = AvatarProps & {
+  state?: PaletteColorKey | "light"
   useShadow?: boolean
   isSoft?: boolean
   isUpload?: boolean
 }
 
-const getStateStyles = (theme: Theme, state?: AvatarStateProps['state'], useShadow?: boolean, isSoft?: boolean) => {
+const getStateStyles = (theme: Theme, state?: AvatarStateProps["state"], useShadow?: boolean, isSoft?: boolean) => {
   let backgroundColor: string | undefined
   let boxShadow: string | undefined
   let color: string
@@ -31,15 +31,15 @@ const getStateStyles = (theme: Theme, state?: AvatarStateProps['state'], useShad
   }
 
   switch (state) {
-    case 'success':
-    case 'error':
-    case 'warning':
-    case 'info':
-    case 'primary':
-    case 'secondary':
+    case "success":
+    case "error":
+    case "warning":
+    case "info":
+    case "primary":
+    case "secondary":
       getColorAndShadow(state, shadowStrengths[state])
       break
-    case 'light':
+    case "light":
       backgroundColor = alpha(theme.palette.common.white, 0.1)
       color = theme.palette.common.white
       boxShadow = undefined
@@ -51,12 +51,12 @@ const getStateStyles = (theme: Theme, state?: AvatarStateProps['state'], useShad
       break
   }
 
-  //@ts-ignore
+  // @ts-ignore
   return { backgroundColor, boxShadow, color }
 }
 
 export const AvatarState = styled(Avatar, {
-  shouldForwardProp: (prop) => prop !== 'state' && prop !== 'useShadow' && prop !== 'isSoft',
+  shouldForwardProp: (prop) => prop !== "state" && prop !== "useShadow" && prop !== "isSoft",
 })<AvatarStateProps>(({ theme, state, useShadow, isSoft }) => {
   const { backgroundColor, boxShadow, color } = getStateStyles(theme, state, useShadow, isSoft)
   return {

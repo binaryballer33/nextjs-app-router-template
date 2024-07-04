@@ -1,6 +1,5 @@
-import KeyboardArrowRightTwoToneIcon from '@mui/icons-material/KeyboardArrowRightTwoTone'
+import KeyboardArrowRightTwoToneIcon from "@mui/icons-material/KeyboardArrowRightTwoTone"
 import {
-  alpha,
   Box,
   Collapse,
   List,
@@ -12,21 +11,20 @@ import {
   styled,
   Theme,
   useMediaQuery,
-} from '@mui/material'
-import { usePathname } from 'next/navigation'
-import PropTypes from 'prop-types'
-import React, { FC, useState } from 'react'
-import { RouterLink } from 'src/components/base/router-link'
-import { NavBarItem } from 'src/models/navbar-item'
-import { neutral } from 'src/theme/theme'
+} from "@mui/material"
+import { usePathname } from "next/navigation"
+import PropTypes from "prop-types"
+import { useState } from "react"
+import RouterLink from "src/components/base/router-link"
+import { NavBarItem } from "src/models/navbar-item"
 
-interface NavItemProps {
+type NavItemProps = {
   item: NavBarItem
 }
 
-const ListSubheaderWrapper = styled(ListSubheader)<ListProps<'div', { component: 'div' }>>(({ theme }) => ({
+const ListSubheaderWrapper = styled(ListSubheader)<ListProps<"div", { component: "div" }>>(({ theme }) => ({
   background: theme.palette.background.default,
-  textTransform: 'uppercase',
+  textTransform: "uppercase",
   fontWeight: 500,
   fontSize: 13,
   color: theme.palette.text.secondary,
@@ -37,86 +35,86 @@ const ListSubheaderWrapper = styled(ListSubheader)<ListProps<'div', { component:
 export const ListItemButtonWrapper = styled(ListItemButton)(({ theme }) => ({
   color: theme.palette.text.secondary,
   borderRadius: theme.shape.borderRadius,
-  transition: 'none',
+  transition: "none",
   fontWeight: 600,
   fontSize: 14,
-  marginBottom: '2px',
+  marginBottom: "2px",
   padding: theme.spacing(0.8, 1, 0.8, 2),
 
-  '& .MuiListItemIcon-root': {
+  "& .MuiListItemIcon-root": {
     color: theme.palette.text.secondary,
     minWidth: 44,
   },
 
-  '& .MuiListItemText-root': {
+  "& .MuiListItemText-root": {
     color: theme.palette.text.secondary,
   },
 
-  '&:hover': {
+  "&:hover": {
     color: theme.palette.text.primary,
     background: theme.palette.background.paper,
     borderColor: theme.palette.primary.main,
 
-    '& .MuiListItemIcon-root': {
+    "& .MuiListItemIcon-root": {
       color: theme.palette.text.primary,
     },
 
-    '& .MuiListItemText-root': {
+    "& .MuiListItemText-root": {
       color: theme.palette.text.primary,
     },
   },
 
-  '&.Mui-selected, &.Mui-selected:hover': {
+  "&.Mui-selected, &.Mui-selected:hover": {
     color: theme.palette.text.primary,
     background: theme.palette.primary.main,
     borderColor: theme.palette.primary.main,
 
-    '& .MuiListItemIcon-root': {
+    "& .MuiListItemIcon-root": {
       color: theme.palette.text.primary,
     },
 
-    '& .MuiListItemText-root': {
+    "& .MuiListItemText-root": {
       color: theme.palette.text.primary,
     },
   },
 }))
 
-const SubMenu = styled(List)<ListProps<'div', { component: 'div' }>>(({ theme }) => ({
+const SubMenu = styled(List)<ListProps<"div", { component: "div" }>>(({ theme }) => ({
   paddingTop: theme.spacing(0.5),
 
-  '& .MuiListItemButton-root': {
+  "& .MuiListItemButton-root": {
     padding: theme.spacing(0.8, 1, 0.8, 6.5),
     fontWeight: 500,
 
-    '&::before': {
+    "&::before": {
       content: '" "',
       background: theme.palette.primary.main,
       opacity: 0,
-      position: 'absolute',
+      position: "absolute",
       left: theme.spacing(2.8),
       borderRadius: 4,
-      top: '50%',
-      height: '6px',
-      width: '6px',
-      transform: 'scale(0)',
-      marginTop: '-3px',
-      transition: theme.transitions.create(['transform', 'opacity']),
+      top: "50%",
+      height: "6px",
+      width: "6px",
+      transform: "scale(0)",
+      marginTop: "-3px",
+      transition: theme.transitions.create(["transform", "opacity"]),
     },
 
-    '&.Mui-selected, &:hover': {
-      '&::before': {
+    "&.Mui-selected, &:hover": {
+      "&::before": {
         opacity: 1,
-        transform: 'scale(1)',
+        transform: "scale(1)",
       },
     },
 
-    '& .MuiListItemText-root': {
+    "& .MuiListItemText-root": {
       margin: 0,
     },
   },
 }))
 
-const NavItem: React.FC<NavItemProps> = ({ item }) => {
+function NavItem({ item }: NavItemProps) {
   const { title, icon, route, subMenu } = item
   const pathname = usePathname()
   const isActive = route && pathname.includes(route)
@@ -125,9 +123,7 @@ const NavItem: React.FC<NavItemProps> = ({ item }) => {
   const [open, setOpen] = useState(isSubMenuActive)
 
   const handleToggle = () => {
-    if (subMenu) {
-      setOpen(!open)
-    }
+    if (subMenu) setOpen(!open)
   }
 
   return (
@@ -135,20 +131,20 @@ const NavItem: React.FC<NavItemProps> = ({ item }) => {
       <ListItemButtonWrapper
         selected={isActive || isSubMenuActive}
         onClick={handleToggle}
-        //@ts-ignore
-        component={route ? RouterLink : 'a'}
-        href={route ? route : undefined}
+        // @ts-ignore
+        component={route ? RouterLink : "a"}
+        href={route || undefined}
       >
         {icon && <ListItemIcon>{icon}</ListItemIcon>}
         <ListItemText disableTypography primary={title} />
         {subMenu && (
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
-              transition: (theme) => theme.transitions.create(['transform']),
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              transform: open ? "rotate(90deg)" : "rotate(0deg)",
+              transition: (theme) => theme.transitions.create(["transform"]),
             }}
           >
             <KeyboardArrowRightTwoToneIcon fontSize="small" />
@@ -168,26 +164,26 @@ const NavItem: React.FC<NavItemProps> = ({ item }) => {
   )
 }
 
-interface SidebarNavMenuProps {
-  navbar_items?: NavBarItem[]
+type SidebarNavMenuProps = {
+  navbarItems?: NavBarItem[]
 }
 
-export const SidebarNavMenu: FC<SidebarNavMenuProps> = ({ navbar_items = [] }) => {
-  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+export default function SidebarNavMenu({ navbarItems = [] }: SidebarNavMenuProps) {
+  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
 
   return (
     <Box>
-      {navbar_items.map((navbar_item) => (
-        <div key={navbar_item.title}>
+      {navbarItems.map((navbarItem) => (
+        <div key={navbarItem.title}>
           <List
             component="nav"
             subheader={
               <ListSubheaderWrapper component="div" disableSticky={!mdUp}>
-                {navbar_item.title}
+                {navbarItem.title}
               </ListSubheaderWrapper>
             }
           >
-            {navbar_item.subMenu?.map((subItem) => <NavItem key={subItem.title} item={subItem} />)}
+            {navbarItem.subMenu?.map((subItem) => <NavItem key={subItem.title} item={subItem} />)}
           </List>
         </div>
       ))}
@@ -196,5 +192,5 @@ export const SidebarNavMenu: FC<SidebarNavMenuProps> = ({ navbar_items = [] }) =
 }
 
 SidebarNavMenu.propTypes = {
-  navbar_items: PropTypes.array,
+  navbarItems: PropTypes.array,
 }

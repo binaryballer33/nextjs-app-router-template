@@ -1,5 +1,5 @@
-import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded'
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded'
+import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded"
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded"
 import {
   Button,
   Card,
@@ -11,22 +11,22 @@ import {
   Theme,
   Typography,
   useMediaQuery,
-} from '@mui/material'
-import React, { ChangeEvent } from 'react'
-import PlaceholderBox from 'src/components/base/placeholder-box'
-import { ButtonIcon } from 'src/components/base/styles/button-icon'
+} from "@mui/material"
+import { ChangeEvent, MouseEvent, useState } from "react"
+import PlaceholderBox from "src/components/base/placeholder-box"
+import ButtonIcon from "src/components/base/styles/button-icon"
 
-interface PaginationActionsProps {
+type PaginationActionsProps = {
   count: number
   page: number
-  onPageChange: (event: React.MouseEvent<HTMLButtonElement>, newPage: number) => void
+  onPageChange: (event: MouseEvent<HTMLButtonElement>, newPage: number) => void
 }
 
-export const PaginationActions: React.FC<PaginationActionsProps> = ({ count, page, onPageChange }) => {
-  const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'))
+export function PaginationActions({ count, page, onPageChange }: PaginationActionsProps) {
+  const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"))
 
-  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => onPageChange(event, page - 1)
-  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => onPageChange(event, page + 1)
+  const handleBackButtonClick = (event: MouseEvent<HTMLButtonElement>) => onPageChange(event, page - 1)
+  const handleNextButtonClick = (event: MouseEvent<HTMLButtonElement>) => onPageChange(event, page + 1)
 
   return (
     <Stack direction="row" spacing={1}>
@@ -75,11 +75,11 @@ export const PaginationActions: React.FC<PaginationActionsProps> = ({ count, pag
   )
 }
 
-const Component = () => {
-  const [page, setPage] = React.useState<number>(2)
-  const [rowsPerPage, setRowsPerPage] = React.useState<number>(10)
+export default function Pagination() {
+  const [page, setPage] = useState<number>(2)
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10)
 
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+  const handleChangePage = (_event: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage)
   }
 
@@ -96,12 +96,12 @@ const Component = () => {
       <Divider />
       <CardActions
         sx={{
-          '.MuiTablePagination-toolbar': {
-            justifyContent: 'space-between',
+          ".MuiTablePagination-toolbar": {
+            justifyContent: "space-between",
           },
 
-          '.MuiTablePagination-spacer': {
-            display: 'none',
+          ".MuiTablePagination-spacer": {
+            display: "none",
           },
         }}
       >
@@ -123,5 +123,3 @@ const Component = () => {
     </Card>
   )
 }
-
-export default Component

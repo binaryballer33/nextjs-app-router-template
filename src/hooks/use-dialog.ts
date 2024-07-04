@@ -1,13 +1,13 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState } from "react"
 
-interface DialogController<T> {
+type DialogController<T> = {
   data?: T
   handleClose: () => void
   handleOpen: (data?: T) => void
   open: boolean
 }
 
-export function useDialog<T = unknown>(): DialogController<T> {
+export default function useDialog<T = unknown>(): DialogController<T> {
   const [state, setState] = useState<{ open: boolean; data?: T }>({
     open: false,
     data: undefined,

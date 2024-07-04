@@ -1,4 +1,4 @@
-import { Checkbox, Input, Radio, styled } from '@mui/material'
+import { Checkbox, Input, Radio, styled } from "@mui/material"
 
 const visuallyHidden = () => `
   clip: rect(0 0 0 0);
@@ -13,6 +13,6 @@ const visuallyHidden = () => `
 `
 
 export const VisuallyHiddenInput = styled(Input)(visuallyHidden)
-export const VisuallyHiddenInputNative = styled('input')(visuallyHidden)
+export const VisuallyHiddenInputNative = styled("input")(visuallyHidden)
 export const VisuallyHiddenRadio = styled(Radio)(visuallyHidden)
 export const VisuallyHiddenCheckbox = styled(Checkbox)(visuallyHidden)

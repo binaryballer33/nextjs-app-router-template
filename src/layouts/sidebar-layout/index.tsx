@@ -1,23 +1,23 @@
-import { Box } from '@mui/material'
-import PropTypes from 'prop-types'
-import { type FC, type ReactNode } from 'react'
-import { useMobileNav } from 'src/hooks/use-mobile-nav'
-import { useVerticalNavBarItems } from 'src/router/vertical-navbar-routes'
-import { Sidebar } from './sidebar'
+import { Box } from "@mui/material"
+import PropTypes from "prop-types"
+import { type ReactNode } from "react"
+import useMobileNav from "src/hooks/use-mobile-nav"
+import useVerticalNavBarItems from "src/router/vertical-navbar-routes"
+import Sidebar from "./sidebar"
 
-interface SideBarLayoutProps {
+type SideBarLayoutProps = {
   children?: ReactNode
 }
 
-export const SideBarLayout: FC<SideBarLayoutProps> = (props) => {
+export default function SideBarLayout(props: SideBarLayoutProps) {
   const { children } = props
-  const navbar_items = useVerticalNavBarItems()
+  const navbarItems = useVerticalNavBarItems()
   const mobileNav = useMobileNav()
 
   return (
-    <Box display={'flex'} gap={4}>
+    <Box display="flex" gap={4}>
       <Sidebar
-        navbar_items={navbar_items}
+        navbarItems={navbarItems}
         onClose={mobileNav.handleClose}
         open={mobileNav.open}
         onOpen={mobileNav.handleOpen}
@@ -26,8 +26,8 @@ export const SideBarLayout: FC<SideBarLayoutProps> = (props) => {
         flex={1}
         overflow="hidden"
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         {children}

@@ -1,7 +1,7 @@
-import { Visibility, VisibilityOff } from '@mui/icons-material'
-import ClearIcon from '@mui/icons-material/Clear'
-import KeyIcon from '@mui/icons-material/Key'
-import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded'
+import { Visibility, VisibilityOff } from "@mui/icons-material"
+import ClearIcon from "@mui/icons-material/Clear"
+import KeyIcon from "@mui/icons-material/Key"
+import MailOutlineRoundedIcon from "@mui/icons-material/MailOutlineRounded"
 import {
   Box,
   FilledInput,
@@ -12,12 +12,12 @@ import {
   InputAdornment,
   Tooltip,
   Typography,
-} from '@mui/material'
-import { useState } from 'react'
-import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
-import { ButtonIcon } from 'src/components/base/styles/button-icon'
-import { LoginForm } from 'src/models/forms/login'
+} from "@mui/material"
+import { useState } from "react"
+import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form"
+import { useTranslation } from "react-i18next"
+import ButtonIcon from "src/components/base/styles/button-icon"
+import { LoginForm } from "src/models/forms/login"
 
 type LoginFormInputProps = {
   register: UseFormRegister<LoginForm>
@@ -39,18 +39,24 @@ function LoginFormInput(props: LoginFormInputProps) {
   // make the first letter of the inputName uppercase
   const inputNameForTypography = inputName.charAt(0).toUpperCase() + inputName.slice(1)
 
+  const getType = (inputName: keyof LoginForm) => {
+    if (inputName === "password") return showPassword ? "text" : "password"
+    if (inputName === "email") return "email"
+    return "text"
+  }
+
   return (
     <Grid xs={12}>
       <FormControl fullWidth error={Boolean(errors[inputName.toString()])}>
         {/* Form Input Label And Button */}
-        <Box display={'flex'} gap={2} p={1} justifyContent={'space-between'} alignItems={'center'}>
+        <Box display="flex" gap={2} p={1} justifyContent="space-between" alignItems="center">
           {/* Input Label */}
           <Typography variant="h6" gutterBottom component="label" htmlFor={`${inputName}-input`} fontWeight={500}>
             {t(inputNameForTypography)}
           </Typography>
 
           {/* Password Field Visibility Button */}
-          {inputName === 'password' && (
+          {inputName === "password" && (
             <ButtonIcon
               variant="outlined"
               color="secondary"
@@ -58,11 +64,11 @@ function LoginFormInput(props: LoginFormInputProps) {
               onClick={handlePasswordVisibility}
             >
               {showPassword ? (
-                <Tooltip title={t('hide password')}>
+                <Tooltip title={t("hide password")}>
                   <VisibilityOff sx={{ fontSize: 18 }} />
                 </Tooltip>
               ) : (
-                <Tooltip title={t('show password')}>
+                <Tooltip title={t("show password")}>
                   <Visibility sx={{ fontSize: 18 }} />
                 </Tooltip>
               )}
@@ -74,13 +80,13 @@ function LoginFormInput(props: LoginFormInputProps) {
         <FilledInput
           hiddenLabel
           {...register(inputName)}
-          type={inputName === 'password' ? (showPassword ? 'text' : 'password') : 'email'}
+          type={getType(inputName)}
           id={`${inputName}-input`}
           placeholder={`Write your ${placeholder}`}
           autoComplete={inputName}
           required
           startAdornment={
-            inputName === 'email' ? (
+            inputName === "email" ? (
               <InputAdornment position="start">
                 <MailOutlineRoundedIcon fontSize="small" />
               </InputAdornment>
@@ -92,11 +98,11 @@ function LoginFormInput(props: LoginFormInputProps) {
           }
           endAdornment={
             // only show clear icon if textfield is not empty
-            watchFormField(inputName as keyof LoginForm) !== '' && (
+            watchFormField(inputName as keyof LoginForm) !== "" && (
               <InputAdornment position="end">
                 <Tooltip title={`clear ${inputName}`}>
                   {/* reset the input field */}
-                  <IconButton onClick={() => setFormValue(inputName as keyof LoginForm, '')}>
+                  <IconButton onClick={() => setFormValue(inputName as keyof LoginForm, "")}>
                     <ClearIcon color="secondary" />
                   </IconButton>
                 </Tooltip>

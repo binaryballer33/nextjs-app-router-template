@@ -1,37 +1,30 @@
-'use client'
+"use client"
 
-import ChevronRightTwoToneIcon from '@mui/icons-material/ChevronRightTwoTone'
-import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone'
-import { alpha, Box, Button, Paper, Popper } from '@mui/material'
-import { usePathname, useRouter } from 'next/navigation'
-import React, { FC, useRef, useState } from 'react'
-import { NavBarItem } from 'src/models/navbar-item'
+import ChevronRightTwoToneIcon from "@mui/icons-material/ChevronRightTwoTone"
+import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone"
+import { alpha, Box, Button, Paper, Popper } from "@mui/material"
+import { usePathname, useRouter } from "next/navigation"
+import { useRef, useState } from "react"
+import { NavBarItem } from "src/models/navbar-item"
 
-const isRouteActive = (route?: string, currentPath?: string, subMenu?: NavBarItem[]): boolean => {
+const isRouteActive = (route?: string, currentPath?: string, subMenu?: NavBarItem[]): boolean | undefined => {
   if (route && route === currentPath) return true
-  if (subMenu) {
-    for (let item of subMenu) {
-      if (item.route && isRouteActive(item.route, currentPath, item.subMenu)) {
-        return true
-      }
-    }
-  }
-  return false
+  return subMenu?.some((item) => item.route && isRouteActive(item.route, currentPath, item.subMenu))
 }
 
 type DesktopNavBarItemProps = {
-  item: NavBarItem
+  navbarItem: NavBarItem
   isSub?: boolean
 }
 
-export const DesktopNavBarItem: FC<DesktopNavBarItemProps> = ({ item: navbar_item, isSub }) => {
+export default function DesktopNavBarItem({ navbarItem, isSub }: DesktopNavBarItemProps) {
   const router = useRouter()
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const anchorRef = useRef(null)
-  const isActive = navbar_item.route ? isRouteActive(navbar_item.route, pathname, navbar_item.subMenu) : false
-  const placement = isSub && navbar_item.subMenu ? 'right-start' : navbar_item.subMenu ? 'bottom-start' : 'bottom-start'
+  const isActive = navbarItem.route ? isRouteActive(navbarItem.route, pathname, navbarItem.subMenu) : false
+  const placement = isSub && navbarItem.subMenu ? "right-start" : "bottom-start"
 
   const commonProps = {
     onMouseEnter: () => {
@@ -45,17 +38,23 @@ export const DesktopNavBarItem: FC<DesktopNavBarItemProps> = ({ item: navbar_ite
     },
   }
 
+  const getBorderRadius = () => {
+    if (isSub && navbarItem.subMenu) return 6
+    if (navbarItem.subMenu) return 0
+    return 6
+  }
+
   return (
     <Box
       position="relative"
       zIndex={2}
       sx={{
-        '&:hover': {
+        "&:hover": {
           zIndex: 3,
 
-          '& > .MuiButton-root': {
-            borderBottomLeftRadius: isSub && navbar_item.subMenu ? 6 : navbar_item.subMenu ? 0 : 6,
-            borderBottomRightRadius: isSub && navbar_item.subMenu ? 6 : navbar_item.subMenu ? 0 : 6,
+          "& > .MuiButton-root": {
+            borderBottomLeftRadius: getBorderRadius(),
+            borderBottomRightRadius: getBorderRadius(),
             zIndex: 13,
           },
         },
@@ -65,71 +64,70 @@ export const DesktopNavBarItem: FC<DesktopNavBarItemProps> = ({ item: navbar_ite
     >
       {isSub ? (
         <Button
-          startIcon={navbar_item.icon ? navbar_item.icon : null}
+          startIcon={navbarItem.icon ? navbarItem.icon : null}
           fullWidth
-          endIcon={navbar_item.subMenu ? <ChevronRightTwoToneIcon fontSize="small" /> : null}
-          onClick={() => navbar_item.route && router.push(navbar_item.route)}
+          endIcon={navbarItem.subMenu ? <ChevronRightTwoToneIcon fontSize="small" /> : null}
+          onClick={() => navbarItem.route && router.push(navbarItem.route)}
           sx={{
-            justifyContent: 'space-between',
+            justifyContent: "space-between",
             fontWeight: 600,
-            my: '1px',
+            my: "1px",
             fontSize: 14,
-            ':hover': {
+            ":hover": {
               color: (theme) => theme.palette.primary.main,
               backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.08),
             },
-            ':active': {
+            ":active": {
               color: (theme) => theme.palette.primary.main,
               backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.08),
             },
 
-            color: (theme) => (theme.palette.mode === 'dark' ? theme.palette.neutral[300] : theme.palette.neutral[800]),
-            backgroundColor: 'transparent',
+            color: (theme) => (theme.palette.mode === "dark" ? theme.palette.neutral[300] : theme.palette.neutral[800]),
+            backgroundColor: "transparent",
           }}
         >
-          {navbar_item.title}
+          {navbarItem.title}
         </Button>
       ) : (
         <Button
-          endIcon={navbar_item.subMenu ? <ExpandMoreTwoToneIcon fontSize="small" /> : null}
-          startIcon={navbar_item.icon ? navbar_item.icon : null}
-          onClick={() => navbar_item.route && router.push(navbar_item.route)}
+          endIcon={navbarItem.subMenu ? <ExpandMoreTwoToneIcon fontSize="small" /> : null}
+          startIcon={navbarItem.icon ? navbarItem.icon : null}
+          onClick={() => navbarItem.route && router.push(navbarItem.route)}
           {...commonProps}
           sx={{
             p: (theme) => theme.spacing(0.9, 1.5, 0.9, 1.8),
             fontSize: 14,
-            borderRadius: '6px',
+            borderRadius: "6px",
             mr: 1.5,
             fontWeight: 500,
-            backgroundColor: (theme) =>
-              isHovered
-                ? theme.palette.mode === 'dark'
-                  ? theme.palette.background.paper
-                  : theme.palette.background.paper
-                : isActive
-                  ? theme.palette.mode === 'dark'
-                    ? 'background.default'
-                    : 'transparent'
-                  : 'transparent',
-            color: (theme) =>
-              isHovered || isActive
-                ? theme.palette.mode === 'dark' // Default Colors below are for hovered and active items
-                  ? theme.palette.secondary.dark // Dark mode text color for hovered and active items
-                  : theme.palette.secondary.dark // Light mode text color for hovered and active items
-                : theme.palette.mode === 'dark' // Default Colors below are for non-hovered and non-active items
-                  ? theme.palette.neutral[400] // Dark mode text color for non-hovered and non-active items
-                  : theme.palette.neutral[900], // Light mode text color for non-hovered and non-active items
-            '&:hover': {
+            backgroundColor: (theme) => {
+              if (isHovered) return theme.palette.background.paper
+              if (isActive) return theme.palette.mode === "dark" ? "background.default" : "transparent"
+              return "transparent"
+            },
+            color: (theme) => {
+              // Determine if the item is either hovered or active
+              if (isHovered || isActive)
+                // Since both conditions for dark and light mode return the same value,
+                // you can directly return without checking the theme.palette.mode
+                return theme.palette.secondary.dark
+
+              // For non-hovered and non-active items, choose color based on the theme mode
+              return theme.palette.mode === "dark"
+                ? theme.palette.neutral[400] // Dark mode text color
+                : theme.palette.neutral[900] // Light mode text color
+            },
+            "&:hover": {
               color: (theme) => theme.palette.primary.main,
               backgroundColor: (theme) =>
-                theme.palette.mode === 'dark' ? theme.palette.neutral[900] : theme.palette.neutral[300],
+                theme.palette.mode === "dark" ? theme.palette.neutral[900] : theme.palette.neutral[300],
             },
           }}
         >
-          {navbar_item.title ? navbar_item.title : null}
+          {navbarItem.title ? navbarItem.title : null}
         </Button>
       )}
-      {navbar_item.subMenu && (
+      {navbarItem.subMenu && (
         <Popper
           open={menuOpen}
           anchorEl={anchorRef.current}
@@ -141,17 +139,17 @@ export const DesktopNavBarItem: FC<DesktopNavBarItemProps> = ({ item: navbar_ite
             {...commonProps}
             elevation={23}
             sx={{
-              borderRadius: '6px',
-              borderTopLeftRadius: isSub && navbar_item.subMenu ? 6 : navbar_item.subMenu ? 0 : 6,
-              minWidth: 'max-content',
-              backgroundColor: 'background.paper',
+              borderRadius: "6px",
+              borderTopLeftRadius: getBorderRadius(),
+              minWidth: "max-content",
+              backgroundColor: "background.paper",
               maxWidth: 400,
-              mt: '-1px',
+              mt: "-1px",
               p: 2,
             }}
           >
-            {navbar_item.subMenu.map((subItem, index) => (
-              <DesktopNavBarItem key={index} item={subItem} isSub />
+            {navbarItem.subMenu.map((subItem) => (
+              <DesktopNavBarItem key={subItem.title} navbarItem={subItem} isSub />
             ))}
           </Paper>
         </Popper>

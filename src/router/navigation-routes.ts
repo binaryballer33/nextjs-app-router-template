@@ -1,13 +1,15 @@
-export const routes = {
+const routes = {
   auth: {
-    login: '/login',
-    register: '/register',
-    signOut: '/sign-out',
+    login: "/login",
+    register: "/register",
+    signOut: "/sign-out",
   },
   user: {
-    profile: '/profile',
+    profile: "/profile",
   },
-  index: '/',
-  dummy: '',
-  404: '/404',
+  index: "/",
+  dummy: "",
+  404: "/404",
 }
+
+export default routes

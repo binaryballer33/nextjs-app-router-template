@@ -1,6 +1,8 @@
+import { ReactNode } from "react"
+
 export type NavBarItem = {
   title: string
   route?: string
-  icon?: React.ReactNode
+  icon?: ReactNode
   subMenu?: NavBarItem[]
 }

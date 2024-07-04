@@ -1,5 +1,5 @@
-import AddRoundedIcon from '@mui/icons-material/AddRounded'
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
+import AddRoundedIcon from "@mui/icons-material/AddRounded"
+import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone"
 import {
   Box,
   Card,
@@ -12,15 +12,15 @@ import {
   Tooltip,
   Typography,
   useTheme,
-} from '@mui/material'
-import Image from 'next/image'
-import React, { useState } from 'react'
-import toast from 'react-hot-toast'
-import { useTranslation } from 'react-i18next'
-import { ButtonIcon } from 'src/components/base/styles/button-icon'
-import { CardAddActionDashed } from 'src/components/base/styles/card'
+} from "@mui/material"
+import Image from "next/image"
+import { ChangeEvent, useState } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
+import ButtonIcon from "src/components/base/styles/button-icon"
+import { CardAddActionDashed } from "src/components/base/styles/card"
 
-interface Item {
+type Item = {
   id: number
   image: string
   cc: string
@@ -28,35 +28,35 @@ interface Item {
   title: string
 }
 
-const MyCardsSelect = () => {
+export default function MyCardsSelect() {
   const theme = useTheme()
   const { t } = useTranslation()
 
   const items: Item[] = [
     {
       id: 1,
-      image: '/placeholders/logo/visa.png',
-      cc: '6979',
-      expires: '12/25',
-      title: t('Visa'),
+      image: "/placeholders/logo/visa.png",
+      cc: "6979",
+      expires: "12/25",
+      title: t("Visa"),
     },
     {
       id: 2,
-      image: '/placeholders/logo/mastercard.png',
-      cc: '5724',
-      expires: '06/26',
-      title: t('Mastercard'),
+      image: "/placeholders/logo/mastercard.png",
+      cc: "5724",
+      expires: "06/26",
+      title: t("Mastercard"),
     },
   ]
 
   const [selectedValue, setSelectedValue] = useState<number>(items[0].id)
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(parseInt(event.target.value))
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectedValue(parseInt(event.target.value, 10))
   }
 
   const handleDelete = () => {
-    toast.success('The card has been removed successfully!')
+    toast.success("The card has been removed successfully!")
   }
 
   return (
@@ -67,28 +67,28 @@ const MyCardsSelect = () => {
             elevation={0}
             sx={{
               border: 0,
-              position: 'relative',
+              position: "relative",
             }}
           >
             <ListItemButton
               sx={{
-                p: '1px',
-                flexDirection: 'column',
-                borderRadius: 'inherit',
+                p: "1px",
+                flexDirection: "column",
+                borderRadius: "inherit",
                 boxShadow: `0 0 0 1px ${theme.palette.divider} inset`,
-                background: theme.palette.mode === 'dark' ? theme.palette.neutral[900] : theme.palette.neutral[50],
+                background: theme.palette.mode === "dark" ? theme.palette.neutral[900] : theme.palette.neutral[50],
 
-                '&:hover': {
-                  backgroundColor: 'background.paper',
+                "&:hover": {
+                  backgroundColor: "background.paper",
                   boxShadow: `0 0 0 1px ${theme.palette.primary.main} inset`,
                 },
 
-                '&.Mui-selected': {
-                  backgroundColor: 'background.paper',
+                "&.Mui-selected": {
+                  backgroundColor: "background.paper",
                   boxShadow: `0 0 0 2px ${theme.palette.primary.main} inset`,
 
-                  '&:hover': {
-                    backgroundColor: 'background.paper',
+                  "&:hover": {
+                    backgroundColor: "background.paper",
                   },
                 },
               }}
@@ -99,12 +99,12 @@ const MyCardsSelect = () => {
                 <Card
                   elevation={8}
                   sx={{
-                    display: 'flex',
+                    display: "flex",
                     px: item.id === 2 ? 2 : 1,
                     mr: 2,
                     py: 1.5,
                     img: {
-                      width: 'auto',
+                      width: "auto",
                       height: 28,
                     },
                   }}
@@ -116,7 +116,7 @@ const MyCardsSelect = () => {
                     •••• {item.cc}
                   </Typography>
                   <Typography variant="h6" fontWeight={500} color="text.secondary">
-                    {t('Expires')}:{' '}
+                    {t("Expires")}:{" "}
                     <Typography component="span" variant="h6" color="text.primary">
                       {item.expires}
                     </Typography>
@@ -131,17 +131,17 @@ const MyCardsSelect = () => {
                   size="small"
                   edge="start"
                   name="radio-buttons"
-                  inputProps={{ 'aria-label': 'Set' + item.title + 'as primary card' }}
+                  inputProps={{ "aria-label": `Set${item.title}as primary card` }}
                   color="primary"
                 />
                 <Typography variant="h6" noWrap>
-                  {t('Primary')}
+                  {t("Primary")}
                 </Typography>
               </Stack>
-              <Tooltip arrow title={t('Remove this card')}>
+              <Tooltip arrow title={t("Remove this card")}>
                 <ButtonIcon
                   sx={{
-                    position: 'absolute',
+                    position: "absolute",
                     top: theme.spacing(1),
                     right: theme.spacing(1),
                   }}
@@ -164,7 +164,7 @@ const MyCardsSelect = () => {
               <Stack spacing={0.5} justifyContent="center" direction="column" alignItems="center">
                 <AddRoundedIcon
                   sx={{
-                    color: 'primary.main',
+                    color: "primary.main",
                   }}
                 />
                 <Box>
@@ -183,5 +183,3 @@ const MyCardsSelect = () => {
     </Grid>
   )
 }
-
-export default MyCardsSelect

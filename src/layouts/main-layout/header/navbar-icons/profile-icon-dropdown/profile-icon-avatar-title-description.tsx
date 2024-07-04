@@ -1,25 +1,25 @@
-import { Avatar, Badge, Box, Typography } from '@mui/material'
-import { useTranslation } from 'react-i18next'
+import { Avatar, Badge, Box, Typography } from "@mui/material"
+import { useTranslation } from "react-i18next"
 
 const user = {
-  name: 'Shaquille Mandy',
-  role: 'Software Engineer',
+  name: "Shaquille Mandy",
+  role: "Software Engineer",
 }
 
-const ProfileIconDropdownAvatar = () => {
+export default function ProfileIconDropdownAvatar() {
   const { t } = useTranslation()
   return (
     <Box display="flex" alignItems="center">
       <Badge
         color="secondary"
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        anchorOrigin={{ vertical: "top", horizontal: "left" }}
         badgeContent="12"
         overlap="circular"
       >
         <Avatar
           sx={{
-            backgroundColor: 'primary.main',
-            color: 'text.primary',
+            backgroundColor: "primary.main",
+            color: "text.primary",
             width: 48,
             height: 48,
           }}
@@ -38,5 +38,3 @@ const ProfileIconDropdownAvatar = () => {
     </Box>
   )
 }
-
-export default ProfileIconDropdownAvatar

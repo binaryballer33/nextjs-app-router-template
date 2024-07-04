@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { Button, Typography } from '@mui/material'
-import { useRouter } from 'next/navigation'
-import FullScreenCenteredContainer from 'src/components/base/full-height-width-centered-container'
+import { Button, Typography } from "@mui/material"
+import { useRouter } from "next/navigation"
+import FullScreenCenteredContainer from "src/components/base/full-height-width-centered-container"
 
 function Page() {
   const router = useRouter()
@@ -10,7 +10,7 @@ function Page() {
   return (
     <FullScreenCenteredContainer>
       <Typography>Sorry, something went wrong</Typography>
-      <Button variant="contained" onClick={() => router.push('/')}>
+      <Button variant="contained" onClick={() => router.push("/")}>
         Go back to the home page
       </Button>
       <Button variant="contained" onClick={() => router.back()}>

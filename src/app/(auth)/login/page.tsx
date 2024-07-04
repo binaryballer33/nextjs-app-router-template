@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { zodResolver } from '@hookform/resolvers/zod'
+import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Alert,
   Box,
@@ -12,21 +12,21 @@ import {
   Stack,
   Typography,
   useTheme,
-} from '@mui/material'
-import Image from 'next/image'
-import { useCallback, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
-import { useTranslation } from 'react-i18next'
-import { login } from 'src/actions/auth/login'
-import { RouterLink } from 'src/components/base/router-link'
-import { useAuth } from 'src/hooks/use-auth'
-import { oAuthProviders } from 'src/models/forms/common'
-import { defaultValuesLoginForm, LoginForm, LoginFormSchema } from 'src/models/forms/login'
-import { OAuthProvider } from 'src/models/forms/register'
-import { routes } from 'src/router/navigation-routes'
-import { createClient as createSupabaseClient } from 'src/utils/supabase/client'
-import LoginFormInput from './login-form-input'
+} from "@mui/material"
+import Image from "next/image"
+import { useCallback, useState } from "react"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
+import login from "src/actions/auth/login"
+import RouterLink from "src/components/base/router-link"
+import useAuth from "src/hooks/use-auth"
+import oAuthProviders from "src/models/forms/common"
+import { defaultValuesLoginForm, LoginForm, LoginFormSchema } from "src/models/forms/login"
+import { OAuthProvider } from "src/models/forms/register"
+import routes from "src/router/navigation-routes"
+import createSupabaseClient from "src/utils/supabase/client"
+import LoginFormInput from "./login-form-input"
 
 /*
   TODO: there's a mui warning in the chrome dev tools, figuer out how to fix it later,
@@ -34,7 +34,7 @@ import LoginFormInput from './login-form-input'
 
   You can duplicate the error by toggling the password visibility icon in the register or login form
 */
-function LoginPage(): React.JSX.Element {
+export default function LoginPage() {
   const [supabaseClient] = useState(createSupabaseClient())
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -55,11 +55,11 @@ function LoginPage(): React.JSX.Element {
   })
 
   const onAuth = useCallback(
-    async (provider: OAuthProvider['id']): Promise<void> => {
+    async (provider: OAuthProvider["id"]): Promise<void> => {
       setIsLoading(true)
 
       const redirectToUrl = new URL(routes.index)
-      redirectToUrl.searchParams.set('next', routes.index)
+      redirectToUrl.searchParams.set("next", routes.index)
 
       const { data, error } = await supabaseClient.auth.signInWithOAuth({
         provider,
@@ -93,29 +93,30 @@ function LoginPage(): React.JSX.Element {
   )
 
   const inputFields = Object.keys(defaultValuesLoginForm) // get the text fields from the initial form state
-  const isDarkMode = theme.palette.mode === 'dark'
+  const isDarkMode = theme.palette.mode === "dark"
+  const getLogo = (provider: OAuthProvider) => {
+    if (provider.id === "github")
+      return isDarkMode ? "/placeholders/logo/github-icon-light.svg" : "/placeholders/logo/github-icon.svg"
+
+    return provider.logo
+  }
   const updatedOAuthProviders = oAuthProviders.map((provider) => ({
     ...provider,
-    logo:
-      provider.id === 'github'
-        ? isDarkMode
-          ? '/placeholders/logo/github-icon-light.svg'
-          : '/placeholders/logo/github-icon.svg'
-        : provider.logo,
+    logo: getLogo(provider),
   }))
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      style={{ display: 'flex', flexDirection: 'column', minHeight: '75dvh', padding: '64px 0px' }}
+      style={{ display: "flex", flexDirection: "column", minHeight: "75dvh", padding: "64px 0px" }}
     >
       {/* Form Header */}
       <Container maxWidth="sm">
         <Typography align="center" variant="h4" gutterBottom>
-          {t('Sign in')}
+          {t("Sign in")}
         </Typography>
         <Typography align="center" variant="body1" fontWeight={400}>
-          {t('Access your account and continue your journey')}
+          {t("Access your account and continue your journey")}
         </Typography>
       </Container>
 
@@ -123,13 +124,13 @@ function LoginPage(): React.JSX.Element {
       <Stack mt={{ xs: 2, sm: 3 }} justifyContent="center" alignItems="center" spacing={{ xs: 2, sm: 3 }}>
         {/* OAuth Sign In Buttons */}
         <Container maxWidth="sm">
-          <Stack justifyContent="center" direction={{ xs: 'column', sm: 'row' }} spacing={1}>
+          <Stack justifyContent="center" direction={{ xs: "column", sm: "row" }} spacing={1}>
             {updatedOAuthProviders.map((provider) => (
               <Button
                 fullWidth
                 disabled={isLoading}
                 sx={{
-                  whiteSpace: 'nowrap',
+                  whiteSpace: "nowrap",
                 }}
                 variant="outlined"
                 color="secondary"
@@ -144,8 +145,8 @@ function LoginPage(): React.JSX.Element {
         </Container>
 
         {/* OAuth / Email Password Divider */}
-        <Divider sx={{ width: '75%' }}>
-          <Typography variant="subtitle1">{t('Or Sign In With Email Below')}</Typography>
+        <Divider sx={{ width: "75%" }}>
+          <Typography variant="subtitle1">{t("Or Sign In With Email Below")}</Typography>
         </Divider>
 
         {/* Form Inputs Below */}
@@ -168,12 +169,12 @@ function LoginPage(): React.JSX.Element {
             <Grid xs={12}>
               <Box alignItems="center" display="flex" justifyContent="space-between">
                 <Link component={RouterLink} href={routes.index} underline="hover">
-                  {t('Recover password')}
+                  {t("Recover password")}
                 </Link>
 
                 {/* Reset Form Button */}
                 <Button disabled={isLoading} variant="outlined" size="small" onClick={() => resetFormFields()}>
-                  {t('Clear Form')}
+                  {t("Clear Form")}
                 </Button>
               </Box>
             </Grid>
@@ -181,17 +182,17 @@ function LoginPage(): React.JSX.Element {
             {/* Submit Button */}
             <Grid xs={12}>
               <Button disabled={isLoading} variant="contained" type="submit" size="large" fullWidth>
-                {isLoading ? t('Signing In') : t('Sign in')}
+                {isLoading ? t("Signing In") : t("Sign in")}
               </Button>
             </Grid>
 
             {/* Sign Up Link */}
             <Grid xs={12} textAlign="center">
               <Typography component="span" color="text.secondary">
-                {t('Not a Member yet?')}
-              </Typography>{' '}
+                {t("Not a Member yet?")}
+              </Typography>{" "}
               <Link component={RouterLink} href={routes.auth.register} underline="hover" fontWeight={500}>
-                {t('Sign up')}
+                {t("Sign up")}
               </Link>
             </Grid>
 
@@ -209,5 +210,3 @@ function LoginPage(): React.JSX.Element {
     </form>
   )
 }
-
-export default LoginPage
