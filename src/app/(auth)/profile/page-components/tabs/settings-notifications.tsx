@@ -1,3 +1,5 @@
+import { ChangeEvent, useState } from "react"
+
 import {
   Box,
   Card,
@@ -10,7 +12,6 @@ import {
   Switch,
   Typography,
 } from "@mui/material"
-import { ChangeEvent, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 const StyledSwitch = styled(Switch)(() => ({

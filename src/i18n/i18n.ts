@@ -1,5 +1,6 @@
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
+
 import ae from "./translations/ae"
 import de from "./translations/de"
 import es from "./translations/es"

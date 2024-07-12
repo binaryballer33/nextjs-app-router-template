@@ -1,5 +1,9 @@
 "use client"
 
+import { useCallback, useState } from "react"
+
+import Image from "next/image"
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Alert,
@@ -13,19 +17,19 @@ import {
   Typography,
   useTheme,
 } from "@mui/material"
-import Image from "next/image"
-import { useCallback, useState } from "react"
-import { useForm } from "react-hook-form"
+import { SubmitHandler, useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
+
 import login from "src/actions/auth/login"
 import RouterLink from "src/components/base/router-link"
 import useAuth from "src/hooks/use-auth"
 import oAuthProviders from "src/models/forms/common"
-import { defaultValuesLoginForm, LoginForm, LoginFormSchema } from "src/models/forms/login"
+import { defaultValuesLoginRequest, LoginRequest, LoginRequestSchema } from "src/models/forms/login"
 import { OAuthProvider } from "src/models/forms/register"
 import routes from "src/router/navigation-routes"
 import createSupabaseClient from "src/utils/supabase/client"
+
 import LoginFormInput from "./login-form-input"
 
 /*
@@ -44,14 +48,14 @@ export default function LoginPage() {
 
   const {
     register: registerInputField,
-    handleSubmit,
+    handleSubmit: handleSubmitHookForm,
     reset: resetFormFields,
     watch: watchFormField,
     setValue: setFormValue,
     formState: { errors },
-  } = useForm<LoginForm>({
-    defaultValues: defaultValuesLoginForm,
-    resolver: zodResolver(LoginFormSchema),
+  } = useForm<LoginRequest>({
+    defaultValues: defaultValuesLoginRequest,
+    resolver: zodResolver(LoginRequestSchema),
   })
 
   const onAuth = useCallback(
@@ -79,8 +83,8 @@ export default function LoginPage() {
     [supabaseClient],
   )
 
-  const onSubmit = useCallback(
-    async (credentials: LoginForm): Promise<void> => {
+  const handleSubmit: SubmitHandler<LoginRequest> = useCallback(
+    async (credentials: LoginRequest): Promise<void> => {
       setIsLoading(true) // Set loading state to true for disabling buttons and changing UI
       resetFormFields() // Reset the form to clear the inputs
 
@@ -92,7 +96,7 @@ export default function LoginPage() {
     [resetFormFields, checkSession],
   )
 
-  const inputFields = Object.keys(defaultValuesLoginForm) // get the text fields from the initial form state
+  const inputFields = Object.keys(defaultValuesLoginRequest) // get the text fields from the initial form state
   const isDarkMode = theme.palette.mode === "dark"
   const getLogo = (provider: OAuthProvider) => {
     if (provider.id === "github")
@@ -107,7 +111,7 @@ export default function LoginPage() {
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmitHookForm(handleSubmit)}
       style={{ display: "flex", flexDirection: "column", minHeight: "75dvh", padding: "64px 0px" }}
     >
       {/* Form Header */}
@@ -158,7 +162,7 @@ export default function LoginPage() {
                 key={inputName}
                 register={registerInputField}
                 errors={errors}
-                inputName={inputName as keyof LoginForm}
+                inputName={inputName as keyof LoginRequest}
                 placeholder={inputName}
                 watchFormField={watchFormField}
                 setFormValue={setFormValue}

@@ -1,5 +1,6 @@
-import { usePathname } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
+
+import { usePathname } from "next/navigation"
 
 export default function useMobileNav() {
   const pathname = usePathname()

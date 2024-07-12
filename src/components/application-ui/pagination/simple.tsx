@@ -1,3 +1,5 @@
+import { ChangeEvent, MouseEvent, useState } from "react"
+
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded"
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded"
 import {
@@ -12,7 +14,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material"
-import { ChangeEvent, MouseEvent, useState } from "react"
+
 import PlaceholderBox from "src/components/base/placeholder-box"
 import ButtonIcon from "src/components/base/styles/button-icon"
 

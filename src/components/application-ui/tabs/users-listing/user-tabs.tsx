@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable prettier/prettier */
 // TODO: fix some of the mobile issues with the table and other things like that
+import { ChangeEvent, MouseEvent, SyntheticEvent, useState } from "react"
+
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded"
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone"
 import GridViewTwoToneIcon from "@mui/icons-material/GridViewTwoTone"
@@ -43,11 +45,12 @@ import {
 } from "@mui/material"
 import clsx from "clsx"
 import PropTypes from "prop-types"
-import { ChangeEvent, MouseEvent, SyntheticEvent, useState } from "react"
 import { useTranslation } from "react-i18next"
+
 import ButtonIcon from "src/components/base/styles/button-icon"
 import { TabsShadow } from "src/components/base/styles/tabs"
 import { User } from "src/mocks/user-mocks"
+
 import BulkDelete from "./bulk-delete"
 
 export const CardWrapper = styled(Card)(

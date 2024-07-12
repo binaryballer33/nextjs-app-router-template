@@ -1,5 +1,7 @@
 "use client"
 
+import { useRouter } from "next/navigation"
+
 import LockIcon from "@mui/icons-material/Lock"
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded"
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded"
@@ -16,7 +18,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material"
-import { useRouter } from "next/navigation"
+
 import { DividerLight } from "src/components/base/styles/card"
 import useAuth from "src/hooks/use-auth"
 import useDialog from "src/hooks/use-dialog"
@@ -24,6 +26,7 @@ import useMobileNav from "src/hooks/use-mobile-nav"
 import usePopover from "src/hooks/use-popover"
 import useHorizontalNavBarItems from "src/router/horizontal-navbar-routes"
 import { neutral } from "src/theme/theme"
+
 import DesktopNavBar from "./desktop-navbar/desktop-navbar"
 import MobileNavBar from "./mobile-navbar/mobile-navbar"
 import LanguageDropdown from "./navbar-icons/language-icon/language-icon-dropdown"

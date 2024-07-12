@@ -1,4 +1,5 @@
 import { useContext } from "react"
+
 import { UserContext } from "src/contexts/auth-context"
 
 export default function useAuth() {

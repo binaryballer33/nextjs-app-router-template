@@ -3,6 +3,7 @@ import ShoppingBagTwoToneIcon from "@mui/icons-material/ShoppingBagTwoTone"
 import StarTwoToneIcon from "@mui/icons-material/StarTwoTone"
 import { Box, Card, CardHeader, Divider, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
+
 import { AvatarState } from "src/components/base/styles/avatar"
 
 export default function ActivityTotals() {

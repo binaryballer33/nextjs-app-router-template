@@ -1,11 +1,12 @@
 import { Box, List, ListProps, ListSubheader, styled, Theme, useMediaQuery } from "@mui/material"
 import PropTypes from "prop-types"
-import React from "react"
+
 import Scrollbar from "src/components/base/scrollbar"
 import Logo from "src/layouts/main-layout/header/navbar-icons/logo/logo"
 import { NavBarItem } from "src/models/navbar-item"
 import { neutral } from "src/theme/theme"
 import { SIDEBAR_WIDTH } from "src/theme/utils"
+
 import MobileNavBarNavItem from "./mobile-navbar-nav-item"
 
 const MobileSidebarWrapper = styled(Box)(({ theme }) => ({

@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 import { Visibility, VisibilityOff } from "@mui/icons-material"
 import ClearIcon from "@mui/icons-material/Clear"
 import EditIcon from "@mui/icons-material/Edit"
@@ -14,14 +16,14 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material"
-import { useState } from "react"
 import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+
 import ButtonIcon from "src/components/base/styles/button-icon"
-import { RegisterForm } from "src/models/forms/register"
+import { RegisterRequest } from "src/models/forms/register"
 
 // set the input type based on the inputName and showPassword state for the password fields
-function getInputType(inputName: keyof RegisterForm, isVisible: boolean) {
+function getInputType(inputName: keyof RegisterRequest, isVisible: boolean) {
   if (inputName === "password" || inputName === "confirmPassword") return isVisible ? "text" : "password"
   if (inputName === "email") return "email"
 
@@ -43,7 +45,7 @@ function transformInputName(inputName: string): string {
 }
 
 // show email icon for email, key icon for password fields and edit icon for name fields
-function getStartAdornment(inputName: keyof RegisterForm) {
+function getStartAdornment(inputName: keyof RegisterRequest) {
   switch (inputName) {
     case "email":
       return (
@@ -68,7 +70,7 @@ function getStartAdornment(inputName: keyof RegisterForm) {
 }
 
 // does all the text transformations for the input fields to make them look better, keep that logic out of the component
-function useGetAllTypographies(inputName: keyof RegisterForm) {
+function useGetAllTypographies(inputName: keyof RegisterRequest) {
   const inputNameTypography = transformInputName(inputName)
 
   const tooltipTypopgraphy = inputName === "confirmPassword" ? inputNameTypography.toLowerCase() : inputName
@@ -80,11 +82,11 @@ function useGetAllTypographies(inputName: keyof RegisterForm) {
 }
 
 type RegisterFormInputProps = {
-  register: UseFormRegister<RegisterForm>
-  errors: FieldErrors<RegisterForm>
-  watchFormField: UseFormWatch<RegisterForm>
-  setFormValue: UseFormSetValue<RegisterForm>
-  inputName: keyof RegisterForm // must be lowercase
+  register: UseFormRegister<RegisterRequest>
+  errors: FieldErrors<RegisterRequest>
+  watchFormField: UseFormWatch<RegisterRequest>
+  setFormValue: UseFormSetValue<RegisterRequest>
+  inputName: keyof RegisterRequest // must be lowercase
 }
 
 function RegisterFormInput(props: RegisterFormInputProps) {
@@ -143,11 +145,11 @@ function RegisterFormInput(props: RegisterFormInputProps) {
           startAdornment={getStartAdornment(inputName)}
           endAdornment={
             // only show clear icon if textfield is not empty
-            watchFormField(inputName as keyof RegisterForm) !== "" && (
+            watchFormField(inputName as keyof RegisterRequest) !== "" && (
               <InputAdornment position="end">
                 <Tooltip title={`clear ${tooltipTypopgraphy}`}>
                   {/* reset the input field */}
-                  <IconButton onClick={() => setFormValue(inputName as keyof RegisterForm, "")}>
+                  <IconButton onClick={() => setFormValue(inputName as keyof RegisterRequest, "")}>
                     <ClearIcon color="secondary" />
                   </IconButton>
                 </Tooltip>

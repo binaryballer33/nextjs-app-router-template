@@ -1,5 +1,7 @@
-import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
+
+import { createServerClient } from "@supabase/ssr"
+
 import { SUPABASE_ANON_KEY, SUPABASE_URL } from "../secrets"
 
 /*

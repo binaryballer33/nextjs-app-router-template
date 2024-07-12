@@ -1,10 +1,13 @@
 "use client"
 
+import { useRef, useState } from "react"
+
+import { usePathname, useRouter } from "next/navigation"
+
 import ChevronRightTwoToneIcon from "@mui/icons-material/ChevronRightTwoTone"
 import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone"
 import { alpha, Box, Button, Paper, Popper } from "@mui/material"
-import { usePathname, useRouter } from "next/navigation"
-import { useRef, useState } from "react"
+
 import { NavBarItem } from "src/models/navbar-item"
 
 const isRouteActive = (route?: string, currentPath?: string, subMenu?: NavBarItem[]): boolean | undefined => {

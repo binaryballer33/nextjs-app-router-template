@@ -1,5 +1,7 @@
-import type { Metadata, Viewport } from "next/"
 import { ReactNode } from "react"
+
+import type { Metadata, Viewport } from "next/"
+
 import NProgress from "src/components/base/nprogress"
 import ProvidersLayout from "src/layouts/document"
 import MainLayout from "src/layouts/main-layout"

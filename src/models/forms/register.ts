@@ -6,7 +6,7 @@ export type OAuthProvider = {
   logo: string
 }
 
-export const RegisterSchema = zod
+export const RegisterRequestSchema = zod
   .object({
     firstname: zod.string().min(1, { message: "First name is required" }),
     lastname: zod.string().min(1, { message: "Last name is required" }),
@@ -21,13 +21,13 @@ export const RegisterSchema = zod
     path: ["confirmPassword"],
   })
 
-export type RegisterForm = zod.infer<typeof RegisterSchema>
+export type RegisterRequest = zod.infer<typeof RegisterRequestSchema>
 
-export const defaultValuesRegisterForm = {
+export const defaultValuesRegisterRequest = {
   firstname: "",
   lastname: "",
   email: "",
   password: "",
   confirmPassword: "",
   terms: false,
-} satisfies RegisterForm
+} satisfies RegisterRequest

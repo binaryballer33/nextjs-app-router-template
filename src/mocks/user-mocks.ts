@@ -25,7 +25,7 @@ export const mockUser: User = {
   role: "admin",
   coverImg: "/placeholders/covers/5.jpg",
   followers: "813",
-  description: "Passionate Building And Breaking Things. Hooper / Coder / World Traveler.",
+  description: "Passionate Building And Breaking Things / Hooper / Coder / World Traveler.",
   posts: "23",
 }
 

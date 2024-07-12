@@ -1,5 +1,6 @@
-import { usePathname } from "next/navigation"
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
+
+import { usePathname } from "next/navigation"
 
 // Context structure
 type SidebarContextType = {

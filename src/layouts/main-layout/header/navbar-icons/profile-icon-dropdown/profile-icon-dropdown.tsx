@@ -1,7 +1,9 @@
 "use client"
 
 import { Avatar, IconButton, Stack, useTheme } from "@mui/material"
+
 import usePopover from "src/hooks/use-popover"
+
 import ProfileIconDropdown from "./profile-icon-dropdown-content"
 
 // TODO: make icon button hoverable so that you don't have to click it to see the dropdown

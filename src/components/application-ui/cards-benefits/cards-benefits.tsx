@@ -4,8 +4,8 @@ import Card from "@mui/material/Card"
 import Grid from "@mui/material/Grid"
 import { useTheme } from "@mui/material/styles"
 import Typography from "@mui/material/Typography"
-import React from "react"
 import { useTranslation } from "react-i18next"
+
 import mockBenefits from "src/mocks/card-benefits"
 
 export default function CardsBenefits() {

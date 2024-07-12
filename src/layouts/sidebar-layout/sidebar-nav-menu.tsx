@@ -1,3 +1,7 @@
+import { useState } from "react"
+
+import { usePathname } from "next/navigation"
+
 import KeyboardArrowRightTwoToneIcon from "@mui/icons-material/KeyboardArrowRightTwoTone"
 import {
   Box,
@@ -12,9 +16,8 @@ import {
   Theme,
   useMediaQuery,
 } from "@mui/material"
-import { usePathname } from "next/navigation"
 import PropTypes from "prop-types"
-import { useState } from "react"
+
 import RouterLink from "src/components/base/router-link"
 import { NavBarItem } from "src/models/navbar-item"
 

@@ -1,3 +1,5 @@
+import { ChangeEvent, MouseEvent, useState } from "react"
+
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone"
 import {
   Card,
@@ -17,8 +19,8 @@ import {
   useTheme,
 } from "@mui/material"
 import { format, subDays, subHours, subWeeks } from "date-fns"
-import { ChangeEvent, MouseEvent, useState } from "react"
 import { useTranslation } from "react-i18next"
+
 import { PaginationActions } from "src/components/application-ui/pagination/simple"
 
 export default function SettingsSecurity() {

@@ -1,3 +1,5 @@
+import { SyntheticEvent, useState } from "react"
+
 import DownloadIcon from "@mui/icons-material/Download"
 import KeyboardArrowRightTwoToneIcon from "@mui/icons-material/KeyboardArrowRightTwoTone"
 import {
@@ -15,8 +17,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material"
-import { SyntheticEvent, useState } from "react"
 import { useTranslation } from "react-i18next"
+
 import { AccordionAlternate } from "src/components/base/styles/accordion"
 
 type AccordionItem = {

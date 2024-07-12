@@ -1,15 +1,19 @@
 "use client"
 
+import { useCallback } from "react"
+
+import { useRouter } from "next/navigation"
+
 import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone"
 import { alpha, Box, Button, Divider, ListItemText, Menu, MenuItem, useTheme } from "@mui/material"
-import { useRouter } from "next/navigation"
 import PropTypes from "prop-types"
-import { useCallback } from "react"
 import { useTranslation } from "react-i18next"
+
 import signOut from "src/actions/auth/sign-out"
 import useAuth from "src/hooks/use-auth"
 import profileIconDropdownNavItems from "src/router/profile-dropdown-icon-routes"
 import { neutral } from "src/theme/theme"
+
 import AvatarTitleDescriptionAlternate from "./profile-icon-avatar-title-description"
 
 type Origin = {

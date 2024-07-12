@@ -1,4 +1,5 @@
 import { alpha, PaletteColor, styled, Theme, Tooltip, tooltipClasses, TooltipProps } from "@mui/material"
+
 import { neutral } from "src/theme/theme"
 
 export const TooltipLight = styled(({ className, ...props }: TooltipProps) => (

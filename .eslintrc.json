@@ -15,7 +15,6 @@
   },
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "curly": ["error", "multi"],
     "import/extensions": "off",
     "import/prefer-default-export": "warn",
@@ -41,6 +40,18 @@
     "no-unused-expressions": "off",
     "no-unused-vars": "off", // let typescript handle this
     "no-param-reassign": "off",
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "react",
+            "importNames": ["default"],
+            "message": "Direct import of React is not allowed. Use React features from the 'react/jsx-runtime' instead."
+          }
+        ]
+      }
+    ], // get rid of direct import of React, after React 17 this is not necessary
 
     "arrow-body-style": "off",
     "object-curly-newline": "off", // let prettier handle this

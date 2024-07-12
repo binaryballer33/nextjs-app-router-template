@@ -1,9 +1,10 @@
 "use client"
 
-import { Button, Typography } from "@mui/material"
 import { useRouter } from "next/navigation"
-import React from "react"
+
+import { Button, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
+
 import FullScreenCenteredContainer from "src/components/base/full-height-width-centered-container"
 
 function SignOutPage() {

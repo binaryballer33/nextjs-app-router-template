@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded"
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded"
 import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded"
@@ -17,11 +19,12 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material"
-import { useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
+
 import { AvatarState } from "src/components/base/styles/avatar"
 import ButtonIcon from "src/components/base/styles/button-icon"
+
 import AlertDialogContent from "./alert-dialog-content"
 
 function BulkDelete() {

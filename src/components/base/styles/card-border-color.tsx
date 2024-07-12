@@ -1,5 +1,6 @@
-import { Card, styled } from "@mui/material"
 import { ReactNode } from "react"
+
+import { Card, styled } from "@mui/material"
 
 export type BorderColor = "primary" | "error" | "success" | "secondary" | "warning" | "info"
 type BorderPosition = "top" | "bottom"

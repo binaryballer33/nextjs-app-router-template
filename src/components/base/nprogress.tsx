@@ -1,8 +1,9 @@
 "use client"
 
 /* eslint-disable no-undef */
-import NProgress from "nprogress"
 import { useEffect } from "react"
+
+import NProgress from "nprogress"
 
 type PushStateInput = [data: unknown, unused: string, url?: string | URL | null | undefined]
 

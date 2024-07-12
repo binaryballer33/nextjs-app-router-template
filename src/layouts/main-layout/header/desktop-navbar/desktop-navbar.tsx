@@ -1,5 +1,7 @@
 import { Box, Stack } from "@mui/material"
+
 import { NavBarItem } from "src/models/navbar-item"
+
 import DesktopNavBarItem from "./desktop-navbar-item"
 
 const isRouteActive = (route?: string, currentPath?: string, subMenu?: NavBarItem[]): boolean | undefined => {

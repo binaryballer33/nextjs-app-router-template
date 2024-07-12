@@ -1,5 +1,6 @@
-import Box, { BoxProps } from "@mui/material/Box"
 import { ReactNode } from "react"
+
+import Box, { BoxProps } from "@mui/material/Box"
 
 type FullScreenCenteredContainerProps = BoxProps & {
   children: ReactNode

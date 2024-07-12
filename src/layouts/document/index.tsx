@@ -1,19 +1,24 @@
 "use client"
 
+import { useEffect, type ReactNode } from "react"
+
 import { Box } from "@mui/material"
 import CssBaseline from "@mui/material/CssBaseline"
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
-import { useEffect, type ReactNode } from "react"
 import { Provider as ReduxProvider } from "react-redux"
+import { NextAppDirEmotionCacheProvider } from "tss-react/next/appDir"
+
 import Toastr from "src/components/base/toastr" // for notification overlays
 import { store, useSelector } from "src/store"
-import { NextAppDirEmotionCacheProvider } from "tss-react/next/appDir"
+
 import "src/i18n/i18n" // for multilanguage support
 import "src/global.css" // for global styles
 import "aos/dist/aos.css" // for animations and transitions on scroll
+
 import AOS from "aos"
+
 import AuthProvider from "src/contexts/auth-context" // for authentication with Supabase
 import SidebarProvider from "src/contexts/sidebar-context"
 import { darkTheme, lightTheme } from "src/theme/theme"

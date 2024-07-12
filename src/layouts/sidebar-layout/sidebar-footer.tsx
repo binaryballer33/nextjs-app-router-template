@@ -1,7 +1,9 @@
+import { ReactNode } from "react"
+
 import { ExitToApp, Settings, ShoppingCart } from "@mui/icons-material"
 import { alpha, IconButton, Stack, useTheme } from "@mui/material"
-import { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
+
 import { TooltipLight } from "src/components/base/styles/tooltips"
 
 type TooltipProps = {
@@ -36,7 +38,7 @@ function FooterButton({ icon, tooltipText }: TooltipProps) {
   )
 }
 
-function SidebarFooter() {
+export default function SidebarFooter() {
   return (
     <Stack
       direction="row"
@@ -54,5 +56,3 @@ function SidebarFooter() {
     </Stack>
   )
 }
-
-export default SidebarFooter

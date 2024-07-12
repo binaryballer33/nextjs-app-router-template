@@ -1,6 +1,7 @@
+import { ReactNode } from "react"
+
 import { alpha, styled, useTheme } from "@mui/material"
 import PropTypes from "prop-types"
-import { ReactNode } from "react"
 import SimpleBar from "simplebar-react"
 
 const ScrollbarWrapper = styled(SimpleBar)(() => ({}))

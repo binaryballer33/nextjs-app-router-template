@@ -2,10 +2,11 @@
 
 /* eslint-disable no-console */
 import { revalidatePath } from "next/cache"
-import { RegisterForm } from "src/models/forms/register"
+
+import { RegisterRequest } from "src/models/forms/register"
 import createServerClient from "src/utils/supabase/server"
 
-export default async function register(credentials: RegisterForm) {
+export default async function register(credentials: RegisterRequest) {
   const supabase = createServerClient()
 
   const { data, error } = await supabase.auth.signUp({

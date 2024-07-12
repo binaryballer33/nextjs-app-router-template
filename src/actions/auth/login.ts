@@ -3,10 +3,11 @@
 /* eslint-disable no-console */
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
-import { LoginForm } from "src/models/forms/login"
+
+import { LoginRequest } from "src/models/forms/login"
 import createServerClient from "src/utils/supabase/server"
 
-export default async function login(credentials: LoginForm) {
+export default async function login(credentials: LoginRequest) {
   const { email, password } = credentials
   const supabase = createServerClient()
 

@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 import KeyboardArrowLeftTwoToneIcon from "@mui/icons-material/KeyboardArrowLeftTwoTone"
 import KeyboardArrowRightTwoToneIcon from "@mui/icons-material/KeyboardArrowRightTwoTone"
 import {
@@ -12,13 +14,14 @@ import {
   useTheme,
 } from "@mui/material"
 import PropTypes from "prop-types"
-import { useState } from "react"
+
 import ActivityTotals from "src/app/(auth)/profile/page-components/activity-totals"
 import Scrollbar from "src/components/base/scrollbar"
 import { useSidebarContext } from "src/contexts/sidebar-context"
 import useAuth from "src/hooks/use-auth"
 import { NavBarItem } from "src/models/navbar-item"
 import { SIDEBAR_WIDTH_COLLAPSED, SIDEBAR_WIDTH_PROFILE_PAGE } from "src/theme/utils"
+
 import SidebarFooter from "./sidebar-footer"
 import SidebarNavMenu from "./sidebar-nav-menu"
 import SidebarNavMenuCollapsed from "./sidebar-nav-menu-collapsed"
@@ -40,9 +43,11 @@ type SidebarProps = {
 
 export default function Sidebar(props: SidebarProps) {
   const { onClose, onOpen, navbarItems, open, ...other } = props
-
+  const theme = useTheme()
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("lg"))
   const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
+  const { isSidebarCollapsed, isSidebarHovered, toggleSidebarCollapsed, toggleSidebarHover } = useSidebarContext()
+  const { user } = useAuth()
 
   const sampleTenants = [
     {
@@ -67,9 +72,17 @@ export default function Sidebar(props: SidebarProps) {
 
   const [currentTenant, setCurrentTenant] = useState(sampleTenants[0])
   const handleTenantSwitch = (tenant: any) => setCurrentTenant(tenant)
-  const { user } = useAuth()
-  const theme = useTheme()
-  const { isSidebarCollapsed, isSidebarHovered, toggleSidebarCollapsed, toggleSidebarHover } = useSidebarContext()
+
+  const renderSidebarNavMenu = () => {
+    if (mdUp && isSidebarCollapsed)
+      return isSidebarHovered ? (
+        <SidebarNavMenu navbarItems={navbarItems} />
+      ) : (
+        <SidebarNavMenuCollapsed navbarItems={navbarItems} />
+      )
+
+    return <SidebarNavMenu navbarItems={navbarItems} />
+  }
 
   const getSidebarWidthForSidebarWrapper = () => {
     if (mdUp && isSidebarCollapsed) return isSidebarHovered ? SIDEBAR_WIDTH_PROFILE_PAGE : SIDEBAR_WIDTH_COLLAPSED
@@ -84,17 +97,6 @@ export default function Sidebar(props: SidebarProps) {
   const getBoxShadow = (theme: Theme) => {
     if (isSidebarCollapsed) return isSidebarHovered ? theme.shadows[24] : theme.shadows[0]
     return theme.shadows[0]
-  }
-
-  const renderSidebarNavMenu = () => {
-    if (mdUp && isSidebarCollapsed)
-      return isSidebarHovered ? (
-        <SidebarNavMenu navbarItems={navbarItems} />
-      ) : (
-        <SidebarNavMenuCollapsed navbarItems={navbarItems} />
-      )
-
-    return <SidebarNavMenu navbarItems={navbarItems} />
   }
 
   const getJustifyContent = () => {
@@ -143,9 +145,11 @@ export default function Sidebar(props: SidebarProps) {
         alignItems="center"
       >
         {/* SideBar Header */}
-        <Typography variant="body1" color="primary">
-          Welcome {user?.email.slice(0, user?.email.indexOf("@"))}
-        </Typography>
+        {(isSidebarCollapsed && isSidebarHovered) || !isSidebarCollapsed ? (
+          <Typography variant="h6" color="primary">
+            Welcome {user?.email.slice(0, user?.email.indexOf("@"))}
+          </Typography>
+        ) : null}
 
         {/* Show Arrow IconButton */}
         {lgUp && (
@@ -214,9 +218,7 @@ export default function Sidebar(props: SidebarProps) {
       <Drawer
         anchor="left"
         open
-        ModalProps={{
-          keepMounted: true,
-        }}
+        ModalProps={{ keepMounted: true }}
         onMouseEnter={() => toggleSidebarHover(true)}
         onMouseLeave={() => toggleSidebarHover(false)}
         PaperProps={{

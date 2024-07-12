@@ -1,12 +1,13 @@
+import Image from "next/image"
+
 import FacebookIcon from "@mui/icons-material/Facebook"
 import GitHubIcon from "@mui/icons-material/GitHub"
 import InstagramIcon from "@mui/icons-material/Instagram"
 import TwitterIcon from "@mui/icons-material/Twitter"
 import YouTubeIcon from "@mui/icons-material/YouTube"
 import { Box, Button, Divider, Grid, IconButton, Link, TextField, Typography, useTheme } from "@mui/material"
-import Image from "next/image"
-import React from "react"
 import { useTranslation } from "react-i18next"
+
 import { neutral } from "src/theme/theme"
 
 export default function Footer() {

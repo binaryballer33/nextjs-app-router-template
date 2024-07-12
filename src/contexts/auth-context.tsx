@@ -2,6 +2,7 @@
 
 /* eslint-disable no-console */
 import { createContext, ReactNode, useCallback, useEffect, useState } from "react"
+
 import type { User } from "src/models/user"
 import createSupabaseClient from "src/utils/supabase/client"
 

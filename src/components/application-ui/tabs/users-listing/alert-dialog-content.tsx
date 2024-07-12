@@ -1,5 +1,6 @@
 import WarningTwoToneIcon from "@mui/icons-material/WarningTwoTone"
 import { Box, Stack, Typography } from "@mui/material"
+
 import { AvatarState } from "src/components/base/styles/avatar"
 
 function AlertDialogContent() {

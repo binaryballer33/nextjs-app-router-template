@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+
 import { ThemeState } from "src/models/redux/theme-state"
 
 const initialState: ThemeState = {

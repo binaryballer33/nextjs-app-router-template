@@ -1,5 +1,10 @@
 "use client"
 
+import { useCallback, useState } from "react"
+
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Alert,
@@ -17,19 +22,23 @@ import {
   Typography,
   useTheme,
 } from "@mui/material"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { useCallback, useState } from "react"
-import { useForm } from "react-hook-form"
+import { SubmitHandler, useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
+
 import register from "src/actions/auth/register"
 import RouterLink from "src/components/base/router-link"
 import useAuth from "src/hooks/use-auth"
 import oAuthProviders from "src/models/forms/common"
-import { defaultValuesRegisterForm, OAuthProvider, RegisterForm, RegisterSchema } from "src/models/forms/register"
+import {
+  defaultValuesRegisterRequest,
+  OAuthProvider,
+  RegisterRequest,
+  RegisterRequestSchema,
+} from "src/models/forms/register"
 import routes from "src/router/navigation-routes"
 import createSupabaseClient from "src/utils/supabase/client"
+
 import RegisterFormInput from "./register-form-input"
 
 /*
@@ -49,14 +58,14 @@ export default function RegisterPage() {
 
   const {
     register: registerInputField,
-    handleSubmit,
+    handleSubmit: handleSubmitHookForm,
     reset: resetFormFields,
     watch: watchFormField,
     setValue: setFormValue,
     formState: { errors },
-  } = useForm<RegisterForm>({
-    defaultValues: defaultValuesRegisterForm,
-    resolver: zodResolver(RegisterSchema),
+  } = useForm<RegisterRequest>({
+    defaultValues: defaultValuesRegisterRequest,
+    resolver: zodResolver(RegisterRequestSchema),
   })
 
   const onAuth = useCallback(
@@ -84,8 +93,8 @@ export default function RegisterPage() {
     [supabaseClient],
   )
 
-  const onSubmit = useCallback(
-    async (credentials: RegisterForm): Promise<void> => {
+  const handleSubmit: SubmitHandler<RegisterRequest> = useCallback(
+    async (credentials: RegisterRequest): Promise<void> => {
       setIsLoading(true) // Set loading state to true for disabling buttons and changing UI
       resetFormFields() // Reset the form to clear the inputs
 
@@ -106,7 +115,7 @@ export default function RegisterPage() {
     resetFormFields()
   }, [resetFormFields])
 
-  let inputFields = Object.keys(defaultValuesRegisterForm) // get the text fields from the initial form state
+  let inputFields = Object.keys(defaultValuesRegisterRequest) // get the text fields from the initial form state
   inputFields = inputFields.filter((inputName) => inputName !== "terms") // don't create an input field for the terms checkbox
 
   const isDarkMode = theme.palette.mode === "dark"
@@ -124,7 +133,10 @@ export default function RegisterPage() {
   }))
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} style={{ display: "flex", flexDirection: "column", padding: "16px 0px" }}>
+    <form
+      onSubmit={handleSubmitHookForm(handleSubmit)}
+      style={{ display: "flex", flexDirection: "column", padding: "16px 0px" }}
+    >
       <Box py={{ xs: 2, sm: 3 }} mx={{ xl: 6 }}>
         {/* Form Header */}
         <Container maxWidth="sm">
@@ -176,7 +188,7 @@ export default function RegisterPage() {
                   watchFormField={watchFormField}
                   setFormValue={setFormValue}
                   errors={errors}
-                  inputName={inputName as keyof RegisterForm}
+                  inputName={inputName as keyof RegisterRequest}
                 />
               ))}
 

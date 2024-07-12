@@ -1,3 +1,5 @@
+import { ChangeEvent, useState } from "react"
+
 import ChevronRightTwoToneIcon from "@mui/icons-material/ChevronRightTwoTone"
 import CloseIcon from "@mui/icons-material/Close"
 import QueryStatsTwoToneIcon from "@mui/icons-material/QueryStatsTwoTone"
@@ -31,8 +33,8 @@ import {
 } from "@mui/material"
 import { OverridableComponent } from "@mui/material/OverridableComponent"
 import PropTypes from "prop-types"
-import { ChangeEvent, useState } from "react"
 import { useTranslation } from "react-i18next"
+
 import { AvatarState } from "src/components/base/styles/avatar"
 import { Category, dummyData, iconMapping, Item } from "src/mocks/search-icon-mock-search-data"
 import { neutral, PaletteColorKey } from "src/theme/theme"

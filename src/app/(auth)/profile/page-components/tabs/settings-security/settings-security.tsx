@@ -16,8 +16,10 @@ import {
   useTheme,
 } from "@mui/material"
 import { useTranslation } from "react-i18next"
+
 import { AvatarState } from "src/components/base/styles/avatar"
 import ButtonSoft from "src/components/base/styles/button-soft"
+
 import SecurityLogs from "./security-logs"
 
 const StyledSwitch = styled(Switch)(() => ({

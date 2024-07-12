@@ -17,6 +17,7 @@ import { BarChart } from "@mui/x-charts/BarChart"
 import { LineChart } from "@mui/x-charts/LineChart"
 import CountUp from "react-countup"
 import { useTranslation } from "react-i18next"
+
 import { CardBorderColor } from "src/components/base/styles/card-border-color"
 import { neutral } from "src/theme/theme"
 

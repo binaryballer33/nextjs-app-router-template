@@ -2,6 +2,7 @@
 
 import { Box, Divider, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
+
 import AvatarAccordion from "src/components/application-ui/accordions/avatar/avatar"
 import CardsBenefits from "src/components/application-ui/cards-benefits/cards-benefits"
 import FinancialStatus from "src/components/application-ui/financial-status/financial-status"

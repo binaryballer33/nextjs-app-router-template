@@ -1,5 +1,6 @@
 import { colors, lighten, NeutralColors, PaletteMode } from "@mui/material"
 import { createTheme, responsiveFontSizes } from "@mui/material/styles"
+
 import { modifiedComponents } from "./modified-components"
 
 declare module "@mui/material/styles" {

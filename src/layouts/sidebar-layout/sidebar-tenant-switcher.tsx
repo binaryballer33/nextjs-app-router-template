@@ -1,3 +1,5 @@
+import { MouseEvent, useState } from "react"
+
 import CheckTwoToneIcon from "@mui/icons-material/CheckTwoTone"
 import KeyboardArrowDownTwoToneIcon from "@mui/icons-material/KeyboardArrowDownTwoTone"
 import {
@@ -16,7 +18,6 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material"
-import { MouseEvent, useState } from "react"
 
 type Tenant = {
   id: number

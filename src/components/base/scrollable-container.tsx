@@ -1,5 +1,7 @@
-import { Box, SxProps, Theme, useTheme } from "@mui/material"
 import { ReactNode } from "react"
+
+import { Box, SxProps, Theme, useTheme } from "@mui/material"
+
 import Scrollbar from "src/components/base/scrollbar"
 
 type ScrollableContainerProps = {

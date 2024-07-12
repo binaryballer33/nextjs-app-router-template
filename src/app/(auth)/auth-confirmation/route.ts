@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
-import { type EmailOtpType } from "@supabase/supabase-js"
 import { NextResponse, type NextRequest } from "next/server"
+
+import { type EmailOtpType } from "@supabase/supabase-js"
+
 import createClient from "src/utils/supabase/server"
 
 // when a user signs up, they are sent an email with a link to verify their email address, this route handles the verification

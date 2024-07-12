@@ -1,5 +1,6 @@
-import { Stack, SxProps, Theme, Typography, useMediaQuery } from "@mui/material"
 import { ReactNode } from "react"
+
+import { Stack, SxProps, Theme, Typography, useMediaQuery } from "@mui/material"
 import { useTranslation } from "react-i18next"
 
 type PageHeadingProps = {

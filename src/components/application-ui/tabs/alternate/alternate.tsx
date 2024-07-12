@@ -1,3 +1,5 @@
+import { ReactNode, SyntheticEvent, useState } from "react"
+
 import {
   alpha,
   Box,
@@ -12,8 +14,8 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material"
-import { ReactNode, SyntheticEvent, useState } from "react"
 import { useTranslation } from "react-i18next"
+
 import PlaceholderBox from "src/components/base/placeholder-box"
 import { TabsAlternate } from "src/components/base/styles/tabs"
 

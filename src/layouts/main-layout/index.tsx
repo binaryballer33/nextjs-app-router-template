@@ -1,8 +1,10 @@
 "use client"
 
+import { ReactNode } from "react"
+
 import { Box } from "@mui/material"
 import PropTypes from "prop-types"
-import { ReactNode } from "react"
+
 import Footer from "./footer/footer"
 import Header from "./header/header"
 

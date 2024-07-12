@@ -2,7 +2,9 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox"
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts"
 import ReceiptIcon from "@mui/icons-material/Receipt"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
+
 import { NavBarItem } from "src/models/navbar-item"
+
 import routes from "./navigation-routes"
 
 const profileIconDropdownNavItems: NavBarItem[] = [

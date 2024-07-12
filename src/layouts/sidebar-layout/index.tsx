@@ -1,8 +1,11 @@
+import { type ReactNode } from "react"
+
 import { Box } from "@mui/material"
 import PropTypes from "prop-types"
-import { type ReactNode } from "react"
+
 import useMobileNav from "src/hooks/use-mobile-nav"
 import useVerticalNavBarItems from "src/router/vertical-navbar-routes"
+
 import Sidebar from "./sidebar"
 
 type SideBarLayoutProps = {
