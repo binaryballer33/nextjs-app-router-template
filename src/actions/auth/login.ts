@@ -4,11 +4,19 @@
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
-import { LoginRequest } from "src/models/forms/login"
+import { LoginRequest, LoginRequestSchema } from "src/models/forms/login"
 import createServerClient from "src/utils/supabase/server"
 
 export default async function login(credentials: LoginRequest) {
-  const { email, password } = credentials
+  const validatedLoginRequest = LoginRequestSchema.safeParse(credentials)
+
+  if (!validatedLoginRequest.success) {
+    console.debug("Invalid Login Request", validatedLoginRequest.error.message)
+    throw new Error("Invalid Login Request")
+  }
+
+  const { email, password } = validatedLoginRequest.data
+
   const supabase = createServerClient()
 
   const { error } = await supabase.auth.signInWithPassword({

@@ -19,6 +19,7 @@ import "aos/dist/aos.css" // for animations and transitions on scroll
 
 import AOS from "aos"
 
+import ReactQueryClientProvider from "src/api/query-client-provider"
 import AuthProvider from "src/contexts/auth-context" // for authentication with Supabase
 import SidebarProvider from "src/contexts/sidebar-context"
 import { darkTheme, lightTheme } from "src/theme/theme"
@@ -72,7 +73,9 @@ export default function Layout({ children }: LayoutProps) {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <AuthProvider>
             <SidebarProvider>
-              <ThemeProvider>{children}</ThemeProvider>
+              <ThemeProvider>
+                <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+              </ThemeProvider>
             </SidebarProvider>
           </AuthProvider>
         </LocalizationProvider>

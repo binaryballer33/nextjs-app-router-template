@@ -1,14 +1,15 @@
-/* API ROUTES FOR REDUX TOOLKIT QUERY */
-const apiRoutes = {
-  user: {
-    get_user_by_userid_route: (userid: string) => `/user/${userid}`,
-    get_all_users_route: "/user/",
-    get_register_user_route: "/user/register",
-    get_login_user_route: "/user/login",
-    get_user_profile_route: (userid: string) => `/user/profile/${userid}`,
-    get_update_user_route: (userid: string) => `/user/update-user/${userid}`,
-    get_delete_user_route: (userid: string) => `/user/delete-user/${userid}`,
+/* API ROUTES FOR REACT QUERY */
+const API_QUERY_ROUTES = {
+  BACKEND_BASE_URL: "http://localhost:3333",
+  USER: {
+    GET_ALL_USERS_ROUTE: "/user",
+    GET_USER_BY_ID: (userid: string) => `/user/${userid}`,
+    GET_REGISTER_USER_ROUTE: "/user/register",
+    GET_LOGIN_USER_ROUTE: "/user/login",
+    GET_USER_PROFILE_ROUTE: (userid: string) => `/user/profile/${userid}`,
+    GET_UPDATE_USER_ROUTE: (userid: string) => `/user/update-user/${userid}`,
+    GET_DELETE_USER_ROUTE: (userid: string) => `/user/delete-user/${userid}`,
   },
 }
 
-export default apiRoutes
+export default API_QUERY_ROUTES
