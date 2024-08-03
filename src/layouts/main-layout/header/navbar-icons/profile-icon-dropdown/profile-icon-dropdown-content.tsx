@@ -29,6 +29,7 @@ type ProfileDropdownProps = {
     transformOrigin?: Origin
 }
 
+// TODO: on mobile phones turn this dropdown into a bottom mobile navigation bar
 export default function ProfileIconDropdown(props: ProfileDropdownProps) {
     const { anchorEl, onClose, open, anchorOrigin, transformOrigin, ...other } = props
 

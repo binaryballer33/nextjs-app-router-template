@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next"
 import AvatarAccordion from "src/components/application-ui/accordions/avatar/avatar"
 import CardsBenefits from "src/components/application-ui/cards-benefits/cards-benefits"
 import FinancialStatus from "src/components/application-ui/financial-status/financial-status"
-import AlternateTabs from "src/components/application-ui/tabs/alternate/alternate"
 import UserTabs from "src/components/application-ui/tabs/users-listing/user-tabs"
 import Container from "src/components/base/container"
 import PageHeading from "src/components/base/page-heading"
@@ -37,7 +36,7 @@ function Page() {
             </Container>
 
             <Container>
-                <AlternateTabs />
+                <UserTabs users={mockUsers} />
             </Container>
 
             <Container>
@@ -45,15 +44,11 @@ function Page() {
             </Container>
 
             <Container>
-                <AvatarAccordion />
-            </Container>
-
-            <Container>
                 <FinancialStatus />
             </Container>
 
             <Container>
-                <UserTabs users={mockUsers} />
+                <AvatarAccordion />
             </Container>
         </>
     )
