@@ -8,10 +8,10 @@ import { NavBarItem } from "src/models/navbar-item"
 import routes from "./navigation-routes"
 
 const profileIconDropdownNavItems: NavBarItem[] = [
-  { title: "My Profile", icon: <AccountBoxIcon />, route: routes.user.profile },
-  { title: "Profile settings", icon: <ManageAccountsIcon />, route: routes.dummy },
-  { title: "Cart", icon: <ShoppingCartIcon />, route: routes.dummy },
-  { title: "Orders", icon: <ReceiptIcon />, route: routes.dummy },
+    { title: "My Profile", icon: <AccountBoxIcon />, route: routes.user.profile },
+    { title: "Profile settings", icon: <ManageAccountsIcon />, route: routes.dummy },
+    { title: "Cart", icon: <ShoppingCartIcon />, route: routes.dummy },
+    { title: "Orders", icon: <ReceiptIcon />, route: routes.dummy },
 ]
 
 export default profileIconDropdownNavItems

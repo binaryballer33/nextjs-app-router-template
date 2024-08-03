@@ -2,9 +2,7 @@
 
 import { useEffect, type ReactNode } from "react"
 
-import { Box } from "@mui/material"
-import CssBaseline from "@mui/material/CssBaseline"
-import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles"
+import { Box, CssBaseline, ThemeProvider as MuiThemeProvider } from "@mui/material"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { Provider as ReduxProvider } from "react-redux"
@@ -25,61 +23,61 @@ import SidebarProvider from "src/contexts/sidebar-context"
 import { darkTheme, lightTheme } from "src/theme/theme"
 
 type ThemeProviderProps = {
-  children: ReactNode
+    children: ReactNode
 }
 
 function ThemeProvider({ children }: ThemeProviderProps) {
-  const { mode } = useSelector((state) => state.theme)
-  const theme = mode === "dark" ? darkTheme : lightTheme
+    const { mode } = useSelector((state) => state.theme)
+    const theme = mode === "dark" ? darkTheme : lightTheme
 
-  useEffect(() => {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector("#jss-server-side")
-    if (jssStyles && jssStyles.parentElement) jssStyles.parentElement.removeChild(jssStyles)
+    useEffect(() => {
+        // Remove the server-side injected CSS.
+        const jssStyles = document.querySelector("#jss-server-side")
+        if (jssStyles && jssStyles.parentElement) jssStyles.parentElement.removeChild(jssStyles)
 
-    // Initialize AOS library for animations and transitions on scroll
-    AOS.init({
-      once: true,
-      delay: 50,
-      duration: 500,
-      easing: "ease-in-out",
-    })
-  }, [])
+        // Initialize AOS library for animations and transitions on scroll
+        AOS.init({
+            once: true,
+            delay: 50,
+            duration: 500,
+            easing: "ease-in-out",
+        })
+    }, [])
 
-  // Refresh AOS library on theme change
-  useEffect(() => {
-    AOS.refresh()
-  }, [mode])
+    // Refresh AOS library on theme change
+    useEffect(() => {
+        AOS.refresh()
+    }, [mode])
 
-  return (
-    <MuiThemeProvider theme={theme}>
-      <CssBaseline />
-      <Box display="flex" minHeight="100vh">
-        {children}
-      </Box>
-      <Toastr />
-    </MuiThemeProvider>
-  )
+    return (
+        <MuiThemeProvider theme={theme}>
+            <CssBaseline />
+            <Box display="flex" minHeight="100vh">
+                {children}
+            </Box>
+            <Toastr />
+        </MuiThemeProvider>
+    )
 }
 
 type LayoutProps = {
-  children: ReactNode
+    children: ReactNode
 }
 
 export default function Layout({ children }: LayoutProps) {
-  return (
-    <NextAppDirEmotionCacheProvider options={{ key: "mandy-tec" }}>
-      <ReduxProvider store={store}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <AuthProvider>
-            <SidebarProvider>
-              <ThemeProvider>
-                <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
-              </ThemeProvider>
-            </SidebarProvider>
-          </AuthProvider>
-        </LocalizationProvider>
-      </ReduxProvider>
-    </NextAppDirEmotionCacheProvider>
-  )
+    return (
+        <NextAppDirEmotionCacheProvider options={{ key: "mandy-tec" }}>
+            <ReduxProvider store={store}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <AuthProvider>
+                        <SidebarProvider>
+                            <ThemeProvider>
+                                <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+                            </ThemeProvider>
+                        </SidebarProvider>
+                    </AuthProvider>
+                </LocalizationProvider>
+            </ReduxProvider>
+        </NextAppDirEmotionCacheProvider>
+    )
 }

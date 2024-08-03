@@ -5,9 +5,9 @@ import { ReactNode } from "react"
 import SideBarLayout from "src/layouts/sidebar-layout/index"
 
 type ProfileLayoutProps = {
-  children: ReactNode
+    children: ReactNode
 }
 
 export default function ProfileLayout({ children }: ProfileLayoutProps) {
-  return <SideBarLayout>{children}</SideBarLayout>
+    return <SideBarLayout>{children}</SideBarLayout>
 }

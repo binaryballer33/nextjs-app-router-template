@@ -8,12 +8,12 @@ import createServerClient from "./supabase/server"
   redirect to login page if not and if logged in already, return user data and supabase client
 */
 export async function checkLoginStatusServer() {
-  const supabaseServerClient = createServerClient()
-  const { data, error } = await supabaseServerClient.auth.getUser()
+    const supabaseServerClient = createServerClient()
+    const { data, error } = await supabaseServerClient.auth.getUser()
 
-  if (error || !data?.user) redirect("/login")
+    if (error || !data?.user) redirect("/login")
 
-  return { data, supabaseServerClient }
+    return { data, supabaseServerClient }
 }
 
 /*
@@ -21,10 +21,10 @@ export async function checkLoginStatusServer() {
   redirect to login page if not and if logged in already, return user data and supabase client
 */
 export async function checkLoginStatusClient() {
-  const supabaseBrowserClient = createBrowserClient()
-  const { data, error } = await supabaseBrowserClient.auth.getSession()
+    const supabaseBrowserClient = createBrowserClient()
+    const { data, error } = await supabaseBrowserClient.auth.getSession()
 
-  if (error || !data?.session?.user) redirect("/login")
+    if (error || !data?.session?.user) redirect("/login")
 
-  return { data, supabaseBrowserClient }
+    return { data, supabaseBrowserClient }
 }

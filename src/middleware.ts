@@ -16,10 +16,10 @@ import updateSession from "src/utils/supabase/middleware"
 
 // just a wrapper around the updateSession middleware and a config matcher to filter out the paths where the middleware shouldn't run
 export async function middleware(request: NextRequest) {
-  return updateSession(request)
+    return updateSession(request)
 }
 
 // run the middleware on the pages in the matcher
 export const config = {
-  matcher: ["/profile"],
+    matcher: ["/profile"],
 }

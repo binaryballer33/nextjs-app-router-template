@@ -3,19 +3,19 @@ import ArrowForwardTwoToneIcon from "@mui/icons-material/ArrowForwardTwoTone"
 import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone"
 import UploadTwoToneIcon from "@mui/icons-material/UploadTwoTone"
 import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  CardMedia,
-  Chip,
-  Divider,
-  IconButton,
-  Stack,
-  styled,
-  Theme,
-  Typography,
-  useMediaQuery,
+    Avatar,
+    Box,
+    Button,
+    Card,
+    CardMedia,
+    Chip,
+    Divider,
+    IconButton,
+    Stack,
+    styled,
+    Theme,
+    Typography,
+    useMediaQuery,
 } from "@mui/material"
 import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
@@ -25,7 +25,7 @@ import { VisuallyHiddenInputNative } from "src/components/base/styles/visually-h
 import { User } from "src/mocks/user-mocks"
 
 const AvatarWrapper = styled(Card)(
-  ({ theme }) => `
+    ({ theme }) => `
     position: relative;
     overflow: visible;
     display: inline-block;
@@ -40,7 +40,7 @@ const AvatarWrapper = styled(Card)(
 )
 
 const ButtonUploadWrapper = styled(Box)(
-  ({ theme }) => `
+    ({ theme }) => `
     position: absolute;
     width: ${theme.spacing(4)};
     height: ${theme.spacing(4)};
@@ -63,7 +63,7 @@ const ButtonUploadWrapper = styled(Box)(
 )
 
 const CardCover = styled(Card)(
-  ({ theme }) => `
+    ({ theme }) => `
     position: relative;
 
     .MuiCardMedia-root {
@@ -73,7 +73,7 @@ const CardCover = styled(Card)(
 )
 
 const CardCoverAction = styled(Box)(
-  ({ theme }) => `
+    ({ theme }) => `
     position: absolute;
     right: ${theme.spacing(2)};
     bottom: ${theme.spacing(2)};
@@ -81,99 +81,104 @@ const CardCoverAction = styled(Box)(
 )
 
 type ProfileCoverProps = {
-  user: User
+    user: User
 }
 
 export default function ProfileCover({ user }: ProfileCoverProps) {
-  const { t } = useTranslation()
-  const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"))
+    const { t } = useTranslation()
+    const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"))
 
-  return (
-    <>
-      <Box display="flex" alignItems="center" mb={{ xs: 2, sm: 3 }}>
-        <Box>
-          <Typography variant="h3" component="h3" sx={{ pb: 0.5 }}>
-            {`${user.name}'s ${t("profile")}`}
-          </Typography>
-          <Typography variant="subtitle1">
-            {t("This is a profile page. Easy to modify, always blazing fast")}
-          </Typography>
-        </Box>
-      </Box>
-      <CardCover>
-        <CardMedia image={user.coverImg} />
-        <CardCoverAction sx={{ position: "absolute", top: 10, right: { xs: 12, sm: 10 } }}>
-          <VisuallyHiddenInputNative accept="image/*" id="change-cover" multiple type="file" />
-          <label htmlFor="change-cover">
-            <Button startIcon={<UploadTwoToneIcon />} variant="contained" color="primary" component="span">
-              {t("Change cover")}
-            </Button>
-          </label>
-        </CardCoverAction>
-      </CardCover>
-      <AvatarWrapper>
-        <Avatar variant="rounded" alt={user.name} src={user.avatar} />
-        <ButtonUploadWrapper>
-          <VisuallyHiddenInputNative accept="image/*" id="icon-button-file" name="icon-button-file" type="file" />
-          <label htmlFor="icon-button-file">
-            <IconButton component="span" color="primary">
-              <UploadTwoToneIcon />
-            </IconButton>
-          </label>
-        </ButtonUploadWrapper>
-      </AvatarWrapper>
-      <Box pt={2} pl={2}>
-        <Typography variant="h4">
-          {user.name}
-          <Typography variant="h6" fontWeight={500} sx={{ pl: 0.5 }} color="text.secondary" component="span">
-            ({user.jobtitle})
-          </Typography>
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary">
-          {user.description}
-        </Typography>
-        <Stack
-          mt={2}
-          gap={{ xs: 1, sm: 1.5 }}
-          flexDirection={{ xs: "column", sm: "row" }}
-          divider={<Divider flexItem orientation={smUp ? "vertical" : "horizontal"} />}
-        >
-          <Chip variant="outlined" color="info" label={user.location} />
-          <Chip
-            variant="outlined"
-            color="info"
-            label={
-              <>
-                {user.followers} {t("followers")}
-              </>
-            }
-          />
-          <Button size="small" endIcon={<ArrowForwardTwoToneIcon />}>
-            {t("See all")}
-            {` ${user.followers} `}
-            {t("connections")}
-          </Button>
-        </Stack>
-        <Divider sx={{ ml: -2.5, my: 2 }} />
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Stack spacing={1} direction="row">
-            <Button size="small" variant="contained">
-              {t("Follow")}
-            </Button>
-            <Button size="small" variant="outlined">
-              {t("View website")}
-            </Button>
-          </Stack>
-          <ButtonIcon color="primary" size="small">
-            <MoreHorizTwoToneIcon />
-          </ButtonIcon>
-        </Box>
-      </Box>
-    </>
-  )
+    return (
+        <>
+            <Box display="flex" alignItems="center" mb={{ xs: 2, sm: 3 }}>
+                <Box>
+                    <Typography variant="h3" component="h3" sx={{ pb: 0.5 }}>
+                        {`${user.name}'s ${t("profile")}`}
+                    </Typography>
+                    <Typography variant="subtitle1">
+                        {t("This is a profile page. Easy to modify, always blazing fast")}
+                    </Typography>
+                </Box>
+            </Box>
+            <CardCover>
+                <CardMedia image={user.coverImg} />
+                <CardCoverAction sx={{ position: "absolute", top: 10, right: { xs: 12, sm: 10 } }}>
+                    <VisuallyHiddenInputNative accept="image/*" id="change-cover" multiple type="file" />
+                    <label htmlFor="change-cover">
+                        <Button startIcon={<UploadTwoToneIcon />} variant="contained" color="primary" component="span">
+                            {t("Change cover")}
+                        </Button>
+                    </label>
+                </CardCoverAction>
+            </CardCover>
+            <AvatarWrapper>
+                <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+                <ButtonUploadWrapper>
+                    <VisuallyHiddenInputNative
+                        accept="image/*"
+                        id="icon-button-file"
+                        name="icon-button-file"
+                        type="file"
+                    />
+                    <label htmlFor="icon-button-file">
+                        <IconButton component="span" color="primary">
+                            <UploadTwoToneIcon />
+                        </IconButton>
+                    </label>
+                </ButtonUploadWrapper>
+            </AvatarWrapper>
+            <Box pt={2} pl={2}>
+                <Typography variant="h4">
+                    {user.name}
+                    <Typography variant="h6" fontWeight={500} sx={{ pl: 0.5 }} color="text.secondary" component="span">
+                        ({user.jobtitle})
+                    </Typography>
+                </Typography>
+                <Typography variant="subtitle1" color="text.secondary">
+                    {user.description}
+                </Typography>
+                <Stack
+                    mt={2}
+                    gap={{ xs: 1, sm: 1.5 }}
+                    flexDirection={{ xs: "column", sm: "row" }}
+                    divider={<Divider flexItem orientation={smUp ? "vertical" : "horizontal"} />}
+                >
+                    <Chip variant="outlined" color="info" label={user.location} />
+                    <Chip
+                        variant="outlined"
+                        color="info"
+                        label={
+                            <>
+                                {user.followers} {t("followers")}
+                            </>
+                        }
+                    />
+                    <Button size="small" endIcon={<ArrowForwardTwoToneIcon />}>
+                        {t("See all")}
+                        {` ${user.followers} `}
+                        {t("connections")}
+                    </Button>
+                </Stack>
+                <Divider sx={{ ml: -2.5, my: 2 }} />
+                <Box display="flex" alignItems="center" justifyContent="space-between">
+                    <Stack spacing={1} direction="row">
+                        <Button size="small" variant="contained">
+                            {t("Follow")}
+                        </Button>
+                        <Button size="small" variant="outlined">
+                            {t("View website")}
+                        </Button>
+                    </Stack>
+                    <ButtonIcon color="primary" size="small">
+                        <MoreHorizTwoToneIcon />
+                    </ButtonIcon>
+                </Box>
+            </Box>
+        </>
+    )
 }
 
 ProfileCover.propTypes = {
-  // @ts-ignore
-  user: PropTypes.object.isRequired,
+    // @ts-ignore
+    user: PropTypes.object.isRequired,
 }

@@ -9,19 +9,19 @@ import Footer from "./footer/footer"
 import Header from "./header/header"
 
 type MainLayoutProps = {
-  children?: ReactNode
+    children?: ReactNode
 }
 
 export default function MainLayout({ children }: MainLayoutProps) {
-  return (
-    <Box width="95%" m="auto">
-      <Header />
-      <Box my={2}>{children}</Box>
-      <Footer />
-    </Box>
-  )
+    return (
+        <Box width="95%" m="auto">
+            <Header />
+            <Box my={2}>{children}</Box>
+            <Footer />
+        </Box>
+    )
 }
 
 MainLayout.propTypes = {
-  children: PropTypes.node,
+    children: PropTypes.node,
 }

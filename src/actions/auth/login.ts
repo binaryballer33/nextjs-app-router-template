@@ -8,27 +8,27 @@ import { LoginRequest, LoginRequestSchema } from "src/models/forms/login"
 import createServerClient from "src/utils/supabase/server"
 
 export default async function login(credentials: LoginRequest) {
-  const validatedLoginRequest = LoginRequestSchema.safeParse(credentials)
+    const validatedLoginRequest = LoginRequestSchema.safeParse(credentials)
 
-  if (!validatedLoginRequest.success) {
-    console.debug("Invalid Login Request", validatedLoginRequest.error.message)
-    throw new Error("Invalid Login Request")
-  }
+    if (!validatedLoginRequest.success) {
+        console.debug("Invalid Login Request", validatedLoginRequest.error.message)
+        throw new Error("Invalid Login Request")
+    }
 
-  const { email, password } = validatedLoginRequest.data
+    const { email, password } = validatedLoginRequest.data
 
-  const supabase = createServerClient()
+    const supabase = createServerClient()
 
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  })
+    const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+    })
 
-  if (error) {
-    console.debug("Error signing in", error.message)
-    throw new Error("Error signing in")
-  }
+    if (error) {
+        console.debug("Error signing in", error.message)
+        throw new Error("Error signing in")
+    }
 
-  revalidatePath("/")
-  redirect("/profile")
+    revalidatePath("/")
+    redirect("/profile")
 }

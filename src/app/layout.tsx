@@ -9,33 +9,33 @@ import MainLayout from "src/layouts/main-layout"
 export const dynamic = "force-dynamic"
 
 export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  colorScheme: "dark",
+    width: "device-width",
+    initialScale: 1,
+    colorScheme: "dark",
 }
 
 export const metadata: Metadata = {
-  title: "Starter Next Template",
-  description: "Created By Shaquille Rashad Mandy",
+    title: "Starter Next Template",
+    description: "Created By Shaquille Rashad Mandy",
 }
 
 type LayoutProps = {
-  children: ReactNode
+    children: ReactNode
 }
 
 function Layout({ children }: LayoutProps) {
-  return (
-    <html lang="en">
-      <body>
-        <ProvidersLayout>
-          <MainLayout>
-            {children}
-            <NProgress />
-          </MainLayout>
-        </ProvidersLayout>
-      </body>
-    </html>
-  )
+    return (
+        <html lang="en">
+            <body>
+                <ProvidersLayout>
+                    <MainLayout>
+                        {children}
+                        <NProgress />
+                    </MainLayout>
+                </ProvidersLayout>
+            </body>
+        </html>
+    )
 }
 
 export default Layout

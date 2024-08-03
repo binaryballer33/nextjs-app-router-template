@@ -29,5 +29,5 @@ import { SUPABASE_ANON_KEY, SUPABASE_URL } from "../secrets"
 */
 
 export default function createClient() {
-  return createBrowserClient(SUPABASE_URL!, SUPABASE_ANON_KEY!)
+    return createBrowserClient(SUPABASE_URL!, SUPABASE_ANON_KEY!)
 }
