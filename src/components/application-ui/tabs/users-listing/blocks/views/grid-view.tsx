@@ -17,6 +17,8 @@ import {
 } from "@mui/material"
 import clsx from "clsx"
 
+import NoDataResults from "src/components/application-ui/tabs/users-listing/blocks/buttons-icons-input-text/no-data-results"
+
 export const CardWrapper = styled(Card)(
     ({ theme }) => `
 
@@ -59,10 +61,10 @@ export default function GridView(props: GridViewProps) {
         selectedItems,
         paginatedUsers,
         filteredUsers,
-        t,
         handlePageChange,
         handleLimitChange,
         handleSelectOneUser,
+        t,
     } = props
 
     const getUserRoleLabel = (userRole: string) => {
@@ -87,16 +89,7 @@ export default function GridView(props: GridViewProps) {
 
     // Return Data Or Text Saying We Couldn't Find Any Users
     return paginatedUsers.length === 0 ? (
-        <Typography
-            sx={{
-                py: { xs: 2, sm: 3, md: 6, lg: 10 },
-            }}
-            variant="h3"
-            color="text.secondary"
-            align="center"
-        >
-            {t("We couldn't find any users matching your search criteria")}
-        </Typography>
+        <NoDataResults t={t} />
     ) : (
         <>
             <Grid container spacing={{ xs: 2, sm: 3 }}>
@@ -106,6 +99,7 @@ export default function GridView(props: GridViewProps) {
 
                     return (
                         <Grid xs={12} sm={6} lg={4} key={user.id}>
+                            {/* Create The Card */}
                             <CardWrapper
                                 className={clsx({
                                     "Mui-selected": isUserSelected,
@@ -117,6 +111,7 @@ export default function GridView(props: GridViewProps) {
                                         zIndex: "2",
                                     }}
                                 >
+                                    {/* Create The Label Icon Button */}
                                     <Box
                                         px={2}
                                         pt={2}
@@ -134,12 +129,15 @@ export default function GridView(props: GridViewProps) {
                                             <MoreVertTwoToneIcon />
                                         </IconButton>
                                     </Box>
+
+                                    {/* Create The Card Avatar, Name, UserName, Email, JobTitle  */}
                                     <Box
                                         p={2}
                                         display="flex"
                                         flexDirection={{ xs: "column", md: "row" }}
                                         alignItems="flex-start"
                                     >
+                                        {/* Create The Avatar */}
                                         <Avatar
                                             variant="rounded"
                                             sx={{
@@ -150,7 +148,10 @@ export default function GridView(props: GridViewProps) {
                                             }}
                                             src={user.avatar}
                                         />
+
+                                        {/* Name, UserName, Email, JobTitle */}
                                         <Box>
+                                            {/* Name And User Name */}
                                             <Box>
                                                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                                                 <Link
@@ -165,6 +166,8 @@ export default function GridView(props: GridViewProps) {
                                                     ({user.username})
                                                 </Typography>
                                             </Box>
+
+                                            {/* Job Title */}
                                             <Typography
                                                 sx={{
                                                     pt: 0.3,
@@ -173,6 +176,8 @@ export default function GridView(props: GridViewProps) {
                                             >
                                                 {t(user.jobtitle as string)}
                                             </Typography>
+
+                                            {/* Email */}
                                             <Typography
                                                 sx={{
                                                     pt: 1,
@@ -185,6 +190,7 @@ export default function GridView(props: GridViewProps) {
                                         </Box>
                                     </Box>
                                     <Divider />
+                                    {/* User Post Count  And Card Check Box */}
                                     <Box
                                         pl={2}
                                         py={1}
@@ -208,6 +214,8 @@ export default function GridView(props: GridViewProps) {
                     )
                 })}
             </Grid>
+
+            {/* Pagination Controls */}
             <Card
                 sx={{
                     p: 2,
@@ -222,7 +230,8 @@ export default function GridView(props: GridViewProps) {
                 }}
             >
                 <Box>
-                    <b>{limit}</b> {t("of")} <b>{filteredUsers.length}</b> <b>{t("Users")}</b>
+                    <b>{limit > filteredUsers.length ? filteredUsers.length : limit}</b> {t("of")}{" "}
+                    <b>{filteredUsers.length}</b> <b>{t("Users")}</b>
                 </Box>
 
                 {/* Create The Pagination Buttons And Information */}

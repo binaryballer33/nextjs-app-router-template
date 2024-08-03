@@ -14,6 +14,7 @@ export default function usePagination(initialPage = 0, initialLimit = 10) {
         setLimit(parseInt(event.target.value, 10))
     }
 
+    /* call this on the data that you want to paginate in order to get the paginated data */
     const paginate = (users: User[], page: number, limit: number): User[] => {
         return users.slice(page * limit, page * limit + limit)
     }

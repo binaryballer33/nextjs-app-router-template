@@ -74,9 +74,11 @@ function TableView(props: TableViewProps) {
 
     return (
         <>
+            {/* Card Wraps Around The Table To Give It A Background */}
             <Card>
                 <TableContainer>
                     <Table>
+                        {/* Table Column Headers */}
                         <TableHead>
                             <TableRow>
                                 <TableCell padding="checkbox">
@@ -95,22 +97,31 @@ function TableView(props: TableViewProps) {
                                 <TableCell align="center">{t("Actions")}</TableCell>
                             </TableRow>
                         </TableHead>
+
+                        {/* Create The Table Rows From The Paginated Data */}
                         <TableBody>
                             {paginatedUsers.map((user) => {
                                 const { text, color } = getUserRoleLabel(user.role as string)
                                 const isUserSelected = selectedItems.includes(user.id)
+
                                 return (
+                                    //  Create The Table Row For Each Item
                                     <TableRow hover key={user.id} selected={isUserSelected}>
                                         <TableCell padding="checkbox">
+                                            {/* Checkbox For Each Record */}
                                             <Checkbox
                                                 checked={isUserSelected}
                                                 onChange={(event) => handleSelectOneUser(event, user.id)}
                                                 value={isUserSelected}
                                             />
                                         </TableCell>
+
+                                        {/* Record UserName Column */}
                                         <TableCell>
                                             <Typography fontWeight={400}>{user.username}</Typography>
                                         </TableCell>
+
+                                        {/* Record Avatar, Name With Link Column  */}
                                         <TableCell>
                                             <Box display="flex" alignItems="center">
                                                 <Avatar
@@ -137,25 +148,38 @@ function TableView(props: TableViewProps) {
                                                 </Box>
                                             </Box>
                                         </TableCell>
+
+                                        {/* Record Email Column */}
                                         <TableCell>
                                             <Typography>{user.email}</Typography>
                                         </TableCell>
+
+                                        {/* Record Posts Count Column */}
                                         <TableCell align="center">
                                             <Typography fontWeight={600}>{user.posts}</Typography>
                                         </TableCell>
+
+                                        {/* Record Location Column */}
                                         <TableCell>
                                             <Typography>{t(user.location as string)}</Typography>
                                         </TableCell>
+
+                                        {/* Record Role Column */}
                                         <TableCell>
                                             <Chip color={color} label={t(text)} />
                                         </TableCell>
+
+                                        {/* Record Actions Column */}
                                         <TableCell align="center">
                                             <Typography noWrap>
+                                                {/* Open Action Icon */}
                                                 <Tooltip title={t("View")} arrow>
                                                     <IconButton color="secondary">
                                                         <LaunchTwoToneIcon fontSize="small" />
                                                     </IconButton>
                                                 </Tooltip>
+
+                                                {/* Edit Record Action Icon */}
                                                 <Tooltip title={t("Delete")} arrow>
                                                     <IconButton color="secondary">
                                                         <DeleteTwoToneIcon fontSize="small" />
