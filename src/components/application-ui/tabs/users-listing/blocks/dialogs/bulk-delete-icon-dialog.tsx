@@ -27,7 +27,7 @@ import ButtonIcon from "src/components/base/styles/button-icon"
 
 import AlertDialogContent from "./alert-dialog-content"
 
-function BulkDelete() {
+function BulkDeleteIconDialog() {
     const { t } = useTranslation()
     const theme = useTheme()
     const smUp = useMediaQuery(theme.breakpoints.up("sm"))
@@ -43,8 +43,11 @@ function BulkDelete() {
 
     const handleNotificationClick = () => {
         setOpen(false)
+
+        //  Custom Card Toast Notification
         toast.custom(
             (t) => (
+                //  Toast Component
                 <Card elevation={21} className={`${t.visible ? "animate-enter" : "animate-leave"}`}>
                     <Box
                         sx={{
@@ -53,6 +56,7 @@ function BulkDelete() {
                             maxWidth: 340,
                         }}
                     >
+                        {/* Dismiss The Toast Button */}
                         <IconButton
                             color="primary"
                             sx={{
@@ -66,6 +70,8 @@ function BulkDelete() {
                         >
                             <CloseRoundedIcon fontSize="inherit" />
                         </IconButton>
+
+                        {/* Toast Content */}
                         <Box
                             sx={{
                                 px: 2,
@@ -78,6 +84,7 @@ function BulkDelete() {
                                 },
                             }}
                         >
+                            {/* Toast Avatar */}
                             <AvatarState
                                 state="error"
                                 variant="rounded"
@@ -90,6 +97,8 @@ function BulkDelete() {
                             >
                                 <WarningAmberRoundedIcon fontSize="small" />
                             </AvatarState>
+
+                            {/* Toast Text */}
                             <Box ml={1.5} flex={1} pt={0.5} overflow="hidden">
                                 <Typography sx={{ pb: 1 }} variant="h6">
                                     Items deleted successfully
@@ -124,6 +133,7 @@ function BulkDelete() {
 
     return (
         <>
+            {/* Display Delete Button With Text On Tablet And Up Screen Size */}
             {smUp ? (
                 <Button
                     variant="outlined"
@@ -136,6 +146,7 @@ function BulkDelete() {
                     {t("Delete selected")}
                 </Button>
             ) : (
+                //  Display Delete Icon Button No Text On Mobile Screen Size
                 <Tooltip arrow placement="top" title={t("Delete selected")}>
                     <ButtonIcon
                         variant="outlined"
@@ -147,6 +158,8 @@ function BulkDelete() {
                     />
                 </Tooltip>
             )}
+
+            {/* If Delete Icon Clicked Show Dialog To Confirm Deletion */}
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -192,4 +205,4 @@ function BulkDelete() {
     )
 }
 
-export default BulkDelete
+export default BulkDeleteIconDialog
