@@ -6,6 +6,7 @@ import {
     Card,
     Checkbox,
     Chip,
+    colors,
     Divider,
     IconButton,
     Link,
@@ -43,28 +44,42 @@ export const CardWrapper = styled(Card)(
   `,
 )
 
-function getYugiohFrameTypeColor(frameType: string) {
+export function getYugiohFrameTypeColor(frameType: string) {
     switch (frameType) {
         case "spell":
-            return "primary"
+            return "primary.dark"
         case "trap":
-            return "warning"
+            return colors.purple["500"]
         case "normal":
-            return "primary"
+            return colors.orange["300"]
         case "effect":
-            return "warning"
+            return colors.orange["600"]
         case "fusion":
-            return "info"
-        case "Ritual":
-            return "info"
-        case "Synchro":
-            return "success"
-        case "Xyz":
-            return "error"
-        case "Pendulum":
-            return "primary"
-        case "Link":
-            return "secondary"
+            return colors.purple["800"]
+        case "ritual":
+            return colors.blue["800"]
+        case "synchro":
+            return colors.grey["600"]
+        case "xyz":
+            return colors.common.black
+        case "pendulum":
+            return colors.orange["300"]
+        case "normal_pendulum":
+            return colors.orange["300"]
+        case "effect_pendulum":
+            return colors.orange["600"]
+        case "fusion_pendulum":
+            return colors.orange["800"]
+        case "xyz_pendulum":
+            return colors.common.black
+        case "synchro_pendulum":
+            return colors.grey["600"]
+        case "ritual_pendulum":
+            return colors.blue["800"]
+        case "link":
+            return colors.lightBlue["800"]
+        case "token":
+            return colors.lightBlue["800"]
         default:
             return "primary"
     }
@@ -147,9 +162,9 @@ function GridCard(props: GridCard2Props) {
                         <Stack gap={1} justifyContent="space-around" height={250}>
                             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                             <Chip
-                                color={getYugiohFrameTypeColor(card.frameType)}
+                                // color={getYugiohFrameTypeColor(card.frameType)}
                                 label={t(card.type)}
-                                sx={{ mb: 2, maxWidth: "50%" }}
+                                sx={{ mb: 2, maxWidth: "50%", bgcolor: getYugiohFrameTypeColor(card.frameType) }}
                             />
 
                             <Card elevation={1} sx={{ p: 1, height: 150, overflow: "scroll" }}>

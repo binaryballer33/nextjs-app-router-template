@@ -2,9 +2,29 @@ import Image from "next/image"
 
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone"
 import LaunchTwoToneIcon from "@mui/icons-material/LaunchTwoTone"
-import { Box, Card, Checkbox, Chip, IconButton, Link, TableCell, TableRow, Tooltip, Typography } from "@mui/material"
+import {
+    Box,
+    Card,
+    Checkbox,
+    Chip,
+    IconButton,
+    Link,
+    styled,
+    TableCell,
+    TableRow,
+    Tooltip,
+    Typography,
+} from "@mui/material"
 
+import { getYugiohFrameTypeColor } from "src/components/application-ui/tabs/users-listing/blocks/views/grid-view/grid-card"
+import FlexCenter from "src/components/base/flex-box/flex-center"
 import { YuGiOhCard } from "src/models/cards/yu-gi-oh"
+
+const TableCellWrapper = styled(TableCell)(
+    () => `
+    padding: 8px
+    `,
+)
 
 type TableRowProps = {
     record: YuGiOhCard
@@ -30,7 +50,7 @@ export default function TableRecord(props: TableRowProps) {
             </TableCell>
 
             {/* Record Image Column  */}
-            <TableCell>
+            <TableCellWrapper>
                 <Box display="flex" alignItems="center">
                     <div
                         style={{
@@ -48,25 +68,32 @@ export default function TableRecord(props: TableRowProps) {
                         />
                     </div>
                 </Box>
-            </TableCell>
+            </TableCellWrapper>
 
             {/* Record Name Column */}
-            <TableCell>
+            <TableCellWrapper>
                 <Box>
                     {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                     <Link variant="subtitle2" fontWeight={500} href={record.ygoprodeck_url} underline="hover">
                         {record.name}
                     </Link>
                 </Box>
-            </TableCell>
+            </TableCellWrapper>
 
             {/* Record Card Frame Type Column */}
-            <TableCell>
-                <Typography fontWeight={400}>{record.frameType}</Typography>
-            </TableCell>
+            <TableCellWrapper>
+                <FlexCenter justifyContent="start">
+                    <Chip
+                        // TODO: put these colors into your light and dark theme later
+                        // color={getYugiohFrameTypeColor(card.frameType)}
+                        label={t(record.frameType)}
+                        sx={{ bgcolor: getYugiohFrameTypeColor(record.frameType) }}
+                    />
+                </FlexCenter>
+            </TableCellWrapper>
 
             {/* Record Description Column */}
-            <TableCell sx={{ maxHeight: 50, overflow: "scroll" }}>
+            <TableCellWrapper sx={{ maxHeight: 50, overflow: "scroll", padding: 0 }}>
                 <Card elevation={1} sx={{ p: 1 }}>
                     <Typography
                         sx={{
@@ -78,25 +105,25 @@ export default function TableRecord(props: TableRowProps) {
                         {record.desc}
                     </Typography>
                 </Card>
-            </TableCell>
+            </TableCellWrapper>
 
             {/* Record Archetype Column */}
-            <TableCell>
+            <TableCellWrapper>
                 <Typography>{t(` ${(record.archetype as string) ?? "None"}`)}</Typography>
-            </TableCell>
+            </TableCellWrapper>
 
             {/* Record Price Column */}
-            <TableCell>
+            <TableCellWrapper>
                 <Chip color="primary" label={t(`$${record.card_prices[0].tcgplayer_price}`)} />
-            </TableCell>
+            </TableCellWrapper>
 
             {/* Record Number Column */}
-            <TableCell align="center">
+            <TableCellWrapper align="center">
                 <Typography fontWeight={600}>{record.id}</Typography>
-            </TableCell>
+            </TableCellWrapper>
 
             {/* Record Actions Column */}
-            <TableCell align="center">
+            <TableCellWrapper align="center">
                 <Typography noWrap>
                     {/* Open Action Icon */}
                     <Tooltip title={t("View")} arrow>
@@ -112,7 +139,7 @@ export default function TableRecord(props: TableRowProps) {
                         </IconButton>
                     </Tooltip>
                 </Typography>
-            </TableCell>
+            </TableCellWrapper>
         </TableRow>
     )
 }

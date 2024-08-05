@@ -16,13 +16,13 @@ import { yugiohTestCards } from "src/models/cards/yu-gi-oh"
 function Page() {
     const { t } = useTranslation()
     // const yugiohCards = useGetYuGiOhCardsQuery()
-
+    //
     // if (yugiohCards.isLoading) return <p>Loading...</p>
     // if (yugiohCards.isError) return <p>Error: {yugiohCards.error.message}</p>
     // if (!yugiohCards.data) return <p>No cards found</p>
     //
     // yugiohCards.data.data.forEach((card, index) => {
-    //     console.log(card.name)
+    //     console.log(card.frameType)
     // })
 
     return (
