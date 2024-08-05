@@ -11,7 +11,7 @@ export default function ShareIcon(props: ShareIconProps) {
     const { t } = props
 
     return (
-        <Tooltip arrow placement="top" title={t("Export user list")}>
+        <Tooltip arrow placement="top" title={t("Export records list")}>
             <ButtonIcon
                 variant="outlined"
                 color="secondary"

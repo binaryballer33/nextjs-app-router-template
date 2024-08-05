@@ -1,90 +1,1161 @@
 import { z } from "zod"
 
-import { basicCardSchema } from "./basic-card"
-import GAME from "./game"
-
-export const yuGiOhCardSchema = basicCardSchema.extend({
-    game: z.literal(GAME.YU_GI_OH),
-    attack: z.preprocess((val) => Number(val), z.number()), // preprocess to convert to number
-    defense: z.preprocess((val) => Number(val), z.number()), // preprocess to convert to number
+const CardSetSchema = z.object({
+    set_name: z.string(),
+    set_code: z.string(),
+    set_rarity: z.string(),
+    set_rarity_code: z.string(),
+    set_price: z.string(),
 })
 
-export const yuGiOhCardSchemaWithoutId = yuGiOhCardSchema.omit({ id: true })
+const CardImageSchema = z.object({
+    id: z.number(),
+    image_url: z.string(),
+    image_url_small: z.string(),
+    image_url_cropped: z.string(),
+})
 
-export type YuGiOhCard = z.infer<typeof yuGiOhCardSchema>
-export type YuGiOhCardWithoutId = z.infer<typeof yuGiOhCardSchemaWithoutId>
+const CardPriceSchema = z.object({
+    cardmarket_price: z.string(),
+    tcgplayer_price: z.string(),
+    ebay_price: z.string(),
+    amazon_price: z.string(),
+    coolstuffinc_price: z.string(),
+})
 
-export type YuGiOhCardFromApi = {
-    id: number
-    name: string
-    type: string
-    frameType: string
-    desc: string
-    race: string
-    archetype: string
-    ygoprodeck_url: string
-    card_sets: {
-        set_name: string
-        set_code: string
-        set_rarity: string
-        set_rarity_code: string
-        set_price: string
-    }[]
-    card_images: {
-        id: number
-        image_url: string
-        image_url_small: string
-        image_url_cropped: string
-    }[]
-    card_prices: {
-        cardmarket_price: string
-        tcgplayer_price: string
-        ebay_price: string
-        amazon_price: string
-        coolstuffinc_price: string
-    }[]
-}
+const YuGiOhCardBaseSchema = z.object({
+    id: z.number(),
+    name: z.string(),
+    type: z.string(),
+    frameType: z.string(),
+    desc: z.string(),
+    race: z.string(),
+    archetype: z.string().optional(),
+    ygoprodeck_url: z.string(),
+    banlist_info: z
+        .object({
+            ban_goat: z.string(),
+        })
+        .optional(),
+    card_sets: z.array(CardSetSchema).optional(),
+    card_images: z.array(CardImageSchema),
+    card_prices: z.array(CardPriceSchema),
+})
 
-export const yugiohTestCard: YuGiOhCardFromApi = {
-    id: 99674361,
-    name: "World Legacy Succession",
-    type: "Spell Card",
-    frameType: "spell",
-    desc: 'Target 1 monster in your GY; Special Summon it to your zone a Link Monster points to. You can only activate 1 "World Legacy Succession" per turn.',
-    race: "Normal",
-    archetype: "World Legacy",
-    ygoprodeck_url: "https://ygoprodeck.com/card/world-legacy-succession-9210",
-    card_sets: [
-        {
-            set_name: "2019 Gold Sarcophagus Tin Mega Pack",
-            set_code: "MP19-EN038",
-            set_rarity: "Prismatic Secret Rare",
-            set_rarity_code: "(PScR)",
-            set_price: "0",
+const LinkCardSchema = YuGiOhCardBaseSchema.extend({
+    frameType: z.literal("link"),
+    linkval: z.number(),
+    linkmarkers: z.array(z.string()),
+    attribute: z.string(),
+    atk: z.number(),
+})
+
+const MonsterCardSchema = YuGiOhCardBaseSchema.extend({
+    frameType: z.string().refine((val) => !["link", "spell", "trap"].includes(val)),
+    level: z.number(),
+    attribute: z.string(),
+    atk: z.number(),
+    def: z.number(),
+})
+
+const SpellOrTrapCardSchema = YuGiOhCardBaseSchema.extend({
+    frameType: z.union([z.literal("spell"), z.literal("trap")]),
+})
+
+const YuGiOhCardSchema = z.union([LinkCardSchema, MonsterCardSchema, SpellOrTrapCardSchema])
+
+const YuGiOhCardWithoutIdSchema = z.union([
+    LinkCardSchema.omit({ id: true }),
+    MonsterCardSchema.omit({ id: true }),
+    SpellOrTrapCardSchema.omit({ id: true }),
+])
+
+type YuGiOhCardWithoutId = z.infer<typeof YuGiOhCardWithoutIdSchema>
+type YuGiOhCard = z.infer<typeof YuGiOhCardSchema>
+
+export { YuGiOhCardSchema, YuGiOhCardWithoutIdSchema }
+export type { YuGiOhCard, YuGiOhCardWithoutId }
+
+export const yugiohTestCards: YuGiOhCard[] = [
+    {
+        id: 49702428,
+        name: "Dark Burning Attack",
+        type: "Spell Card",
+        frameType: "spell",
+        desc: 'If you control a "Dark Magician Girl" monster: Destroy all face-up monsters your opponent controls.',
+        race: "Normal",
+        archetype: "Dark Magician",
+        ygoprodeck_url: "https://ygoprodeck.com/card/dark-burning-attack-4235",
+        card_sets: [
+            {
+                set_name: "Legendary Decks II",
+                set_code: "LDK2-ENS04",
+                set_rarity: "Secret Rare",
+                set_rarity_code: "(ScR)",
+                set_price: "3.22",
+            },
+        ],
+        card_images: [
+            {
+                id: 49702428,
+                image_url: "https://images.ygoprodeck.com/images/cards/49702428.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/49702428.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/49702428.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "0.36",
+                tcgplayer_price: "0.43",
+                ebay_price: "2.50",
+                amazon_price: "2.69",
+                coolstuffinc_price: "1.99",
+            },
+        ],
+    },
+    {
+        id: 75190122,
+        name: "Dark Burning Magic",
+        type: "Spell Card",
+        frameType: "spell",
+        desc: 'If you control monsters whose original names are "Dark Magician" and "Dark Magician Girl": Destroy all cards your opponent controls.',
+        race: "Quick-Play",
+        archetype: "Dark Magician",
+        ygoprodeck_url: "https://ygoprodeck.com/card/dark-burning-magic-6323",
+        card_sets: [
+            {
+                set_name: "Legendary Decks II",
+                set_code: "LDK2-ENS05",
+                set_rarity: "Secret Rare",
+                set_rarity_code: "(ScR)",
+                set_price: "4.19",
+            },
+        ],
+        card_images: [
+            {
+                id: 75190122,
+                image_url: "https://images.ygoprodeck.com/images/cards/75190122.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/75190122.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/75190122.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "0.89",
+                tcgplayer_price: "0.64",
+                ebay_price: "2.95",
+                amazon_price: "1.95",
+                coolstuffinc_price: "2.99",
+            },
+        ],
+    },
+    {
+        id: 2314238,
+        name: "Dark Magic Attack",
+        type: "Spell Card",
+        frameType: "spell",
+        desc: 'If you control "Dark Magician": Destroy all Spells and Traps your opponent controls.',
+        race: "Normal",
+        archetype: "Dark Magician",
+        ygoprodeck_url: "https://ygoprodeck.com/card/dark-magic-attack-205",
+        card_sets: [
+            {
+                set_name: "Ancient Sanctuary",
+                set_code: "AST-095",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "34.83",
+            },
+            {
+                set_name: "Dark Revelation Volume 2",
+                set_code: "DR2-EN208",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Duel Terminal - Preview Wave 1",
+                set_code: "DTP1-EN014",
+                set_rarity: "Duel Terminal Normal Parallel Rare",
+                set_rarity_code: "(DNPR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Duel Terminal 1",
+                set_code: "DT01-EN040",
+                set_rarity: "Duel Terminal Normal Parallel Rare",
+                set_rarity_code: "(DNPR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Legendary Collection 3: Yugi's World Mega Pack",
+                set_code: "LCYW-EN071",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.48",
+            },
+            {
+                set_name: "Legendary Decks II",
+                set_code: "LDK2-ENY28",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.83",
+            },
+            {
+                set_name: "Legendary Dragon Decks",
+                set_code: "LEDD-ENA20",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.6",
+            },
+            {
+                set_name: "Speed Duel Starter Decks: Destiny Masters",
+                set_code: "SS01-ENA11",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "3.16",
+            },
+            {
+                set_name: "Speed Duel: Streets of Battle City",
+                set_code: "SBC1-ENG15",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "0",
+            },
+            {
+                set_name: "Starter Deck: Yugi Reloaded",
+                set_code: "YSYR-EN032",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "2.71",
+            },
+            {
+                set_name: "Structure Deck: Spellcaster's Judgment",
+                set_code: "SD6-EN026",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.6",
+            },
+            {
+                set_name: "Structure Deck: Yugi Muto",
+                set_code: "SDMY-EN026",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "0",
+            },
+            {
+                set_name: "Yugi's Legendary Decks",
+                set_code: "YGLD-ENC29",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.67",
+            },
+        ],
+        card_images: [
+            {
+                id: 2314238,
+                image_url: "https://images.ygoprodeck.com/images/cards/2314238.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/2314238.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/2314238.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "0.11",
+                tcgplayer_price: "0.20",
+                ebay_price: "4.99",
+                amazon_price: "1.19",
+                coolstuffinc_price: "0.39",
+            },
+        ],
+    },
+    {
+        id: 47222536,
+        name: "Dark Magical Circle",
+        type: "Spell Card",
+        frameType: "spell",
+        desc: 'When this card is activated: Look at the top 3 cards of your Deck, then you can reveal 1 "Dark Magician" or 1 Spell/Trap that specifically lists the card "Dark Magician" in its text, among them, and add it to your hand, also place the remaining cards on top of your Deck in any order. If "Dark Magician" is Normal or Special Summoned to your field (except during the Damage Step): You can target 1 card your opponent controls; banish it. You can only use each effect of "Dark Magical Circle" once per turn.',
+        race: "Continuous",
+        archetype: "Dark Magician",
+        ygoprodeck_url: "https://ygoprodeck.com/card/dark-magical-circle-4027",
+        card_sets: [
+            {
+                set_name: "2017 Mega-Tin Mega Pack",
+                set_code: "MP17-EN100",
+                set_rarity: "Secret Rare",
+                set_rarity_code: "(ScR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Duel Power",
+                set_code: "DUPO-EN051",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "2.1",
+            },
+            {
+                set_name: "Legendary Dragon Decks",
+                set_code: "LEDD-ENA15",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "2.38",
+            },
+            {
+                set_name: "Legendary Duelists: Magical Hero",
+                set_code: "LED6-EN009",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "0",
+            },
+            {
+                set_name: "Legendary Duelists: Season 3",
+                set_code: "LDS3-EN093",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "0",
+            },
+            {
+                set_name: "OTS Tournament Pack 18",
+                set_code: "OP18-EN024",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.47",
+            },
+            {
+                set_name: "OTS Tournament Pack 18 (POR)",
+                set_code: "OP18-PT024",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "0",
+            },
+            {
+                set_name: "The Dark Illusion",
+                set_code: "TDIL-EN057",
+                set_rarity: "Secret Rare",
+                set_rarity_code: "(ScR)",
+                set_price: "0",
+            },
+        ],
+        card_images: [
+            {
+                id: 47222536,
+                image_url: "https://images.ygoprodeck.com/images/cards/47222536.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/47222536.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/47222536.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "0.10",
+                tcgplayer_price: "0.20",
+                ebay_price: "1.22",
+                amazon_price: "1.75",
+                coolstuffinc_price: "0.39",
+            },
+        ],
+    },
+    {
+        id: 40737112,
+        name: "Dark Magician of Chaos",
+        type: "Effect Monster",
+        frameType: "effect",
+        desc: "During the End Phase, if this card was Normal or Special Summoned this turn: You can target 1 Spell in your GY; add it to your hand. You can only use this effect of \"Dark Magician of Chaos\" once per turn. If this card destroys an opponent's monster by battle, after damage calculation: Banish that opponent's monster. If this face-up card would leave the field, banish it instead.",
+        atk: 2800,
+        def: 2600,
+        level: 8,
+        race: "Spellcaster",
+        attribute: "DARK",
+        archetype: "Dark Magician",
+        ygoprodeck_url: "https://ygoprodeck.com/card/dark-magician-of-chaos-3468",
+        card_sets: [
+            {
+                set_name: "Battle Pack 2: War of the Giants",
+                set_code: "BP02-EN023",
+                set_rarity: "Mosaic Rare",
+                set_rarity_code: "(MSR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Battle Pack 2: War of the Giants",
+                set_code: "BP02-EN023",
+                set_rarity: "Rare",
+                set_rarity_code: "(R)",
+                set_price: "0",
+            },
+            {
+                set_name: "Battle Pack: Epic Dawn",
+                set_code: "BP01-EN007",
+                set_rarity: "Rare",
+                set_rarity_code: "(R)",
+                set_price: "0",
+            },
+            {
+                set_name: "Battle Pack: Epic Dawn",
+                set_code: "BP01-EN007",
+                set_rarity: "Starfoil Rare",
+                set_rarity_code: "(SFR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Dark Revelation Volume 2",
+                set_code: "DR2-EN066",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Dark Revelation Volume 2",
+                set_code: "DR2-EN09",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "0",
+            },
+            {
+                set_name: "Duelist Pack: Rivals of the Pharaoh",
+                set_code: "DPRP-EN013",
+                set_rarity: "Rare",
+                set_rarity_code: "(R)",
+                set_price: "0",
+            },
+            {
+                set_name: "Duelist Saga",
+                set_code: "DUSA-EN054",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "4.33",
+            },
+            {
+                set_name: "Gold Series",
+                set_code: "GLD1-EN016",
+                set_rarity: "Gold Rare",
+                set_rarity_code: "(GUR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Invasion of Chaos",
+                set_code: "IOC-065",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "31.28",
+            },
+            {
+                set_name: "Invasion of Chaos",
+                set_code: "IOC-EN065",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Legendary Collection 3: Yugi's World Mega Pack",
+                set_code: "LCYW-EN026",
+                set_rarity: "Secret Rare",
+                set_rarity_code: "(ScR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Structure Deck: Order of the Spellcasters",
+                set_code: "SR08-EN015",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "0",
+            },
+            {
+                set_name: "Yugi's Legendary Decks",
+                set_code: "YGLD-ENC02",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "5.65",
+            },
+        ],
+        banlist_info: {
+            ban_goat: "Limited",
         },
-        {
-            set_name: "Flames of Destruction",
-            set_code: "FLOD-EN058",
-            set_rarity: "Ultra Rare",
-            set_rarity_code: "(UR)",
-            set_price: "0",
-        },
-    ],
-    card_images: [
-        {
-            id: 99674361,
-            image_url: "https://images.ygoprodeck.com/images/cards/99674361.jpg",
-            image_url_small: "https://images.ygoprodeck.com/images/cards_small/99674361.jpg",
-            image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/99674361.jpg",
-        },
-    ],
-    card_prices: [
-        {
-            cardmarket_price: "1.83",
-            tcgplayer_price: "3.31",
-            ebay_price: "4.95",
-            amazon_price: "5.95",
-            coolstuffinc_price: "2.99",
-        },
-    ],
-}
+        card_images: [
+            {
+                id: 40737112,
+                image_url: "https://images.ygoprodeck.com/images/cards/40737112.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/40737112.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/40737112.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "0.21",
+                tcgplayer_price: "0.86",
+                ebay_price: "4.99",
+                amazon_price: "3.24",
+                coolstuffinc_price: "0.79",
+            },
+        ],
+    },
+    {
+        id: 98502113,
+        name: "Dark Paladin",
+        type: "Fusion Monster",
+        frameType: "fusion",
+        desc: '"Dark Magician" + "Buster Blader"\r\nMust be Fusion Summoned. When a Spell Card is activated (Quick Effect): You can discard 1 card; negate the activation, and if you do, destroy it. This card must be face-up on the field to activate and to resolve this effect. Gains 500 ATK for each Dragon monster on the field and in the GY.',
+        atk: 2900,
+        def: 2400,
+        level: 8,
+        race: "Spellcaster",
+        attribute: "DARK",
+        archetype: "Dark Magician",
+        ygoprodeck_url: "https://ygoprodeck.com/card/dark-paladin-8186",
+        card_sets: [
+            {
+                set_name: "Dark Revelation Volume 1",
+                set_code: "DR1-EN160",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Duel Master's Guide promotional cards",
+                set_code: "DMG-001",
+                set_rarity: "Secret Rare",
+                set_rarity_code: "(ScR)",
+                set_price: "92.62",
+            },
+            {
+                set_name: "Duel Terminal 3",
+                set_code: "DT03-EN034",
+                set_rarity: "Duel Terminal Rare Parallel Rare",
+                set_rarity_code: "(DRPR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Duelist Pack: Yugi",
+                set_code: "DPYG-EN016",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "22.93",
+            },
+            {
+                set_name: "Hidden Arsenal: Chapter 1",
+                set_code: "HAC1-EN018",
+                set_rarity: "Duel Terminal Ultra Parallel Rare",
+                set_rarity_code: "(DUPR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Legendary Collection 3: Yugi's World Mega Pack",
+                set_code: "LCYW-EN048",
+                set_rarity: "Secret Rare",
+                set_rarity_code: "(ScR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Legendary Dragon Decks",
+                set_code: "LEDD-ENA34",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.78",
+            },
+            {
+                set_name: "Magician's Force",
+                set_code: "MFC-105",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "47.43",
+            },
+            {
+                set_name: "Millennium Pack",
+                set_code: "MIL1-EN041",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.74",
+            },
+            {
+                set_name: "Speed Duel: Battle City Box",
+                set_code: "SBCB-EN021",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.41",
+            },
+            {
+                set_name: "Speed Duel: Battle City Box",
+                set_code: "SBCB-EN021",
+                set_rarity: "Secret Rare",
+                set_rarity_code: "(ScR)",
+                set_price: "13.84",
+            },
+            {
+                set_name: "Speed Duel: Streets of Battle City",
+                set_code: "SBC1-ENA20",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "0",
+            },
+            {
+                set_name: "Structure Deck: Yugi Muto",
+                set_code: "SDMY-EN043",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "0",
+            },
+            {
+                set_name: "Yugi's Legendary Decks",
+                set_code: "YGLD-ENC41",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "2.12",
+            },
+        ],
+        card_images: [
+            {
+                id: 98502113,
+                image_url: "https://images.ygoprodeck.com/images/cards/98502113.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/98502113.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/98502113.jpg",
+            },
+            {
+                id: 98502114,
+                image_url: "https://images.ygoprodeck.com/images/cards/98502114.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/98502114.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/98502114.jpg",
+            },
+            {
+                id: 98502115,
+                image_url: "https://images.ygoprodeck.com/images/cards/98502115.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/98502115.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/98502115.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "0.16",
+                tcgplayer_price: "0.29",
+                ebay_price: "4.95",
+                amazon_price: "1.57",
+                coolstuffinc_price: "0.39",
+            },
+        ],
+    },
+    {
+        id: 48680970,
+        name: "Eternal Soul",
+        type: "Trap Card",
+        frameType: "trap",
+        desc: 'Every "Dark Magician" in your Monster Zone is unaffected by your opponent\'s card effects. If this face-up card leaves the field: Destroy all monsters you control. You can only use the following effect of "Eternal Soul" once per turn. You can activate 1 of these effects;\r\n● Special Summon 1 "Dark Magician" from your hand or GY.\r\n● Add 1 "Dark Magic Attack" or "Thousand Knives" from your Deck to your hand.',
+        race: "Continuous",
+        archetype: "Dark Magician",
+        ygoprodeck_url: "https://ygoprodeck.com/card/eternal-soul-4157",
+        card_sets: [
+            {
+                set_name: "Duel Power",
+                set_code: "DUPO-EN052",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "2.4",
+            },
+            {
+                set_name: "Legendary Decks II",
+                set_code: "LDK2-ENS06",
+                set_rarity: "Secret Rare",
+                set_rarity_code: "(ScR)",
+                set_price: "3.54",
+            },
+            {
+                set_name: "Legendary Dragon Decks",
+                set_code: "LEDD-ENA28",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "2.33",
+            },
+        ],
+        card_images: [
+            {
+                id: 48680970,
+                image_url: "https://images.ygoprodeck.com/images/cards/48680970.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/48680970.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/48680970.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "0.32",
+                tcgplayer_price: "0.79",
+                ebay_price: "4.95",
+                amazon_price: "3.28",
+                coolstuffinc_price: "1.99",
+            },
+        ],
+    },
+    {
+        id: 42006475,
+        name: "Palladium Oracle Mana",
+        type: "Effect Monster",
+        frameType: "effect",
+        desc: 'When your opponent activates a card or effect that targets 1 Spellcaster monster you control (and no other cards), while this card is in your hand or GY (Quick Effect): You can Special Summon this card. You can only use this effect of "Palladium Oracle Mana" once per turn. Level 7 or higher Spellcaster monsters you control cannot be destroyed by card effects. If this card is destroyed by battle or card effect: You can Special Summon 1 "Dark Magician Girl" from your hand, Deck, or GY.',
+        atk: 2000,
+        def: 1700,
+        level: 6,
+        race: "Spellcaster",
+        attribute: "LIGHT",
+        archetype: "Dark Magician",
+        ygoprodeck_url: "https://ygoprodeck.com/card/palladium-oracle-mana-10074",
+        card_sets: [
+            {
+                set_name: "2019 Gold Sarcophagus Tin",
+                set_code: "TN19-EN004",
+                set_rarity: "Prismatic Secret Rare",
+                set_rarity_code: "(PScR)",
+                set_price: "6.83",
+            },
+        ],
+        card_images: [
+            {
+                id: 42006475,
+                image_url: "https://images.ygoprodeck.com/images/cards/42006475.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/42006475.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/42006475.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "0.40",
+                tcgplayer_price: "0.93",
+                ebay_price: "0.99",
+                amazon_price: "2.44",
+                coolstuffinc_price: "1.99",
+            },
+        ],
+    },
+    {
+        id: 1784686,
+        name: "The Eye of Timaeus",
+        type: "Spell Card",
+        frameType: "spell",
+        desc: '(This card is also always treated as "Legendary Dragon Timaeus".)\nTarget 1 "Dark Magician" monster you control; Fusion Summon 1 Fusion Monster from your Extra Deck that lists that monster on the field as Fusion Material, using it as the Fusion Material. You can only activate 1 "The Eye of Timaeus" per turn.',
+        race: "Normal",
+        archetype: "Dark Magician",
+        ygoprodeck_url: "https://ygoprodeck.com/card/the-eye-of-timaeus-157",
+        card_sets: [
+            {
+                set_name: "Dragons of Legend",
+                set_code: "DRLG-EN005",
+                set_rarity: "Secret Rare",
+                set_rarity_code: "(ScR)",
+                set_price: "28.12",
+            },
+            {
+                set_name: "Dragons of Legend: The Complete Series",
+                set_code: "DLCS-EN007",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Dragons of Legend: Unleashed",
+                set_code: "DRL3-EN045",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Ghosts From the Past: The 2nd Haunting",
+                set_code: "GFP2-EN183",
+                set_rarity: "Ghost Rare",
+                set_rarity_code: "(GR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Legendary Dragon Decks",
+                set_code: "LEDD-ENA21",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "7.39",
+            },
+        ],
+        card_images: [
+            {
+                id: 1784686,
+                image_url: "https://images.ygoprodeck.com/images/cards/1784686.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/1784686.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/1784686.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "2.40",
+                tcgplayer_price: "3.91",
+                ebay_price: "9.95",
+                amazon_price: "7.00",
+                coolstuffinc_price: "5.99",
+            },
+        ],
+    },
+    {
+        id: 30603688,
+        name: "Apprentice Illusion Magician",
+        type: "Effect Monster",
+        frameType: "effect",
+        desc: 'You can Special Summon this card (from your hand) by discarding 1 card. If this card is Normal or Special Summoned: You can add 1 "Dark Magician" from your Deck to your hand. During damage calculation, if your other DARK Spellcaster monster battles an opponent\'s monster (Quick Effect): You can send this card from your hand or face-up field to the GY; that monster you control gains 2000 ATK/DEF during that damage calculation only.',
+        atk: 2000,
+        def: 1700,
+        level: 6,
+        race: "Spellcaster",
+        attribute: "DARK",
+        archetype: "Dark Magician",
+        ygoprodeck_url: "https://ygoprodeck.com/card/apprentice-illusion-magician-2600",
+        card_sets: [
+            {
+                set_name: "Legendary Dragon Decks",
+                set_code: "LEDD-ENA03",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "14.48",
+            },
+            {
+                set_name: "Legendary Duelists: Magical Hero",
+                set_code: "LED6-EN007",
+                set_rarity: "Super Rare",
+                set_rarity_code: "(SR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Legendary Duelists: Season 3",
+                set_code: "LDS3-EN087",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Weekly Shonen Jump April 2017 membership promotional card",
+                set_code: "JUMP-EN080",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "29.86",
+            },
+            {
+                set_name: "WSJ Jump Pack Fall 2018 promotional card",
+                set_code: "JMPS-EN007",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "35.95",
+            },
+        ],
+        card_images: [
+            {
+                id: 30603688,
+                image_url: "https://images.ygoprodeck.com/images/cards/30603688.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/30603688.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/30603688.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "1.45",
+                tcgplayer_price: "0.54",
+                ebay_price: "6.95",
+                amazon_price: "1.78",
+                coolstuffinc_price: "1.99",
+            },
+        ],
+    },
+    {
+        id: 56920308,
+        name: "The Ultimate Creature of Destruction",
+        type: "Trap Card",
+        frameType: "trap",
+        desc: 'Target 1 "Blue-Eyes" monster you control; this turn, that face-up monster is unaffected by card effects, except its own, it cannot be destroyed by battle, also any opponent\'s monster it battles is destroyed at the end of the Damage Step. While this card is in your GY, if you Normal or Special Summon a "Blue-Eyes White Dragon": You can Set this card, but banish it when it leaves the field. You can only use this effect of "The Ultimate Creature of Destruction" once per turn.',
+        race: "Normal",
+        archetype: "Blue-Eyes",
+        ygoprodeck_url: "https://ygoprodeck.com/card/the-ultimate-creature-of-destruction-9558",
+        card_sets: [
+            {
+                set_name: "Legendary Duelists: Season 2",
+                set_code: "LDS2-EN030",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Legendary Duelists: White Dragon Abyss",
+                set_code: "LED3-EN005",
+                set_rarity: "Super Rare",
+                set_rarity_code: "(SR)",
+                set_price: "5.98",
+            },
+        ],
+        card_images: [
+            {
+                id: 56920308,
+                image_url: "https://images.ygoprodeck.com/images/cards/56920308.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/56920308.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/56920308.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "5.13",
+                tcgplayer_price: "1.05",
+                ebay_price: "4.50",
+                amazon_price: "2.48",
+                coolstuffinc_price: "2.99",
+            },
+        ],
+    },
+    {
+        id: 17655904,
+        name: "Burst Stream of Destruction",
+        type: "Spell Card",
+        frameType: "spell",
+        desc: 'If you control "Blue-Eyes White Dragon": Destroy all monsters your opponent controls. "Blue-Eyes White Dragon" you control cannot attack the turn you activate this card.',
+        race: "Normal",
+        archetype: "Blue-Eyes",
+        ygoprodeck_url: "https://ygoprodeck.com/card/burst-stream-of-destruction-1537",
+        card_sets: [
+            {
+                set_name: "Ancient Sanctuary",
+                set_code: "AST-038",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "6.51",
+            },
+            {
+                set_name: "Dark Revelation Volume 2",
+                set_code: "DR2-EN150",
+                set_rarity: "Super Rare",
+                set_rarity_code: "(SR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Dragons Collide Structure Deck",
+                set_code: "SDDC-EN025",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "0",
+            },
+            {
+                set_name: "Duel Terminal - Preview Wave 1",
+                set_code: "DTP1-EN013",
+                set_rarity: "Duel Terminal Normal Parallel Rare",
+                set_rarity_code: "(DNPR)",
+                set_price: "0.00",
+            },
+            {
+                set_name: "Duel Terminal - Preview Wave 2",
+                set_code: "DTP1-EN013",
+                set_rarity: "Duel Terminal Rare Parallel Rare",
+                set_rarity_code: "(DRPR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Duel Terminal 1",
+                set_code: "DT01-EN039",
+                set_rarity: "Duel Terminal Rare Parallel Rare",
+                set_rarity_code: "(DRPR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Legendary Collection Kaiba Mega Pack",
+                set_code: "LCKC-EN025",
+                set_rarity: "Secret Rare",
+                set_rarity_code: "(ScR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Legendary Decks II",
+                set_code: "LDK2-ENK19",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.3",
+            },
+            {
+                set_name: "Legendary Duelists: Season 2",
+                set_code: "LDS2-EN021",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.03",
+            },
+            {
+                set_name: "Saga of Blue-Eyes White Dragon Structure Deck",
+                set_code: "SDBE-EN021",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.11",
+            },
+            {
+                set_name: "Speed Duel Starter Decks: Duelists of Tomorrow",
+                set_code: "SS02-ENA13",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.25",
+            },
+            {
+                set_name: "Starter Deck: Kaiba Reloaded",
+                set_code: "YSKR-EN036",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.33",
+            },
+            {
+                set_name: "Structure Deck: Seto Kaiba",
+                set_code: "SDKS-EN022",
+                set_rarity: "Common",
+                set_rarity_code: "(C)",
+                set_price: "1.14",
+            },
+        ],
+        card_images: [
+            {
+                id: 17655904,
+                image_url: "https://images.ygoprodeck.com/images/cards/17655904.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/17655904.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/17655904.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "0.05",
+                tcgplayer_price: "0.07",
+                ebay_price: "1.99",
+                amazon_price: "1.39",
+                coolstuffinc_price: "0.25",
+            },
+        ],
+    },
+    {
+        id: 100347032,
+        name: "Blue-Eyes Spirit Ultimate Dragon",
+        type: "Synchro Monster",
+        frameType: "synchro",
+        desc: '2+ Tuners + 1 non-Tuner "Blue-Eyes" monster\r\nYour opponent cannot banish cards from your GY. You can only use each of the following effects of "Blue-Eyes Spirit Ultimate Dragon" once per turn. When a card or effect is activated on the field (Quick Effect): You can negate the activation, and if you do, this card gains 1000 ATK until the end of this turn. If this card is destroyed by battle or card effect: You can Special Summon 1 LIGHT Dragon monster from your GY, except "Blue-Eyes Spirit Ultimate Dragon".',
+        atk: 3500,
+        def: 4000,
+        level: 12,
+        race: "Dragon",
+        attribute: "LIGHT",
+        archetype: "Blue-Eyes",
+        ygoprodeck_url: "https://ygoprodeck.com/card/blue-eyes-spirit-ultimate-dragon-14644",
+        card_images: [
+            {
+                id: 100347032,
+                image_url: "https://images.ygoprodeck.com/images/cards/100347032.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/100347032.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/100347032.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "0.00",
+                tcgplayer_price: "0.00",
+                ebay_price: "0.00",
+                amazon_price: "0.00",
+                coolstuffinc_price: "0.00",
+            },
+        ],
+    },
+    {
+        id: 55410871,
+        name: "Blue-Eyes Chaos MAX Dragon",
+        type: "Ritual Effect Monster",
+        frameType: "ritual",
+        desc: 'You can Ritual Summon this card with "Chaos Form". Must be Ritual Summoned. Your opponent cannot target this card with card effects, also it cannot be destroyed by your opponent\'s card effects. If this card attacks a Defense Position monster, inflict double piercing battle damage.',
+        atk: 4000,
+        def: 0,
+        level: 8,
+        race: "Dragon",
+        attribute: "DARK",
+        archetype: "Blue-Eyes",
+        ygoprodeck_url: "https://ygoprodeck.com/card/blue-eyes-chaos-max-dragon-4716",
+        card_sets: [
+            {
+                set_name: "Duel Power",
+                set_code: "DUPO-EN048",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "2.15",
+            },
+            {
+                set_name: "Legendary Duelists: Season 2",
+                set_code: "LDS2-EN016",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Legendary Duelists: White Dragon Abyss",
+                set_code: "LED3-EN000",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Yu-Gi-Oh! The Dark Side of Dimensions Movie Pack",
+                set_code: "MVP1-EN004",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "2.56",
+            },
+            {
+                set_name: "Yu-Gi-Oh! The Dark Side of Dimensions Movie Pack Secret Edition",
+                set_code: "MVP1-ENS04",
+                set_rarity: "Secret Rare",
+                set_rarity_code: "(ScR)",
+                set_price: "29.92",
+            },
+            {
+                set_name: "Yu-Gi-Oh! The Dark Side of Dimensions Movie Pack: Gold Edition",
+                set_code: "MVP1-ENG04",
+                set_rarity: "Gold Rare",
+                set_rarity_code: "(GUR)",
+                set_price: "7.66",
+            },
+        ],
+        card_images: [
+            {
+                id: 55410871,
+                image_url: "https://images.ygoprodeck.com/images/cards/55410871.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/55410871.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/55410871.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "3.16",
+                tcgplayer_price: "2.45",
+                ebay_price: "6.95",
+                amazon_price: "4.79",
+                coolstuffinc_price: "1.99",
+            },
+        ],
+    },
+    {
+        id: 62089826,
+        name: "True Light",
+        type: "Trap Card",
+        frameType: "trap",
+        desc: 'Your opponent cannot target "Blue-Eyes White Dragon" in your Monster Zone with card effects. If this face-up card is sent from the Spell & Trap Zone to the GY: Destroy all monsters you control. You can only use the following effect of "True Light" once per turn. You can activate 1 of these effects;\r\n● Special Summon 1 "Blue-Eyes White Dragon" from your hand or GY.\r\n● Set 1 Spell/Trap directly from your Deck, that specifically lists "Blue-Eyes White Dragon" in its text, with a different name from the cards you control and in your GY.',
+        race: "Continuous",
+        archetype: "Blue-Eyes",
+        ygoprodeck_url: "https://ygoprodeck.com/card/true-light-12556",
+        card_sets: [
+            {
+                set_name: "2021 Tin of Ancient Battles",
+                set_code: "MP21-EN255",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "4.04",
+            },
+        ],
+        card_images: [
+            {
+                id: 62089826,
+                image_url: "https://images.ygoprodeck.com/images/cards/62089826.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/62089826.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/62089826.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "1.42",
+                tcgplayer_price: "1.76",
+                ebay_price: "2.88",
+                amazon_price: "1.49",
+                coolstuffinc_price: "0.99",
+            },
+        ],
+    },
+]

@@ -22,7 +22,7 @@ export default function NoView({ t }: NoViewProps) {
                 }}
                 gutterBottom
             >
-                {t("Choose between table or grid views for displaying the users list.")}
+                {t("Choose between Table view or Grid views for displaying the records.")}
             </Typography>
         </Box>
     )

@@ -1,6 +1,24 @@
+import Image from "next/image"
+
 import MoreVertTwoToneIcon from "@mui/icons-material/MoreVertTwoTone"
-import { Avatar, Box, Card, Checkbox, Chip, Divider, IconButton, Link, styled, Typography } from "@mui/material"
+import {
+    Box,
+    Card,
+    Checkbox,
+    Chip,
+    Divider,
+    IconButton,
+    Link,
+    Stack,
+    styled,
+    Theme,
+    Typography,
+    useMediaQuery,
+} from "@mui/material"
 import clsx from "clsx"
+
+import FlexCenter from "src/components/base/flex-box/flex-center"
+import { YuGiOhCard } from "src/models/cards/yu-gi-oh"
 
 export const CardWrapper = styled(Card)(
     ({ theme }) => `
@@ -25,41 +43,50 @@ export const CardWrapper = styled(Card)(
   `,
 )
 
-type GridCardProps = {
-    user: any
-    selectedItems: string[]
-    handleSelectOneUser: (event: any, id: string) => void
+function getYugiohFrameTypeColor(frameType: string) {
+    switch (frameType) {
+        case "spell":
+            return "primary"
+        case "trap":
+            return "warning"
+        case "normal":
+            return "primary"
+        case "effect":
+            return "warning"
+        case "fusion":
+            return "info"
+        case "Ritual":
+            return "info"
+        case "Synchro":
+            return "success"
+        case "Xyz":
+            return "error"
+        case "Pendulum":
+            return "primary"
+        case "Link":
+            return "secondary"
+        default:
+            return "primary"
+    }
+}
+
+type GridCard2Props = {
+    card: YuGiOhCard
+    selectedRecords: string[]
+    handleSelectOneRecord: (event: any, id: string) => void
     t: (token: string) => string
 }
 
-function GridCard(props: GridCardProps) {
-    const { user, selectedItems, handleSelectOneUser, t } = props
-    const getUserRoleLabel = (userRole: string) => {
-        const map = {
-            admin: {
-                text: "Administrator",
-                color: "primary",
-            },
-            customer: {
-                text: "Customer",
-                color: "secondary",
-            },
-            subscriber: {
-                text: "Subscriber",
-                color: "info",
-            },
-        }
-        // @ts-ignore
-        const { text, color } = map[userRole]
-        return { text, color }
-    }
-    const { text, color } = getUserRoleLabel(user.role as string)
-    const isUserSelected = selectedItems.includes(user.id)
+function GridCard(props: GridCard2Props) {
+    const { card, selectedRecords, handleSelectOneRecord, t } = props
+    const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
+
+    const isRecordSelected = selectedRecords.includes(card.id.toString())
 
     return (
         <CardWrapper
             className={clsx({
-                "Mui-selected": isUserSelected,
+                "Mui-selected": isRecordSelected,
             })}
         >
             <Box
@@ -70,7 +97,22 @@ function GridCard(props: GridCardProps) {
             >
                 {/* Create The Label Icon Button */}
                 <Box px={2} pt={2} display="flex" alignItems="flex-start" justifyContent="space-between">
-                    <Chip color={color} label={t(text)} />
+                    <Link
+                        href={card.ygoprodeck_url}
+                        underline="hover"
+                        sx={{
+                            //  keep the name on only one line to maintain card height consistency
+                            // TODO: steal ellipses code from other app I think its blazar
+                            display: "-webkit-box",
+                            WebkitBoxOrient: "vertical",
+                            WebkitLineClamp: 1,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                        }}
+                    >
+                        {card.name}
+                    </Link>
+
                     <IconButton
                         color="primary"
                         sx={{
@@ -81,66 +123,81 @@ function GridCard(props: GridCardProps) {
                     </IconButton>
                 </Box>
 
-                {/* Create The Card Avatar, Name, UserName, Email, JobTitle  */}
+                {/* Create The Card Image, Record Type, Description, Archetype, Price */}
                 <Box p={2} display="flex" flexDirection={{ xs: "column", md: "row" }} alignItems="flex-start">
-                    {/* Create The Avatar */}
-                    <Avatar
-                        variant="rounded"
+                    {/* Create The Image */}
+                    <Box
                         sx={{
-                            width: 50,
-                            height: 50,
                             mr: 1.5,
                             mb: { xs: 2, md: 0 },
                         }}
-                        src={user.avatar}
-                    />
+                    >
+                        <Image
+                            src={card.card_images[0].image_url}
+                            alt="image"
+                            width={mdUp ? 180 : 250}
+                            height={250}
+                            priority
+                        />
+                    </Box>
 
-                    {/* Name, UserName, Email, JobTitle */}
+                    {/* Record Type, Description, Archetype, Price */}
                     <Box>
-                        {/* Name And User Name */}
-                        <Box>
+                        {/* Record Description */}
+                        <Stack gap={1} justifyContent="space-around" height={250}>
                             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                            <Link variant="h6" href="" onClick={(e) => e.preventDefault()} underline="hover">
-                                {user.name}
-                            </Link>{" "}
-                            <Typography component="span" variant="body2" color="text.secondary">
-                                ({user.username})
+                            <Chip
+                                color={getYugiohFrameTypeColor(card.frameType)}
+                                label={t(card.type)}
+                                sx={{ mb: 2, maxWidth: "50%" }}
+                            />
+
+                            <Card elevation={1} sx={{ p: 1, height: 150, overflow: "scroll" }}>
+                                <Typography
+                                    component="span"
+                                    variant="body2"
+                                    color="text.secondary"
+                                    sx={{
+                                        overflow: "scroll",
+                                        height: 150,
+                                    }}
+                                >
+                                    {card.desc}
+                                </Typography>
+                            </Card>
+
+                            {/* Record Archetype Title */}
+                            <Typography
+                                sx={{
+                                    pt: 0.3,
+                                }}
+                                variant="subtitle2"
+                            >
+                                {t(`Archetype: ${(card.archetype as string) ?? ("None" as string)}`)}
                             </Typography>
-                        </Box>
-
-                        {/* Job Title */}
-                        <Typography
-                            sx={{
-                                pt: 0.3,
-                            }}
-                            variant="subtitle2"
-                        >
-                            {t(user.jobtitle as string)}
-                        </Typography>
-
-                        {/* Email */}
-                        <Typography
-                            sx={{
-                                pt: 1,
-                            }}
-                            variant="h6"
-                            fontWeight={500}
-                        >
-                            {user.email}
-                        </Typography>
+                        </Stack>
                     </Box>
                 </Box>
+
                 <Divider />
-                {/* User Post Count  And Card Check Box */}
+                {/* Record Id And Card Check Box */}
                 <Box pl={2} py={1} pr={1} display="flex" alignItems="center" justifyContent="space-between">
                     <Typography>
-                        <b>{user.posts}</b> {t("posts")}
+                        {t("Card #")} <b>{card.id}</b>
                     </Typography>
-                    <Checkbox
-                        checked={isUserSelected}
-                        onChange={(event) => handleSelectOneUser(event, user.id)}
-                        value={isUserSelected}
-                    />
+
+                    <FlexCenter>
+                        {/* Record Price */}
+                        <Typography variant="h6" fontWeight={500}>
+                            ${card.card_prices[0].tcgplayer_price}
+                        </Typography>
+
+                        <Checkbox
+                            checked={isRecordSelected}
+                            onChange={(event) => handleSelectOneRecord(event, card.id.toString())}
+                            value={isRecordSelected}
+                        />
+                    </FlexCenter>
                 </Box>
             </Box>
         </CardWrapper>

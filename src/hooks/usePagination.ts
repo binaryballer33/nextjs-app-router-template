@@ -1,7 +1,5 @@
 import { ChangeEvent, useState } from "react"
 
-import { User } from "src/mocks/user-mocks"
-
 export default function usePagination(initialPage = 0, initialLimit = 10) {
     const [page, setPage] = useState<number>(initialPage)
     const [limit, setLimit] = useState<number>(initialLimit)
@@ -15,8 +13,8 @@ export default function usePagination(initialPage = 0, initialLimit = 10) {
     }
 
     /* call this on the data that you want to paginate in order to get the paginated data */
-    const paginate = (users: User[], page: number, limit: number): User[] => {
-        return users.slice(page * limit, page * limit + limit)
+    const paginate = (items: any[], page: number, limit: number): any[] => {
+        return items.slice(page * limit, page * limit + limit)
     }
 
     return {

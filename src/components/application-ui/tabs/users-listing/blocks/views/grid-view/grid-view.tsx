@@ -4,16 +4,17 @@ import { Box, Card, Unstable_Grid2 as Grid, TablePagination } from "@mui/materia
 
 import NoDataResults from "src/components/application-ui/tabs/users-listing/blocks/buttons-icons-input-text/no-data-results"
 import GridCard from "src/components/application-ui/tabs/users-listing/blocks/views/grid-view/grid-card"
+import { yugiohTestCards } from "src/models/cards/yu-gi-oh"
 
 type GridViewProps = {
     page: number
     limit: number
-    selectedItems: string[]
-    paginatedUsers: any[]
-    filteredUsers: any[]
+    selectedRecords: string[]
+    paginatedRecords: any[]
+    filteredRecords: any[]
     handlePageChange: (event: unknown, newPage: number) => void
     handleLimitChange: (event: ChangeEvent<HTMLInputElement>) => void
-    handleSelectOneUser: (event: ChangeEvent<HTMLInputElement>, id: string) => void
+    handleSelectOneRecord: (event: ChangeEvent<HTMLInputElement>, id: string) => void
     t: (token: string) => string
 }
 
@@ -21,29 +22,29 @@ export default function GridView(props: GridViewProps) {
     const {
         page,
         limit,
-        selectedItems,
-        paginatedUsers,
-        filteredUsers,
+        selectedRecords,
+        paginatedRecords,
+        filteredRecords,
         handlePageChange,
         handleLimitChange,
-        handleSelectOneUser,
+        handleSelectOneRecord,
         t,
     } = props
 
-    // Return Data Or Text Saying We Couldn't Find Any Users
-    return paginatedUsers.length === 0 ? (
+    // Return Data Or Text Saying We Couldn't Find Any Records
+    return paginatedRecords.length === 0 ? (
         <NoDataResults t={t} />
     ) : (
         <>
             <Grid container spacing={{ xs: 2, sm: 3 }}>
-                {paginatedUsers.map((user) => {
+                {paginatedRecords.map((card) => {
                     return (
-                        <Grid xs={12} sm={6} lg={4} key={user.id}>
-                            {/* Create The Card */}
+                        <Grid xs={12} sm={6} lg={4} key={card.id}>
+                            {/* Create The Cards */}
                             <GridCard
-                                user={user}
-                                selectedItems={selectedItems}
-                                handleSelectOneUser={handleSelectOneUser}
+                                card={card}
+                                selectedRecords={selectedRecords}
+                                handleSelectOneRecord={handleSelectOneRecord}
                                 t={t}
                             />
                         </Grid>
@@ -66,14 +67,14 @@ export default function GridView(props: GridViewProps) {
                 }}
             >
                 <Box>
-                    <b>{limit > filteredUsers.length ? filteredUsers.length : limit}</b> {t("of")}{" "}
-                    <b>{filteredUsers.length}</b> <b>{t("Users")}</b>
+                    <b>{limit > filteredRecords.length ? filteredRecords.length : limit}</b> {t("of")}{" "}
+                    <b>{filteredRecords.length}</b> <b>{t("Records")}</b>
                 </Box>
 
                 {/* Create The Pagination Buttons And Information */}
                 <TablePagination
                     component="div"
-                    count={filteredUsers.length}
+                    count={yugiohTestCards.length}
                     onPageChange={handlePageChange}
                     onRowsPerPageChange={handleLimitChange}
                     page={page}

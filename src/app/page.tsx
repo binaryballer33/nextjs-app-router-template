@@ -3,26 +3,26 @@
 import { Box, Divider, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
 
-// import useGetYuGiOhCardsQuery from "src/api/yu-gi-oh/queries/get-all-yu-gi-oh-cards"
+import useGetYuGiOhCardsQuery from "src/api/yu-gi-oh/queries/get-all-yu-gi-oh-cards"
 import AvatarAccordion from "src/components/application-ui/accordions/avatar/avatar"
 import CardsBenefits from "src/components/application-ui/cards-benefits/cards-benefits"
 import FinancialStatus from "src/components/application-ui/financial-status/financial-status"
-import UserTabs from "src/components/application-ui/tabs/users-listing/user-tabs"
+import CardTabs from "src/components/application-ui/tabs/users-listing/card-tabs"
 import Container from "src/components/base/container"
 import PageHeading from "src/components/base/page-heading"
-import { mockUsers } from "src/mocks/user-mocks"
+import { yugiohTestCards } from "src/models/cards/yu-gi-oh"
 
 // TODO: add prisma and basic crud operations to the project
 function Page() {
     const { t } = useTranslation()
     // const yugiohCards = useGetYuGiOhCardsQuery()
-    //
+
     // if (yugiohCards.isLoading) return <p>Loading...</p>
     // if (yugiohCards.isError) return <p>Error: {yugiohCards.error.message}</p>
     // if (!yugiohCards.data) return <p>No cards found</p>
     //
-    // yugiohCards.data.data.forEach((card) => {
-    //     console.log(card)
+    // yugiohCards.data.data.forEach((card, index) => {
+    //     console.log(card.name)
     // })
 
     return (
@@ -46,7 +46,7 @@ function Page() {
             </Container>
 
             <Container>
-                <UserTabs users={mockUsers} />
+                <CardTabs tabItems={yugiohTestCards} />
             </Container>
 
             <Container>

@@ -4,23 +4,23 @@ import { Box, Stack, Tab, useMediaQuery, useTheme } from "@mui/material"
 import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
 
-import CheckboxSelectAllUsers from "src/components/application-ui/tabs/users-listing/blocks/buttons-icons-input-text/checkbox-select-all-users"
+import CheckboxSelectAllRecords from "src/components/application-ui/tabs/users-listing/blocks/buttons-icons-input-text/checkbox-select-all-records"
 import NoDataResults from "src/components/application-ui/tabs/users-listing/blocks/buttons-icons-input-text/no-data-results"
 import PaginationQuerySearchBox from "src/components/application-ui/tabs/users-listing/blocks/buttons-icons-input-text/pagination-query-search-box"
 import ShareIcon from "src/components/application-ui/tabs/users-listing/blocks/buttons-icons-input-text/share-icon"
 import TabList from "src/components/application-ui/tabs/users-listing/blocks/tabs/tab-list"
 import TabSelectDropdown from "src/components/application-ui/tabs/users-listing/blocks/tabs/tab-select-dropdown"
-import GridView from "src/components/application-ui/tabs/users-listing/blocks/views/grid-view/grid-view"
 import NoView from "src/components/application-ui/tabs/users-listing/blocks/views/no-view"
 import TableView from "src/components/application-ui/tabs/users-listing/blocks/views/table-view/table-view"
 import ToggleViewIcons from "src/components/application-ui/tabs/users-listing/blocks/views/toggle-view-icons"
 import usePagination from "src/hooks/usePagination"
-import { User } from "src/mocks/user-mocks"
+import { YuGiOhCard, yugiohTestCards } from "src/models/cards/yu-gi-oh"
 
 import BulkDeleteIconDialog from "./blocks/dialogs/bulk-delete-icon-dialog"
+import GridView from "./blocks/views/grid-view/grid-view"
 
-type UserTabsProps = {
-    users: User[]
+type CardTabsProps = {
+    tabItems: YuGiOhCard[]
 }
 
 type Filters = {
@@ -33,36 +33,7 @@ type Tab = {
     count: number
 }
 
-const filterData = (users: User[], query: string, filters: Filters): User[] => {
-    return users.filter((user) => {
-        let matches = true
-
-        if (query) {
-            const properties = ["email", "name", "username"]
-            let containsQuery = false
-
-            // if the user's email, name or username is inside the search box query set containsQuery to true
-            properties.forEach((property) => {
-                if (user[property].toLowerCase().includes(query.toLowerCase())) containsQuery = true
-            })
-
-            if (filters.role && user.role !== filters.role) matches = false
-
-            if (!containsQuery) matches = false
-        }
-
-        Object.keys(filters).forEach((key) => {
-            // @ts-ignore
-            const value = filters[key]
-
-            if (value && user[key] !== value) matches = false
-        })
-
-        return matches
-    })
-}
-
-export default function UserTabs({ users }: UserTabsProps) {
+export default function CardTabs({ tabItems }: CardTabsProps) {
     const [toggleView, setToggleView] = useState<string | null>("grid_view")
     const [selectedItems, setSelectedItems] = useState<string[]>([])
     const [query, setQuery] = useState<string>("")
@@ -75,42 +46,42 @@ export default function UserTabs({ users }: UserTabsProps) {
     const smUp = useMediaQuery(theme.breakpoints.up("sm"))
     const { t } = useTranslation()
 
-    const filteredUsers = filterData(users, query, filters)
-    const paginatedUsers = paginate(filteredUsers, page, limit)
+    const filteredItems = tabItems // TODO: filter later
+    const paginatedItems = paginate(filteredItems, page, limit)
     const selectedBulkActions = selectedItems.length > 0
-    const selectedSomeUsers = selectedItems.length > 0 && selectedItems.length < users.length
-    const selectedAllUsers = selectedItems.length === users.length
+    const selectedSomeItems = selectedItems.length > 0 && selectedItems.length < tabItems.length
+    const selectedAllItems = selectedItems.length === tabItems.length
 
     const tabs: Tab[] = [
         {
             value: "all",
-            label: t("All users"),
-            count: users.length,
+            label: t("All cards"),
+            count: tabItems.length,
         },
         {
             value: "customer",
             label: t("Customers"),
-            count: users.filter((user) => user.role === "customer").length,
+            count: tabItems.length,
         },
         {
             value: "admin",
             label: t("Administrators"),
-            count: users.filter((user) => user.role === "admin").length,
+            count: tabItems.length,
         },
         {
             value: "subscriber",
             label: t("Subscribers"),
-            count: users.filter((user) => user.role === "subscriber").length,
+            count: tabItems.length,
         },
     ]
 
-    const handleSelectAllUsers = (event: ChangeEvent<HTMLInputElement>): void => {
-        setSelectedItems(event.target.checked ? users.map((user) => user.id) : [])
+    const handleSelectAllItems = (event: ChangeEvent<HTMLInputElement>): void => {
+        setSelectedItems(event.target.checked ? tabItems.map((card) => card.id.toString()) : [])
     }
 
-    const handleSelectOneUser = (_event: ChangeEvent<HTMLInputElement>, userId: string): void => {
-        if (!selectedItems.includes(userId)) setSelectedItems((prevSelected) => [...prevSelected, userId])
-        else setSelectedItems((prevSelected) => prevSelected.filter((id) => id !== userId))
+    const handleSelectOneItems = (_event: ChangeEvent<HTMLInputElement>, itemId: string): void => {
+        if (!selectedItems.includes(itemId)) setSelectedItems((prevSelected) => [...prevSelected, itemId])
+        else setSelectedItems((prevSelected) => prevSelected.filter((id) => id !== itemId))
     }
 
     return (
@@ -144,11 +115,11 @@ export default function UserTabs({ users }: UserTabsProps) {
                 <Box display="flex" alignItems="center">
                     {/* If  grid_view is the current view than display the checkbox */}
                     {toggleView === "grid_view" && (
-                        <CheckboxSelectAllUsers
-                            selectedAllUsers={selectedAllUsers}
-                            selectedSomeUsers={selectedSomeUsers}
-                            paginatedUsers={paginatedUsers}
-                            handleSelectAllUsers={handleSelectAllUsers}
+                        <CheckboxSelectAllRecords
+                            selectedAllRecords={selectedAllItems}
+                            selectedSomeRecords={selectedSomeItems}
+                            paginatedRecords={yugiohTestCards}
+                            handleSelectAllRecords={handleSelectAllItems}
                             t={t}
                         />
                     )}
@@ -173,7 +144,7 @@ export default function UserTabs({ users }: UserTabsProps) {
             </Box>
 
             {/* If No Data Display Message Stating That */}
-            {paginatedUsers.length === 0 ? (
+            {paginatedItems.length === 0 ? (
                 <NoDataResults t={t} />
             ) : (
                 //  If There Is Data, Display It
@@ -183,15 +154,15 @@ export default function UserTabs({ users }: UserTabsProps) {
                         <TableView
                             page={page}
                             limit={limit}
-                            selectedItems={selectedItems}
-                            paginatedUsers={paginatedUsers}
-                            selectedAllUsers={selectedAllUsers}
-                            selectedSomeUsers={selectedSomeUsers}
-                            filteredUsers={filteredUsers}
+                            selectedRecords={selectedItems}
+                            paginatedRecords={paginatedItems}
+                            selectedAllRecords={selectedAllItems}
+                            selectedSomeRecords={selectedSomeItems}
+                            filteredRecords={filteredItems}
                             handlePageChange={handlePageChange}
                             handleLimitChange={handleLimitChange}
-                            handleSelectOneUser={handleSelectOneUser}
-                            handleSelectAllUsers={handleSelectAllUsers}
+                            handleSelectOneRecord={handleSelectOneItems}
+                            handleSelectAllRecords={handleSelectAllItems}
                             t={t}
                         />
                     )}
@@ -201,12 +172,12 @@ export default function UserTabs({ users }: UserTabsProps) {
                         <GridView
                             page={page}
                             limit={limit}
-                            selectedItems={selectedItems}
-                            paginatedUsers={paginatedUsers}
-                            filteredUsers={filteredUsers}
+                            selectedRecords={selectedItems}
+                            paginatedRecords={paginatedItems}
+                            filteredRecords={filteredItems}
                             handlePageChange={handlePageChange}
                             handleLimitChange={handleLimitChange}
-                            handleSelectOneUser={handleSelectOneUser}
+                            handleSelectOneRecord={handleSelectOneItems}
                             t={t}
                         />
                     )}
@@ -219,6 +190,6 @@ export default function UserTabs({ users }: UserTabsProps) {
     )
 }
 
-UserTabs.propTypes = {
-    users: PropTypes.array.isRequired,
+CardTabs.propTypes = {
+    tabItems: PropTypes.array.isRequired,
 }

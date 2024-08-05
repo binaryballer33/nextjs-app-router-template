@@ -17,7 +17,7 @@ export default function NoDataResults(props: NoDataResultsProps) {
             align="center"
             fontWeight={500}
         >
-            {t("We couldn't find any users matching your search criteria")}
+            {t("We couldn't find any records matching your search criteria")}
         </Typography>
     )
 }
