@@ -10,9 +10,9 @@ import PaginationQuerySearchBox from "src/components/application-ui/tabs/users-l
 import ShareIcon from "src/components/application-ui/tabs/users-listing/blocks/buttons-icons-input-text/share-icon"
 import TabList from "src/components/application-ui/tabs/users-listing/blocks/tabs/tab-list"
 import TabSelectDropdown from "src/components/application-ui/tabs/users-listing/blocks/tabs/tab-select-dropdown"
-import GridView from "src/components/application-ui/tabs/users-listing/blocks/views/grid-view"
+import GridView from "src/components/application-ui/tabs/users-listing/blocks/views/grid-view/grid-view"
 import NoView from "src/components/application-ui/tabs/users-listing/blocks/views/no-view"
-import TableView from "src/components/application-ui/tabs/users-listing/blocks/views/table-view"
+import TableView from "src/components/application-ui/tabs/users-listing/blocks/views/table-view/table-view"
 import ToggleViewIcons from "src/components/application-ui/tabs/users-listing/blocks/views/toggle-view-icons"
 import usePagination from "src/hooks/usePagination"
 import { User } from "src/mocks/user-mocks"
@@ -31,13 +31,6 @@ type Tab = {
     value: string
     label: string
     count: number
-}
-
-type TabCounts = {
-    all: number
-    customer: number
-    admin: number
-    subscriber: number
 }
 
 const filterData = (users: User[], query: string, filters: Filters): User[] => {
@@ -88,33 +81,26 @@ export default function UserTabs({ users }: UserTabsProps) {
     const selectedSomeUsers = selectedItems.length > 0 && selectedItems.length < users.length
     const selectedAllUsers = selectedItems.length === users.length
 
-    const userCounts: TabCounts = {
-        all: users.length,
-        customer: users.filter((user) => user.role === "customer").length,
-        admin: users.filter((user) => user.role === "admin").length,
-        subscriber: users.filter((user) => user.role === "subscriber").length,
-    }
-
     const tabs: Tab[] = [
         {
             value: "all",
             label: t("All users"),
-            count: userCounts.all,
+            count: users.length,
         },
         {
             value: "customer",
             label: t("Customers"),
-            count: userCounts.customer,
+            count: users.filter((user) => user.role === "customer").length,
         },
         {
             value: "admin",
             label: t("Administrators"),
-            count: userCounts.admin,
+            count: users.filter((user) => user.role === "admin").length,
         },
         {
             value: "subscriber",
             label: t("Subscribers"),
-            count: userCounts.subscriber,
+            count: users.filter((user) => user.role === "subscriber").length,
         },
     ]
 

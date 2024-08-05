@@ -3,6 +3,7 @@
 import { Box, Divider, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
 
+// import useGetYuGiOhCardsQuery from "src/api/yu-gi-oh/queries/get-all-yu-gi-oh-cards"
 import AvatarAccordion from "src/components/application-ui/accordions/avatar/avatar"
 import CardsBenefits from "src/components/application-ui/cards-benefits/cards-benefits"
 import FinancialStatus from "src/components/application-ui/financial-status/financial-status"
@@ -14,6 +15,15 @@ import { mockUsers } from "src/mocks/user-mocks"
 // TODO: add prisma and basic crud operations to the project
 function Page() {
     const { t } = useTranslation()
+    // const yugiohCards = useGetYuGiOhCardsQuery()
+    //
+    // if (yugiohCards.isLoading) return <p>Loading...</p>
+    // if (yugiohCards.isError) return <p>Error: {yugiohCards.error.message}</p>
+    // if (!yugiohCards.data) return <p>No cards found</p>
+    //
+    // yugiohCards.data.data.forEach((card) => {
+    //     console.log(card)
+    // })
 
     return (
         <>

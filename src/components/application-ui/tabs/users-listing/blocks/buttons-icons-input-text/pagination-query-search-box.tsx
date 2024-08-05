@@ -10,6 +10,7 @@ type PaginationQuerySearchBoxProps = {
     t: (token: string) => string
 }
 
+// TODO: fix issue where when i search on a page that is not page 1, I get no data even if that user exits
 export default function PaginationQuerySearchBox(props: PaginationQuerySearchBoxProps) {
     const { query, setQuery, t } = props
 
