@@ -6,7 +6,7 @@ import clsx from "clsx"
 
 type Ellipsis = { ellipsis: number }
 
-type Props = BoxProps & {
+type HeaderProps = BoxProps & {
     ellipsis?: boolean
 }
 
@@ -14,7 +14,7 @@ const StyledBox = styled(Box, { shouldForwardProp: (prop) => prop !== "ellipsis"
     ...(ellipsis && { overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }),
 }))
 
-export function H1(props: Props) {
+export function H1(props: HeaderProps) {
     const { ellipsis, children, className, ...others } = props
 
     return (
@@ -31,7 +31,7 @@ export function H1(props: Props) {
     )
 }
 
-export function H2(props: Props) {
+export function H2(props: HeaderProps) {
     const { ellipsis, children, className, ...others } = props
 
     return (
@@ -48,7 +48,7 @@ export function H2(props: Props) {
     )
 }
 
-export function H3(props: Props) {
+export function H3(props: HeaderProps) {
     const { ellipsis, children, className, ...others } = props
 
     return (
@@ -65,7 +65,7 @@ export function H3(props: Props) {
     )
 }
 
-export function H4(props: Props) {
+export function H4(props: HeaderProps) {
     const { ellipsis, children, className, ...others } = props
 
     return (
@@ -82,7 +82,7 @@ export function H4(props: Props) {
     )
 }
 
-export function H5(props: Props) {
+export function H5(props: HeaderProps) {
     const { ellipsis, children, className, ...others } = props
 
     return (
@@ -100,7 +100,7 @@ export function H5(props: Props) {
     )
 }
 
-export function H6(props: Props) {
+export function H6(props: HeaderProps) {
     const { ellipsis, children, className, ...others } = props
 
     return (
@@ -117,7 +117,7 @@ export function H6(props: Props) {
     )
 }
 
-export function Paragraph(props: Props) {
+export function Paragraph(props: HeaderProps) {
     const { ellipsis, children, className, ...others } = props
 
     return (
@@ -134,7 +134,7 @@ export function Paragraph(props: Props) {
     )
 }
 
-export function Small(props: Props) {
+export function Small(props: HeaderProps) {
     const { ellipsis = false, children, className, ...others } = props
 
     return (
@@ -151,7 +151,7 @@ export function Small(props: Props) {
     )
 }
 
-export function Span(props: Props) {
+export function Span(props: HeaderProps) {
     const { ellipsis = false, children, className, ...others } = props
 
     return (
@@ -166,7 +166,7 @@ export function Span(props: Props) {
     )
 }
 
-export function Tiny(props: Props) {
+export function Tiny(props: HeaderProps) {
     const { ellipsis = false, children, className, ...others } = props
 
     return (

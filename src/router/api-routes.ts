@@ -19,10 +19,12 @@ const API_ROUTES = {
     // GET_ALL_YUGIOH_CARDS: `${BACKEND_BASE_URL}/yu-gi-oh`,
     // TODO: get all cards and store them in supabase database and acess using prisma orm, host images on own server
     // GET_ALL_YUGIOH_CARDS: "https://db.ygoprodeck.com/api/v7/cardinfo.php",
-    // GET_ALL_YUGIOH_CARDS: "https://db.ygoprodeck.com/api/v7/cardinfo.php?name=Tornado%20Dragon&misc=yes",
-    // GET_ALL_YUGIOH_CARDS: "https://db.ygoprodeck.com/api/v7/cardinfo.php?attribute=water&type=Link%20Monster",
+    // GET_ALL_YUGIOH_CARDS:
+    //     "https://db.ygoprodeck.com/api/v7/cardinfo.php?name=Number%2038:%20Hope%20Harbinger%20Dragon%20Titanic%20Galaxy&misc=yes",
+    GET_ALL_YUGIOH_CARDS:
+        "https://db.ygoprodeck.com/api/v7/cardinfo.php?attribute=dark&type=Pendulum%20Effect%20Monster",
     // GET_ALL_YUGIOH_CARDS: "https://db.ygoprodeck.com/api/v7/cardinfo.php?staple=yes",
-    GET_ALL_YUGIOH_CARDS: "https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=Dark%20Magician&archetype=Blue-Eyes",
+    // GET_ALL_YUGIOH_CARDS: "https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=Dark%20Magician",
     // GET_ALL_YUGIOH_CARDS: "https://db.ygoprodeck.com/api/v7/cardinfo.php?level=4&attribute=water&sort=atk",
     GET_YUGIOH_CARD_BY_ID: (id: number) => `${BACKEND_BASE_URL}/yu-gi-oh/${id}`,
     UPDATE_YUGIOH_CARD_BY_ID: (id: number) => `${BACKEND_BASE_URL}/yu-gi-oh/update-card/${id}`,

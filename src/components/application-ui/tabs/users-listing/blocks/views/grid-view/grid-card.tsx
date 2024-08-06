@@ -6,7 +6,6 @@ import {
     Card,
     Checkbox,
     Chip,
-    colors,
     Divider,
     IconButton,
     Link,
@@ -20,6 +19,7 @@ import clsx from "clsx"
 
 import FlexCenter from "src/components/base/flex-box/flex-center"
 import { YuGiOhCard } from "src/models/cards/yu-gi-oh"
+import getYugiohFrameTypeColor from "src/utils/helper-functions/getYuGiOhFrameTypeColor"
 
 export const CardWrapper = styled(Card)(
     ({ theme }) => `
@@ -44,47 +44,6 @@ export const CardWrapper = styled(Card)(
   `,
 )
 
-export function getYugiohFrameTypeColor(frameType: string) {
-    switch (frameType) {
-        case "spell":
-            return "primary.dark"
-        case "trap":
-            return colors.purple["500"]
-        case "normal":
-            return colors.orange["300"]
-        case "effect":
-            return colors.orange["600"]
-        case "fusion":
-            return colors.purple["800"]
-        case "ritual":
-            return colors.blue["800"]
-        case "synchro":
-            return colors.grey["600"]
-        case "xyz":
-            return colors.common.black
-        case "pendulum":
-            return colors.orange["300"]
-        case "normal_pendulum":
-            return colors.orange["300"]
-        case "effect_pendulum":
-            return colors.orange["600"]
-        case "fusion_pendulum":
-            return colors.orange["800"]
-        case "xyz_pendulum":
-            return colors.common.black
-        case "synchro_pendulum":
-            return colors.grey["600"]
-        case "ritual_pendulum":
-            return colors.blue["800"]
-        case "link":
-            return colors.lightBlue["800"]
-        case "token":
-            return colors.lightBlue["800"]
-        default:
-            return "primary"
-    }
-}
-
 type GridCard2Props = {
     card: YuGiOhCard
     selectedRecords: string[]
@@ -92,7 +51,7 @@ type GridCard2Props = {
     t: (token: string) => string
 }
 
-function GridCard(props: GridCard2Props) {
+export default function GridCard(props: GridCard2Props) {
     const { card, selectedRecords, handleSelectOneRecord, t } = props
     const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
 
@@ -162,7 +121,6 @@ function GridCard(props: GridCard2Props) {
                         <Stack gap={1} justifyContent="space-around" height={250}>
                             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                             <Chip
-                                // color={getYugiohFrameTypeColor(card.frameType)}
                                 label={t(card.type)}
                                 sx={{ mb: 2, maxWidth: "50%", bgcolor: getYugiohFrameTypeColor(card.frameType) }}
                             />
@@ -218,5 +176,3 @@ function GridCard(props: GridCard2Props) {
         </CardWrapper>
     )
 }
-
-export default GridCard

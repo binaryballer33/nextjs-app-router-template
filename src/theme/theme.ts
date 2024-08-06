@@ -1,4 +1,4 @@
-import { colors, lighten, NeutralColors, PaletteMode } from "@mui/material"
+import { colors, darken, lighten, NeutralColors, PaletteColorOptions, PaletteMode } from "@mui/material"
 import { createTheme, responsiveFontSizes } from "@mui/material/styles"
 
 import { modifiedComponents } from "./modified-components"
@@ -18,12 +18,32 @@ declare module "@mui/material/styles" {
         900: string
     }
 
+    //  for theme.palette
     interface Palette {
         neutral: NeutralColors
+        normal: PaletteColorOptions
+        effect: PaletteColorOptions
+        fusion: PaletteColorOptions
+        ritual: PaletteColorOptions
+        link: PaletteColorOptions
+        xyz: PaletteColorOptions
+        synchro: PaletteColorOptions
+        spell: PaletteColorOptions
+        trap: PaletteColorOptions
     }
 
+    // for creating colors in the theme.palette
     interface PaletteOptions {
         neutral?: NeutralColors
+        normal?: PaletteColorOptions
+        effect?: PaletteColorOptions
+        fusion?: PaletteColorOptions
+        ritual?: PaletteColorOptions
+        link?: PaletteColorOptions
+        xyz?: PaletteColorOptions
+        synchro?: PaletteColorOptions
+        spell?: PaletteColorOptions
+        trap?: PaletteColorOptions
     }
 }
 
@@ -70,6 +90,51 @@ const lightTheme = responsiveFontSizes(
                 light: colors.deepPurple[400],
                 dark: colors.deepPurple[900],
             },
+            fusion: {
+                main: colors.purple[400],
+                light: colors.purple[300],
+                dark: colors.purple[600],
+            },
+            ritual: {
+                main: colors.blueGrey[400],
+                light: colors.blueGrey[300],
+                dark: colors.blueGrey[600],
+            },
+            link: {
+                main: colors.lightBlue[400],
+                light: colors.lightBlue[300],
+                dark: colors.lightBlue[600],
+            },
+            normal: {
+                main: colors.grey[400],
+                light: colors.grey[300],
+                dark: colors.grey[600],
+            },
+            effect: {
+                main: colors.orange[400],
+                light: colors.orange[300],
+                dark: colors.orange[600],
+            },
+            spell: {
+                main: colors.blue[400],
+                light: colors.blue[300],
+                dark: colors.blue[600],
+            },
+            trap: {
+                main: colors.purple["400"],
+                light: colors.purple["300"],
+                dark: colors.purple["600"],
+            },
+            xyz: {
+                main: colors.common.black,
+                light: lighten(colors.common.black, 0.2),
+                dark: colors.common.black,
+            },
+            synchro: {
+                main: darken(colors.grey["400"], 0.15),
+                light: darken(colors.grey["400"], 0.1),
+                dark: darken(colors.grey["400"], 0.2),
+            },
             neutral,
             background: {
                 default: colors.grey[300], // Light grey
@@ -104,6 +169,51 @@ const darkTheme = responsiveFontSizes(
                 main: colors.deepPurple[300],
                 light: colors.deepPurple[100],
                 dark: colors.deepPurple[500],
+            },
+            fusion: {
+                main: colors.purple[300],
+                light: colors.purple[100],
+                dark: colors.purple[500],
+            },
+            ritual: {
+                main: colors.blueGrey[300],
+                light: colors.blueGrey[100],
+                dark: colors.blueGrey[500],
+            },
+            link: {
+                main: colors.lightBlue[300],
+                light: colors.lightBlue[100],
+                dark: colors.lightBlue[500],
+            },
+            normal: {
+                main: colors.grey[300],
+                light: colors.grey[100],
+                dark: colors.grey[500],
+            },
+            effect: {
+                main: colors.orange[300],
+                light: colors.orange[100],
+                dark: colors.orange[500],
+            },
+            spell: {
+                main: colors.blue[300],
+                light: colors.blue[100],
+                dark: colors.blue[500],
+            },
+            trap: {
+                main: colors.purple["300"],
+                light: colors.purple["100"],
+                dark: colors.purple["500"],
+            },
+            xyz: {
+                main: colors.common.black,
+                light: lighten(colors.common.black, 0.2),
+                dark: colors.common.black,
+            },
+            synchro: {
+                main: darken(colors.common.white, 0.4),
+                light: darken(colors.common.white, 0.3),
+                dark: darken(colors.common.white, 0.5),
             },
             neutral,
             background: {

@@ -23,6 +23,20 @@ const CardPriceSchema = z.object({
     coolstuffinc_price: z.string(),
 })
 
+const MiscInfoSchema = z.object({
+    beta_name: z.string(),
+    views: z.number(),
+    viewsweek: z.number(),
+    upvotes: z.number(),
+    downvotes: z.number(),
+    formats: z.array(z.string()),
+    tcg_date: z.string(),
+    ocg_date: z.string(),
+    konami_id: z.number(),
+    has_effect: z.number(),
+    md_rarity: z.string(),
+})
+
 const YuGiOhCardBaseSchema = z.object({
     id: z.number(),
     name: z.string(),
@@ -34,12 +48,15 @@ const YuGiOhCardBaseSchema = z.object({
     ygoprodeck_url: z.string(),
     banlist_info: z
         .object({
-            ban_goat: z.string(),
+            ban_goat: z.string().optional(),
+            ban_ocg: z.string().optional(),
+            ban_tcg: z.string().optional(),
         })
         .optional(),
     card_sets: z.array(CardSetSchema).optional(),
     card_images: z.array(CardImageSchema),
     card_prices: z.array(CardPriceSchema),
+    misc_info: z.array(MiscInfoSchema).optional(),
 })
 
 const LinkCardSchema = YuGiOhCardBaseSchema.extend({
@@ -58,14 +75,22 @@ const MonsterCardSchema = YuGiOhCardBaseSchema.extend({
     def: z.number(),
 })
 
+const PendulumCardSchema = MonsterCardSchema.extend({
+    frameType: z.string().regex(/pendulum/i),
+    pend_desc: z.string(),
+    monster_desc: z.string(),
+    scale: z.number(),
+})
+
 const SpellOrTrapCardSchema = YuGiOhCardBaseSchema.extend({
     frameType: z.union([z.literal("spell"), z.literal("trap")]),
 })
 
-const YuGiOhCardSchema = z.union([LinkCardSchema, MonsterCardSchema, SpellOrTrapCardSchema])
+const YuGiOhCardSchema = z.union([PendulumCardSchema, LinkCardSchema, MonsterCardSchema, SpellOrTrapCardSchema])
 
 const YuGiOhCardWithoutIdSchema = z.union([
     LinkCardSchema.omit({ id: true }),
+    PendulumCardSchema.omit({ id: true }),
     MonsterCardSchema.omit({ id: true }),
     SpellOrTrapCardSchema.omit({ id: true }),
 ])
@@ -77,6 +102,265 @@ export { YuGiOhCardSchema, YuGiOhCardWithoutIdSchema }
 export type { YuGiOhCard, YuGiOhCardWithoutId }
 
 export const yugiohTestCards: YuGiOhCard[] = [
+    {
+        id: 76794549,
+        name: "Astrograph Sorcerer",
+        type: "Pendulum Effect Monster",
+        frameType: "effect_pendulum",
+        desc: '[ Pendulum Effect ] \nDuring your Main Phase: You can destroy this card, and if you do, take 1 "Stargazer Magician" from your hand or Deck, and either place it in your Pendulum Zone or Special Summon it. You can only use this effect of "Astrograph Sorcerer" once per turn.\n[ Monster Effect ] \nIf a card(s) you control is destroyed by battle or card effect: You can Special Summon this card from your hand, then you can choose 1 monster in the GY, Extra Deck, or that is banished, and that was destroyed this turn, and add 1 monster with the same name from your Deck to your hand. You can banish this card you control, plus 4 monsters from your hand, field, and/or GY (1 each with "Pendulum Dragon", "Xyz Dragon", "Synchro Dragon", and "Fusion Dragon" in their names); Special Summon 1 "Supreme King Z-ARC" from your Extra Deck. (This is treated as a Fusion Summon.)',
+        pend_desc:
+            'During your Main Phase: You can destroy this card, and if you do, take 1 "Stargazer Magician" from your hand or Deck, and either place it in your Pendulum Zone or Special Summon it. You can only use this effect of "Astrograph Sorcerer" once per turn.',
+        monster_desc:
+            'If a card(s) you control is destroyed by battle or card effect: You can Special Summon this card from your hand, then you can choose 1 monster in the GY, Extra Deck, or that is banished, and that was destroyed this turn, and add 1 monster with the same name from your Deck to your hand. You can banish this card you control, plus 4 monsters from your hand, field, and/or GY (1 each with "Pendulum Dragon", "Xyz Dragon", "Synchro Dragon", and "Fusion Dragon" in their names); Special Summon 1 "Supreme King Z-ARC" from your Extra Deck. (This is treated as a Fusion Summon.)',
+        atk: 2500,
+        def: 2000,
+        level: 7,
+        race: "Spellcaster",
+        attribute: "DARK",
+        archetype: "Magician",
+        scale: 1,
+        ygoprodeck_url: "https://ygoprodeck.com/card/astrograph-sorcerer-8316",
+        card_sets: [
+            {
+                set_name: "Pendulum Evolution",
+                set_code: "PEVO-EN001",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "3.04",
+            },
+            {
+                set_name: "Tactical Masters",
+                set_code: "TAMA-EN040",
+                set_rarity: "Collector's Rare",
+                set_rarity_code: "(CR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Tactical Masters",
+                set_code: "TAMA-EN040",
+                set_rarity: "Rare",
+                set_rarity_code: "(R)",
+                set_price: "0",
+            },
+        ],
+        banlist_info: {
+            ban_tcg: "Limited",
+            ban_ocg: "Limited",
+        },
+        card_images: [
+            {
+                id: 76794549,
+                image_url: "https://images.ygoprodeck.com/images/cards/76794549.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/76794549.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/76794549.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "0.40",
+                tcgplayer_price: "0.13",
+                ebay_price: "1.44",
+                amazon_price: "0.25",
+                coolstuffinc_price: "0.25",
+            },
+        ],
+    },
+    {
+        id: 37818794,
+        name: "Red-Eyes Dark Dragoon",
+        type: "Fusion Monster",
+        frameType: "fusion",
+        desc: '"Dark Magician" + "Red-Eyes Black Dragon" or 1 Dragon Effect Monster\r\nCannot be destroyed by card effects. Neither player can target this card with card effects. During your Main Phase: You can destroy 1 monster your opponent controls, and if you do, inflict damage to your opponent equal to that monster\'s original ATK. You can use this effect a number of times per turn up to the number of Normal Monsters used as Fusion Material for this card. Once per turn, when a card or effect is activated (Quick Effect): You can discard 1 card; negate the activation, and if you do, destroy that card, and if you do that, this card gains 1000 ATK.',
+        atk: 3000,
+        def: 2500,
+        level: 8,
+        race: "Spellcaster",
+        attribute: "DARK",
+        archetype: "Red-Eyes",
+        ygoprodeck_url: "https://ygoprodeck.com/card/red-eyes-dark-dragoon-10694",
+        card_sets: [
+            {
+                set_name: "2020 Tin of Lost Memories Mega Pack",
+                set_code: "MP20-EN249",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "115.97",
+            },
+            {
+                set_name: "2022 Tin of the Pharaoh's Gods",
+                set_code: "MP22-EN264",
+                set_rarity: "Prismatic Secret Rare",
+                set_rarity_code: "(PScR)",
+                set_price: "0",
+            },
+            {
+                set_name: "Brothers of Legend",
+                set_code: "BROL-EN094",
+                set_rarity: "Starlight Rare",
+                set_rarity_code: "(StR)",
+                set_price: "0",
+            },
+        ],
+        banlist_info: {
+            ban_ocg: "Banned",
+        },
+        card_images: [
+            {
+                id: 37818794,
+                image_url: "https://images.ygoprodeck.com/images/cards/37818794.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/37818794.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/37818794.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "4.52",
+                tcgplayer_price: "0.63",
+                ebay_price: "4.95",
+                amazon_price: "15.99",
+                coolstuffinc_price: "15.99",
+            },
+        ],
+    },
+    {
+        id: 63767246,
+        name: "Number 38: Hope Harbinger Dragon Titanic Galaxy",
+        type: "XYZ Monster",
+        frameType: "xyz",
+        desc: "2 Level 8 monsters\nOnce per turn, when a Spell Card or effect is activated on the field (Quick Effect): You can negate that effect, and if you do, attach that card to this card as material. When an opponent's monster declares an attack: You can detach 1 material from this card; change the attack target to this card and perform damage calculation. If a face-up Xyz Monster(s) you control is destroyed by battle or card effect: You can target 1 face-up Xyz Monster you control; it gains ATK equal to 1 of those destroyed monster's original ATK.",
+        atk: 3000,
+        def: 2500,
+        level: 8,
+        race: "Dragon",
+        attribute: "LIGHT",
+        ygoprodeck_url: "https://ygoprodeck.com/card/number-38-hope-harbinger-dragon-titanic-galaxy-5386",
+        card_sets: [
+            {
+                set_name: "Cybernetic Horizon Special Edition",
+                set_code: "CYHO-ENSE2",
+                set_rarity: "Super Rare",
+                set_rarity_code: "(SR)",
+                set_price: "3.63",
+            },
+            {
+                set_name: "Ghosts From the Past: The 2nd Haunting",
+                set_code: "GFP2-EN143",
+                set_rarity: "Ultra Rare",
+                set_rarity_code: "(UR)",
+                set_price: "2.19",
+            },
+            {
+                set_name: "Premium Gold: Infinite Gold",
+                set_code: "PGL3-EN008",
+                set_rarity: "Gold Secret Rare",
+                set_rarity_code: "(GScR)",
+                set_price: "7.5",
+            },
+        ],
+        card_images: [
+            {
+                id: 63767246,
+                image_url: "https://images.ygoprodeck.com/images/cards/63767246.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/63767246.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/63767246.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "0.47",
+                tcgplayer_price: "0.17",
+                ebay_price: "5.99",
+                amazon_price: "2.94",
+                coolstuffinc_price: "2.99",
+            },
+        ],
+        misc_info: [
+            {
+                beta_name: "Number 38",
+                views: 2523425,
+                viewsweek: 2418,
+                upvotes: 33,
+                downvotes: 4,
+                formats: ["TCG", "OCG", "Master Duel"],
+                tcg_date: "2016-03-17",
+                ocg_date: "2016-03-19",
+                konami_id: 12260,
+                has_effect: 1,
+                md_rarity: "Ultra Rare",
+            },
+        ],
+    },
+    {
+        id: 100347032,
+        name: "Blue-Eyes Spirit Ultimate Dragon",
+        type: "Synchro Monster",
+        frameType: "synchro",
+        desc: '2+ Tuners + 1 non-Tuner "Blue-Eyes" monster\r\nYour opponent cannot banish cards from your GY. You can only use each of the following effects of "Blue-Eyes Spirit Ultimate Dragon" once per turn. When a card or effect is activated on the field (Quick Effect): You can negate the activation, and if you do, this card gains 1000 ATK until the end of this turn. If this card is destroyed by battle or card effect: You can Special Summon 1 LIGHT Dragon monster from your GY, except "Blue-Eyes Spirit Ultimate Dragon".',
+        atk: 3500,
+        def: 4000,
+        level: 12,
+        race: "Dragon",
+        attribute: "LIGHT",
+        archetype: "Blue-Eyes",
+        ygoprodeck_url: "https://ygoprodeck.com/card/blue-eyes-spirit-ultimate-dragon-14644",
+        card_images: [
+            {
+                id: 100347032,
+                image_url: "https://images.ygoprodeck.com/images/cards/100347032.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/100347032.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/100347032.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "0.00",
+                tcgplayer_price: "0.00",
+                ebay_price: "0.00",
+                amazon_price: "0.00",
+                coolstuffinc_price: "0.00",
+            },
+        ],
+    },
+    {
+        id: 92812851,
+        name: "Exceed the Pendulum",
+        type: "Link Monster",
+        frameType: "link",
+        desc: '2+ Effect Monsters, including a Pendulum Monster\r\nGains 100 ATK for each Pendulum Monster Card you control. You can only use each of the following effects of "Exceed the Pendulum" once per turn. If this card is Link Summoned: You can add 1 face-up Pendulum Monster from your Extra Deck to your hand. During the Main Phase (Quick Effect): You can Special Summon 1 Pendulum Monster from your hand or GY in Defense Position, with a Level between the Pendulum Scales of the 2 cards in your Pendulum Zones.',
+        atk: 2000,
+        race: "Spellcaster",
+        attribute: "LIGHT",
+        archetype: "Pendulum",
+        linkval: 3,
+        linkmarkers: ["Bottom-Left", "Bottom", "Bottom-Right"],
+        ygoprodeck_url: "https://ygoprodeck.com/card/exceed-the-pendulum-14079",
+        card_sets: [
+            {
+                set_name: "Age of Overlord",
+                set_code: "AGOV-EN045",
+                set_rarity: "Super Rare",
+                set_rarity_code: "(SR)",
+                set_price: "0",
+            },
+        ],
+        card_images: [
+            {
+                id: 92812851,
+                image_url: "https://images.ygoprodeck.com/images/cards/92812851.jpg",
+                image_url_small: "https://images.ygoprodeck.com/images/cards_small/92812851.jpg",
+                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/92812851.jpg",
+            },
+        ],
+        card_prices: [
+            {
+                cardmarket_price: "0.31",
+                tcgplayer_price: "0.93",
+                ebay_price: "0.00",
+                amazon_price: "0.00",
+                coolstuffinc_price: "1.49",
+            },
+        ],
+    },
     {
         id: 49702428,
         name: "Dark Burning Attack",
@@ -489,149 +773,6 @@ export const yugiohTestCards: YuGiOhCard[] = [
         ],
     },
     {
-        id: 98502113,
-        name: "Dark Paladin",
-        type: "Fusion Monster",
-        frameType: "fusion",
-        desc: '"Dark Magician" + "Buster Blader"\r\nMust be Fusion Summoned. When a Spell Card is activated (Quick Effect): You can discard 1 card; negate the activation, and if you do, destroy it. This card must be face-up on the field to activate and to resolve this effect. Gains 500 ATK for each Dragon monster on the field and in the GY.',
-        atk: 2900,
-        def: 2400,
-        level: 8,
-        race: "Spellcaster",
-        attribute: "DARK",
-        archetype: "Dark Magician",
-        ygoprodeck_url: "https://ygoprodeck.com/card/dark-paladin-8186",
-        card_sets: [
-            {
-                set_name: "Dark Revelation Volume 1",
-                set_code: "DR1-EN160",
-                set_rarity: "Ultra Rare",
-                set_rarity_code: "(UR)",
-                set_price: "0",
-            },
-            {
-                set_name: "Duel Master's Guide promotional cards",
-                set_code: "DMG-001",
-                set_rarity: "Secret Rare",
-                set_rarity_code: "(ScR)",
-                set_price: "92.62",
-            },
-            {
-                set_name: "Duel Terminal 3",
-                set_code: "DT03-EN034",
-                set_rarity: "Duel Terminal Rare Parallel Rare",
-                set_rarity_code: "(DRPR)",
-                set_price: "0",
-            },
-            {
-                set_name: "Duelist Pack: Yugi",
-                set_code: "DPYG-EN016",
-                set_rarity: "Ultra Rare",
-                set_rarity_code: "(UR)",
-                set_price: "22.93",
-            },
-            {
-                set_name: "Hidden Arsenal: Chapter 1",
-                set_code: "HAC1-EN018",
-                set_rarity: "Duel Terminal Ultra Parallel Rare",
-                set_rarity_code: "(DUPR)",
-                set_price: "0",
-            },
-            {
-                set_name: "Legendary Collection 3: Yugi's World Mega Pack",
-                set_code: "LCYW-EN048",
-                set_rarity: "Secret Rare",
-                set_rarity_code: "(ScR)",
-                set_price: "0",
-            },
-            {
-                set_name: "Legendary Dragon Decks",
-                set_code: "LEDD-ENA34",
-                set_rarity: "Common",
-                set_rarity_code: "(C)",
-                set_price: "1.78",
-            },
-            {
-                set_name: "Magician's Force",
-                set_code: "MFC-105",
-                set_rarity: "Ultra Rare",
-                set_rarity_code: "(UR)",
-                set_price: "47.43",
-            },
-            {
-                set_name: "Millennium Pack",
-                set_code: "MIL1-EN041",
-                set_rarity: "Common",
-                set_rarity_code: "(C)",
-                set_price: "1.74",
-            },
-            {
-                set_name: "Speed Duel: Battle City Box",
-                set_code: "SBCB-EN021",
-                set_rarity: "Common",
-                set_rarity_code: "(C)",
-                set_price: "1.41",
-            },
-            {
-                set_name: "Speed Duel: Battle City Box",
-                set_code: "SBCB-EN021",
-                set_rarity: "Secret Rare",
-                set_rarity_code: "(ScR)",
-                set_price: "13.84",
-            },
-            {
-                set_name: "Speed Duel: Streets of Battle City",
-                set_code: "SBC1-ENA20",
-                set_rarity: "Common",
-                set_rarity_code: "(C)",
-                set_price: "0",
-            },
-            {
-                set_name: "Structure Deck: Yugi Muto",
-                set_code: "SDMY-EN043",
-                set_rarity: "Common",
-                set_rarity_code: "(C)",
-                set_price: "0",
-            },
-            {
-                set_name: "Yugi's Legendary Decks",
-                set_code: "YGLD-ENC41",
-                set_rarity: "Common",
-                set_rarity_code: "(C)",
-                set_price: "2.12",
-            },
-        ],
-        card_images: [
-            {
-                id: 98502113,
-                image_url: "https://images.ygoprodeck.com/images/cards/98502113.jpg",
-                image_url_small: "https://images.ygoprodeck.com/images/cards_small/98502113.jpg",
-                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/98502113.jpg",
-            },
-            {
-                id: 98502114,
-                image_url: "https://images.ygoprodeck.com/images/cards/98502114.jpg",
-                image_url_small: "https://images.ygoprodeck.com/images/cards_small/98502114.jpg",
-                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/98502114.jpg",
-            },
-            {
-                id: 98502115,
-                image_url: "https://images.ygoprodeck.com/images/cards/98502115.jpg",
-                image_url_small: "https://images.ygoprodeck.com/images/cards_small/98502115.jpg",
-                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/98502115.jpg",
-            },
-        ],
-        card_prices: [
-            {
-                cardmarket_price: "0.16",
-                tcgplayer_price: "0.29",
-                ebay_price: "4.95",
-                amazon_price: "1.57",
-                coolstuffinc_price: "0.39",
-            },
-        ],
-    },
-    {
         id: 48680970,
         name: "Eternal Soul",
         type: "Trap Card",
@@ -1013,37 +1154,6 @@ export const yugiohTestCards: YuGiOhCard[] = [
                 ebay_price: "1.99",
                 amazon_price: "1.39",
                 coolstuffinc_price: "0.25",
-            },
-        ],
-    },
-    {
-        id: 100347032,
-        name: "Blue-Eyes Spirit Ultimate Dragon",
-        type: "Synchro Monster",
-        frameType: "synchro",
-        desc: '2+ Tuners + 1 non-Tuner "Blue-Eyes" monster\r\nYour opponent cannot banish cards from your GY. You can only use each of the following effects of "Blue-Eyes Spirit Ultimate Dragon" once per turn. When a card or effect is activated on the field (Quick Effect): You can negate the activation, and if you do, this card gains 1000 ATK until the end of this turn. If this card is destroyed by battle or card effect: You can Special Summon 1 LIGHT Dragon monster from your GY, except "Blue-Eyes Spirit Ultimate Dragon".',
-        atk: 3500,
-        def: 4000,
-        level: 12,
-        race: "Dragon",
-        attribute: "LIGHT",
-        archetype: "Blue-Eyes",
-        ygoprodeck_url: "https://ygoprodeck.com/card/blue-eyes-spirit-ultimate-dragon-14644",
-        card_images: [
-            {
-                id: 100347032,
-                image_url: "https://images.ygoprodeck.com/images/cards/100347032.jpg",
-                image_url_small: "https://images.ygoprodeck.com/images/cards_small/100347032.jpg",
-                image_url_cropped: "https://images.ygoprodeck.com/images/cards_cropped/100347032.jpg",
-            },
-        ],
-        card_prices: [
-            {
-                cardmarket_price: "0.00",
-                tcgplayer_price: "0.00",
-                ebay_price: "0.00",
-                amazon_price: "0.00",
-                coolstuffinc_price: "0.00",
             },
         ],
     },

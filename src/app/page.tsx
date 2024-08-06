@@ -22,7 +22,7 @@ function Page() {
     // if (!yugiohCards.data) return <p>No cards found</p>
     //
     // yugiohCards.data.data.forEach((card, index) => {
-    //     console.log(card.frameType)
+    //     console.log(card)
     // })
 
     return (
