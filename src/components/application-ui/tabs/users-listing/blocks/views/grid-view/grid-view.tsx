@@ -4,7 +4,6 @@ import { Box, Card, Unstable_Grid2 as Grid, TablePagination } from "@mui/materia
 
 import NoDataResults from "src/components/application-ui/tabs/users-listing/blocks/buttons-icons-input-text/no-data-results"
 import GridCard from "src/components/application-ui/tabs/users-listing/blocks/views/grid-view/grid-card"
-import { yugiohTestCards } from "src/models/cards/yu-gi-oh"
 
 type GridViewProps = {
     page: number
@@ -74,7 +73,7 @@ export default function GridView(props: GridViewProps) {
                 {/* Create The Pagination Buttons And Information */}
                 <TablePagination
                     component="div"
-                    count={yugiohTestCards.length}
+                    count={filteredRecords.length}
                     onPageChange={handlePageChange}
                     onRowsPerPageChange={handleLimitChange}
                     page={page}

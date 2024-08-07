@@ -16,7 +16,7 @@ function makeQueryClient() {
     return new QueryClient({
         defaultOptions: {
             queries: {
-                // With SSR, set some default staleTime to avoid refetching immediately on the client
+                // With SSR, set some default staleTime to avoid re-fetching immediately on the client
                 staleTime: 60 * 1000,
             },
         },

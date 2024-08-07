@@ -16,16 +16,8 @@ const API_ROUTES = {
 
     // Yu-Gi-Oh Routes
     CREATE_YUGIOH_CARD: "/yu-gi-oh/create-card",
-    // GET_ALL_YUGIOH_CARDS: `${BACKEND_BASE_URL}/yu-gi-oh`,
-    // TODO: get all cards and store them in supabase database and acess using prisma orm, host images on own server
-    // GET_ALL_YUGIOH_CARDS: "https://db.ygoprodeck.com/api/v7/cardinfo.php",
-    // GET_ALL_YUGIOH_CARDS:
-    //     "https://db.ygoprodeck.com/api/v7/cardinfo.php?name=Number%2038:%20Hope%20Harbinger%20Dragon%20Titanic%20Galaxy&misc=yes",
-    GET_ALL_YUGIOH_CARDS:
-        "https://db.ygoprodeck.com/api/v7/cardinfo.php?attribute=dark&type=Pendulum%20Effect%20Monster",
-    // GET_ALL_YUGIOH_CARDS: "https://db.ygoprodeck.com/api/v7/cardinfo.php?staple=yes",
-    // GET_ALL_YUGIOH_CARDS: "https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=Dark%20Magician",
-    // GET_ALL_YUGIOH_CARDS: "https://db.ygoprodeck.com/api/v7/cardinfo.php?level=4&attribute=water&sort=atk",
+    // TODO: get all cards and store them in supabase database and access using prisma orm, host images on s3 bucket because 2GB is too much for supabase free tier
+    GET_ALL_YUGIOH_CARDS: "http://localhost:3333/yu-gi-oh",
     GET_YUGIOH_CARD_BY_ID: (id: number) => `${BACKEND_BASE_URL}/yu-gi-oh/${id}`,
     UPDATE_YUGIOH_CARD_BY_ID: (id: number) => `${BACKEND_BASE_URL}/yu-gi-oh/update-card/${id}`,
     DELETE_YUGIOH_CARD_BY_ID: (id: number) => `${BACKEND_BASE_URL}/yu-gi-oh/delete-card/${id}`,

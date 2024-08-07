@@ -1,6 +1,8 @@
+"use client"
+
 import { ReactNode } from "react"
 
-import { Stack, SxProps, Theme, Typography, useMediaQuery } from "@mui/material"
+import { Box, Divider, Stack, SxProps, Theme, Typography, useMediaQuery } from "@mui/material"
 import { useTranslation } from "react-i18next"
 
 type PageHeadingProps = {
@@ -8,14 +10,14 @@ type PageHeadingProps = {
     title: string
     description?: string
     topSection?: ReactNode
-    bottomSection?: ReactNode
+    bottomText?: string
     actions?: ReactNode
     background?: string
     sx?: SxProps<Theme>
 }
 
 export default function PageHeading(props: PageHeadingProps) {
-    const { iconBox, title, description, topSection, bottomSection, actions, background, sx } = props
+    const { iconBox, title, description, topSection, bottomText, actions, background, sx } = props
     const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
     const { t } = useTranslation()
 
@@ -52,7 +54,14 @@ export default function PageHeading(props: PageHeadingProps) {
                 </Stack>
                 {actions}
             </Stack>
-            {bottomSection}
+            {bottomText && (
+                <Box my={2}>
+                    <Divider sx={{ width: { xs: 1, md: "75%" }, mb: 2 }} />
+                    <Typography variant="body1" color="textSecondary" sx={{ textAlign: { xs: "center", md: "left" } }}>
+                        {t(bottomText)}
+                    </Typography>
+                </Box>
+            )}
         </Stack>
     )
 }

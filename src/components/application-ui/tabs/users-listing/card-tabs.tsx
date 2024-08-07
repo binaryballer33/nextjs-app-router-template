@@ -1,3 +1,5 @@
+"use client"
+
 import { ChangeEvent, useState } from "react"
 
 import { Box, Stack, Tab, useMediaQuery, useTheme } from "@mui/material"
@@ -14,13 +16,12 @@ import NoView from "src/components/application-ui/tabs/users-listing/blocks/view
 import TableView from "src/components/application-ui/tabs/users-listing/blocks/views/table-view/table-view"
 import ToggleViewIcons from "src/components/application-ui/tabs/users-listing/blocks/views/toggle-view-icons"
 import usePagination from "src/hooks/usePagination"
-import { YuGiOhCard, yugiohTestCards } from "src/models/cards/yu-gi-oh"
 
 import BulkDeleteIconDialog from "./blocks/dialogs/bulk-delete-icon-dialog"
 import GridView from "./blocks/views/grid-view/grid-view"
 
-type CardTabsProps = {
-    tabItems: YuGiOhCard[]
+type CardTabProps = {
+    cards: any[]
 }
 
 type Filters = {
@@ -33,7 +34,7 @@ type Tab = {
     count: number
 }
 
-export default function CardTabs({ tabItems }: CardTabsProps) {
+export default function CardTabs({ cards }: CardTabProps) {
     const [toggleView, setToggleView] = useState<string | null>("grid_view")
     const [selectedItems, setSelectedItems] = useState<string[]>([])
     const [query, setQuery] = useState<string>("")
@@ -46,37 +47,37 @@ export default function CardTabs({ tabItems }: CardTabsProps) {
     const smUp = useMediaQuery(theme.breakpoints.up("sm"))
     const { t } = useTranslation()
 
-    const filteredItems = tabItems // TODO: filter later
+    const filteredItems = cards // TODO: filter later
     const paginatedItems = paginate(filteredItems, page, limit)
     const selectedBulkActions = selectedItems.length > 0
-    const selectedSomeItems = selectedItems.length > 0 && selectedItems.length < tabItems.length
-    const selectedAllItems = selectedItems.length === tabItems.length
+    const selectedSomeItems = selectedItems.length > 0 && selectedItems.length < cards.length
+    const selectedAllItems = selectedItems.length === cards.length
 
     const tabs: Tab[] = [
         {
             value: "all",
             label: t("All cards"),
-            count: tabItems.length,
+            count: cards.length,
         },
         {
             value: "customer",
             label: t("Customers"),
-            count: tabItems.length,
+            count: cards.length,
         },
         {
             value: "admin",
             label: t("Administrators"),
-            count: tabItems.length,
+            count: cards.length,
         },
         {
             value: "subscriber",
             label: t("Subscribers"),
-            count: tabItems.length,
+            count: cards.length,
         },
     ]
 
     const handleSelectAllItems = (event: ChangeEvent<HTMLInputElement>): void => {
-        setSelectedItems(event.target.checked ? tabItems.map((card) => card.id.toString()) : [])
+        setSelectedItems(event.target.checked ? cards.map((card) => card.id.toString()) : [])
     }
 
     const handleSelectOneItems = (_event: ChangeEvent<HTMLInputElement>, itemId: string): void => {
@@ -118,7 +119,7 @@ export default function CardTabs({ tabItems }: CardTabsProps) {
                         <CheckboxSelectAllRecords
                             selectedAllRecords={selectedAllItems}
                             selectedSomeRecords={selectedSomeItems}
-                            paginatedRecords={yugiohTestCards}
+                            paginatedRecords={cards}
                             handleSelectAllRecords={handleSelectAllItems}
                             t={t}
                         />
@@ -191,5 +192,5 @@ export default function CardTabs({ tabItems }: CardTabsProps) {
 }
 
 CardTabs.propTypes = {
-    tabItems: PropTypes.array.isRequired,
+    cards: PropTypes.array.isRequired,
 }

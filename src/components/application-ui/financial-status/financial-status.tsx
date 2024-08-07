@@ -1,3 +1,5 @@
+"use client"
+
 import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone"
 import PieChartTwoToneIcon from "@mui/icons-material/PieChartTwoTone"
 import {
