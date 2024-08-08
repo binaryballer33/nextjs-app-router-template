@@ -7,11 +7,16 @@ import FinancialStatus from "src/components/application-ui/financial-status/fina
 import CardTabs from "src/components/application-ui/tabs/users-listing/card-tabs"
 import Container from "src/components/base/container"
 import PageHeading from "src/components/base/page-heading"
+import YuGiOhCardDynamooseModel from "src/models/dynamoose/yu-gi-oh"
 
 // TODO: add prisma and basic crud operations to the project
 // TODO: make as many components server components as you can in the below code, all of them are top level client components
 export default async function HomePage() {
     const { dehydratedState, yugiohCards = [] } = await prefetchHomePageDataDehydrateState()
+
+    const yugiohCardsFromDynamoose = (await YuGiOhCardDynamooseModel.scan().limit(10).exec()).map((card) =>
+        card.toJSON(),
+    )
 
     return (
         <HydrationBoundary state={dehydratedState}>
@@ -20,7 +25,7 @@ export default async function HomePage() {
             </Container>
 
             <Container>
-                <CardTabs cards={yugiohCards} />
+                <CardTabs cards={yugiohCardsFromDynamoose} />
             </Container>
 
             <Container>
