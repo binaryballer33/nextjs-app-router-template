@@ -20,7 +20,7 @@ export default async function updateSession(request: NextRequest) {
         request,
     })
 
-    const supabase = createServerClient(SUPABASE_URL!, SUPABASE_ANON_KEY!, {
+    const supabase = createServerClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
         cookies: {
             getAll() {
                 return request.cookies.getAll()

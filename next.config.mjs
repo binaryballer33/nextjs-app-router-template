@@ -3,9 +3,8 @@ const nextConfig = {
     images: {
         domains: [
             "raw.githubusercontent.com",
-            "static.wikia.nocookie.net",
-            "static.wikia.nocookie.net",
             "images.ygoprodeck.com",
+            "code-template-next-app-mui-yugioh-images.s3.amazonaws.com",
         ],
     },
 }

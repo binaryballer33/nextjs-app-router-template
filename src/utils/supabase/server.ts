@@ -33,7 +33,7 @@ import { SUPABASE_ANON_KEY, SUPABASE_URL } from "../secrets"
 export default function createClient() {
     const cookieStore = cookies()
 
-    return createServerClient(SUPABASE_URL!, SUPABASE_ANON_KEY!, {
+    return createServerClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
         cookies: {
             getAll() {
                 return cookieStore.getAll()

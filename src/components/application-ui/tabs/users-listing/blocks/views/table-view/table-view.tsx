@@ -84,7 +84,7 @@ export default function TableView(props: TableViewProps) {
                     onRowsPerPageChange={handleLimitChange}
                     page={page}
                     rowsPerPage={limit}
-                    rowsPerPageOptions={[5, 10, 15]}
+                    rowsPerPageOptions={[5, 10, 25, 50, 100]}
                     slotProps={{
                         select: {
                             variant: "outlined",
