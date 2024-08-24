@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id                String       @id // don't default create, get it from auth provider when user signs up
+  id                String       @id // don't default create, get it from auth provider when user signs up with auth provider
   email             String       @unique
   firstName         String
   lastName          String
@@ -23,6 +23,8 @@ model User {
 
 model YugiohCard {
   id             Int          @id
+  SavedCards     SavedCards[] // yugi oh card can be saved in multiple user's saved cards
+  CartItem       CartItem[] // yugi oh card can be in multiple user's cart items
   name           String
   price          Float
   imageUrl       String
@@ -40,8 +42,6 @@ model YugiohCard {
   monster_desc   String?
   scale          Int?
   linkval        Int?
-  SavedCards     SavedCards[] // yugi oh card can be saved in multiple user's saved cards
-  CartItem       CartItem[] // yugi oh card can be in multiple user's cart items
 }
 
 model SavedCards {
@@ -59,8 +59,11 @@ model CartItem {
   userId       String
   User         User       @relation(fields: [userId], references: [id])
   yugiohCardId Int
-  quantity     Int
   yugiohCard   YugiohCard @relation(fields: [yugiohCardId], references: [id]) // 1:M relation to YugiohCard
+  name         String
+  quantity     Int
+  price        Float
+  desc         String
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 }
