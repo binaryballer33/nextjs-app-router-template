@@ -12,6 +12,8 @@ export interface Env {
     NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY?: string
     NEXT_PUBLIC_AWS_REGION?: string
     NEXT_PUBLIC_AWS_DYNAMO_DB_TABLE_NAME?: string
+
+    DATABASE_URL?: string
 }
 
 declare global {

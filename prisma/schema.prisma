@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String       @id // don't default create, get it from auth provider when user signs up
+  email             String       @unique
+  firstName         String
+  lastName          String
+  encryptedPassword String
+  savedCards        SavedCards[] // 1:M relation to Card
+  cartItems         CartItem[] // 1:M relation to CartItem
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@index([id, email, firstName, lastName, createdAt, updatedAt]) // allows for more efficient queries
+}
+
+model YugiohCard {
+  id             Int          @id
+  name           String
+  price          Float
+  imageUrl       String
+  type           String
+  frameType      String
+  desc           String
+  atk            Int?
+  def            Int?
+  level          Int?
+  race           String
+  attribute      String?
+  archetype      String?
+  ygoprodeck_url String
+  pend_desc      String?
+  monster_desc   String?
+  scale          Int?
+  linkval        Int?
+  SavedCards     SavedCards[] // yugi oh card can be saved in multiple user's saved cards
+  CartItem       CartItem[] // yugi oh card can be in multiple user's cart items
+}
+
+model SavedCards {
+  id           String     @id @default(uuid())
+  userId       String
+  user         User       @relation(fields: [userId], references: [id]) // 1:M relation to User
+  yugiohCardId Int
+  yugiohCard   YugiohCard @relation(fields: [yugiohCardId], references: [id]) // 1:M relation to YugiohCard
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model CartItem {
+  id           String     @id @default(uuid())
+  userId       String
+  User         User       @relation(fields: [userId], references: [id])
+  yugiohCardId Int
+  quantity     Int
+  yugiohCard   YugiohCard @relation(fields: [yugiohCardId], references: [id]) // 1:M relation to YugiohCard
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}

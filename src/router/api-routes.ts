@@ -16,7 +16,7 @@ const API_ROUTES = {
 
     // Yu-Gi-Oh Routes
     CREATE_YUGIOH_CARD: "/yu-gi-oh/create-card",
-    // TODO: get all cards and store them in supabase database and access using prisma orm, host images on s3 bucket because 2GB is too much for supabase free tier
+    // TODO: get all cards and store them in supabase database and access using prisma orm
     GET_ALL_YUGIOH_CARDS: "http://localhost:3333/yu-gi-oh",
     GET_YUGIOH_CARD_BY_ID: (id: number) => `${BACKEND_BASE_URL}/yu-gi-oh/${id}`,
     UPDATE_YUGIOH_CARD_BY_ID: (id: number) => `${BACKEND_BASE_URL}/yu-gi-oh/update-card/${id}`,
