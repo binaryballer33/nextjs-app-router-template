@@ -5,6 +5,7 @@
 - React v18 ( Change To v19 Work In Progress )
 - Next v14
 - Typescript v5
+- Node v21.x
 - Eslint ( Linting )
 - Prettier ( Formatting )
 - Husky ( Pre-Commit Validation )
