@@ -1,34 +1,34 @@
 # Next JS App Router Mui Starter Template
 
-## About
+## Template Project Tech Stack
 
-This Template Uses The Following Technologies
-
-- React
-- Next
-- Typescript
-- MUI ( Light And Dark Themes )
-- Redux
-- Redux Toolkit
-- TanStack React Query v5
-- Pagination
-- Prisma
-- Zod
-- React-Hook-Form ( Work In Progress )
-- Multilanguage Support
-- Eslint ( linting )
-- Prettier ( formatting )
-- Husky ( pre-commit validation )
+- React v18 ( Change To v19 Work In Progress )
+- Next v14
+- Typescript v5
+- Eslint ( Linting )
+- Prettier ( Formatting )
+- Husky ( Pre-Commit Validation )
 - Import Sorting With @ianvs/prettier-plugin-sort-imports
-- Fully Desktop / Tablet / Mobile Responsive
+- Redux Toolkit
+- Zod ( Client Side Validation And Data Modelling )
+- React-Hook-Form ( Form Validation )
+- TanStack React Query v5 ( Frontend API Queries )
+- Prisma ( DB CRUD Operations )
+- Pagination
+- Internationalization ( i18next ) - Multilanguage Support
+- Fully Responsive On Desktop, Tablet And Mobile
+- MUI ( Light And Dark Themes, MUI-X )
 - Advance Components
-    - Animate On Scroll ( AOS )
-    - Count Up
-        - Carousels ( Work In Progress )
-        - Accordions
-        - Graphs, Charts
-        - Modals
-        - Tabs
+    - Animations ( AOS But Changing Library To Framer Motion Work In Progress )
+        - Count Up
+    - Carousels ( Work In Progress )
+    - Accordions
+    - Graphs
+    - Charts
+    - Modals & Dialogs
+    - Tabs
+    - Maps ( react-map-gl and mapbox-gl Work In Progress )
+    - Paginated Tables And Grids ( Changing To Mui-Data-Grid Work In Progress )
 
 ## Getting Started With The Package
 
@@ -65,4 +65,4 @@ created in the project unlike mjs or js files
 
 ### Install Dependencies
 
-Run npm install or use script ( Work In Progress )
+```npm install```
