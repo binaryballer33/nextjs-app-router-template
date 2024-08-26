@@ -6,6 +6,7 @@
 - Next v14
 - Typescript v5
 - Node v21.x
+- Docker ( Containerization )
 - Eslint ( Linting )
 - Prettier ( Formatting )
 - Husky ( Pre-Commit Validation )
