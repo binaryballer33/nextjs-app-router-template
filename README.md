@@ -15,7 +15,9 @@
 - Zod ( Client Side Validation And Data Modelling )
 - React-Hook-Form ( Form Validation )
 - TanStack React Query v5 ( Caching, API Queries And Mutations )
-- Prisma ( DB CRUD Operations )
+- Authentication ( Supabase, Will Change To Next Auth Work In Progress )
+- Postgres Database Provider ( Supabase )
+- Prisma ORM ( DB CRUD Operations )
 - Pagination
 - Internationalization ( i18next ) - Multilanguage Support
 - Fully Responsive On Desktop, Tablet And Mobile
