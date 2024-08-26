@@ -82,7 +82,7 @@ export default function TableView(props: TableViewProps) {
                     count={filteredRecords.length}
                     onPageChange={handlePageChange}
                     onRowsPerPageChange={handleLimitChange}
-                    page={page}
+                    page={page} //  MUI TablePagination page starts at 0
                     rowsPerPage={limit}
                     rowsPerPageOptions={[5, 10, 25, 50, 100]}
                     slotProps={{

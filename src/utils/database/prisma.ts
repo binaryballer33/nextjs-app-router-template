@@ -1,12 +1,18 @@
 import { Prisma, PrismaClient } from "@prisma/client"
 import { DefaultArgs } from "@prisma/client/runtime/library"
 
-const prisma: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs> =
-    global.prisma ||
-    new PrismaClient({
-        log: process.env.NODE_ENV === "development" ? ["query", "info", "warn"] : ["error"],
-    })
+const prismaClientSingleton = () => {
+    return new PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>()
+}
 
-if (process.env.NODE_ENV !== "production") global.prisma = prisma
+type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>
+
+const globalForPrisma = globalThis as unknown as {
+    prisma: PrismaClientSingleton | undefined
+}
+
+const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
 
 export default prisma
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma

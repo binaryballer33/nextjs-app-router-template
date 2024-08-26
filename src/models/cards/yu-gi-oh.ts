@@ -46,6 +46,8 @@ const YuGiOhCardBaseSchema = z.object({
     race: z.string(),
     archetype: z.string().optional(),
     ygoprodeck_url: z.string(),
+    imageUrl: z.string(),
+    price: z.number(),
     banlist_info: z
         .object({
             ban_goat: z.string().optional(),

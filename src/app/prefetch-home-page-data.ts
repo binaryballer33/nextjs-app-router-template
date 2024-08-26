@@ -17,12 +17,12 @@ export default async function prefetchHomePageDataDehydrateState() {
 
     // prefetch all yu-gi-oh cards and store the data in the cache
     await queryClient.prefetchQuery({
-        queryKey: QUERY_KEYS.ALL_YU_GI_OH_CARDS,
+        queryKey: QUERY_KEYS.YU_GI_OH_CARDS,
         queryFn: getYuGiOhCards,
     })
 
     // get the yu-gi-oh cards from the cache and return them in case a component needs them
-    const yugiohCards = queryClient.getQueryData<YuGiOhCard[]>(QUERY_KEYS.ALL_YU_GI_OH_CARDS)
+    const yugiohCards = queryClient.getQueryData<YuGiOhCard[]>(QUERY_KEYS.YU_GI_OH_CARDS)
 
     return {
         // return the dehydrated state of the queryClient

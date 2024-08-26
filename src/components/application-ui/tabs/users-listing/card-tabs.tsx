@@ -42,7 +42,7 @@ export default function CardTabs({ cards }: CardTabProps) {
         role: null,
     })
 
-    const { page, limit, handlePageChange, handleLimitChange, paginate } = usePagination()
+    const { page, limit, handlePageChange, handleLimitChange, paginate } = usePagination(0, 5)
     const theme = useTheme()
     const smUp = useMediaQuery(theme.breakpoints.up("sm"))
     const { t } = useTranslation()

@@ -13,8 +13,10 @@ export default function usePagination(initialPage = 0, initialLimit = 10) {
     }
 
     /* call this on the data that you want to paginate in order to get the paginated data */
-    const paginate = (items: any[], page: number, limit: number): any[] => {
-        return items.slice(page * limit, page * limit + limit)
+    const paginate = (records: any[], page: number, limit: number): any[] => {
+        const firstRecord = page * limit
+        const lastRecord = Math.min(page * limit + limit, records.length)
+        return records.slice(firstRecord, lastRecord)
     }
 
     return {

@@ -106,20 +106,13 @@ export default function GridCard(props: GridCard2Props) {
                             mb: { xs: 2, md: 0 },
                         }}
                     >
-                        <Image
-                            src={card.card_images[0].image_url}
-                            alt="image"
-                            width={mdUp ? 180 : 250}
-                            height={250}
-                            priority
-                        />
+                        <Image src={card.imageUrl} alt="image" width={mdUp ? 180 : 250} height={250} priority />
                     </Box>
 
                     {/* Record Type, Description, Archetype, Price */}
                     <Box>
                         {/* Record Description */}
                         <Stack gap={1} justifyContent="space-around" height={250}>
-                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                             <Chip
                                 label={t(card.type)}
                                 sx={{ mb: 2, maxWidth: "50%", bgcolor: getYugiohFrameTypeColor(card.frameType) }}
@@ -162,7 +155,7 @@ export default function GridCard(props: GridCard2Props) {
                     <FlexCenter>
                         {/* Record Price */}
                         <Typography variant="h6" fontWeight={500}>
-                            ${card.card_prices[0].tcgplayer_price}
+                            ${card.price}
                         </Typography>
 
                         <Checkbox

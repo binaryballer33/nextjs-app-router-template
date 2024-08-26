@@ -26,7 +26,7 @@ async function batchCreateYuGiOhCards(cards) {
     console.log("Attempting To Create Yugioh Cards")
 
     cards.forEach((card) => {
-        // delete the data that is not needed for the yugiohCard table, its related tables with weird data I don't have time to fix
+        // delete the data that is not needed for the yugiohCard table, its related tables with weird data I don't have time to fix and put into a relational database
         delete card?.card_sets
         delete card?.card_images
         delete card?.card_prices

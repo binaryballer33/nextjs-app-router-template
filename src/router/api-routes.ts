@@ -1,6 +1,8 @@
 /* API ROUTES FOR REACT QUERY */
 
-const BACKEND_BASE_URL = "http://localhost:3333"
+import { BACKEND_BASE_URL } from "src/utils/secrets"
+
+const YU_GI_OH_API_BASE_URL = `${BACKEND_BASE_URL}/api/yu-gi-oh/`
 
 const API_ROUTES = {
     // User Routes
@@ -15,20 +17,11 @@ const API_ROUTES = {
     },
 
     // Yu-Gi-Oh Routes
-    CREATE_YUGIOH_CARD: "/yu-gi-oh/create-card",
-    // TODO: get all cards and store them in supabase database and access using prisma orm
-    GET_ALL_YUGIOH_CARDS: "http://localhost:3333/yu-gi-oh",
-    GET_YUGIOH_CARD_BY_ID: (id: number) => `${BACKEND_BASE_URL}/yu-gi-oh/${id}`,
-    UPDATE_YUGIOH_CARD_BY_ID: (id: number) => `${BACKEND_BASE_URL}/yu-gi-oh/update-card/${id}`,
-    DELETE_YUGIOH_CARD_BY_ID: (id: number) => `${BACKEND_BASE_URL}/yu-gi-oh/delete-card/${id}`,
-
-    // TODO: routes not working yet, integrating yugioh cards from api first
-    // Pokémon Routes
-    CREATE_POKEMON_CARD: "/pokemon/create-card",
-    GET_ALL_POKEMON_CARDS: `${BACKEND_BASE_URL}/pokemon`,
-    GET_POKEMON_CARD_BY_ID: (id: number) => `${BACKEND_BASE_URL}/pokemon/${id}`,
-    UPDATE_POKEMON_CARD_BY_ID: (id: number) => `${BACKEND_BASE_URL}/pokemon/update-card/${id}`,
-    DELETE_POKEMON_CARD_BY_ID: (id: number) => `${BACKEND_BASE_URL}/pokemon/delete-card/${id}`,
+    CREATE_YUGIOH_CARD: `${YU_GI_OH_API_BASE_URL}post`,
+    GET_YUGIOH_CARDS: `${YU_GI_OH_API_BASE_URL}get/`,
+    GET_YUGIOH_CARD_BY_ID: (id: number) => `${YU_GI_OH_API_BASE_URL}${id}/get`,
+    UPDATE_YUGIOH_CARD_BY_ID: (id: number) => `${YU_GI_OH_API_BASE_URL}${id}/patch`,
+    DELETE_YUGIOH_CARD_BY_ID: (id: number) => `${YU_GI_OH_API_BASE_URL}${id}/delete`,
 }
 
 export default API_ROUTES

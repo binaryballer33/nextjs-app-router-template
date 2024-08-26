@@ -59,13 +59,7 @@ export default function TableRecord(props: TableRowProps) {
                             objectFit: "cover",
                         }}
                     >
-                        <Image
-                            alt={record.name}
-                            src={record.card_images[0].image_url}
-                            height={50}
-                            width={50}
-                            priority
-                        />
+                        <Image alt={record.name} src={record.imageUrl} height={50} width={50} priority />
                     </div>
                 </Box>
             </TableCellWrapper>
@@ -73,7 +67,6 @@ export default function TableRecord(props: TableRowProps) {
             {/* Record Name Column */}
             <TableCellWrapper>
                 <Box>
-                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                     <Link variant="subtitle2" fontWeight={500} href={record.ygoprodeck_url} underline="hover">
                         {record.name}
                     </Link>
@@ -114,7 +107,7 @@ export default function TableRecord(props: TableRowProps) {
 
             {/* Record Price Column */}
             <TableCellWrapper>
-                <Chip color="primary" label={t(`$${record.card_prices[0].tcgplayer_price}`)} />
+                <Chip color="primary" label={t(`$${record.price}`)} />
             </TableCellWrapper>
 
             {/* Record Number Column */}

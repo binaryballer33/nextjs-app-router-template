@@ -76,7 +76,7 @@ export default function GridView(props: GridViewProps) {
                     count={filteredRecords.length}
                     onPageChange={handlePageChange}
                     onRowsPerPageChange={handleLimitChange}
-                    page={page}
+                    page={page} //  MUI TablePagination page starts at 0
                     rowsPerPage={limit}
                     labelRowsPerPage=""
                     rowsPerPageOptions={[5, 10, 25, 50, 100]}
