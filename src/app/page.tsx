@@ -10,6 +10,7 @@ import PageHeading from "src/components/base/page-heading"
 
 // TODO: add prisma and basic crud operations to the project
 // TODO: make as many components server components as you can in the below code, all of them are top level client components
+// TODO: when wanting to show different components that do the same thing, eg Accordions, use Tabs to show the different components, save space on website
 export default async function HomePage() {
     const { dehydratedState, yugiohCards = [] } = await prefetchHomePageDataDehydrateState()
 
