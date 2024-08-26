@@ -27,6 +27,9 @@
     - Charts
     - Modals & Dialogs
     - Tabs
+    - Mobile App Bottom Navigation Bar ( Work In Progress )
+    - Multi-Layouts ( Work In Progress )
+    - Website Keyboard Shortcut Cmd + K ( For Searching Through The Website Work In Progress )
     - Animations ( AOS But Changing Library To Framer Motion Work In Progress )
     - Date Pickers ( Work In Progress )
     - Carousels ( Work In Progress )
