@@ -1,8 +1,9 @@
-import { MouseEvent } from "react"
+import type { MouseEvent } from "react"
 
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded"
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded"
-import { Button, Stack, Theme, useMediaQuery } from "@mui/material"
+import type { Theme } from "@mui/material"
+import { Button, Stack, useMediaQuery } from "@mui/material"
 
 import ButtonIcon from "src/components/base/styles/button-icon"
 

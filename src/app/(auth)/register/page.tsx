@@ -22,7 +22,8 @@ import {
     Typography,
     useTheme,
 } from "@mui/material"
-import { SubmitHandler, useForm } from "react-hook-form"
+import type { SubmitHandler } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
@@ -30,12 +31,8 @@ import register from "src/actions/auth/register"
 import RouterLink from "src/components/base/router-link"
 import useAuth from "src/hooks/use-auth"
 import oAuthProviders from "src/models/forms/common"
-import {
-    defaultValuesRegisterRequest,
-    OAuthProvider,
-    RegisterRequest,
-    RegisterRequestSchema,
-} from "src/models/forms/register"
+import type { OAuthProvider, RegisterRequest } from "src/models/forms/register"
+import { defaultValuesRegisterRequest, RegisterRequestSchema } from "src/models/forms/register"
 import routes from "src/router/navigation-routes"
 import createSupabaseClient from "src/utils/supabase/client"
 

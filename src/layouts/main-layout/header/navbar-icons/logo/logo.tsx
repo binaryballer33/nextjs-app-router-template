@@ -10,7 +10,7 @@ export default function Logo() {
             sx={{
                 position: "relative",
 
-                transition: (theme) => theme.transitions.create(["transform"]),
+                transition: (transitionTheme) => transitionTheme.transitions.create(["transform"]),
                 transform: "scale(1)",
                 "&:hover": {
                     transform: "scale(1.05)",
@@ -38,7 +38,8 @@ export default function Logo() {
                     sx={{
                         ".MuiBadge-badge": {
                             opacity: 0,
-                            transition: (theme) => theme.transitions.create(["opacity", "visibility"]),
+                            transition: (transitionTheme) =>
+                                transitionTheme.transitions.create(["opacity", "visibility"]),
                             visibility: "hidden",
                             fontSize: theme.typography.pxToRem(10),
                             right: -5,

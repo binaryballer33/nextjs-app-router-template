@@ -1,4 +1,5 @@
-import { alpha, Box, SxProps, Theme, Typography, useTheme } from "@mui/material"
+import type { SxProps, Theme } from "@mui/material"
+import { alpha, Box, Typography, useTheme } from "@mui/material"
 import { useTranslation } from "react-i18next"
 
 type PlaceholderBoxProps = {

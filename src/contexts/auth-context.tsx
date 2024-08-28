@@ -1,7 +1,7 @@
 "use client"
 
-/* eslint-disable no-console */
-import { createContext, ReactNode, useCallback, useEffect, useState } from "react"
+import type { ReactNode } from "react"
+import { createContext, useCallback, useEffect, useState } from "react"
 
 import type { User } from "src/models/user"
 import createSupabaseClient from "src/utils/supabase/client"
@@ -59,7 +59,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
     // TODO: come back and figure these issues out
     useEffect(() => {
-        // eslint-disable-next-line no-extra-semi
         ;(async () => {
             await checkSession().catch(() => {})
             setState((prev) => ({ ...prev, isLoading: false }))

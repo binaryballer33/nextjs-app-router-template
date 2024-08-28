@@ -8,7 +8,7 @@ import ChevronRightTwoToneIcon from "@mui/icons-material/ChevronRightTwoTone"
 import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone"
 import { alpha, Box, Button, Paper, Popper } from "@mui/material"
 
-import { NavBarItem } from "src/models/navbar-item"
+import type { NavBarItem } from "src/models/navbar-item"
 
 const isRouteActive = (route?: string, currentPath?: string, subMenu?: NavBarItem[]): boolean | undefined => {
     if (route && route === currentPath) return true

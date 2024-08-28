@@ -1,8 +1,9 @@
 "use client"
 
-import { ChangeEvent, useState } from "react"
+import type { ChangeEvent } from "react"
+import { useState } from "react"
 
-import { Box, Stack, Tab, useMediaQuery, useTheme } from "@mui/material"
+import { Box, Stack, useMediaQuery, useTheme } from "@mui/material"
 import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
 

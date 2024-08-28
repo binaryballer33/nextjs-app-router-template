@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import LockIcon from "@mui/icons-material/Lock"
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded"
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded"
+import type { Theme } from "@mui/material"
 import {
     AppBar,
     Avatar,
@@ -13,7 +14,6 @@ import {
     Stack,
     styled,
     SwipeableDrawer,
-    Theme,
     Tooltip,
     useMediaQuery,
     useTheme,
@@ -229,7 +229,7 @@ export default function Header() {
                         sx: {
                             overflow: "hidden",
                             backgroundColor: neutral[900],
-                            boxShadow: (theme) => theme.shadows[0],
+                            boxShadow: (boxShadowTheme) => boxShadowTheme.shadows[0],
                         },
                     }}
                     variant="temporary"

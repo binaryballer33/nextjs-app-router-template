@@ -4,7 +4,7 @@ import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone"
 import SettingsIcon from "@mui/icons-material/Settings"
 import { useTranslation } from "react-i18next"
 
-import { NavBarItem } from "src/models/navbar-item"
+import type { NavBarItem } from "src/models/navbar-item"
 import routes from "src/router/navigation-routes"
 
 // manage the navbar items, their title, icons and routes from here. This is for both desktop and mobile navbars

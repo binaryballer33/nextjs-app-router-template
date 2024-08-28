@@ -1,6 +1,7 @@
-import { Dispatch, SetStateAction, SyntheticEvent } from "react"
+import type { Dispatch, SetStateAction, SyntheticEvent } from "react"
 
-import { alpha, Chip, Tab, Theme } from "@mui/material"
+import type { Theme } from "@mui/material"
+import { alpha, Chip, Tab as MuiTab } from "@mui/material"
 
 import { TabsShadow } from "src/components/base/styles/tabs"
 
@@ -75,7 +76,7 @@ export default function TabList(props: CreateTabProps) {
         >
             {/* Create The Tabs */}
             {tabs.map((tab) => (
-                <Tab
+                <MuiTab
                     key={tab.value}
                     value={tab.value}
                     label={

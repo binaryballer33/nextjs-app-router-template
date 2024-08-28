@@ -1,6 +1,5 @@
 "use client"
 
-/* eslint-disable no-undef */
 import { useEffect } from "react"
 
 import NProgress from "nprogress"

@@ -1,10 +1,10 @@
-import { ChangeEvent } from "react"
+import type { ChangeEvent } from "react"
 
 import { Box, Card, Table, TableBody, TableContainer, TablePagination } from "@mui/material"
 
 import TableColumns from "src/components/application-ui/tabs/users-listing/blocks/views/table-view/table-columns"
 import TableRecord from "src/components/application-ui/tabs/users-listing/blocks/views/table-view/table-record"
-import { YuGiOhCard } from "src/models/cards/yu-gi-oh"
+import type { YuGiOhCard } from "src/models/cards/yu-gi-oh"
 
 type TableViewProps = {
     page: number

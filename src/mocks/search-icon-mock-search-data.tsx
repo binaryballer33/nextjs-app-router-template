@@ -1,4 +1,4 @@
-import { SvgIconComponent } from "@mui/icons-material"
+import type { SvgIconComponent } from "@mui/icons-material"
 import AccessTimeTwoTone from "@mui/icons-material/AccessTimeTwoTone"
 import ArticleTwoTone from "@mui/icons-material/ArticleTwoTone"
 import AssignmentTwoTone from "@mui/icons-material/AssignmentTwoTone"

@@ -1,9 +1,9 @@
 "use server"
 
-/* eslint-disable no-console */
 import { revalidatePath } from "next/cache"
 
-import { RegisterRequest, RegisterRequestSchema } from "src/models/forms/register"
+import type { RegisterRequest } from "src/models/forms/register"
+import { RegisterRequestSchema } from "src/models/forms/register"
 import createServerClient from "src/utils/supabase/server"
 
 export default async function register(credentials: RegisterRequest) {

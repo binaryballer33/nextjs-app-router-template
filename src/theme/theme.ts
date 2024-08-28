@@ -1,9 +1,11 @@
-import { colors, darken, lighten, NeutralColors, PaletteColorOptions, PaletteMode } from "@mui/material"
+import type { NeutralColors, PaletteColorOptions, PaletteMode } from "@mui/material"
+import { colors, darken, lighten } from "@mui/material"
 import { createTheme, responsiveFontSizes } from "@mui/material/styles"
 
 import { modifiedComponents } from "./modified-components"
 
 declare module "@mui/material/styles" {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     export interface NeutralColors {
         25: string
         50: string

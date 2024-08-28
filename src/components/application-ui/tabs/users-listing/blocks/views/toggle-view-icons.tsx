@@ -1,4 +1,4 @@
-import { Dispatch, MouseEvent, SetStateAction } from "react"
+import type { Dispatch, MouseEvent, SetStateAction } from "react"
 
 import GridViewTwoToneIcon from "@mui/icons-material/GridViewTwoTone"
 import TableRowsTwoToneIcon from "@mui/icons-material/TableRowsTwoTone"

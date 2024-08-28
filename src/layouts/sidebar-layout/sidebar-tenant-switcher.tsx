@@ -1,7 +1,9 @@
-import { MouseEvent, useState } from "react"
+import type { MouseEvent } from "react"
+import { useState } from "react"
 
 import CheckTwoToneIcon from "@mui/icons-material/CheckTwoTone"
 import KeyboardArrowDownTwoToneIcon from "@mui/icons-material/KeyboardArrowDownTwoTone"
+import type { Theme } from "@mui/material"
 import {
     Avatar,
     Badge,
@@ -13,7 +15,6 @@ import {
     Menu,
     MenuItem,
     Stack,
-    Theme,
     Typography,
     useMediaQuery,
     useTheme,
@@ -57,7 +58,7 @@ function TenantSwitcher(props: Props) {
                 lineHeight={1.2}
                 sx={{
                     pb: 0.2,
-                    color: (theme) => theme.palette.text.secondary,
+                    color: (colorTheme) => colorTheme.palette.text.secondary,
                 }}
             >
                 {currentTenant.name}
@@ -67,7 +68,7 @@ function TenantSwitcher(props: Props) {
                 noWrap
                 lineHeight={1.2}
                 sx={{
-                    color: (theme) => theme.palette.text.secondary,
+                    color: (colorTheme) => colorTheme.palette.text.secondary,
                 }}
             >
                 {currentTenant.description}
@@ -87,7 +88,7 @@ function TenantSwitcher(props: Props) {
                     display: "flex",
                     ".MuiBadge-badge": {
                         animation: "pulse 1s infinite",
-                        transition: (theme) => theme.transitions.create(["all"]),
+                        transition: (transitionTheme) => transitionTheme.transitions.create(["all"]),
                     },
                 }}
                 variant="dot"
@@ -154,7 +155,7 @@ function TenantSwitcher(props: Props) {
                             selected={currentTenant.id === tenant.id}
                             sx={{
                                 pl: 1,
-                                borderRadius: (theme) => `${theme.shape.borderRadius}px`,
+                                borderRadius: (borderRadiusTheme) => `${borderRadiusTheme.shape.borderRadius}px`,
                             }}
                             key={tenant.id}
                             onClick={() => handleTenantSelect(tenant)}

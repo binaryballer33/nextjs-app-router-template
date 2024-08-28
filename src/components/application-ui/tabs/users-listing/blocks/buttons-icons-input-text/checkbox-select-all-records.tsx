@@ -1,8 +1,8 @@
-import { ChangeEvent } from "react"
+import type { ChangeEvent } from "react"
 
 import { Checkbox, Tooltip } from "@mui/material"
 
-type CheckboxSelectAllRecords = {
+type CheckboxSelectAllRecordsProps = {
     selectedAllRecords: boolean
     selectedSomeRecords: boolean
     paginatedRecords: any[]
@@ -10,7 +10,7 @@ type CheckboxSelectAllRecords = {
     t: (token: string) => string
 }
 
-export default function CheckboxSelectAllRecords(props: CheckboxSelectAllRecords) {
+export default function CheckboxSelectAllRecords(props: CheckboxSelectAllRecordsProps) {
     const { selectedAllRecords, selectedSomeRecords, paginatedRecords, handleSelectAllRecords, t } = props
     return (
         <Tooltip arrow placement="top" title={t("Select all users")}>

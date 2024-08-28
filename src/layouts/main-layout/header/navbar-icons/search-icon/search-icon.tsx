@@ -1,4 +1,5 @@
-import { ChangeEvent, useState } from "react"
+import type { ChangeEvent } from "react"
+import { useState } from "react"
 
 import ChevronRightTwoToneIcon from "@mui/icons-material/ChevronRightTwoTone"
 import CloseIcon from "@mui/icons-material/Close"
@@ -6,6 +7,7 @@ import QueryStatsTwoToneIcon from "@mui/icons-material/QueryStatsTwoTone"
 import SearchOffTwoToneIcon from "@mui/icons-material/SearchOffTwoTone"
 import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone"
 import Masonry from "@mui/lab/Masonry"
+import type { SvgIconTypeMap } from "@mui/material"
 import {
     Box,
     Card,
@@ -26,18 +28,19 @@ import {
     ListSubheader,
     OutlinedInput,
     Stack,
-    SvgIconTypeMap,
     Typography,
     useMediaQuery,
     useTheme,
 } from "@mui/material"
-import { OverridableComponent } from "@mui/material/OverridableComponent"
+import type { OverridableComponent } from "@mui/material/OverridableComponent"
 import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
 
 import { AvatarState } from "src/components/base/styles/avatar"
-import { Category, dummyData, iconMapping, Item } from "src/mocks/search-icon-mock-search-data"
-import { neutral, PaletteColorKey } from "src/theme/theme"
+import type { Category, Item } from "src/mocks/search-icon-mock-search-data"
+import { dummyData, iconMapping } from "src/mocks/search-icon-mock-search-data"
+import type { PaletteColorKey } from "src/theme/theme"
+import { neutral } from "src/theme/theme"
 
 type BasicSpotlightSearchProps = {
     onClose?: () => void

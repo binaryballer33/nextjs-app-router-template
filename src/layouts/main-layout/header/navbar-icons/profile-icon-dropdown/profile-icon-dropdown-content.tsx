@@ -23,7 +23,7 @@ type Origin = {
 
 type ProfileDropdownProps = {
     anchorEl: null | Element
-    onClose?: () => void
+    onClose: () => void
     open?: boolean
     anchorOrigin?: Origin
     transformOrigin?: Origin
@@ -39,13 +39,13 @@ export default function ProfileIconDropdown(props: ProfileDropdownProps) {
     const { t } = useTranslation()
 
     const handleSignOut = useCallback(async (): Promise<void> => {
-        onClose && onClose() // close the profile dropdown
+        onClose() // close the profile dropdown
         await signOut() // sign out the user with supabase
         await checkSession() // refresh the auth state to reflect the user being signed out
     }, [checkSession, onClose])
 
     const handleNavItemClick = (route: string): void => {
-        onClose && onClose()
+        onClose()
         router.push(route)
     }
 
@@ -92,8 +92,10 @@ export default function ProfileIconDropdown(props: ProfileDropdownProps) {
         >
             <Box
                 sx={{
-                    backgroundColor: (theme) =>
-                        theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.02) : neutral[25],
+                    backgroundColor: (bgColortheme) =>
+                        bgColortheme.palette.mode === "dark"
+                            ? alpha(bgColortheme.palette.neutral[25], 0.02)
+                            : neutral[25],
                     p: 1.5,
                     overflow: "hidden",
                 }}

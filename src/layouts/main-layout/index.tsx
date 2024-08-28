@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 
 import { Box } from "@mui/material"
 import PropTypes from "prop-types"

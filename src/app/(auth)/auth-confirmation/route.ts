@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { NextResponse, type NextRequest } from "next/server"
 
 import { type EmailOtpType } from "@supabase/supabase-js"

@@ -1,4 +1,5 @@
-import { alpha, Avatar, AvatarProps, PaletteColor, styled, Theme } from "@mui/material"
+import type { AvatarProps, PaletteColor, Theme } from "@mui/material"
+import { alpha, Avatar, styled } from "@mui/material"
 
 type PaletteColorKey = "success" | "error" | "warning" | "info" | "primary" | "secondary"
 

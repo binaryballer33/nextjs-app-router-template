@@ -1,6 +1,7 @@
 "use client"
 
-import { SyntheticEvent, useState } from "react"
+import type { SyntheticEvent } from "react"
+import { useState } from "react"
 
 import DownloadIcon from "@mui/icons-material/Download"
 import KeyboardArrowRightTwoToneIcon from "@mui/icons-material/KeyboardArrowRightTwoTone"

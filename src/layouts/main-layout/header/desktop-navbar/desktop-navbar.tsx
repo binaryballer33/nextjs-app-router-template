@@ -1,13 +1,8 @@
 import { Box, Stack } from "@mui/material"
 
-import { NavBarItem } from "src/models/navbar-item"
+import type { NavBarItem } from "src/models/navbar-item"
 
 import DesktopNavBarItem from "./desktop-navbar-item"
-
-const isRouteActive = (route?: string, currentPath?: string, subMenu?: NavBarItem[]): boolean | undefined => {
-    if (route && route === currentPath) return true
-    return subMenu?.some((item) => item.route && isRouteActive(item.route, currentPath, item.subMenu))
-}
 
 type DesktopNavBarProps = {
     navbarItems?: NavBarItem[]

@@ -16,11 +16,11 @@ import {
     Tooltip,
     Typography,
 } from "@mui/material"
-import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form"
+import type { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import ButtonIcon from "src/components/base/styles/button-icon"
-import { RegisterRequest } from "src/models/forms/register"
+import type { RegisterRequest } from "src/models/forms/register"
 
 // set the input type based on the inputName and showPassword state for the password fields
 function getInputType(inputName: keyof RegisterRequest, isVisible: boolean) {

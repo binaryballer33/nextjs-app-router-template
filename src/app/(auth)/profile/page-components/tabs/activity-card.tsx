@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import CommentTwoToneIcon from "@mui/icons-material/CommentTwoTone"
 import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone"
 import ShareTwoToneIcon from "@mui/icons-material/ShareTwoTone"

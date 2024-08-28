@@ -46,9 +46,9 @@ function BulkDeleteIconDialog() {
 
         //  Custom Card Toast Notification
         toast.custom(
-            (t) => (
+            (message) => (
                 //  Toast Component
-                <Card elevation={21} className={`${t.visible ? "animate-enter" : "animate-leave"}`}>
+                <Card elevation={21} className={`${message.visible ? "animate-enter" : "animate-leave"}`}>
                     <Box
                         sx={{
                             position: "relative",
@@ -62,11 +62,11 @@ function BulkDeleteIconDialog() {
                             sx={{
                                 p: 0.2,
                                 position: "absolute",
-                                right: (theme) => theme.spacing(1),
-                                top: (theme) => theme.spacing(1),
+                                right: (prTheme) => prTheme.spacing(1),
+                                top: (ptTheme) => ptTheme.spacing(1),
                             }}
                             size="small"
-                            onClick={() => toast.dismiss(t.id)}
+                            onClick={() => toast.dismiss(message.id)}
                         >
                             <CloseRoundedIcon fontSize="inherit" />
                         </IconButton>
@@ -80,7 +80,7 @@ function BulkDeleteIconDialog() {
                                 transition: "none",
                                 alignItems: "flex-start",
                                 "&:hover": {
-                                    backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.01),
+                                    backgroundColor: (bgColorTheme) => alpha(bgColorTheme.palette.primary.main, 0.01),
                                 },
                             }}
                         >
@@ -115,7 +115,7 @@ function BulkDeleteIconDialog() {
                                             color: "primary.main",
                                         }}
                                         startIcon={<ReplayRoundedIcon fontSize="small" />}
-                                        onClick={() => toast.dismiss(t.id)}
+                                        onClick={() => toast.dismiss(message.id)}
                                     >
                                         Undo
                                     </Button>
@@ -177,8 +177,10 @@ function BulkDeleteIconDialog() {
                 </DialogContent>
                 <DialogActions
                     sx={{
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.02) : "neutral.25",
+                        backgroundColor: (bgColorTheme) =>
+                            bgColorTheme.palette.mode === "dark"
+                                ? alpha(bgColorTheme.palette.neutral[25], 0.02)
+                                : "neutral.25",
                         flexDirection: { xs: "column-reverse", sm: "row" },
 
                         "& > :not(:first-of-type)": {

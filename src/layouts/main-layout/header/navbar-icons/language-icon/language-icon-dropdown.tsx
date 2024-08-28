@@ -1,4 +1,5 @@
-import { MouseEvent, useCallback, useState } from "react"
+import type { MouseEvent } from "react"
+import { useCallback, useState } from "react"
 
 import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from "@mui/material"
 import ReactCountryFlag from "react-country-flag"

@@ -2,6 +2,7 @@
 import ArrowForwardTwoToneIcon from "@mui/icons-material/ArrowForwardTwoTone"
 import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone"
 import UploadTwoToneIcon from "@mui/icons-material/UploadTwoTone"
+import type { Theme } from "@mui/material"
 import {
     Avatar,
     Box,
@@ -13,7 +14,6 @@ import {
     IconButton,
     Stack,
     styled,
-    Theme,
     Typography,
     useMediaQuery,
 } from "@mui/material"
@@ -22,7 +22,7 @@ import { useTranslation } from "react-i18next"
 
 import ButtonIcon from "src/components/base/styles/button-icon"
 import { VisuallyHiddenInputNative } from "src/components/base/styles/visually-hidden"
-import { User } from "src/mocks/user-mocks"
+import type { User } from "src/mocks/user-mocks"
 
 const AvatarWrapper = styled(Card)(
     ({ theme }) => `

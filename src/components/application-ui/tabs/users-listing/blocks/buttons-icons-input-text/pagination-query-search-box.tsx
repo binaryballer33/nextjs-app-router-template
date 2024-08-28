@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction } from "react"
+import type { ChangeEvent, Dispatch, SetStateAction } from "react"
 
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded"
 import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone"

@@ -1,4 +1,4 @@
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 
 import { ExitToApp, Settings, ShoppingCart } from "@mui/icons-material"
 import { alpha, IconButton, Stack, useTheme } from "@mui/material"

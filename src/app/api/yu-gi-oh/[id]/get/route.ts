@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
+import { NextResponse } from "next/server"
 
 import getYuGiOhCardByIdQuery from "src/actions/yu-gi-oh/queries/get-yu-gi-oh-card-by-id-query"
 

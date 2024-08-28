@@ -2,24 +2,15 @@ import { useState } from "react"
 
 import KeyboardArrowLeftTwoToneIcon from "@mui/icons-material/KeyboardArrowLeftTwoTone"
 import KeyboardArrowRightTwoToneIcon from "@mui/icons-material/KeyboardArrowRightTwoTone"
-import {
-    Box,
-    Drawer,
-    IconButton,
-    styled,
-    SwipeableDrawer,
-    Theme,
-    Typography,
-    useMediaQuery,
-    useTheme,
-} from "@mui/material"
+import type { Theme } from "@mui/material"
+import { Box, Drawer, IconButton, styled, SwipeableDrawer, Typography, useMediaQuery, useTheme } from "@mui/material"
 import PropTypes from "prop-types"
 
 import ActivityTotals from "src/app/(auth)/profile/page-components/activity-totals"
 import Scrollbar from "src/components/base/scrollbar"
 import { useSidebarContext } from "src/contexts/sidebar-context"
 import useAuth from "src/hooks/use-auth"
-import { NavBarItem } from "src/models/navbar-item"
+import type { NavBarItem } from "src/models/navbar-item"
 import { SIDEBAR_WIDTH_COLLAPSED, SIDEBAR_WIDTH_PROFILE_PAGE } from "src/theme/utils"
 
 import SidebarFooter from "./sidebar-footer"
@@ -44,8 +35,8 @@ type SidebarProps = {
 export default function Sidebar(props: SidebarProps) {
     const { onClose, onOpen, navbarItems, open, ...other } = props
     const theme = useTheme()
-    const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("lg"))
-    const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
+    const lgUp = useMediaQuery((desktopTheme: Theme) => desktopTheme.breakpoints.up("lg"))
+    const mdUp = useMediaQuery((tabletTheme: Theme) => tabletTheme.breakpoints.up("md"))
     const { isSidebarCollapsed, isSidebarHovered, toggleSidebarCollapsed, toggleSidebarHover } = useSidebarContext()
     const { user } = useAuth()
 
@@ -94,9 +85,9 @@ export default function Sidebar(props: SidebarProps) {
         return SIDEBAR_WIDTH_PROFILE_PAGE
     }
 
-    const getBoxShadow = (theme: Theme) => {
-        if (isSidebarCollapsed) return isSidebarHovered ? theme.shadows[24] : theme.shadows[0]
-        return theme.shadows[0]
+    const getBoxShadow = (boxShadowTheme: Theme) => {
+        if (isSidebarCollapsed) return isSidebarHovered ? boxShadowTheme.shadows[24] : boxShadowTheme.shadows[0]
+        return boxShadowTheme.shadows[0]
     }
 
     const getJustifyContent = () => {
@@ -232,11 +223,11 @@ export default function Sidebar(props: SidebarProps) {
                         borderRight: `1px solid ${theme.palette.divider}`,
                         backgroundColor: theme.palette.background.default,
                         width: getSidebarWidthForDrawer(),
-                        boxShadow: (theme) => getBoxShadow(theme),
+                        boxShadow: (boxShadowTheme) => getBoxShadow(boxShadowTheme),
 
                         position: isSidebarCollapsed ? "sticky" : "sticky",
                         height: "100dvh",
-                        transition: (theme) => theme.transitions.create(["width", "box-shadow"]),
+                        transition: (transitionTheme) => transitionTheme.transitions.create(["width", "box-shadow"]),
                     },
                 }}
                 variant="persistent"
@@ -259,7 +250,7 @@ export default function Sidebar(props: SidebarProps) {
                 sx: {
                     backgroundColor: theme.palette.background.default,
                     overflow: "hidden",
-                    boxShadow: (theme) => theme.shadows[24],
+                    boxShadow: (boxShadowTheme) => boxShadowTheme.shadows[24],
                 },
             }}
             variant="temporary"

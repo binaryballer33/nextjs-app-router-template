@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react"
+import type { ChangeEvent } from "react"
 
 import { Box, Card, Unstable_Grid2 as Grid, TablePagination } from "@mui/material"
 

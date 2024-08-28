@@ -15,11 +15,11 @@ import {
     Tooltip,
     Typography,
 } from "@mui/material"
-import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form"
+import type { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import ButtonIcon from "src/components/base/styles/button-icon"
-import { LoginRequest } from "src/models/forms/login"
+import type { LoginRequest } from "src/models/forms/login"
 
 type LoginFormInputProps = {
     register: UseFormRegister<LoginRequest>
@@ -41,9 +41,9 @@ function LoginFormInput(props: LoginFormInputProps) {
     // make the first letter of the inputName uppercase
     const inputNameForTypography = inputName.charAt(0).toUpperCase() + inputName.slice(1)
 
-    const getType = (inputName: keyof LoginRequest) => {
-        if (inputName === "password") return showPassword ? "text" : "password"
-        if (inputName === "email") return "email"
+    const getType = (typeInputName: keyof LoginRequest) => {
+        if (typeInputName === "password") return showPassword ? "text" : "password"
+        if (typeInputName === "email") return "email"
         return "text"
     }
 

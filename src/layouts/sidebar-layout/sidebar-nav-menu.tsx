@@ -3,6 +3,7 @@ import { useState } from "react"
 import { usePathname } from "next/navigation"
 
 import KeyboardArrowRightTwoToneIcon from "@mui/icons-material/KeyboardArrowRightTwoTone"
+import type { ListProps, Theme } from "@mui/material"
 import {
     Box,
     Collapse,
@@ -10,16 +11,14 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
-    ListProps,
     ListSubheader,
     styled,
-    Theme,
     useMediaQuery,
 } from "@mui/material"
 import PropTypes from "prop-types"
 
 import RouterLink from "src/components/base/router-link"
-import { NavBarItem } from "src/models/navbar-item"
+import type { NavBarItem } from "src/models/navbar-item"
 
 type NavItemProps = {
     item: NavBarItem

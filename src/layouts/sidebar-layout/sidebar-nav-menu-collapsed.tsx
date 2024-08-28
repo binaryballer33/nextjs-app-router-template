@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { Box, List, ListItemIcon } from "@mui/material"
 
 import RouterLink from "src/components/base/router-link"
-import { NavBarItem } from "src/models/navbar-item"
+import type { NavBarItem } from "src/models/navbar-item"
 
 import { ListItemButtonWrapper } from "./sidebar-nav-menu"
 

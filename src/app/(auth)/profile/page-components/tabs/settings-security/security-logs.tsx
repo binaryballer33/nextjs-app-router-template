@@ -1,4 +1,5 @@
-import { ChangeEvent, MouseEvent, useState } from "react"
+import type { ChangeEvent, MouseEvent } from "react"
+import { useState } from "react"
 
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone"
 import {

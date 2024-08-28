@@ -1,9 +1,10 @@
-import { Box, List, ListProps, ListSubheader, styled, Theme, useMediaQuery } from "@mui/material"
+import type { ListProps, Theme } from "@mui/material"
+import { Box, List, ListSubheader, styled, useMediaQuery } from "@mui/material"
 import PropTypes from "prop-types"
 
 import Scrollbar from "src/components/base/scrollbar"
 import Logo from "src/layouts/main-layout/header/navbar-icons/logo/logo"
-import { NavBarItem } from "src/models/navbar-item"
+import type { NavBarItem } from "src/models/navbar-item"
 import { neutral } from "src/theme/theme"
 import { SIDEBAR_WIDTH } from "src/theme/utils"
 

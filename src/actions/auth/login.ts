@@ -1,10 +1,10 @@
 "use server"
 
-/* eslint-disable no-console */
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
-import { LoginRequest, LoginRequestSchema } from "src/models/forms/login"
+import type { LoginRequest } from "src/models/forms/login"
+import { LoginRequestSchema } from "src/models/forms/login"
 import createServerClient from "src/utils/supabase/server"
 
 export default async function login(credentials: LoginRequest) {

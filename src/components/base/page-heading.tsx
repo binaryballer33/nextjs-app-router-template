@@ -1,8 +1,9 @@
 "use client"
 
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 
-import { Box, Divider, Stack, SxProps, Theme, Typography, useMediaQuery } from "@mui/material"
+import type { SxProps, Theme } from "@mui/material"
+import { Box, Divider, Stack, Typography, useMediaQuery } from "@mui/material"
 import { useTranslation } from "react-i18next"
 
 type PageHeadingProps = {

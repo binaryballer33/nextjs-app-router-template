@@ -1,6 +1,7 @@
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 
-import { alpha, Button, ButtonProps, lighten, styled, Tab, TabProps, Theme } from "@mui/material"
+import type { ButtonProps, TabProps, Theme } from "@mui/material"
+import { alpha, Button, lighten, styled, Tab } from "@mui/material"
 
 type BaseButtonTabProps = {
     componentType: "tab" | "button"

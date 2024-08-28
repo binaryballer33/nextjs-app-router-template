@@ -3,20 +3,11 @@ import { useState } from "react"
 import { usePathname } from "next/navigation"
 
 import KeyboardArrowRightTwoToneIcon from "@mui/icons-material/KeyboardArrowRightTwoTone"
-import {
-    alpha,
-    Box,
-    Collapse,
-    List,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    ListProps,
-    styled,
-} from "@mui/material"
+import type { ListProps } from "@mui/material"
+import { alpha, Box, Collapse, List, ListItemButton, ListItemIcon, ListItemText, styled } from "@mui/material"
 
 import RouterLink from "src/components/base/router-link"
-import { NavBarItem } from "src/models/navbar-item"
+import type { NavBarItem } from "src/models/navbar-item"
 import { neutral } from "src/theme/theme"
 
 type NavBarItemProps = {

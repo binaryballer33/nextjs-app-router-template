@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction } from "react"
+import type { ChangeEvent, Dispatch, SetStateAction } from "react"
 
 import { MenuItem, Select } from "@mui/material"
 

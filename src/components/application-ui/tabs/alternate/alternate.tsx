@@ -1,5 +1,7 @@
-import { ReactNode, SyntheticEvent, useState } from "react"
+import type { ReactNode, SyntheticEvent } from "react"
+import { useState } from "react"
 
+import type { SelectChangeEvent } from "@mui/material"
 import {
     alpha,
     Box,
@@ -8,7 +10,6 @@ import {
     Divider,
     MenuItem,
     Select,
-    SelectChangeEvent,
     Stack,
     Tab,
     useMediaQuery,
@@ -68,8 +69,10 @@ export default function AlternateTabs() {
                 <Divider />
                 <CardHeader
                     sx={{
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.02) : "neutral.25",
+                        backgroundColor: (bgColorTheme) =>
+                            bgColorTheme.palette.mode === "dark"
+                                ? alpha(bgColorTheme.palette.neutral[25], 0.02)
+                                : "neutral.25",
                         ".MuiCardHeader-content": {
                             overflow: "visible",
                         },

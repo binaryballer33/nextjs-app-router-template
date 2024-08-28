@@ -1,12 +1,14 @@
 "use client"
 
-import { ChangeEvent, useState } from "react"
+import type { ChangeEvent } from "react"
+import { useState } from "react"
 
 import { Box, Container, Unstable_Grid2 as Grid, MenuItem, Select, Tab, useMediaQuery, useTheme } from "@mui/material"
 import { useTranslation } from "react-i18next"
 
 import { TabsPills } from "src/components/base/styles/tabs"
-import { mockUser, User } from "src/mocks/user-mocks"
+import type { User } from "src/mocks/user-mocks"
+import { mockUser } from "src/mocks/user-mocks"
 
 import ProfileCover from "./page-components/profile-cover"
 import ActivityCard from "./page-components/tabs/activity-card"

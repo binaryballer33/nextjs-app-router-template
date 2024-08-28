@@ -312,8 +312,10 @@ function FinancialStatus() {
                         p={{ xs: 2, sm: 3 }}
                         sx={{
                             textAlign: "center",
-                            backgroundColor: (theme) =>
-                                theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.02) : neutral[25],
+                            backgroundColor: (bgColorTheme) =>
+                                bgColorTheme.palette.mode === "dark"
+                                    ? alpha(bgColorTheme.palette.neutral[25], 0.02)
+                                    : neutral[25],
                         }}
                     >
                         <Button

@@ -1,6 +1,7 @@
 import Image from "next/image"
 
 import MoreVertTwoToneIcon from "@mui/icons-material/MoreVertTwoTone"
+import type { Theme } from "@mui/material"
 import {
     Box,
     Card,
@@ -11,14 +12,13 @@ import {
     Link,
     Stack,
     styled,
-    Theme,
     Typography,
     useMediaQuery,
 } from "@mui/material"
 import clsx from "clsx"
 
 import FlexCenter from "src/components/base/flex-box/flex-center"
-import { YuGiOhCard } from "src/models/cards/yu-gi-oh"
+import type { YuGiOhCard } from "src/models/cards/yu-gi-oh"
 import getYugiohFrameTypeColor from "src/utils/helper-functions/getYuGiOhFrameTypeColor"
 
 export const CardWrapper = styled(Card)(

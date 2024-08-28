@@ -1,4 +1,5 @@
-import { ChangeEvent, MouseEvent, useState } from "react"
+import type { ChangeEvent, MouseEvent } from "react"
+import { useState } from "react"
 
 import { Card, CardActions, CardContent, Divider, TablePagination, Typography } from "@mui/material"
 
