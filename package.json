@@ -19,7 +19,8 @@
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --check \"**/*.{js,jsx,ts,tsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{js,jsx,ts,tsx,mdx}\" --cache",
-    "prepare": "husky"
+    "prepare": "husky",
+    "seed-database": "tsx prisma/seed-database.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",

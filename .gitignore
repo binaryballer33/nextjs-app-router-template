@@ -40,3 +40,5 @@ next-env.d.ts
 
 # local garbage test code
 delete-later/
+dont-commit/
+ignore-for-now/
