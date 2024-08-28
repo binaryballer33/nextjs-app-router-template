@@ -1,5 +1,2 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 npm run format # format the code with prettier
 npm run lint # lint the code with eslint, then commit
