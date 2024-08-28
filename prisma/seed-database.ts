@@ -1,6 +1,7 @@
 /* eslint-disable */
 import fs from "fs"
 
+import { YuGiOhCard } from "src/models/cards/yu-gi-oh"
 import { CartItemWithoutId } from "src/models/cart-item"
 import { SavedItemWithoutId } from "src/models/saved-item"
 import prisma from "src/utils/database/prisma"
@@ -22,15 +23,16 @@ async function dropTables() {
     console.log("Dropped Tables Successfully\n")
 }
 
-async function batchCreateYuGiOhCards(cards) {
+async function batchCreateYuGiOhCards(cards: YuGiOhCard[]) {
     console.log("Attempting To Create Yugioh Cards")
 
     cards.forEach((card) => {
-        // delete the data that is not needed for the yugiohCard table, its related tables with weird data I don't have time to fix and put into a relational database
+        // delete the data that is not needed for the yugiohCard table, these related tables have inconsistent data in my yu-gi-oh-cards.json file and I don't have time to fix and put into a relational database
         delete card?.card_sets
         delete card?.card_images
         delete card?.card_prices
-        delete card?.linkmarkers
+        // @ts-ignore
+        delete card?.linkmarkers // TODO: figure out how to get typescript to see that this field could exist on this card
         delete card?.banlist_info
         delete card?.misc_info
     })
@@ -86,7 +88,7 @@ async function createUsersWithSupabaseUserId() {
     }
 }
 
-async function createRandomSavedCards(userId, amountOfRandomSavedCards = 10) {
+async function createRandomSavedCards(userId: string, amountOfRandomSavedCards = 10) {
     console.log("Attempting To Create Random Saved Cards")
 
     const randomCards: SavedItemWithoutId[] = Array(amountOfRandomSavedCards)

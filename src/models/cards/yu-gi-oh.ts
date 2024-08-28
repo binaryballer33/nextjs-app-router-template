@@ -56,8 +56,8 @@ const YuGiOhCardBaseSchema = z.object({
         })
         .optional(),
     card_sets: z.array(CardSetSchema).optional(),
-    card_images: z.array(CardImageSchema),
-    card_prices: z.array(CardPriceSchema),
+    card_images: z.array(CardImageSchema).optional(),
+    card_prices: z.array(CardPriceSchema).optional(),
     misc_info: z.array(MiscInfoSchema).optional(),
 })
 

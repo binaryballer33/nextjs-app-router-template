@@ -13,15 +13,15 @@ export async function GET(request: NextRequest) {
         const yugiohCards = await getYuGiOhCardsQuery(page, limit)
 
         return NextResponse.json({
-            cards: yugiohCards,
             status: 200,
             message: `Successfully Fetched All ${yugiohCards.length} Yu-Gi-Oh Cards`,
+            cards: yugiohCards,
         })
     } catch (error) {
         return NextResponse.json({
-            cards: [],
             status: 500,
             message: `Error, Failed To Fetch All Yu-Gi-Oh Cards: ${error}`,
+            cards: [],
         })
     }
 }
