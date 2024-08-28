@@ -14,8 +14,8 @@ export default async function getYuGiOhCardsQuery(page = 0, limit = 50) {
             skip: skipPreviousRecords,
         })
     } catch (error) {
-        console.error("Error Fetching Yu-Gi-Oh Cards", error)
-        return []
+        console.error(`Error Fetching Yu-Gi-Oh Cards: ${error}`)
+        return null
     } finally {
         prisma.$disconnect()
     }

@@ -10,8 +10,8 @@ export default async function getYuGiOhCardByIdQuery(id: number) {
             },
         })
     } catch (error) {
-        console.error("Error Fetching Yu-Gi-Oh Card", error)
-        return {}
+        console.error(`Error Fetching Yu-Gi-Oh Card With Id ${id}: ${error}`)
+        return null
     } finally {
         prisma.$disconnect()
     }

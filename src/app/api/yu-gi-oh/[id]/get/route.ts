@@ -2,6 +2,7 @@ import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 
 import getYuGiOhCardByIdQuery from "src/actions/yu-gi-oh/queries/get-yu-gi-oh-card-by-id-query"
+import type { ServerResponse } from "src/models/server-response"
 
 type ContextProps = {
     params: {
@@ -13,18 +14,19 @@ type ContextProps = {
 export async function GET(_request: NextRequest, { params }: ContextProps) {
     const id = parseInt(params.id, 10)
 
-    try {
-        const yugiohCard = await getYuGiOhCardByIdQuery(id)
+    const yugiohCard = await getYuGiOhCardByIdQuery(id)
+
+    if (yugiohCard) {
         return NextResponse.json({
-            card: yugiohCard,
             status: 200,
-            message: "Successfully fetched all yu-gi-oh cards",
-        })
-    } catch (error) {
-        return NextResponse.json({
-            card: [],
-            status: 500,
-            message: `Error, Failed to fetch all yu-gi-oh cards: ${error}`,
-        })
+            message: `Successfully Fetched Yu-Gi-Oh Card With Id: ${id}`,
+            card: yugiohCard,
+        } as ServerResponse)
     }
+
+    return NextResponse.json({
+        status: 500,
+        message: `Error, Failed To Fetch Yu-Gi-Oh Card With Id: ${id}`,
+        card: null,
+    } as ServerResponse)
 }
