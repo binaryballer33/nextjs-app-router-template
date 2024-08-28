@@ -66,7 +66,7 @@ NEXT_PUBLIC_AWS_DYNAMO_DB_TABLE_NAME
 
 ### Seeding The Database
 
-Make Sure You Have TSX installed, Use TSX to run seed file, it will allow you to use other neccessary dependencies
+Make Sure You Have TSX installed, Use TSX to run seed file, it will allow you to use other necessary dependencies
 created in the project unlike mjs or js files
 
 `npm install -g tsx`
