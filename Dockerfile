@@ -1,5 +1,5 @@
 # Stage 1: Building the app
-FROM node:21-alpine AS builder
+FROM node:20-alpine AS builder
 
 # Set the working directory
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Setting up the production environment
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 
 # Set the working directory
 WORKDIR /app

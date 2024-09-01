@@ -9,6 +9,7 @@ import Container from "src/components/base/container"
 import PageHeading from "src/components/base/page-heading"
 
 // TODO: add prisma and basic crud operations to the project
+// TODO: improve performance later with tools like chrome dev tool lighthouse, use unlighthouse and chrome extension webvitals
 // TODO: make as many components server components as you can in the below code, all of them are top level client components
 // TODO: when wanting to show different components that do the same thing, eg Accordions, use Tabs to show the different components, save space on website
 // TODO: Make Navigation Bar A Lot Simpler, it has too much nonsense in it, links that are not needed or not important
