@@ -18,7 +18,7 @@ import {
 import clsx from "clsx"
 
 import FlexCenter from "src/components/base/flex-box/flex-center"
-import type { YuGiOhCard } from "src/models/cards/yu-gi-oh"
+import type { YuGiOhCard } from "src/models/yu-gi-oh/yu-gi-oh"
 import getYugiohFrameTypeColor from "src/utils/helper-functions/getYuGiOhFrameTypeColor"
 
 export const CardWrapper = styled(Card)(

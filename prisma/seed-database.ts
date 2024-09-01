@@ -1,9 +1,9 @@
 /* eslint-disable */
 import fs from "fs"
 
-import { YuGiOhCard } from "src/models/cards/yu-gi-oh"
 import { CartItemWithoutId } from "src/models/cart-item"
 import { SavedItemWithoutId } from "src/models/saved-item"
+import { YuGiOhCard } from "src/models/yu-gi-oh/yu-gi-oh"
 import prisma from "src/utils/database/prisma"
 
 const cardDataFilePath = "src/mocks/yugioh-cards.json"

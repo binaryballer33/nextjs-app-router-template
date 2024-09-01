@@ -4,7 +4,7 @@ import { Box, Card, Table, TableBody, TableContainer, TablePagination } from "@m
 
 import TableColumns from "src/components/application-ui/tabs/users-listing/blocks/views/table-view/table-columns"
 import TableRecord from "src/components/application-ui/tabs/users-listing/blocks/views/table-view/table-record"
-import type { YuGiOhCard } from "src/models/cards/yu-gi-oh"
+import type { YuGiOhCard } from "src/models/yu-gi-oh/yu-gi-oh"
 
 type TableViewProps = {
     page: number

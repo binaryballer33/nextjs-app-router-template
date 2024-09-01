@@ -17,7 +17,7 @@ import {
 } from "@mui/material"
 
 import FlexCenter from "src/components/base/flex-box/flex-center"
-import type { YuGiOhCard } from "src/models/cards/yu-gi-oh"
+import type { YuGiOhCard } from "src/models/yu-gi-oh/yu-gi-oh"
 import getYugiohFrameTypeColor from "src/utils/helper-functions/getYuGiOhFrameTypeColor"
 
 const TableCellWrapper = styled(TableCell)(

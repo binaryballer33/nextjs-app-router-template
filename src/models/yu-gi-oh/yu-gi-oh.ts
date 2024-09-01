@@ -48,7 +48,7 @@ const LinkCardSchema = YuGiOhCardBaseSchema.extend({
     linkval: LinkValueSchema,
     linkmarkers: LinkMarkersSchema,
     attribute: AttributeMonsterCardSchema,
-    atk: z.union([z.number().min(0, "Attack Must Be Greater Than Or Equal To 0"), z.literal("?")]),
+    atk: z.number().min(0, "Attack Must Be Greater Than Or Equal To 0"),
 })
 
 const MonsterCardSchema = YuGiOhCardBaseSchema.extend({
@@ -57,8 +57,8 @@ const MonsterCardSchema = YuGiOhCardBaseSchema.extend({
     race: RaceMonsterCardSchema,
     level: LevelSchema,
     attribute: AttributeMonsterCardSchema,
-    atk: z.union([z.number().min(0, "Attack Must Be Greater Than Or Equal To 0"), z.literal("?")]),
-    def: z.union([z.number().min(0, "Defense Must Be Greater Than Or Equal To 0"), z.literal("?")]),
+    atk: z.number().min(0, "Attack Must Be Greater Than Or Equal To 0"),
+    def: z.number().min(0, "Defense Must Be Greater Than Or Equal To 0"),
 })
 
 const PendulumCardSchema = MonsterCardSchema.extend({
