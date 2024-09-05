@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next"
 
 import RouterLink from "src/components/base/router-link"
 import { AvatarState } from "src/components/base/styles/avatar"
-import routes from "src/router/navigation-routes"
+import routes from "src/router/routes"
 
 function Page() {
     const { t } = useTranslation()

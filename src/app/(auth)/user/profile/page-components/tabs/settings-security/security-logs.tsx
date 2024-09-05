@@ -22,7 +22,7 @@ import {
 import { format, subDays, subHours, subWeeks } from "date-fns"
 import { useTranslation } from "react-i18next"
 
-import PaginationActions from "src/components/application-ui/pagination/simple-pagination/pagination-actions"
+import PaginationActions from "src/components/pagination/simple-pagination/pagination-actions"
 
 export default function SettingsSecurity() {
     const { t } = useTranslation()

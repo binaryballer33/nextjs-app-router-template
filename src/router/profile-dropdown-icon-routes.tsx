@@ -5,7 +5,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 
 import type { NavBarItem } from "src/models/navbar-item"
 
-import routes from "./navigation-routes"
+import routes from "./routes"
 
 const profileIconDropdownNavItems: NavBarItem[] = [
     { title: "My Profile", icon: <AccountBoxIcon />, route: routes.user.profile },

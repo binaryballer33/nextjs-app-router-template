@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react"
 
 import Image from "next/image"
+import { useSearchParams } from "next/navigation"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -17,9 +18,10 @@ import {
     Typography,
     useTheme,
 } from "@mui/material"
-import { signIn, useSession } from "next-auth/react"
+import { signIn } from "next-auth/react"
 import type { SubmitHandler } from "react-hook-form"
 import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 import login from "src/actions/auth/login"
@@ -28,23 +30,24 @@ import oAuthProviders from "src/models/forms/common"
 import type { LoginRequest } from "src/models/forms/login"
 import { defaultValuesLoginRequest, LoginRequestSchema } from "src/models/forms/login"
 import type { OAuthProvider } from "src/models/forms/register"
-import routes from "src/router/navigation-routes"
+import routes from "src/router/routes"
 
 import LoginFormInput from "./login-form-input"
 
-// TODO: maybe I need this, maybe I don't import { useSession } from "next-auth/react"
-// TODO: fix issue that breaks app when signing in with incorrect email and password
-
 /*
-  TODO: there's a mui warning in the chrome dev tools, figuer out how to fix it later,
+  TODO: maybe I need this, maybe I don't import { useSession } from "next-auth/react"
+  TODO: there's a mui warning in the chrome dev tools, figure out how to fix it later,
   it doesn't affect the functionality of the app
 
   You can duplicate the error by toggling the password visibility icon in the register or login form
 */
 export default function LoginPage() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const { data: session } = useSession()
-    console.log(`useSession called from login page ${session}`)
+    const searchParams = useSearchParams()
+
+    const loginError = searchParams.get("error")
+    const oauthLoginError =
+        loginError === "OAuthAccountNotLinked" ? "Email Already In Use With A Different Provider" : null
 
     const theme = useTheme()
     const { t } = useTranslation()
@@ -61,18 +64,34 @@ export default function LoginPage() {
         resolver: zodResolver(LoginRequestSchema),
     })
 
-    const onAuth = useCallback(async (provider: OAuthProvider["id"]): Promise<void> => {
-        await signIn(provider)
-    }, [])
+    const onAuth = useCallback(
+        async (provider: OAuthProvider["id"]): Promise<void> => {
+            await signIn(provider, { callbackUrl: routes.nextAuth.defaultLoginRedirect })
+            if (loginError) toast.error(oauthLoginError)
+        },
+        [loginError, oauthLoginError],
+    )
 
     const handleSubmit: SubmitHandler<LoginRequest> = useCallback(
         async (credentials: LoginRequest): Promise<void> => {
             setIsLoading(true) // Set loading state to true for disabling buttons and changing UI
             resetFormFields() // Reset the form to clear the inputs
 
-            await login(credentials) // Call the login action to sign in the user with next auth
-
+            const response = await login(credentials) // Call the login action to sign in the user with next auth
             setIsLoading(false)
+
+            if (response.error) {
+                toast.error(response.error)
+                return
+            }
+
+            if (response.success) {
+                toast.success(response.success)
+
+                // TODO: temporary fix for refreshing session
+                // force all components to recognize the change in auth status
+                window.location.href = routes.user.profile
+            }
         },
         [resetFormFields],
     )
@@ -86,6 +105,7 @@ export default function LoginPage() {
 
         return provider.logo
     }
+
     const updatedOAuthProviders = oAuthProviders.map((provider) => ({
         ...provider,
         logo: getLogo(provider),

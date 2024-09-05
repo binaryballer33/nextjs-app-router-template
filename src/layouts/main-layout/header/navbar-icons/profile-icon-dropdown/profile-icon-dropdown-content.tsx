@@ -7,10 +7,12 @@ import { useRouter } from "next/navigation"
 import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone"
 import { alpha, Box, Button, Divider, ListItemText, Menu, MenuItem, useTheme } from "@mui/material"
 import PropTypes from "prop-types"
+import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 import signOut from "src/actions/auth/sign-out"
 import profileIconDropdownNavItems from "src/router/profile-dropdown-icon-routes"
+import routes from "src/router/routes"
 import { neutral } from "src/theme/theme"
 
 import AvatarTitleDescriptionAlternate from "./profile-icon-avatar-title-description"
@@ -38,9 +40,18 @@ export default function ProfileIconDropdown(props: ProfileDropdownProps) {
     const { t } = useTranslation()
 
     const handleSignOut = useCallback(async (): Promise<void> => {
-        onClose() // close the profile dropdown
-        await signOut() // sign out the user with next auth
-    }, [onClose])
+        try {
+            await signOut() // sign out the user with next auth
+            toast.success(t("You've Successfully Signed Out"))
+            window.location.reload() // force all components to recognize the change in auth status
+            router.push(routes.auth.signOut)
+        } catch (error) {
+            toast.error(t("An Error Occurred While Signing Out"))
+            console.error("Error While Signing Out: ", error)
+        } finally {
+            onClose() // close the profile dropdown
+        }
+    }, [onClose, router, t])
 
     const handleNavItemClick = (route: string): void => {
         onClose()

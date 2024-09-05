@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react"
 
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -20,6 +21,7 @@ import {
 import { signIn } from "next-auth/react"
 import type { SubmitHandler } from "react-hook-form"
 import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 import register from "src/actions/auth/register"
@@ -27,7 +29,7 @@ import RouterLink from "src/components/base/router-link"
 import oAuthProviders from "src/models/forms/common"
 import type { OAuthProvider, RegisterRequest } from "src/models/forms/register"
 import { defaultValuesRegisterRequest, RegisterRequestSchema } from "src/models/forms/register"
-import routes from "src/router/navigation-routes"
+import routes from "src/router/routes"
 
 import RegisterFormInput from "./register-form-input"
 
@@ -42,6 +44,7 @@ export default function RegisterPage() {
 
     const theme = useTheme()
     const { t } = useTranslation()
+    const router = useRouter()
 
     const {
         register: registerInputField,
@@ -64,13 +67,16 @@ export default function RegisterPage() {
             setIsLoading(true) // Set loading state to true for disabling buttons and changing UI
             resetFormFields() // Reset the form to clear the inputs
 
-            await register(credentials)
-
+            const response = await register(credentials)
             setIsLoading(false)
 
-            setIsLoading(false)
+            if (response.success) {
+                toast.success(response.success)
+                router.push(routes.auth.login)
+            }
+            if (response.error) toast.error(response.error, { duration: 5000 })
         },
-        [resetFormFields],
+        [resetFormFields, router],
     )
 
     const handleClearForm = useCallback(() => {

@@ -15,7 +15,7 @@ function SignOutPage() {
         <FullScreenCenteredContainer>
             <Typography variant="body1">{t("You've Been Successfully Signed Out")}</Typography>
             <Button variant="contained" onClick={() => router.push("/")}>
-                {t("Go back to the home page")}
+                {t("Go Back To The Home Page")}
             </Button>
         </FullScreenCenteredContainer>
     )

@@ -25,6 +25,7 @@ import useDialog from "src/hooks/use-dialog"
 import useMobileNav from "src/hooks/use-mobile-nav"
 import usePopover from "src/hooks/use-popover"
 import useHorizontalNavBarItems from "src/router/horizontal-navbar-routes"
+import routes from "src/router/routes"
 import { neutral } from "src/theme/theme"
 
 import DesktopNavBar from "./desktop-navbar/desktop-navbar"
@@ -56,7 +57,8 @@ export default function Header() {
     const popover = usePopover<HTMLButtonElement>()
     const { handleClose, handleOpen, open } = useMobileNav()
     const { data: session } = useSession()
-    console.log(`Data from the useSession In Header: ${session}`)
+    // TODO: figure out why I need to refresh in order for auth state to update
+    // console.log(`useSession called from the Header component: ${JSON.stringify(session, null, 2)}, status: ${status}`)
 
     return (
         <>
@@ -174,7 +176,7 @@ export default function Header() {
                             </Tooltip>
                         ) : (
                             <Tooltip title="Login">
-                                <IconButton onClick={() => router.push("/login")}>
+                                <IconButton onClick={() => router.push(routes.auth.login)}>
                                     <LockIcon color="primary" />
                                 </IconButton>
                             </Tooltip>

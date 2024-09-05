@@ -3,10 +3,10 @@ import axios from "axios"
 
 import QUERY_KEYS from "src/api/query-keys"
 import type { YuGiOhCard } from "src/models/yu-gi-oh/yu-gi-oh"
-import QUERY_ROUTES from "src/router/api-routes"
+import routes from "src/router/routes"
 
 export async function getYuGiOhCards(): Promise<YuGiOhCard[]> {
-    return (await axios.get(QUERY_ROUTES.GET_YUGIOH_CARDS)).data.cards
+    return (await axios.get(routes.api.yugioh.read)).data.cards
 }
 
 export default function useGetYuGiOhCardsQuery() {

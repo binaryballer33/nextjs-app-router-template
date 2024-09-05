@@ -1,19 +1,16 @@
-import type { Prisma } from "@prisma/client"
+// noinspection ES6ConvertVarToLetConst
+
 import { PrismaClient } from "@prisma/client"
-import type { DefaultArgs } from "@prisma/client/runtime/library"
 
-const prismaClientSingleton = () => {
-    return new PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>()
+import { NODE_ENV } from "src/utils/secrets"
+
+declare global {
+    // eslint-disable-next-line no-var,vars-on-top
+    var prisma: PrismaClient | undefined
 }
 
-type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>
-
-const globalForPrisma = globalThis as unknown as {
-    prisma: PrismaClientSingleton | undefined
-}
-
-const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
+const prisma = global.prisma || new PrismaClient({ log: NODE_ENV === "development" ? ["error", "warn"] : ["error"] })
 
 export default prisma
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma
+if (NODE_ENV !== "production") global.prisma = prisma

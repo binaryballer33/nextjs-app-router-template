@@ -5,7 +5,7 @@ import SettingsIcon from "@mui/icons-material/Settings"
 import { useTranslation } from "react-i18next"
 
 import type { NavBarItem } from "src/models/navbar-item"
-import routes from "src/router/navigation-routes"
+import routes from "src/router/routes"
 
 // manage the navbar items, their title, icons and routes from here. This is for both desktop and mobile navbars
 const useHorizontalNavBarItems = (): NavBarItem[] => {

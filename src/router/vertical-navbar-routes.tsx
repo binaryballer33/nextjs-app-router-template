@@ -8,7 +8,7 @@ import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded"
 import { useTranslation } from "react-i18next"
 
 import type { NavBarItem } from "src/models/navbar-item"
-import routes from "src/router/navigation-routes"
+import routes from "src/router/routes"
 
 const useVerticalNavBarItems = (): NavBarItem[] => {
     const { t } = useTranslation()
