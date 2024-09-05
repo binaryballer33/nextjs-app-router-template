@@ -1,33 +1,32 @@
 import { z as zod } from "zod"
 
 export type OAuthProvider = {
-    id: "google" | "github"
+    id: "google" | "facebook"
     name: string
     logo: string
 }
 
 export const RegisterRequestSchema = zod
     .object({
-        firstname: zod.string().min(1, { message: "First name is required" }),
-        lastname: zod.string().min(1, { message: "Last name is required" }),
+        firstName: zod.string().min(1, { message: "First name is required" }),
+        lastName: zod.string().min(1, { message: "Last name is required" }),
         email: zod.string().min(1, { message: "Email is required" }).email(),
         password: zod.string().min(6, { message: "Password should be at least 6 characters" }),
         confirmPassword: zod.string().min(6, { message: "Password should be at least 6 characters" }),
-        terms: zod.boolean().refine((value) => value, "You must accept the terms and conditions"),
     })
     .refine((data) => data.password === data.confirmPassword, {
         // Add a custom validation rule to ensure the password and confirmPassword fields match
-        message: "Your passwords don't match",
+        message: "Your Passwords Don't Match",
         path: ["confirmPassword"],
     })
 
 export type RegisterRequest = zod.infer<typeof RegisterRequestSchema>
 
+// TODO: add terms and conditions later
 export const defaultValuesRegisterRequest = {
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
-    terms: false,
 } satisfies RegisterRequest

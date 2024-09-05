@@ -7,14 +7,59 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Account {
+  id                String  @id @default(uuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
 model User {
-  id                String       @id // don't default create, get it from auth provider when user signs up with auth provider
+  id                String       @id @default(uuid())
   email             String       @unique
+  emailVerified     Boolean?     @default(false)
   firstName         String
   lastName          String
-  encryptedPassword String
+  imageUrl          String?
+  encryptedPassword String? // if you are using oauth to create the user, you will not have a password
+  role              Role         @default(USER)
   savedCards        SavedCards[] // 1:M relation to Card
   cartItems         CartItem[] // 1:M relation to CartItem
+  Account           Account[]
+  Session           Session[]
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @updatedAt
 

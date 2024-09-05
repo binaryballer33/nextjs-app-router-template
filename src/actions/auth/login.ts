@@ -1,11 +1,10 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
 
 import type { LoginRequest } from "src/models/forms/login"
 import { LoginRequestSchema } from "src/models/forms/login"
-import createServerClient from "src/utils/supabase/server"
+import { signIn } from "src/utils/auth/auth"
 
 export default async function login(credentials: LoginRequest) {
     const validatedLoginRequest = LoginRequestSchema.safeParse(credentials)
@@ -17,18 +16,7 @@ export default async function login(credentials: LoginRequest) {
 
     const { email, password } = validatedLoginRequest.data
 
-    const supabase = createServerClient()
-
-    const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-    })
-
-    if (error) {
-        console.debug("Error signing in", error.message)
-        throw new Error("Error signing in")
-    }
+    await signIn("credentials", { email, password, redirectTo: "/user/profile" })
 
     revalidatePath("/")
-    redirect("/profile")
 }

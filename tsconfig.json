@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "lib": ["dom", "dom.iterable", "esnext"],
+        "typeRoots": ["types.d.ts", "./node_modules/@types"],
         "allowJs": true,
         "skipLibCheck": true,
         "strict": true,
@@ -12,8 +13,10 @@
         "jsx": "preserve",
         "incremental": true,
         "noEmit": true,
-        "noUnusedLocals": true, // Warns about unused local variables
-        "noUnusedParameters": true, // Warns about unused function parameters
+        "noUnusedLocals": true,
+        // Warns about unused local variables
+        "noUnusedParameters": true,
+        // Warns about unused function parameters
         "noImplicitAny": false,
         "plugins": [
             {
@@ -24,6 +27,6 @@
             "src/*": ["./src/*"]
         }
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    "include": ["next-env.d.ts", "types.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
     "exclude": ["node_modules"]
 }

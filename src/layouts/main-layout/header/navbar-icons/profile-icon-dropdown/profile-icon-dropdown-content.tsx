@@ -10,7 +10,6 @@ import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
 
 import signOut from "src/actions/auth/sign-out"
-import useAuth from "src/hooks/use-auth"
 import profileIconDropdownNavItems from "src/router/profile-dropdown-icon-routes"
 import { neutral } from "src/theme/theme"
 
@@ -29,20 +28,19 @@ type ProfileDropdownProps = {
     transformOrigin?: Origin
 }
 
+// TODO: maybe I need useSession here, maybe I don't
 // TODO: on mobile phones turn this dropdown into a bottom mobile navigation bar
 export default function ProfileIconDropdown(props: ProfileDropdownProps) {
     const { anchorEl, onClose, open, anchorOrigin, transformOrigin, ...other } = props
 
     const router = useRouter()
     const theme = useTheme()
-    const { checkSession } = useAuth()
     const { t } = useTranslation()
 
     const handleSignOut = useCallback(async (): Promise<void> => {
         onClose() // close the profile dropdown
-        await signOut() // sign out the user with supabase
-        await checkSession() // refresh the auth state to reflect the user being signed out
-    }, [checkSession, onClose])
+        await signOut() // sign out the user with next auth
+    }, [onClose])
 
     const handleNavItemClick = (route: string): void => {
         onClose()

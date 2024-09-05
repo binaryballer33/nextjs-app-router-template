@@ -1,5 +1,5 @@
 type OAuthProvider = {
-    id: "google" | "github"
+    id: "google" | "facebook"
     name: string
     logo: string
 }
@@ -11,9 +11,9 @@ const oAuthProviders = [
         logo: "/placeholders/logo/google-icon.svg",
     },
     {
-        id: "github",
-        name: "Github",
-        logo: "/placeholders/logo/github-icon.svg",
+        id: "facebook",
+        name: "Facebook",
+        logo: "/placeholders/logo/facebook.svg",
     },
 ] satisfies OAuthProvider[]
 

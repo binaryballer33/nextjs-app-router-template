@@ -17,22 +17,23 @@ import {
     Typography,
     useTheme,
 } from "@mui/material"
+import { signIn, useSession } from "next-auth/react"
 import type { SubmitHandler } from "react-hook-form"
 import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 import login from "src/actions/auth/login"
 import RouterLink from "src/components/base/router-link"
-import useAuth from "src/hooks/use-auth"
 import oAuthProviders from "src/models/forms/common"
 import type { LoginRequest } from "src/models/forms/login"
 import { defaultValuesLoginRequest, LoginRequestSchema } from "src/models/forms/login"
 import type { OAuthProvider } from "src/models/forms/register"
 import routes from "src/router/navigation-routes"
-import createSupabaseClient from "src/utils/supabase/client"
 
 import LoginFormInput from "./login-form-input"
+
+// TODO: maybe I need this, maybe I don't import { useSession } from "next-auth/react"
+// TODO: fix issue that breaks app when signing in with incorrect email and password
 
 /*
   TODO: there's a mui warning in the chrome dev tools, figuer out how to fix it later,
@@ -41,12 +42,12 @@ import LoginFormInput from "./login-form-input"
   You can duplicate the error by toggling the password visibility icon in the register or login form
 */
 export default function LoginPage() {
-    const [supabaseClient] = useState(createSupabaseClient())
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const { data: session } = useSession()
+    console.log(`useSession called from login page ${session}`)
 
     const theme = useTheme()
     const { t } = useTranslation()
-    const { checkSession } = useAuth()
 
     const {
         register: registerInputField,
@@ -60,49 +61,28 @@ export default function LoginPage() {
         resolver: zodResolver(LoginRequestSchema),
     })
 
-    const onAuth = useCallback(
-        async (provider: OAuthProvider["id"]): Promise<void> => {
-            setIsLoading(true)
-
-            const redirectToUrl = new URL(routes.index)
-            redirectToUrl.searchParams.set("next", routes.index)
-
-            const { data, error } = await supabaseClient.auth.signInWithOAuth({
-                provider,
-                options: {
-                    redirectTo: redirectToUrl.href,
-                },
-            })
-
-            if (error) {
-                setIsLoading(false)
-                toast.error(error.message)
-                return
-            }
-
-            window.location.href = data.url
-        },
-        [supabaseClient],
-    )
+    const onAuth = useCallback(async (provider: OAuthProvider["id"]): Promise<void> => {
+        await signIn(provider)
+    }, [])
 
     const handleSubmit: SubmitHandler<LoginRequest> = useCallback(
         async (credentials: LoginRequest): Promise<void> => {
             setIsLoading(true) // Set loading state to true for disabling buttons and changing UI
             resetFormFields() // Reset the form to clear the inputs
 
-            await login(credentials) // Call the login action to sign in the user with supabase
+            await login(credentials) // Call the login action to sign in the user with next auth
 
             setIsLoading(false)
-            await checkSession() // Check the session to update the user context with our auth provider
         },
-        [resetFormFields, checkSession],
+        [resetFormFields],
     )
 
     const inputFields = Object.keys(defaultValuesLoginRequest) // get the text fields from the initial form state
     const isDarkMode = theme.palette.mode === "dark"
     const getLogo = (provider: OAuthProvider) => {
-        if (provider.id === "github")
-            return isDarkMode ? "/placeholders/logo/github-icon-light.svg" : "/placeholders/logo/github-icon.svg"
+        if (provider.id === "facebook")
+            // TODO: fix this later to be a light and dark icon for facebook
+            return isDarkMode ? "/placeholders/logo/facebook.svg" : "/placeholders/logo/facebook.svg"
 
         return provider.logo
     }
@@ -142,7 +122,7 @@ export default function LoginPage() {
                                 color="secondary"
                                 key={provider.id}
                                 onClick={() => onAuth(provider.id).catch(() => {})}
-                                startIcon={<Image height={24} width={24} alt="Google" src={provider.logo} />}
+                                startIcon={<Image height={24} width={24} alt={provider.name} src={provider.logo} />}
                             >
                                 {t(`Sign in with ${provider.name}`)}
                             </Button>

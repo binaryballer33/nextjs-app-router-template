@@ -1,10 +1,13 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
+
+import { hash } from "bcryptjs"
 
 import type { RegisterRequest } from "src/models/forms/register"
 import { RegisterRequestSchema } from "src/models/forms/register"
-import createServerClient from "src/utils/supabase/server"
+import prisma from "src/utils/database/prisma"
 
 export default async function register(credentials: RegisterRequest) {
     const validatedRegisterRequest = RegisterRequestSchema.safeParse(credentials)
@@ -14,20 +17,20 @@ export default async function register(credentials: RegisterRequest) {
         throw new Error("Invalid Register Request")
     }
 
-    const { email, password } = validatedRegisterRequest.data
+    // TODO: add terms and conditions later
+    const { firstName, lastName, email, password } = validatedRegisterRequest.data
+    const hashedPassword = await hash(password, 10)
 
-    const supabase = createServerClient()
-
-    const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-            emailRedirectTo: "/",
+    // TODO: clean up code and put db calls in right folder
+    await prisma.user.create({
+        data: {
+            firstName,
+            lastName,
+            email,
+            encryptedPassword: hashedPassword,
         },
     })
 
-    if (error) console.debug("Error signing up", error.message)
-
     revalidatePath("/")
-    return { data, error }
+    redirect("/login")
 }

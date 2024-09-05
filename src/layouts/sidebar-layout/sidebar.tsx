@@ -4,12 +4,12 @@ import KeyboardArrowLeftTwoToneIcon from "@mui/icons-material/KeyboardArrowLeftT
 import KeyboardArrowRightTwoToneIcon from "@mui/icons-material/KeyboardArrowRightTwoTone"
 import type { Theme } from "@mui/material"
 import { Box, Drawer, IconButton, styled, SwipeableDrawer, Typography, useMediaQuery, useTheme } from "@mui/material"
+import { useSession } from "next-auth/react"
 import PropTypes from "prop-types"
 
-import ActivityTotals from "src/app/(auth)/profile/page-components/activity-totals"
+import ActivityTotals from "src/app/(auth)/user/profile/page-components/activity-totals"
 import Scrollbar from "src/components/base/scrollbar"
 import { useSidebarContext } from "src/contexts/sidebar-context"
-import useAuth from "src/hooks/use-auth"
 import type { NavBarItem } from "src/models/navbar-item"
 import { SIDEBAR_WIDTH_COLLAPSED, SIDEBAR_WIDTH_PROFILE_PAGE } from "src/theme/utils"
 
@@ -38,7 +38,7 @@ export default function Sidebar(props: SidebarProps) {
     const lgUp = useMediaQuery((desktopTheme: Theme) => desktopTheme.breakpoints.up("lg"))
     const mdUp = useMediaQuery((tabletTheme: Theme) => tabletTheme.breakpoints.up("md"))
     const { isSidebarCollapsed, isSidebarHovered, toggleSidebarCollapsed, toggleSidebarHover } = useSidebarContext()
-    const { user } = useAuth()
+    const { data: session } = useSession()
 
     const sampleTenants = [
         {
@@ -138,7 +138,7 @@ export default function Sidebar(props: SidebarProps) {
                 {/* SideBar Header */}
                 {(isSidebarCollapsed && isSidebarHovered) || !isSidebarCollapsed ? (
                     <Typography variant="h6" color="primary">
-                        Welcome {user?.email.slice(0, user?.email.indexOf("@"))}
+                        Welcome {session?.user?.email?.slice(0, session?.user?.email?.indexOf("@"))}
                     </Typography>
                 ) : null}
 

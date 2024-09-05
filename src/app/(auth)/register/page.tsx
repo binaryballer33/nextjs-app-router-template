@@ -3,55 +3,45 @@
 import { useCallback, useState } from "react"
 
 import Image from "next/image"
-import { useRouter } from "next/navigation"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
     Alert,
     Box,
     Button,
-    Checkbox,
     Container,
     Divider,
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
     Unstable_Grid2 as Grid,
     Link,
     Stack,
     Typography,
     useTheme,
 } from "@mui/material"
+import { signIn } from "next-auth/react"
 import type { SubmitHandler } from "react-hook-form"
 import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 import register from "src/actions/auth/register"
 import RouterLink from "src/components/base/router-link"
-import useAuth from "src/hooks/use-auth"
 import oAuthProviders from "src/models/forms/common"
 import type { OAuthProvider, RegisterRequest } from "src/models/forms/register"
 import { defaultValuesRegisterRequest, RegisterRequestSchema } from "src/models/forms/register"
 import routes from "src/router/navigation-routes"
-import createSupabaseClient from "src/utils/supabase/client"
 
 import RegisterFormInput from "./register-form-input"
 
 /*
-  TODO: there's a mui warning in the chrome dev tools, figuer out how to fix it later,
+  TODO: there's a mui warning in the chrome dev tools, figure out how to fix it later,
   it doesn't affect the functionality of the app
 
   You can duplicate the error by toggling the password visibility icon in the register or login form
 */
 export default function RegisterPage() {
-    const [supabaseClient] = useState(createSupabaseClient())
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const router = useRouter()
     const theme = useTheme()
     const { t } = useTranslation()
-    const { checkSession } = useAuth()
 
     const {
         register: registerInputField,
@@ -65,47 +55,22 @@ export default function RegisterPage() {
         resolver: zodResolver(RegisterRequestSchema),
     })
 
-    const onAuth = useCallback(
-        async (provider: OAuthProvider["id"]): Promise<void> => {
-            setIsLoading(true)
-
-            const redirectToUrl = new URL(routes.index)
-            redirectToUrl.searchParams.set("next", routes.index)
-
-            const { data, error } = await supabaseClient.auth.signInWithOAuth({
-                provider,
-                options: {
-                    redirectTo: redirectToUrl.href,
-                },
-            })
-
-            if (error) {
-                setIsLoading(false)
-                toast.error(error.message)
-                return
-            }
-
-            window.location.href = data.url
-        },
-        [supabaseClient],
-    )
+    const onAuth = useCallback(async (provider: OAuthProvider["id"]): Promise<void> => {
+        await signIn(provider)
+    }, [])
 
     const handleSubmit: SubmitHandler<RegisterRequest> = useCallback(
         async (credentials: RegisterRequest): Promise<void> => {
             setIsLoading(true) // Set loading state to true for disabling buttons and changing UI
             resetFormFields() // Reset the form to clear the inputs
 
-            const { data } = await register(credentials)
+            await register(credentials)
 
             setIsLoading(false)
-
-            // will update the user state if supabase has a auth session
-            if (data?.session) await checkSession()
-            if (data.session?.user) router.push(`${routes.index}`)
 
             setIsLoading(false)
         },
-        [resetFormFields, router, checkSession],
+        [resetFormFields],
     )
 
     const handleClearForm = useCallback(() => {
@@ -118,8 +83,9 @@ export default function RegisterPage() {
     const isDarkMode = theme.palette.mode === "dark"
 
     const getLogo = (provider: OAuthProvider) => {
-        if (provider.id === "github")
-            return isDarkMode ? "/placeholders/logo/github-icon-light.svg" : "/placeholders/logo/github-icon.svg"
+        if (provider.id === "facebook")
+            // TODO: get light and dark facebook icon later
+            return isDarkMode ? "/placeholders/logo/facebook.svg" : "/placeholders/logo/facebook.svg"
 
         return provider.logo
     }
@@ -192,23 +158,23 @@ export default function RegisterPage() {
                             {/* Terms Conditions And Clear Form Button */}
                             <Grid xs={12}>
                                 <Box alignItems="center" display="flex" justifyContent="space-between">
-                                    <FormControl error={Boolean(errors.terms)}>
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    {...registerInputField("terms")}
-                                                    name="terms"
-                                                    color="primary"
-                                                />
-                                            }
-                                            label={
-                                                <Typography variant="body1">
-                                                    {t("I accept the Terms and Conditions")}
-                                                </Typography>
-                                            }
-                                        />
-                                        {errors.terms && <FormHelperText>{errors.terms.message}</FormHelperText>}
-                                    </FormControl>
+                                    {/* <FormControl error={Boolean(errors.terms)}> */}
+                                    {/*    <FormControlLabel */}
+                                    {/*        control={ */}
+                                    {/*            <Checkbox */}
+                                    {/*                {...registerInputField("terms")} */}
+                                    {/*                name="terms" */}
+                                    {/*                color="primary" */}
+                                    {/*            /> */}
+                                    {/*        } */}
+                                    {/*        label={ */}
+                                    {/*            <Typography variant="body1"> */}
+                                    {/*                {t("I accept the Terms and Conditions")} */}
+                                    {/*            </Typography> */}
+                                    {/*        } */}
+                                    {/*    /> */}
+                                    {/*    {errors.terms && <FormHelperText>{errors.terms.message}</FormHelperText>} */}
+                                    {/* </FormControl> */}
 
                                     {/* Reset Form Button */}
                                     <Button

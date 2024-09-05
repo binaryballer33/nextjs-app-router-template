@@ -18,9 +18,9 @@ import {
     useMediaQuery,
     useTheme,
 } from "@mui/material"
+import { useSession } from "next-auth/react"
 
 import { DividerLight } from "src/components/base/styles/card"
-import useAuth from "src/hooks/use-auth"
 import useDialog from "src/hooks/use-dialog"
 import useMobileNav from "src/hooks/use-mobile-nav"
 import usePopover from "src/hooks/use-popover"
@@ -55,7 +55,8 @@ export default function Header() {
     const navbarItems = useHorizontalNavBarItems()
     const popover = usePopover<HTMLButtonElement>()
     const { handleClose, handleOpen, open } = useMobileNav()
-    const { user } = useAuth()
+    const { data: session } = useSession()
+    console.log(`Data from the useSession In Header: ${session}`)
 
     return (
         <>
@@ -143,7 +144,7 @@ export default function Header() {
                         </>
 
                         {/* Login Icon & Profile Icon */}
-                        {user ? (
+                        {session?.user ? (
                             <Tooltip title="User">
                                 <IconButton
                                     id="profile-button"

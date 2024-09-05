@@ -1,155 +1,144 @@
 {
-  "root": true,
-  "env": {
-    "browser": true,
-    "es2020": true
-  },
-  "plugins": [
-    "unused-imports",
-    "@typescript-eslint",
-    "prettier"
-  ],
-  "extends": [
-    "airbnb",
-    "airbnb-typescript",
-    "airbnb/hooks",
-    "prettier"
-  ],
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": "latest",
-    "ecmaFeatures": {
-      "jsx": true
+    "root": true,
+    "env": {
+        "browser": true,
+        "es2020": true
     },
-    "project": "./tsconfig.json"
-  },
-  "settings": {
-    "import/resolver": {
-      "typescript": {
+    "plugins": ["unused-imports", "@typescript-eslint", "prettier"],
+    "extends": ["airbnb", "airbnb-typescript", "airbnb/hooks", "prettier"],
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": "latest",
+        "ecmaFeatures": {
+            "jsx": true
+        },
         "project": "./tsconfig.json"
-      }
-    }
-  },
-  "globals": {
-    "React": true
-  },
-  "rules": {
-    "import/extensions": "off",
-    "import/prefer-default-export": "warn",
-    "semi": 0,
-    // let prettier handle this
-    "indent": "off",
-    // let prettier handle this
-    "max-len": "off",
-    // let prettier handle this
-    "comma-dangle": "off",
-    // let prettier handle this
-    "operator-linebreak": "off",
-    // let prettier handle this
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {
+                "project": "./tsconfig.json"
+            }
+        }
+    },
+    "globals": {
+        "React": true
+    },
+    "rules": {
+        "import/extensions": "off",
+        "import/prefer-default-export": "warn",
+        "semi": 0,
+        // let prettier handle this
+        "indent": "off",
+        // let prettier handle this
+        "max-len": "off",
+        // let prettier handle this
+        "comma-dangle": "off",
+        // let prettier handle this
+        "operator-linebreak": "off",
+        // let prettier handle this
 
-    "react/jsx-no-target-blank": "off",
-    "react/jsx-filename-extension": "off",
-    "react/jsx-one-expression-per-line": "off",
-    // let prettier handle this
-    "react/jsx-props-no-spreading": "off",
-    "react/react-in-jsx-scope": "off",
-    "react/button-has-type": "off",
-    "react/forbid-prop-types": "off",
-    "react/require-default-props": "off",
-    // let typescript handle this
-    "react/jsx-indent": "off",
-    // let prettier handle this
-    "no-shadow": "off",
-    "no-case-declarations": "off",
-    "no-redeclare": "off",
-    // let typescript handle this
-    "no-unused-expressions": "off",
-    "no-unused-vars": "off",
-    // let typescript handle this
-    "no-param-reassign": "off",
-    "no-restricted-imports": [
-      "error",
-      {
-        "paths": [
-          {
-            "name": "react",
-            "importNames": [
-              "default"
-            ],
-            "message": "Direct import of React is not allowed. Use React features from the 'react/jsx-runtime' instead."
-          }
+        "react/jsx-no-target-blank": "off",
+        "react/jsx-filename-extension": "off",
+        "react/jsx-one-expression-per-line": "off",
+        // let prettier handle this
+        "react/jsx-props-no-spreading": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/button-has-type": "off",
+        "react/forbid-prop-types": "off",
+        "react/require-default-props": "off",
+        // let typescript handle this
+        "react/jsx-indent": "off",
+        // let prettier handle this
+        "no-shadow": "off",
+        "no-case-declarations": "off",
+        "no-redeclare": "off",
+        // let typescript handle this
+        "no-unused-expressions": "off",
+        "no-unused-vars": "off",
+        // let typescript handle this
+        "no-param-reassign": "off",
+        "no-restricted-imports": [
+            "error",
+            {
+                "paths": [
+                    {
+                        "name": "react",
+                        "importNames": ["default"],
+                        "message": "Direct import of React is not allowed. Use React features from the 'react/jsx-runtime' instead."
+                    }
+                ]
+            }
+        ],
+        // get rid of direct import of React, after React 17 this is not necessary
+
+        "arrow-body-style": "off",
+        "object-curly-newline": "off",
+        // let prettier handle this
+        "function-paren-newline": "off",
+        "implicit-arrow-linebreak": "off",
+        "nonblock-statement-body-position": "off",
+        // general
+        "no-alert": 0,
+        "camelcase": 0,
+        "no-console": 0,
+        "no-nested-ternary": 0,
+        "no-underscore-dangle": 0,
+        "no-restricted-exports": 0,
+        "no-promise-executor-return": 0,
+        "prefer-destructuring": [
+            1,
+            {
+                "object": true,
+                "array": false
+            }
+        ],
+        // typescript
+        "@typescript-eslint/naming-convention": 0,
+        "@typescript-eslint/no-use-before-define": 0,
+        "@typescript-eslint/consistent-type-exports": 1,
+        "@typescript-eslint/consistent-type-imports": 1,
+        "@typescript-eslint/no-unused-vars": [
+            1,
+            {
+                "args": "none"
+            }
+        ],
+        // react
+        "react/no-children-prop": 0,
+        "react/no-array-index-key": 0,
+        "react/function-component-definition": 0,
+        "react/jsx-no-useless-fragment": [
+            1,
+            {
+                "allowExpressions": true
+            }
+        ],
+        "react/no-unstable-nested-components": [
+            1,
+            {
+                "allowAsProps": true
+            }
+        ],
+        "react/jsx-no-duplicate-props": [
+            1,
+            {
+                "ignoreCase": false
+            }
+        ],
+        // jsx-a11y
+        "jsx-a11y/anchor-is-valid": 0,
+        "jsx-a11y/control-has-associated-label": 0,
+        // unused imports
+        "unused-imports/no-unused-imports": 1,
+        "unused-imports/no-unused-vars": [
+            0,
+            {
+                "vars": "all",
+                "varsIgnorePattern": "^_",
+                "args": "after-used",
+                "argsIgnorePattern": "^_"
+            }
         ]
-      }
-    ],
-    // get rid of direct import of React, after React 17 this is not necessary
-
-    "arrow-body-style": "off",
-    "object-curly-newline": "off",
-    // let prettier handle this
-    "function-paren-newline": "off",
-    "implicit-arrow-linebreak": "off",
-    "nonblock-statement-body-position": "off",
-    // general
-    "no-alert": 0,
-    "camelcase": 0,
-    "no-console": 0,
-    "no-nested-ternary": 0,
-    "no-underscore-dangle": 0,
-    "no-restricted-exports": 0,
-    "no-promise-executor-return": 0,
-    "prefer-destructuring": [
-      1,
-      {
-        "object": true,
-        "array": false
-      }
-    ],
-    // typescript
-    "@typescript-eslint/naming-convention": 0,
-    "@typescript-eslint/no-use-before-define": 0,
-    "@typescript-eslint/consistent-type-exports": 1,
-    "@typescript-eslint/consistent-type-imports": 1,
-    "@typescript-eslint/no-unused-vars": [
-      1,
-      {
-        "args": "none"
-      }
-    ],
-    // react
-    "react/no-children-prop": 0,
-    "react/no-array-index-key": 0,
-    "react/function-component-definition": 0,
-    "react/jsx-no-useless-fragment": [
-      1,
-      {
-        "allowExpressions": true
-      }
-    ],
-    "react/no-unstable-nested-components": [
-      1,
-      {
-        "allowAsProps": true
-      }
-    ],
-    "react/jsx-no-duplicate-props": [
-      1,
-      {
-        "ignoreCase": false
-      }
-    ],
-    // jsx-a11y
-    "jsx-a11y/anchor-is-valid": 0,
-    "jsx-a11y/control-has-associated-label": 0,
-    // unused imports
-    "unused-imports/no-unused-imports": 1,
-    "unused-imports/no-unused-vars": [
-      0,
-      {
-        "vars": "all",
-        "varsIgnorePattern": "^_",
-        "args": "after-used",
-        "argsIgnorePattern": "^_"
-      }
-    ]
-  }
+    }
 }

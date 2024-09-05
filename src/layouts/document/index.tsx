@@ -16,9 +16,9 @@ import "src/global.css" // for global styles
 import "aos/dist/aos.css" // for animations and transitions on scroll
 
 import AOS from "aos"
+import { SessionProvider } from "next-auth/react"
 
 import ReactQueryClientProvider from "src/api/query-client-provider"
-import AuthProvider from "src/contexts/auth-context" // for authentication with Supabase
 import SidebarProvider from "src/contexts/sidebar-context"
 import { darkTheme, lightTheme } from "src/theme/theme"
 
@@ -69,13 +69,13 @@ export default function Layout({ children }: LayoutProps) {
         <NextAppDirEmotionCacheProvider options={{ key: "mandy-tec" }}>
             <ReduxProvider store={store}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <AuthProvider>
+                    <SessionProvider>
                         <SidebarProvider>
                             <ThemeProvider>
                                 <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
                             </ThemeProvider>
                         </SidebarProvider>
-                    </AuthProvider>
+                    </SessionProvider>
                 </LocalizationProvider>
             </ReduxProvider>
         </NextAppDirEmotionCacheProvider>

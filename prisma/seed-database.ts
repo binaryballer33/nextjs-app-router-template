@@ -1,8 +1,8 @@
 /* eslint-disable */
 import fs from "fs"
 
-import { CartItemWithoutId } from "src/models/cart-item"
 import { SavedItemWithoutId } from "src/models/saved-item"
+import { CartItemWithoutId } from "src/models/user/cart-item"
 import { YuGiOhCard } from "src/models/yu-gi-oh/yu-gi-oh"
 import prisma from "src/utils/database/prisma"
 

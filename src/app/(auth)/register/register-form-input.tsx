@@ -105,7 +105,7 @@ function RegisterFormInput(props: RegisterFormInputProps) {
 
     return (
         // Set Grid to half width if inputName is firstname or lastname else full width
-        <Grid xs={inputName === "firstname" || inputName === "lastname" ? 6 : 12}>
+        <Grid xs={inputName === "firstName" || inputName === "lastName" ? 6 : 12}>
             <FormControl fullWidth error={Boolean(errors[inputName.toString()])}>
                 {/* Form Input Label And Visibility Button */}
                 <Box display="flex" gap={2} p={1} justifyContent="space-between" alignItems="center">

@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react"
 
-import SideBarLayout from "src/layouts/sidebar-layout/index"
+import SideBarLayout from "src/layouts/sidebar-layout"
 
 type ProfileLayoutProps = {
     children: ReactNode

@@ -3,14 +3,10 @@
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
-import createServerClient from "src/utils/supabase/server"
+import { signOut as nextAuthSignOut } from "src/utils/auth/auth"
 
 export default async function signOut() {
-    const supabase = createServerClient()
-
-    const { error } = await supabase.auth.signOut()
-
-    if (error) console.debug("Error signing out", error)
+    await nextAuthSignOut()
 
     revalidatePath("/")
     redirect("/sign-out")
