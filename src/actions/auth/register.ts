@@ -56,7 +56,6 @@ export default async function register(credentials: RegisterRequest): Promise<Au
         }
     } catch (error) {
         console.error(`Error Registering User: ${error}`)
-
         return { error: "Error Registering User And Sending Verification Email", status: 500 }
     }
 }

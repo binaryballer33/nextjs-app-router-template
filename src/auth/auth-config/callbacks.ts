@@ -18,7 +18,7 @@ import getUserById from "src/actions/user/get-user-by-id"
  * session callback happens after the jwt callback and uses the token returned from the jwt callback, returns the session
  */
 const callbacks: NextAuthConfig["callbacks"] = {
-    async jwt({ isNewUser, token, user }) {
+    async jwt({ token }) {
         if (!token.sub) return token
 
         const existingUser = await getUserById(token.sub)
@@ -26,24 +26,12 @@ const callbacks: NextAuthConfig["callbacks"] = {
 
         token.role = existingUser.role
 
-        // TODO: might delete
-        if (isNewUser && user) {
-            token.firstName = user?.firstName
-            token.lastName = user?.lastName
-        }
-
         return token
     },
 
     async session({ session, token }) {
         if (token.sub && session.user) session.user.id = token.sub
         if (token.role && session.user) session.user.role = token.role
-
-        // TODO: might delete
-        if (token) {
-            session.user.firstName = token.firstName!
-            session.user.lastName = token.lastName!
-        }
 
         return session
     },

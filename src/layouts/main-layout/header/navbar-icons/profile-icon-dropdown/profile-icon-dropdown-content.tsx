@@ -11,6 +11,8 @@ import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone"
 
 import { alpha, Box, Button, Divider, ListItemText, Menu, MenuItem, useTheme } from "@mui/material"
 
+import handleAuthResponse from "src/utils/helper-functions/handleServerResponse"
+
 import signOut from "src/actions/auth/sign-out"
 
 import profileIconDropdownNavItems from "src/router/profile-dropdown-icon-routes"
@@ -42,18 +44,11 @@ export default function ProfileIconDropdown(props: ProfileDropdownProps) {
     const { t } = useTranslation()
 
     const handleSignOut = useCallback(async (): Promise<void> => {
-        try {
-            await signOut() // sign out the user with next auth
-            toast.success(t("You've Successfully Signed Out"))
-            window.location.reload() // force all components to recognize the change in auth status
-            router.push(routes.auth.signOut)
-        } catch (error) {
-            toast.error(t("An Error Occurred While Signing Out"))
-            console.error("Error While Signing Out: ", error)
-        } finally {
-            onClose() // close the profile dropdown
-        }
-    }, [onClose, router, t])
+        const response = await signOut() // sign out the user with next auth
+        handleAuthResponse({ redirectTo: routes.auth.signOut, response, toast })
+
+        onClose() // close the profile dropdown
+    }, [onClose])
 
     const handleNavItemClick = (route: string): void => {
         onClose()

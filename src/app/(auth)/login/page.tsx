@@ -33,6 +33,8 @@ import {
 
 import { signIn } from "next-auth/react"
 
+import handleAuthResponse from "src/utils/helper-functions/handleServerResponse"
+
 import login from "src/actions/auth/login"
 
 import RouterLink from "src/components/base/router-link"
@@ -87,18 +89,7 @@ export default function LoginPage() {
             const response = await login(credentials) // Call the login action to sign in the user with next auth
             setIsLoading(false)
 
-            if (response.status === 400 || response.status === 500) {
-                toast.error(response.error)
-                return
-            }
-
-            if (response.status === 200) {
-                toast.success(response.success)
-
-                // TODO: temporary fix for refreshing session
-                // force all components to recognize the change in auth status
-                window.location.href = routes.user.profile
-            }
+            handleAuthResponse({ redirectTo: routes.user.profile, response, toast })
         },
         [resetFormFields],
     )

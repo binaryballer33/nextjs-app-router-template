@@ -11,21 +11,13 @@ export default async function sendVerificationEmail(email: string, token: string
         // TODO: can only send to your email unless you add domain ( implement this later )
         email = "shaqmandy@gmail.com"
 
-        // TODO: figure out why gmail won't deliver this email with this html? Is it because of the link??
+        // TODO: figure out why gmail won't deliver emails with links, doesn't matter if its localhost or google.com
         return await resend.emails.send({
             from: "onboarding@resend.dev",
             html: `<p>Click <a href="${confirmationLink}">Here</a> To Confirm Your Email.</p>`,
             subject: "Confirm Your Email",
             to: email,
         })
-
-        // TODO: UPDATE, THIS DOESN"T WORK EITHER
-        // await resend.emails.send({
-        //     from: "onboarding@resend.dev",
-        //     to: email,
-        //     subject: "Confirm Your Email",
-        //     html: `<p>Go To This Site To Confirm Your Email: ${confirmationLink}</p>`,
-        // })
 
         // await resend.emails.send({
         //     from: "onboarding@resend.dev",

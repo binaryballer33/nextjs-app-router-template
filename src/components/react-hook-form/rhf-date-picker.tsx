@@ -10,7 +10,7 @@ import dayjs from "dayjs"
 import { DatePicker } from "@mui/x-date-pickers/DatePicker"
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker"
 
-import { formatStr } from "src/utils/format-time"
+import { formatStr } from "src/utils/helper-functions/format-time"
 
 type RHFDatePickerProps = {
     name: string

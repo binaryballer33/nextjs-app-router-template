@@ -51,9 +51,7 @@ export const ListItemButtonWrapper = styled(ListItemButton)(({ theme }) => ({
             color: theme.palette.text.primary,
         },
         background: theme.palette.background.paper,
-
         borderColor: theme.palette.primary.main,
-
         color: theme.palette.text.primary,
     },
     "&.Mui-selected, &.Mui-selected:hover": {
@@ -64,9 +62,7 @@ export const ListItemButtonWrapper = styled(ListItemButton)(({ theme }) => ({
             color: theme.palette.text.primary,
         },
         background: theme.palette.primary.main,
-
         borderColor: theme.palette.primary.main,
-
         color: theme.palette.text.primary,
     },
     borderRadius: theme.shape.borderRadius,

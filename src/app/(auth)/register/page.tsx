@@ -7,7 +7,6 @@ import oAuthProviders from "src/types/forms/common"
 import { defaultValuesRegisterRequest, RegisterRequestSchema } from "src/types/forms/register"
 
 import Image from "next/image"
-import { useRouter } from "next/navigation"
 
 import { useCallback, useState } from "react"
 
@@ -32,6 +31,8 @@ import {
 
 import { signIn } from "next-auth/react"
 
+import handleAuthResponse from "src/utils/helper-functions/handleServerResponse"
+
 import register from "src/actions/auth/register"
 
 import RouterLink from "src/components/base/router-link"
@@ -51,7 +52,6 @@ export default function RegisterPage() {
 
     const theme = useTheme()
     const { t } = useTranslation()
-    const router = useRouter()
 
     const {
         formState: { errors },
@@ -77,13 +77,9 @@ export default function RegisterPage() {
             const response = await register(credentials)
             setIsLoading(false)
 
-            if (response.status === 200) {
-                toast.success(response.success)
-                router.push(routes.auth.login)
-            }
-            if (response.status === 400 || response.status === 500) toast.error(response.error, { duration: 5000 })
+            handleAuthResponse({ redirectTo: routes.auth.login, response, toast })
         },
-        [resetFormFields, router],
+        [resetFormFields],
     )
 
     const handleClearForm = useCallback(() => {
