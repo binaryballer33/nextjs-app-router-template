@@ -1,7 +1,10 @@
+import { useTranslation } from "react-i18next"
+
 import CommentTwoToneIcon from "@mui/icons-material/CommentTwoTone"
 import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone"
 import ShareTwoToneIcon from "@mui/icons-material/ShareTwoTone"
 import ThumbUpAltTwoToneIcon from "@mui/icons-material/ThumbUpAltTwoTone"
+
 import {
     alpha,
     Avatar,
@@ -17,7 +20,6 @@ import {
     Stack,
     Typography,
 } from "@mui/material"
-import { useTranslation } from "react-i18next"
 
 export default function ActivityTab() {
     const { t } = useTranslation()
@@ -25,72 +27,72 @@ export default function ActivityTab() {
     return (
         <Card>
             <CardHeader
-                sx={{
-                    "& .MuiCardHeader-action": {
-                        display: { xs: "none", sm: "flex" },
-                    },
-                }}
-                avatar={
-                    <Avatar
-                        sx={{
-                            width: 54,
-                            height: 54,
-                            mb: {
-                                xs: 1,
-                                sm: 0,
-                            },
-                        }}
-                        src="/avatars/5.png"
-                    />
-                }
                 action={
                     <IconButton color="primary">
                         <MoreHorizTwoToneIcon />
                     </IconButton>
                 }
-                titleTypographyProps={{ variant: "h6" }}
-                subheaderTypographyProps={{ variant: "subtitle2" }}
-                title="Allison Lipshutz"
+                avatar={
+                    <Avatar
+                        src="/avatars/5.png"
+                        sx={{
+                            height: 54,
+                            mb: {
+                                sm: 0,
+                                xs: 1,
+                            },
+                            width: 54,
+                        }}
+                    />
+                }
                 subheader={
                     <>
                         Managing Partner,{" "}
-                        <Link underline="hover" href="" onClick={(e) => e.preventDefault()}>
+                        <Link href="" onClick={(e) => e.preventDefault()} underline="hover">
                             #software
                         </Link>
                         ,{" "}
-                        <Link underline="hover" href="" onClick={(e) => e.preventDefault()}>
+                        <Link href="" onClick={(e) => e.preventDefault()} underline="hover">
                             #managers
                         </Link>
                         , Google Inc.
                     </>
                 }
+                subheaderTypographyProps={{ variant: "subtitle2" }}
+                sx={{
+                    "& .MuiCardHeader-action": {
+                        display: { sm: "flex", xs: "none" },
+                    },
+                }}
+                title="Allison Lipshutz"
+                titleTypographyProps={{ variant: "h6" }}
             />
             <Divider />
             <Box
+                p={2}
+                py={{ sm: 3, xs: 2 }}
                 sx={{
                     backgroundColor: (theme) =>
                         theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.02) : "neutral.25",
                 }}
-                py={{ xs: 2, sm: 3 }}
-                p={2}
             >
-                <Typography variant="h6" fontWeight={500}>
+                <Typography fontWeight={500} variant="h6">
                     Welcome to organizing your remote office for maximum productivity.
                 </Typography>
             </Box>
             <CardMedia
+                image="/placeholders/covers/1.jpg"
                 sx={{
                     minHeight: 284,
                 }}
-                image="/placeholders/covers/1.jpg"
                 title="Card Cover"
             />
-            <Box py={{ xs: 2, sm: 3 }} p={2}>
-                <Link underline="hover" variant="h6" color="text.primary" href="" onClick={(e) => e.preventDefault()}>
+            <Box p={2} py={{ sm: 3, xs: 2 }}>
+                <Link color="text.primary" href="" onClick={(e) => e.preventDefault()} underline="hover" variant="h6">
                     Organizing Your Remote Office for Maximum Productivity
                 </Link>
-                <Typography variant="subtitle1" sx={{ pt: 0.5 }}>
-                    <Link variant="subtitle1" href="" underline="hover" onClick={(e) => e.preventDefault()}>
+                <Typography sx={{ pt: 0.5 }} variant="subtitle1">
+                    <Link href="" onClick={(e) => e.preventDefault()} underline="hover" variant="subtitle1">
                         example.com
                     </Link>{" "}
                     • 4 {t("mins read")}
@@ -99,16 +101,16 @@ export default function ActivityTab() {
             <Divider />
             <CardActions
                 sx={{
-                    display: { xs: "block", md: "flex" },
                     alignItems: "center",
+                    display: { md: "flex", xs: "block" },
                     justifyContent: "space-between",
                 }}
             >
                 <Stack
-                    gap={1}
                     direction="row"
-                    flexWrap={{ xs: "wrap", md: "nowrap" }}
-                    justifyContent={{ xs: "flex-start", md: "center" }}
+                    flexWrap={{ md: "nowrap", xs: "wrap" }}
+                    gap={1}
+                    justifyContent={{ md: "center", xs: "flex-start" }}
                 >
                     <Button startIcon={<ThumbUpAltTwoToneIcon />} variant="contained">
                         {t("Like")}
@@ -122,10 +124,10 @@ export default function ActivityTab() {
                 </Stack>
                 <Box
                     sx={{
-                        mt: { xs: 2, md: 0 },
+                        mt: { md: 0, xs: 2 },
                     }}
                 >
-                    <Typography variant="subtitle2" component="span">
+                    <Typography component="span" variant="subtitle2">
                         <b>485</b> {t("reactions")} • <b>63</b> {t("comments")}
                     </Typography>
                 </Box>

@@ -1,26 +1,26 @@
+import type { Metadata, Viewport } from "next/"
 import type { ReactNode } from "react"
 
-import type { Metadata, Viewport } from "next/"
-
 import { SessionProvider } from "next-auth/react"
+import { auth } from "src/auth/auth"
 
 import NProgress from "src/components/base/nprogress"
+
 import MainLayout from "src/layouts/main-layout"
-import { auth } from "src/utils/auth/auth"
 
 import ProvidersLayout from "../layouts/providers/providers-layout"
 
 export const dynamic = "force-dynamic"
 
 export const viewport: Viewport = {
-    width: "device-width",
-    initialScale: 1,
     colorScheme: "dark",
+    initialScale: 1,
+    width: "device-width",
 }
 
 export const metadata: Metadata = {
-    title: "Starter Next Template",
     description: "Created By Shaquille Rashad Mandy",
+    title: "Starter Next Template",
 }
 
 type LayoutProps = {

@@ -1,5 +1,8 @@
+import { useTranslation } from "react-i18next"
+
 import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone"
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone"
+
 import {
     alpha,
     Box,
@@ -12,33 +15,32 @@ import {
     Stack,
     Typography,
 } from "@mui/material"
-import { useTranslation } from "react-i18next"
 
 export default function EditProfileDetails() {
     const { t } = useTranslation()
 
     return (
-        <Grid container spacing={{ xs: 2, sm: 3 }}>
+        <Grid container spacing={{ sm: 3, xs: 2 }}>
             <Grid xs={12}>
                 <Card>
                     <Box
-                        p={2}
+                        alignItems={{ sm: "center", xs: "flex-start" }}
                         display="flex"
-                        alignItems={{ xs: "flex-start", sm: "center" }}
-                        flexDirection={{ xs: "column", sm: "row" }}
+                        flexDirection={{ sm: "row", xs: "column" }}
                         justifyContent="space-between"
+                        p={2}
                         sx={{
                             backgroundColor: (theme) =>
                                 theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.02) : "neutral.25",
                         }}
                     >
-                        <Box mb={{ xs: 2, sm: 0 }}>
+                        <Box mb={{ sm: 0, xs: 2 }}>
                             <Typography variant="h5">{t("Personal details")}</Typography>
                             <Typography variant="subtitle1">
                                 {t("Manage informations related to your personal details")}
                             </Typography>
                         </Box>
-                        <Button variant="outlined" color="secondary" startIcon={<EditTwoToneIcon />}>
+                        <Button color="secondary" startIcon={<EditTwoToneIcon />} variant="outlined">
                             {t("Edit")}
                         </Button>
                     </Box>
@@ -46,32 +48,32 @@ export default function EditProfileDetails() {
                     <CardContent>
                         <Typography variant="subtitle2">
                             <Grid container spacing={1}>
-                                <Grid xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
-                                    <Box pr={{ xs: 2, sm: 3 }}>{t("Name")}:</Box>
+                                <Grid md={3} sm={4} textAlign={{ sm: "right" }} xs={12}>
+                                    <Box pr={{ sm: 3, xs: 2 }}>{t("Name")}:</Box>
                                 </Grid>
-                                <Grid xs={12} sm={8} md={9}>
-                                    <Typography variant="body1" fontWeight={500}>
+                                <Grid md={9} sm={8} xs={12}>
+                                    <Typography fontWeight={500} variant="body1">
                                         Craig Donin
                                     </Typography>
                                 </Grid>
-                                <Grid xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
-                                    <Box pr={{ xs: 2, sm: 3 }}>{t("Date of birth")}:</Box>
+                                <Grid md={3} sm={4} textAlign={{ sm: "right" }} xs={12}>
+                                    <Box pr={{ sm: 3, xs: 2 }}>{t("Date of birth")}:</Box>
                                 </Grid>
-                                <Grid xs={12} sm={8} md={9}>
-                                    <Typography variant="body1" fontWeight={500}>
+                                <Grid md={9} sm={8} xs={12}>
+                                    <Typography fontWeight={500} variant="body1">
                                         15 March 1977
                                     </Typography>
                                 </Grid>
-                                <Grid xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
-                                    <Box pr={{ xs: 2, sm: 3 }}>{t("Address")}:</Box>
+                                <Grid md={3} sm={4} textAlign={{ sm: "right" }} xs={12}>
+                                    <Box pr={{ sm: 3, xs: 2 }}>{t("Address")}:</Box>
                                 </Grid>
-                                <Grid xs={12} sm={8} md={9}>
+                                <Grid md={9} sm={8} xs={12}>
                                     <Box
                                         sx={{
-                                            maxWidth: { xs: "auto", sm: 340 },
+                                            maxWidth: { sm: 340, xs: "auto" },
                                         }}
                                     >
-                                        <Typography variant="body1" fontWeight={500}>
+                                        <Typography fontWeight={500} variant="body1">
                                             1749 High Meadow Lane, SEQUOIA NATIONAL PARK, California, 93262
                                         </Typography>
                                     </Box>
@@ -84,21 +86,21 @@ export default function EditProfileDetails() {
             <Grid xs={12}>
                 <Card>
                     <Box
-                        p={2}
+                        alignItems={{ sm: "center", xs: "flex-start" }}
                         display="flex"
-                        alignItems={{ xs: "flex-start", sm: "center" }}
-                        flexDirection={{ xs: "column", sm: "row" }}
+                        flexDirection={{ sm: "row", xs: "column" }}
                         justifyContent="space-between"
+                        p={2}
                         sx={{
                             backgroundColor: (theme) =>
                                 theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.02) : "neutral.25",
                         }}
                     >
-                        <Box mb={{ xs: 2, sm: 0 }}>
+                        <Box mb={{ sm: 0, xs: 2 }}>
                             <Typography variant="h5">{t("Account settings")}</Typography>
                             <Typography variant="subtitle2">{t("Manage details related to your account")}</Typography>
                         </Box>
-                        <Button variant="outlined" color="secondary" startIcon={<EditTwoToneIcon />}>
+                        <Button color="secondary" startIcon={<EditTwoToneIcon />} variant="outlined">
                             {t("Edit")}
                         </Button>
                     </Box>
@@ -106,35 +108,35 @@ export default function EditProfileDetails() {
                     <CardContent>
                         <Typography variant="subtitle2">
                             <Grid container spacing={1}>
-                                <Grid xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
-                                    <Box pr={{ xs: 2, sm: 3 }}>{t("Language")}:</Box>
+                                <Grid md={3} sm={4} textAlign={{ sm: "right" }} xs={12}>
+                                    <Box pr={{ sm: 3, xs: 2 }}>{t("Language")}:</Box>
                                 </Grid>
-                                <Grid xs={12} sm={8} md={9}>
-                                    <Typography variant="body1" fontWeight={500}>
+                                <Grid md={9} sm={8} xs={12}>
+                                    <Typography fontWeight={500} variant="body1">
                                         English (US)
                                     </Typography>
                                 </Grid>
-                                <Grid xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
-                                    <Box pr={{ xs: 2, sm: 3 }}>{t("Timezone")}:</Box>
+                                <Grid md={3} sm={4} textAlign={{ sm: "right" }} xs={12}>
+                                    <Box pr={{ sm: 3, xs: 2 }}>{t("Timezone")}:</Box>
                                 </Grid>
-                                <Grid xs={12} sm={8} md={9}>
-                                    <Typography variant="body1" fontWeight={500}>
+                                <Grid md={9} sm={8} xs={12}>
+                                    <Typography fontWeight={500} variant="body1">
                                         GMT +2
                                     </Typography>
                                 </Grid>
-                                <Grid xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
-                                    <Box pr={{ xs: 2, sm: 3 }}>{t("Account status")}:</Box>
+                                <Grid md={3} sm={4} textAlign={{ sm: "right" }} xs={12}>
+                                    <Box pr={{ sm: 3, xs: 2 }}>{t("Account status")}:</Box>
                                 </Grid>
-                                <Grid xs={12} sm={8} md={9}>
+                                <Grid md={9} sm={8} xs={12}>
                                     <Chip
-                                        size="small"
+                                        color="success"
                                         label={
-                                            <Box fontWeight={600} display="flex" alignItems="center">
+                                            <Box alignItems="center" display="flex" fontWeight={600}>
                                                 <DoneTwoToneIcon fontSize="inherit" sx={{ mr: 0.5 }} />
                                                 {t("Active")}
                                             </Box>
                                         }
-                                        color="success"
+                                        size="small"
                                     />
                                 </Grid>
                             </Grid>
@@ -145,23 +147,23 @@ export default function EditProfileDetails() {
             <Grid xs={12}>
                 <Card>
                     <Box
-                        p={2}
+                        alignItems={{ sm: "center", xs: "flex-start" }}
                         display="flex"
-                        alignItems={{ xs: "flex-start", sm: "center" }}
-                        flexDirection={{ xs: "column", sm: "row" }}
+                        flexDirection={{ sm: "row", xs: "column" }}
                         justifyContent="space-between"
+                        p={2}
                         sx={{
                             backgroundColor: (theme) =>
                                 theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.02) : "neutral.25",
                         }}
                     >
-                        <Box mb={{ xs: 2, sm: 0 }}>
+                        <Box mb={{ sm: 0, xs: 2 }}>
                             <Typography variant="h5">{t("Email addresses")}</Typography>
                             <Typography variant="subtitle2">
                                 {t("Manage details related to your associated email addresses")}
                             </Typography>
                         </Box>
-                        <Button variant="outlined" color="secondary" startIcon={<EditTwoToneIcon />}>
+                        <Button color="secondary" startIcon={<EditTwoToneIcon />} variant="outlined">
                             {t("Edit")}
                         </Button>
                     </Box>
@@ -169,32 +171,32 @@ export default function EditProfileDetails() {
                     <CardContent>
                         <Typography variant="subtitle2">
                             <Grid container spacing={1}>
-                                <Grid xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
-                                    <Box pr={{ xs: 2, sm: 3 }}>{t("Primary email address")}:</Box>
+                                <Grid md={3} sm={4} textAlign={{ sm: "right" }} xs={12}>
+                                    <Box pr={{ sm: 3, xs: 2 }}>{t("Primary email address")}:</Box>
                                 </Grid>
-                                <Grid xs={12} sm={8} md={9}>
-                                    <Stack direction="row" alignItems="center" spacing={1}>
-                                        <Typography variant="body1" fontWeight={500} lineHeight={1}>
+                                <Grid md={9} sm={8} xs={12}>
+                                    <Stack alignItems="center" direction="row" spacing={1}>
+                                        <Typography fontWeight={500} lineHeight={1} variant="body1">
                                             example@demo.com
                                         </Typography>
 
                                         <Chip
-                                            size="small"
+                                            color="success"
                                             label={
-                                                <Box fontWeight={600} display="flex" alignItems="center">
+                                                <Box alignItems="center" display="flex" fontWeight={600}>
                                                     <DoneTwoToneIcon fontSize="inherit" sx={{ mr: 0.5 }} />
                                                     {t("Primary")}
                                                 </Box>
                                             }
-                                            color="success"
+                                            size="small"
                                         />
                                     </Stack>
                                 </Grid>
-                                <Grid xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
-                                    <Box pr={{ xs: 2, sm: 3 }}>{t("Secondary email address")}:</Box>
+                                <Grid md={3} sm={4} textAlign={{ sm: "right" }} xs={12}>
+                                    <Box pr={{ sm: 3, xs: 2 }}>{t("Secondary email address")}:</Box>
                                 </Grid>
-                                <Grid xs={12} sm={8} md={9}>
-                                    <Typography variant="body1" fontWeight={500}>
+                                <Grid md={9} sm={8} xs={12}>
+                                    <Typography fontWeight={500} variant="body1">
                                         demo@example.com
                                     </Typography>
                                 </Grid>

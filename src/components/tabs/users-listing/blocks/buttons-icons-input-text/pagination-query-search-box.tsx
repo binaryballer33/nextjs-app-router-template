@@ -2,6 +2,7 @@ import type { ChangeEvent, Dispatch, SetStateAction } from "react"
 
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded"
 import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone"
+
 import { IconButton, InputAdornment, TextField } from "@mui/material"
 
 type PaginationQuerySearchBoxProps = {
@@ -21,27 +22,21 @@ export default function PaginationQuerySearchBox(props: PaginationQuerySearchBox
 
     return (
         <TextField
-            margin="none"
             InputProps={{
-                startAdornment: (
-                    <InputAdornment position="start">
-                        <SearchTwoToneIcon />
-                    </InputAdornment>
-                ),
                 //  Only Display Clear Icon If There Is Text In The Search Box
                 endAdornment: query && (
                     <InputAdornment
+                        position="end"
                         sx={{
                             mr: -0.7,
                         }}
-                        position="end"
                     >
                         {/* Clear The Search Box */}
                         <IconButton
-                            color="error"
                             aria-label="clear input"
-                            onClick={() => setQuery("")}
+                            color="error"
                             edge="end"
+                            onClick={() => setQuery("")}
                             size="small"
                             sx={{
                                 color: "error.main",
@@ -51,11 +46,17 @@ export default function PaginationQuerySearchBox(props: PaginationQuerySearchBox
                         </IconButton>
                     </InputAdornment>
                 ),
+                startAdornment: (
+                    <InputAdornment position="start">
+                        <SearchTwoToneIcon />
+                    </InputAdornment>
+                ),
             }}
+            margin="none"
             onChange={handleQueryChange}
             placeholder={t("Filter results")}
-            value={query}
             size="small"
+            value={query}
             variant="outlined"
         />
     )

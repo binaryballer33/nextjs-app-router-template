@@ -1,23 +1,27 @@
 import { Accordion, alpha, styled } from "@mui/material"
 
 export const AccordionAlternate = styled(Accordion)(({ theme }) => ({
-    ".MuiAccordionSummary-root": {
-        flexDirection: "row-reverse",
-        paddingLeft: theme.spacing(1),
-        borderRadius: "inherit",
+    ".MuiAccordionDetails-root": {
+        paddingLeft: theme.spacing(4.5),
+    },
 
+    ".MuiAccordionSummary-root": {
+        ".MuiAccordionSummary-expandIconWrapper": {
+            marginRight: theme.spacing(1),
+        },
         "&:hover": {
             backgroundColor:
                 theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.02) : theme.palette.neutral[25],
         },
+        borderRadius: "inherit",
 
-        ".MuiAccordionSummary-expandIconWrapper": {
-            marginRight: theme.spacing(1),
-        },
+        flexDirection: "row-reverse",
+
+        paddingLeft: theme.spacing(1),
     },
 
-    ".MuiAccordionDetails-root": {
-        paddingLeft: theme.spacing(4.5),
+    "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+        transform: "rotate(90deg)",
     },
 
     "&.Mui-expanded": {
@@ -25,30 +29,30 @@ export const AccordionAlternate = styled(Accordion)(({ theme }) => ({
             backgroundColor: "inherit",
         },
     },
-
-    "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-        transform: "rotate(90deg)",
-    },
 }))
 
 export const AccordionPrimary = styled(Accordion)(({ theme }) => ({
     ".MuiAccordionSummary-expandIconWrapper": {
-        borderRadius: "50%",
+        "&.Mui-expanded": {
+            backgroundColor: theme.palette.primary.main,
+            borderColor: theme.palette.primary.main,
+            color: theme.palette.primary.contrastText,
+        },
+        alignItems: "center",
         border:
             theme.palette.mode === "dark"
                 ? `1px solid ${theme.palette.neutral[300]}`
                 : `1px solid ${theme.palette.neutral[800]}`,
-        width: 32,
-        height: 32,
+        borderRadius: "50%",
         display: "flex",
-        alignItems: "center",
+        height: 32,
         justifyContent: "center",
 
-        "&.Mui-expanded": {
-            borderColor: theme.palette.primary.main,
-            backgroundColor: theme.palette.primary.main,
-            color: theme.palette.primary.contrastText,
-        },
+        width: 32,
+    },
+
+    ".MuiAccordionSummary-root, .MuiAccordionDetails-root": {
+        borderLeft: "3px solid transparent",
     },
 
     ".MuiAccordionSummary-root:hover": {
@@ -56,14 +60,7 @@ export const AccordionPrimary = styled(Accordion)(({ theme }) => ({
             theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.02) : theme.palette.neutral[25],
     },
 
-    ".MuiAccordionSummary-root, .MuiAccordionDetails-root": {
-        borderLeft: "3px solid transparent",
-    },
-
     "&.Mui-expanded": {
-        backgroundColor:
-            theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.02) : theme.palette.neutral[25],
-
         ".MuiAccordionSummary-content .MuiTypography-root": {
             color: theme.palette.primary.main,
         },
@@ -71,65 +68,68 @@ export const AccordionPrimary = styled(Accordion)(({ theme }) => ({
         ".MuiAccordionSummary-root, .MuiAccordionDetails-root": {
             borderLeftColor: theme.palette.primary.main,
         },
+
+        backgroundColor:
+            theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.02) : theme.palette.neutral[25],
     },
 }))
 
 export const AccordionPlus = styled(Accordion)(({ theme }) => ({
-    ".MuiAccordionSummary-expandIconWrapper": {
-        borderRadius: "50%",
-        border:
-            theme.palette.mode === "dark"
-                ? `1px solid ${theme.palette.neutral[100]}`
-                : `1px solid ${theme.palette.neutral[900]}`,
-        width: 28,
-        height: 28,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: theme.palette.mode === "dark" ? theme.palette.neutral[100] : theme.palette.neutral[900],
-        color: theme.palette.mode === "dark" ? theme.palette.common.black : theme.palette.common.white,
-    },
-
     ".MuiAccordionSummary-content": {
         padding: theme.spacing(1, 0),
     },
 
-    backgroundColor: "transparent",
-    border: "none",
-    boxShadow: "none",
+    ".MuiAccordionSummary-expandIconWrapper": {
+        alignItems: "center",
+        backgroundColor: theme.palette.mode === "dark" ? theme.palette.neutral[100] : theme.palette.neutral[900],
+        border:
+            theme.palette.mode === "dark"
+                ? `1px solid ${theme.palette.neutral[100]}`
+                : `1px solid ${theme.palette.neutral[900]}`,
+        borderRadius: "50%",
+        color: theme.palette.mode === "dark" ? theme.palette.common.black : theme.palette.common.white,
+        display: "flex",
+        height: 28,
+        justifyContent: "center",
+        width: 28,
+    },
 
     ".MuiAccordionSummary-root": {
-        flexDirection: "row-reverse",
-        padding: theme.spacing(0),
-        border: "none",
-
         ".MuiAccordionSummary-expandIconWrapper": {
             marginRight: theme.spacing(1),
         },
+        border: "none",
+        flexDirection: "row-reverse",
+
+        padding: theme.spacing(0),
     },
+    backgroundColor: "transparent",
+    border: "none",
+
+    boxShadow: "none",
 }))
 
 export const AccordionMinimal = styled(Accordion)(({ theme }) => ({
-    borderRadius: "0px !important",
-    boxShadow: "none",
-
+    ".MuiAccordionDetails-root": {
+        padding: 0,
+    },
     ".MuiAccordionSummary-root": {
-        flexDirection: "row",
-        paddingLeft: theme.spacing(1),
-        paddingRight: theme.spacing(1),
-        borderRadius: theme.shape.borderRadius,
-        margin: theme.spacing(2),
-
         "&:hover": {
             backgroundColor: theme.palette.mode === "dark" ? alpha(theme.palette.neutral[50], 0.02) : "neutral.50",
         },
-    },
+        borderRadius: theme.shape.borderRadius,
+        flexDirection: "row",
+        margin: theme.spacing(2),
+        paddingLeft: theme.spacing(1),
 
-    ".MuiAccordionDetails-root": {
-        padding: 0,
+        paddingRight: theme.spacing(1),
     },
 
     "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
         transform: "rotate(180deg)",
     },
+
+    borderRadius: "0px !important",
+
+    boxShadow: "none",
 }))

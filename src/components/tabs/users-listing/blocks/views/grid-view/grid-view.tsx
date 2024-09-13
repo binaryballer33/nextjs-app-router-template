@@ -6,27 +6,27 @@ import NoDataResults from "src/components/tabs/users-listing/blocks/buttons-icon
 import GridCard from "src/components/tabs/users-listing/blocks/views/grid-view/grid-card"
 
 type GridViewProps = {
-    page: number
-    limit: number
-    selectedRecords: string[]
-    paginatedRecords: any[]
     filteredRecords: any[]
-    handlePageChange: (event: unknown, newPage: number) => void
     handleLimitChange: (event: ChangeEvent<HTMLInputElement>) => void
+    handlePageChange: (event: unknown, newPage: number) => void
     handleSelectOneRecord: (event: ChangeEvent<HTMLInputElement>, id: string) => void
+    limit: number
+    page: number
+    paginatedRecords: any[]
+    selectedRecords: string[]
     t: (token: string) => string
 }
 
 export default function GridView(props: GridViewProps) {
     const {
-        page,
-        limit,
-        selectedRecords,
-        paginatedRecords,
         filteredRecords,
-        handlePageChange,
         handleLimitChange,
+        handlePageChange,
         handleSelectOneRecord,
+        limit,
+        page,
+        paginatedRecords,
+        selectedRecords,
         t,
     } = props
 
@@ -35,15 +35,15 @@ export default function GridView(props: GridViewProps) {
         <NoDataResults t={t} />
     ) : (
         <>
-            <Grid container spacing={{ xs: 2, sm: 3 }}>
+            <Grid container spacing={{ sm: 3, xs: 2 }}>
                 {paginatedRecords.map((card) => {
                     return (
-                        <Grid xs={12} sm={6} lg={4} key={card.id}>
+                        <Grid key={card.id} lg={4} sm={6} xs={12}>
                             {/* Create The Cards */}
                             <GridCard
                                 card={card}
-                                selectedRecords={selectedRecords}
                                 handleSelectOneRecord={handleSelectOneRecord}
+                                selectedRecords={selectedRecords}
                                 t={t}
                             />
                         </Grid>
@@ -54,15 +54,15 @@ export default function GridView(props: GridViewProps) {
             {/* Pagination Controls */}
             <Card
                 sx={{
-                    p: 2,
-                    mt: 3,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-
                     ".MuiTablePagination-select": {
                         py: 0.55,
                     },
+                    alignItems: "center",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mt: 3,
+
+                    p: 2,
                 }}
             >
                 <Box>
@@ -74,19 +74,19 @@ export default function GridView(props: GridViewProps) {
                 <TablePagination
                     component="div"
                     count={filteredRecords.length}
+                    labelRowsPerPage=""
                     onPageChange={handlePageChange}
                     onRowsPerPageChange={handleLimitChange}
                     page={page} //  MUI TablePagination page starts at 0
                     rowsPerPage={limit}
-                    labelRowsPerPage=""
                     rowsPerPageOptions={[5, 10, 25, 50, 100]}
                     slotProps={{
                         select: {
-                            variant: "outlined",
                             size: "small",
                             sx: {
                                 p: 0,
                             },
+                            variant: "outlined",
                         },
                     }}
                 />

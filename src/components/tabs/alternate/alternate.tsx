@@ -1,7 +1,10 @@
+import type { SelectChangeEvent } from "@mui/material"
 import type { ReactNode, SyntheticEvent } from "react"
+
 import { useState } from "react"
 
-import type { SelectChangeEvent } from "@mui/material"
+import { useTranslation } from "react-i18next"
+
 import {
     alpha,
     Box,
@@ -15,7 +18,6 @@ import {
     useMediaQuery,
     useTheme,
 } from "@mui/material"
-import { useTranslation } from "react-i18next"
 
 import PlaceholderBox from "src/components/base/placeholder-box"
 import { TabsAlternate } from "src/components/base/styles/tabs"
@@ -27,19 +29,19 @@ type TabPanelProps = {
 }
 
 function CustomTabPanel(props: TabPanelProps) {
-    const { children, value, index } = props
+    const { children, index, value } = props
 
     return (
-        <div role="tabpanel" hidden={value !== index}>
-            {value === index && <Box sx={{ p: 3, minHeight: 300 }}>{children}</Box>}
+        <div hidden={value !== index} role="tabpanel">
+            {value === index && <Box sx={{ minHeight: 300, p: 3 }}>{children}</Box>}
         </div>
     )
 }
 
 function a11yProps(index: number) {
     return {
-        id: `simple-tab-${index}`,
         "aria-controls": `simple-tabpanel-${index}`,
+        id: `simple-tab-${index}`,
     }
 }
 
@@ -55,10 +57,10 @@ export default function AlternateTabs() {
 
     return (
         <Stack
-            justifyContent="center"
-            spacing={{ xs: 2, sm: 3 }}
             alignItems="center"
-            direction={{ xs: "column", sm: "row" }}
+            direction={{ sm: "row", xs: "column" }}
+            justifyContent="center"
+            spacing={{ sm: 3, xs: 2 }}
         >
             <Card
                 sx={{
@@ -68,24 +70,24 @@ export default function AlternateTabs() {
                 <CardHeader title={t("Navigation tabs")} />
                 <Divider />
                 <CardHeader
+                    disableTypography
                     sx={{
+                        ".MuiCardHeader-content": {
+                            overflow: "visible",
+                        },
                         backgroundColor: (bgColorTheme) =>
                             bgColorTheme.palette.mode === "dark"
                                 ? alpha(bgColorTheme.palette.neutral[25], 0.02)
                                 : "neutral.25",
-                        ".MuiCardHeader-content": {
-                            overflow: "visible",
-                        },
                     }}
-                    disableTypography
                     title={
                         smUp ? (
                             <TabsAlternate
-                                value={Number(value)}
-                                onChange={handleTabChange}
-                                variant="fullWidth"
-                                textColor="secondary"
                                 indicatorColor="secondary"
+                                onChange={handleTabChange}
+                                textColor="secondary"
+                                value={Number(value)}
+                                variant="fullWidth"
                             >
                                 <Tab label={t("Analytics")} {...a11yProps(0)} />
                                 <Tab label={t("Integrations")} {...a11yProps(1)} />
@@ -93,7 +95,7 @@ export default function AlternateTabs() {
                                 <Tab label={t("Support")} {...a11yProps(3)} />
                             </TabsAlternate>
                         ) : (
-                            <Select value={value} onChange={handleSelectChange} fullWidth>
+                            <Select fullWidth onChange={handleSelectChange} value={value}>
                                 <MenuItem value={0}>{t("Analytics")}</MenuItem>
                                 <MenuItem value={1}>{t("Integrations")}</MenuItem>
                                 <MenuItem value={2}>{t("Settings")}</MenuItem>
@@ -105,14 +107,14 @@ export default function AlternateTabs() {
                 <Divider />
 
                 {/* Tab 1 */}
-                <CustomTabPanel value={value} index={0}>
+                <CustomTabPanel index={0} value={value}>
                     <Stack spacing={2}>
                         <PlaceholderBox height={300} />
                     </Stack>
                 </CustomTabPanel>
 
                 {/* Tab 2 */}
-                <CustomTabPanel value={value} index={1}>
+                <CustomTabPanel index={1} value={value}>
                     <Stack spacing={2}>
                         <PlaceholderBox height={150} />
                         <PlaceholderBox height={150} />
@@ -120,7 +122,7 @@ export default function AlternateTabs() {
                 </CustomTabPanel>
 
                 {/* Tab 3 */}
-                <CustomTabPanel value={value} index={2}>
+                <CustomTabPanel index={2} value={value}>
                     <Stack spacing={2}>
                         <PlaceholderBox height={100} />
                         <PlaceholderBox height={100} />
@@ -129,7 +131,7 @@ export default function AlternateTabs() {
                 </CustomTabPanel>
 
                 {/* Tab 4 */}
-                <CustomTabPanel value={value} index={3}>
+                <CustomTabPanel index={3} value={value}>
                     <Stack spacing={2}>
                         <PlaceholderBox height={100} />
                         <PlaceholderBox height={100} />

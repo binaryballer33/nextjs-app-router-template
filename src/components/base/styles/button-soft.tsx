@@ -2,28 +2,28 @@ import type { ReactNode } from "react"
 
 import { alpha, Button, styled } from "@mui/material"
 
-type ButtonColor = "primary" | "error" | "success" | "secondary" | "warning" | "info"
+type ButtonColor = "error" | "info" | "primary" | "secondary" | "success" | "warning"
 
 type ButtonColorProps = {
-    color?: ButtonColor
     children?: ReactNode
+    color?: ButtonColor
 }
 
-const ButtonSoft = styled(Button)<ButtonColorProps>(({ theme, color }) => {
+const ButtonSoft = styled(Button)<ButtonColorProps>(({ color, theme }) => {
     const computedColor = color ? theme.palette[color].main : theme.palette.primary.main
 
     return {
-        backgroundColor: alpha(computedColor, 0.08),
-        color: computedColor,
-
+        "&:disabled": {
+            backgroundColor: alpha(theme.palette.action.disabledBackground, 0.3),
+        },
         "&:hover": {
             backgroundColor: alpha(computedColor, 0.12),
             color: computedColor,
         },
 
-        "&:disabled": {
-            backgroundColor: alpha(theme.palette.action.disabledBackground, 0.3),
-        },
+        backgroundColor: alpha(computedColor, 0.08),
+
+        color: computedColor,
     }
 })
 

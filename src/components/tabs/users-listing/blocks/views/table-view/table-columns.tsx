@@ -1,14 +1,14 @@
 import { Checkbox, TableCell, TableHead, TableRow } from "@mui/material"
 
 type TableColumnsProps = {
-    selectedSomeRecords: boolean
-    selectedAllRecords: boolean
     handleSelectAllRecords: (event: any) => void
+    selectedAllRecords: boolean
+    selectedSomeRecords: boolean
     t: (token: string) => string
 }
 
 export default function TableColumns(props: TableColumnsProps) {
-    const { selectedSomeRecords, selectedAllRecords, handleSelectAllRecords, t } = props
+    const { handleSelectAllRecords, selectedAllRecords, selectedSomeRecords, t } = props
     return (
         <TableHead>
             <TableRow>

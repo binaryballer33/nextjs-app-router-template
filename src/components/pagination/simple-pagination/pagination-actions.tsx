@@ -1,19 +1,20 @@
+import type { Theme } from "@mui/material"
 import type { MouseEvent } from "react"
 
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded"
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded"
-import type { Theme } from "@mui/material"
+
 import { Button, Stack, useMediaQuery } from "@mui/material"
 
 import ButtonIcon from "src/components/base/styles/button-icon"
 
 type PaginationActionsProps = {
     count: number
-    page: number
     onPageChange: (event: MouseEvent<HTMLButtonElement>, newPage: number) => void
+    page: number
 }
 
-export default function PaginationActions({ count, page, onPageChange }: PaginationActionsProps) {
+export default function PaginationActions({ count, onPageChange, page }: PaginationActionsProps) {
     const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"))
 
     const handleBackButtonClick = (event: MouseEvent<HTMLButtonElement>) => onPageChange(event, page - 1)
@@ -24,20 +25,20 @@ export default function PaginationActions({ count, page, onPageChange }: Paginat
             {smUp ? (
                 <>
                     <Button
-                        variant="outlined"
                         color="secondary"
-                        size="small"
-                        onClick={handleBackButtonClick}
                         disabled={page === 0}
+                        onClick={handleBackButtonClick}
+                        size="small"
+                        variant="outlined"
                     >
                         Previous
                     </Button>
                     <Button
-                        variant="outlined"
                         color="secondary"
-                        size="small"
-                        onClick={handleNextButtonClick}
                         disabled={page >= Math.ceil(count / 10) - 1}
+                        onClick={handleNextButtonClick}
+                        size="small"
+                        variant="outlined"
                     >
                         Next
                     </Button>
@@ -45,20 +46,20 @@ export default function PaginationActions({ count, page, onPageChange }: Paginat
             ) : (
                 <>
                     <ButtonIcon
-                        variant="outlined"
                         color="secondary"
-                        size="small"
-                        onClick={handleBackButtonClick}
                         disabled={page === 0}
+                        onClick={handleBackButtonClick}
+                        size="small"
                         startIcon={<ChevronLeftRoundedIcon />}
+                        variant="outlined"
                     />
                     <ButtonIcon
-                        variant="outlined"
                         color="secondary"
-                        size="small"
-                        onClick={handleNextButtonClick}
                         disabled={page >= Math.ceil(count / 10) - 1}
+                        onClick={handleNextButtonClick}
+                        size="small"
                         startIcon={<ChevronRightRoundedIcon />}
+                        variant="outlined"
                     />
                 </>
             )}

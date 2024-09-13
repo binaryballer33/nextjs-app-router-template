@@ -1,12 +1,14 @@
 import type { MouseEvent } from "react"
+
 import { useCallback, useState } from "react"
 
-import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from "@mui/material"
 import ReactCountryFlag from "react-country-flag"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
-type Language = "en" | "es" | "br" | "pt" | "de" | "fr" | "ae" | "cn"
+import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from "@mui/material"
+
+type Language = "ae" | "br" | "cn" | "de" | "en" | "es" | "fr" | "pt"
 
 type LanguageOptions = {
     [key in Language]: {
@@ -16,17 +18,33 @@ type LanguageOptions = {
 }
 
 const languages: Record<Language, string> = {
+    ae: "AE",
+    br: "BR",
+    cn: "CN",
+    de: "DE",
     en: "US",
     es: "ES",
-    br: "BR",
-    pt: "PT",
-    de: "DE",
     fr: "FR",
-    ae: "AE",
-    cn: "CN",
+    pt: "PT",
 }
 
 const languageOptions: LanguageOptions = {
+    ae: {
+        icon: "AE",
+        label: "Arabic",
+    },
+    br: {
+        icon: "BR",
+        label: "Brazil",
+    },
+    cn: {
+        icon: "CN",
+        label: "Chinese",
+    },
+    de: {
+        icon: "DE",
+        label: "German",
+    },
     en: {
         icon: "US",
         label: "English",
@@ -35,34 +53,18 @@ const languageOptions: LanguageOptions = {
         icon: "ES",
         label: "Spanish",
     },
-    br: {
-        icon: "BR",
-        label: "Brazil",
+    fr: {
+        icon: "FR",
+        label: "French",
     },
     pt: {
         icon: "PT",
         label: "Portuguese",
     },
-    de: {
-        icon: "DE",
-        label: "German",
-    },
-    fr: {
-        icon: "FR",
-        label: "French",
-    },
-    ae: {
-        icon: "AE",
-        label: "Arabic",
-    },
-    cn: {
-        icon: "CN",
-        label: "Chinese",
-    },
 }
 
 type LanguageDropdownProps = {
-    color?: "inherit" | "primary" | "secondary" | "warning" | "info" | "success" | "error"
+    color?: "error" | "info" | "inherit" | "primary" | "secondary" | "success" | "warning"
     sx?: object
 }
 
@@ -99,11 +101,11 @@ export default function LanguageDropdown({ color = "inherit", sx = {} }: Languag
         <>
             <Tooltip arrow title={t("Switch Language")}>
                 <IconButton
-                    id="language-button"
-                    color={color}
                     aria-controls={open ? "language-menu" : undefined}
-                    aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
+                    aria-haspopup="true"
+                    color={color}
+                    id="language-button"
                     onClick={handleClick}
                     sx={{
                         ...sx,
@@ -113,45 +115,45 @@ export default function LanguageDropdown({ color = "inherit", sx = {} }: Languag
                 </IconButton>
             </Tooltip>
             <Menu
-                id="language-menu"
                 anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
+                anchorOrigin={{
+                    horizontal: "right",
+                    vertical: "bottom",
+                }}
+                id="language-menu"
                 MenuListProps={{
                     "aria-labelledby": "language-button",
                 }}
+                onClose={handleClose}
+                open={open}
                 transformOrigin={{
+                    horizontal: "right",
                     vertical: "top",
-                    horizontal: "right",
-                }}
-                anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "right",
                 }}
             >
                 {(Object.keys(languageOptions) as Language[]).map((language) => {
                     const option = languageOptions[language]
                     return (
                         <MenuItem
-                            onClick={() => handleChange(language)}
                             key={language}
+                            onClick={() => handleChange(language)}
                             selected={i18n.language === language}
                         >
                             <ListItemIcon>
                                 <ReactCountryFlag
-                                    style={{
-                                        width: "2em",
-                                        height: "2em",
-                                    }}
                                     countryCode={option.icon}
+                                    style={{
+                                        height: "2em",
+                                        width: "2em",
+                                    }}
                                     svg
                                 />
                             </ListItemIcon>
                             <ListItemText
+                                primary={option.label}
                                 sx={{
                                     pl: 1,
                                 }}
-                                primary={option.label}
                             />
                         </MenuItem>
                     )

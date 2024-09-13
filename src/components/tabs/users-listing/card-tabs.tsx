@@ -1,11 +1,14 @@
 "use client"
 
 import type { ChangeEvent } from "react"
+
 import { useState } from "react"
 
-import { Box, Stack, useMediaQuery, useTheme } from "@mui/material"
-import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
+
+import { Box, Stack, useMediaQuery, useTheme } from "@mui/material"
+
+import usePagination from "src/hooks/usePagination"
 
 import CheckboxSelectAllRecords from "src/components/tabs/users-listing/blocks/buttons-icons-input-text/checkbox-select-all-records"
 import NoDataResults from "src/components/tabs/users-listing/blocks/buttons-icons-input-text/no-data-results"
@@ -16,7 +19,6 @@ import TabSelectDropdown from "src/components/tabs/users-listing/blocks/tabs/tab
 import NoView from "src/components/tabs/users-listing/blocks/views/no-view"
 import TableView from "src/components/tabs/users-listing/blocks/views/table-view/table-view"
 import ToggleViewIcons from "src/components/tabs/users-listing/blocks/views/toggle-view-icons"
-import usePagination from "src/hooks/usePagination"
 
 import BulkDeleteIconDialog from "./blocks/dialogs/bulk-delete-icon-dialog"
 import GridView from "./blocks/views/grid-view/grid-view"
@@ -26,24 +28,24 @@ type CardTabProps = {
 }
 
 type Filters = {
-    role?: string | null
+    role?: null | string
 }
 
 type Tab = {
-    value: string
-    label: string
     count: number
+    label: string
+    value: string
 }
 
 export default function CardTabs({ cards }: CardTabProps) {
-    const [toggleView, setToggleView] = useState<string | null>("grid_view")
+    const [toggleView, setToggleView] = useState<null | string>("grid_view")
     const [selectedItems, setSelectedItems] = useState<string[]>([])
     const [query, setQuery] = useState<string>("")
     const [filters, setFilters] = useState<Filters>({
         role: null,
     })
 
-    const { page, limit, handlePageChange, handleLimitChange, paginate } = usePagination(0, 5)
+    const { handleLimitChange, handlePageChange, limit, page, paginate } = usePagination(0, 5)
     const theme = useTheme()
     const smUp = useMediaQuery(theme.breakpoints.up("sm"))
     const { t } = useTranslation()
@@ -56,24 +58,24 @@ export default function CardTabs({ cards }: CardTabProps) {
 
     const tabs: Tab[] = [
         {
-            value: "all",
+            count: cards.length,
             label: t("All cards"),
-            count: cards.length,
+            value: "all",
         },
         {
-            value: "customer",
+            count: cards.length,
             label: t("Customers"),
-            count: cards.length,
+            value: "customer",
         },
         {
-            value: "admin",
+            count: cards.length,
             label: t("Administrators"),
-            count: cards.length,
+            value: "admin",
         },
         {
-            value: "subscriber",
-            label: t("Subscribers"),
             count: cards.length,
+            label: t("Subscribers"),
+            value: "subscriber",
         },
     ]
 
@@ -92,36 +94,36 @@ export default function CardTabs({ cards }: CardTabProps) {
             {smUp ? (
                 <TabList
                     filters={filters}
-                    theme={theme}
-                    tabs={tabs}
-                    setSelectedItems={setSelectedItems}
-                    setFilters={setFilters}
                     handlePageChange={handlePageChange}
+                    setFilters={setFilters}
+                    setSelectedItems={setSelectedItems}
                     t={t}
+                    tabs={tabs}
+                    theme={theme}
                 />
             ) : (
                 // If the screen is small, show a select dropdown list for the tabs
                 <TabSelectDropdown
                     filters={filters}
-                    tabs={tabs}
-                    setSelectedItems={setSelectedItems}
                     handlePageChange={handlePageChange}
                     setFilters={setFilters}
+                    setSelectedItems={setSelectedItems}
                     t={t}
+                    tabs={tabs}
                 />
             )}
 
             {/* Create The Select All Check Box, The Search Box  And The Toggle View Icons */}
-            <Box display="flex" justifyContent="space-between" alignItems="center" py={2}>
+            <Box alignItems="center" display="flex" justifyContent="space-between" py={2}>
                 {/* Create The Select All Check Box, The Search Box */}
-                <Box display="flex" alignItems="center">
+                <Box alignItems="center" display="flex">
                     {/* If  grid_view is the current view than display the checkbox */}
                     {toggleView === "grid_view" && (
                         <CheckboxSelectAllRecords
+                            handleSelectAllRecords={handleSelectAllItems}
+                            paginatedRecords={cards}
                             selectedAllRecords={selectedAllItems}
                             selectedSomeRecords={selectedSomeItems}
-                            paginatedRecords={cards}
-                            handleSelectAllRecords={handleSelectAllItems}
                             t={t}
                         />
                     )}
@@ -142,7 +144,7 @@ export default function CardTabs({ cards }: CardTabProps) {
                 </Box>
 
                 {/* Create The Toggle Table View And Grid View Icons */}
-                <ToggleViewIcons toggleView={toggleView} setToggleView={setToggleView} />
+                <ToggleViewIcons setToggleView={setToggleView} toggleView={toggleView} />
             </Box>
 
             {/* If No Data Display Message Stating That */}
@@ -154,17 +156,17 @@ export default function CardTabs({ cards }: CardTabProps) {
                     {/* Display The Table If Toggle View Is Table View */}
                     {toggleView === "table_view" && (
                         <TableView
-                            page={page}
+                            filteredRecords={filteredItems}
+                            handleLimitChange={handleLimitChange}
+                            handlePageChange={handlePageChange}
+                            handleSelectAllRecords={handleSelectAllItems}
+                            handleSelectOneRecord={handleSelectOneItems}
                             limit={limit}
-                            selectedRecords={selectedItems}
+                            page={page}
                             paginatedRecords={paginatedItems}
                             selectedAllRecords={selectedAllItems}
+                            selectedRecords={selectedItems}
                             selectedSomeRecords={selectedSomeItems}
-                            filteredRecords={filteredItems}
-                            handlePageChange={handlePageChange}
-                            handleLimitChange={handleLimitChange}
-                            handleSelectOneRecord={handleSelectOneItems}
-                            handleSelectAllRecords={handleSelectAllItems}
                             t={t}
                         />
                     )}
@@ -172,14 +174,14 @@ export default function CardTabs({ cards }: CardTabProps) {
                     {/* Display The Grid If Toggle View Is Grid View */}
                     {toggleView === "grid_view" && (
                         <GridView
-                            page={page}
-                            limit={limit}
-                            selectedRecords={selectedItems}
-                            paginatedRecords={paginatedItems}
                             filteredRecords={filteredItems}
-                            handlePageChange={handlePageChange}
                             handleLimitChange={handleLimitChange}
+                            handlePageChange={handlePageChange}
                             handleSelectOneRecord={handleSelectOneItems}
+                            limit={limit}
+                            page={page}
+                            paginatedRecords={paginatedItems}
+                            selectedRecords={selectedItems}
                             t={t}
                         />
                     )}
@@ -190,8 +192,4 @@ export default function CardTabs({ cards }: CardTabProps) {
             )}
         </>
     )
-}
-
-CardTabs.propTypes = {
-    cards: PropTypes.array.isRequired,
 }

@@ -1,13 +1,16 @@
 "use client"
 
 import type { ChangeEvent } from "react"
+import type { User } from "src/mocks/user-mocks"
+
 import { useState } from "react"
 
-import { Box, Container, Unstable_Grid2 as Grid, MenuItem, Select, Tab, useMediaQuery, useTheme } from "@mui/material"
 import { useTranslation } from "react-i18next"
 
+import { Box, Container, Unstable_Grid2 as Grid, MenuItem, Select, Tab, useMediaQuery, useTheme } from "@mui/material"
+
 import { TabsPills } from "src/components/base/styles/tabs"
-import type { User } from "src/mocks/user-mocks"
+
 import { mockUser } from "src/mocks/user-mocks"
 
 import ProfileCover from "./page-components/profile-cover"
@@ -18,7 +21,7 @@ import SettingsNotifications from "./page-components/tabs/settings-notifications
 import SettingsSecurity from "./page-components/tabs/settings-security/settings-security"
 
 export default function UserProfile() {
-    const [user] = useState<User | null>(mockUser)
+    const [user] = useState<null | User>(mockUser)
     const { t } = useTranslation()
     const theme = useTheme()
     const smUp = useMediaQuery(theme.breakpoints.up("sm"))
@@ -31,11 +34,11 @@ export default function UserProfile() {
 
     // the tabs that will be displayed, array has their tab name(label) and tab order(value)
     const tabs = [
-        { value: 0, label: t("Notifications") },
-        { value: 1, label: t("Edit Profile") },
-        { value: 2, label: t("Activity") },
-        { value: 3, label: t("Passwords/Security") },
-        { value: 4, label: t("Account Credit Cards") },
+        { label: t("Notifications"), value: 0 },
+        { label: t("Edit Profile"), value: 1 },
+        { label: t("Activity"), value: 2 },
+        { label: t("Passwords/Security"), value: 3 },
+        { label: t("Account Credit Cards"), value: 4 },
     ]
 
     if (!user) return null
@@ -43,29 +46,29 @@ export default function UserProfile() {
     return (
         <Box minWidth="100%">
             <Container maxWidth="xl">
-                <Box py={{ xs: 2, sm: 3 }}>
+                <Box py={{ sm: 3, xs: 2 }}>
                     {/* User Profile Grid Container */}
-                    <Grid container spacing={{ xs: 2, sm: 3 }}>
+                    <Grid container spacing={{ sm: 3, xs: 2 }}>
                         {/* Profile Cover */}
                         <Grid xs={12}>
                             <ProfileCover user={user} />
                         </Grid>
 
                         {/* Tab User Profile Settings */}
-                        <Grid xs={12} sx={{ mt: 6 }}>
+                        <Grid sx={{ mt: 6 }} xs={12}>
                             {smUp ? (
                                 <TabsPills
-                                    onChange={handleTabsChange}
-                                    value={currentTab}
-                                    textColor="secondary"
                                     indicatorColor="secondary"
+                                    onChange={handleTabsChange}
                                     sx={{
                                         "& .MuiTab-root": {
-                                            textTransform: "none",
-                                            fontWeight: 500,
                                             fontSize: 15,
+                                            fontWeight: 500,
+                                            textTransform: "none",
                                         },
                                     }}
+                                    textColor="secondary"
+                                    value={currentTab}
                                 >
                                     {tabs.map((tab) => (
                                         <Tab key={tab.value} label={tab.label} value={tab.value} />
@@ -73,10 +76,10 @@ export default function UserProfile() {
                                 </TabsPills>
                             ) : (
                                 <Select
-                                    value={currentTab}
+                                    fullWidth
                                     // @ts-ignore
                                     onChange={handleSelectChange}
-                                    fullWidth
+                                    value={currentTab}
                                 >
                                     {tabs.map((tab) => (
                                         <MenuItem key={tab.value} value={tab.value}>

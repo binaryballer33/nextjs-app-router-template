@@ -1,7 +1,11 @@
 "use client"
 
+import CountUp from "react-countup"
+import { useTranslation } from "react-i18next"
+
 import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone"
 import PieChartTwoToneIcon from "@mui/icons-material/PieChartTwoTone"
+
 import {
     alpha,
     Box,
@@ -17,10 +21,9 @@ import {
 } from "@mui/material"
 import { BarChart } from "@mui/x-charts/BarChart"
 import { LineChart } from "@mui/x-charts/LineChart"
-import CountUp from "react-countup"
-import { useTranslation } from "react-i18next"
 
 import { CardBorderColor } from "src/components/base/styles/card-border-color"
+
 import { neutral } from "src/theme/theme"
 
 const CardActions = styled(Box)(({ theme }) => ({
@@ -40,25 +43,25 @@ const BoxComposedContent = styled(Box)(() => ({
 }))
 
 const BoxComposedImage = styled(Box)(() => ({
-    position: "absolute",
-    left: 0,
-    top: 0,
-    zIndex: 5,
-    filter: "grayscale(80%)",
     backgroundSize: "cover",
-    height: "100%",
-    width: "100%",
     borderRadius: "inherit",
+    filter: "grayscale(80%)",
+    height: "100%",
+    left: 0,
+    position: "absolute",
+    top: 0,
+    width: "100%",
+    zIndex: 5,
 }))
 
 const BoxComposedBg = styled(Box)(() => ({
-    position: "absolute",
-    left: 0,
-    top: 0,
-    zIndex: 6,
-    height: "100%",
-    width: "100%",
     borderRadius: "inherit",
+    height: "100%",
+    left: 0,
+    position: "absolute",
+    top: 0,
+    width: "100%",
+    zIndex: 6,
 }))
 
 const generateRandomData = (): number[] => Array.from({ length: 7 }, () => Math.floor(Math.random() * 1000))
@@ -73,98 +76,98 @@ function FinancialStatus() {
     return (
         <Card>
             <Grid container>
-                <Grid xs={12} lg={5}>
+                <Grid lg={5} xs={12}>
                     <BoxComposed
-                        display="flex"
                         alignItems="center"
+                        display="flex"
                         sx={{
-                            width: "100%",
-                            position: "relative",
-                            minHeight: "100%",
                             background: "primary",
+                            minHeight: "100%",
+                            position: "relative",
+                            width: "100%",
                         }}
                     >
                         <BoxComposedBg
                             sx={{
-                                opacity: 0.6,
                                 background: "primary",
+                                opacity: 0.6,
                             }}
                         />
                         <BoxComposedBg
                             sx={{
-                                opacity: 0.4,
                                 background: "primary",
+                                opacity: 0.4,
                             }}
                         />
                         <BoxComposedImage
                             sx={{
-                                opacity: 0.4,
                                 backgroundImage: "primary",
+                                opacity: 0.4,
                             }}
                         />
                         <BoxComposedContent
-                            display="flex"
-                            flexGrow={1}
                             alignItems="center"
+                            borderRight={{ lg: 1, xs: 0 }}
+                            display="flex"
                             flexDirection="column"
-                            p={{ xs: 2, sm: 3, md: 4, xl: 6 }}
-                            borderRight={{ xs: 0, lg: 1 }}
+                            flexGrow={1}
+                            p={{ md: 4, sm: 3, xl: 6, xs: 2 }}
                         >
-                            <Grid width="100%" container spacing={{ xs: 2, sm: 3 }}>
-                                <Grid xs={12} sm={6} lg={12}>
-                                    <CardBorderColor borderPosition="bottom" borderColor="primary">
-                                        <Box px={{ xs: 2, sm: 3 }} pt={{ xs: 2, sm: 3 }} pb={1}>
-                                            <Typography variant="h3" color="primary">
+                            <Grid container spacing={{ sm: 3, xs: 2 }} width="100%">
+                                <Grid lg={12} sm={6} xs={12}>
+                                    <CardBorderColor borderColor="primary" borderPosition="bottom">
+                                        <Box pb={1} pt={{ sm: 3, xs: 2 }} px={{ sm: 3, xs: 2 }}>
+                                            <Typography color="primary" variant="h3">
                                                 <CountUp
-                                                    start={0}
-                                                    end={32.865}
-                                                    duration={3}
-                                                    separator=""
-                                                    delay={3}
-                                                    decimals={3}
                                                     decimal=","
+                                                    decimals={3}
+                                                    delay={3}
+                                                    duration={3}
+                                                    end={32.865}
                                                     prefix="$"
+                                                    separator=""
+                                                    start={0}
                                                     suffix=""
                                                 />
                                             </Typography>
-                                            <Typography variant="h4" fontWeight={500}>
+                                            <Typography fontWeight={500} variant="h4">
                                                 {t("Income")}
                                             </Typography>
                                         </Box>
                                         <CardActions>
-                                            <IconButton size="small" color="primary">
+                                            <IconButton color="primary" size="small">
                                                 <MoreHorizTwoToneIcon />
                                             </IconButton>
                                         </CardActions>
                                         <LineChart
+                                            bottomAxis={null}
                                             height={130}
                                             leftAxis={null}
-                                            margin={{ top: 6, bottom: 0, left: 0, right: 0 }}
-                                            bottomAxis={null}
-                                            slotProps={{ legend: { hidden: true } }}
+                                            margin={{ bottom: 0, left: 0, right: 0, top: 6 }}
                                             series={[
                                                 {
-                                                    data: generateRandomData(),
-                                                    label: "Laptop sales",
                                                     area: true,
                                                     color: theme.palette.primary.main,
+                                                    data: generateRandomData(),
+                                                    label: "Laptop sales",
                                                     showMark: false,
                                                 },
                                             ]}
-                                            xAxis={[{ scaleType: "point", data: xLabels }]}
+                                            slotProps={{ legend: { hidden: true } }}
                                             sx={{
-                                                ".MuiLineElement-root": {
-                                                    strokeWidth: 3,
-                                                },
-
                                                 ".MuiAreaElement-root": {
                                                     fill: "url('#successGradient')",
                                                     fillOpacity: theme.palette.mode === "dark" ? 0.76 : 1,
                                                 },
+
+                                                ".MuiLineElement-root": {
+                                                    strokeWidth: 3,
+                                                },
                                             }}
+                                            xAxis={[{ data: xLabels, scaleType: "point" }]}
                                         >
                                             <defs>
-                                                <linearGradient id="successGradient" gradientTransform="rotate(90)">
+                                                <linearGradient gradientTransform="rotate(90)" id="successGradient">
                                                     <stop offset="0%" stopColor={theme.palette.primary.main} />
                                                     <stop offset="100%" stopColor={theme.palette.background.paper} />
                                                 </linearGradient>
@@ -172,59 +175,59 @@ function FinancialStatus() {
                                         </LineChart>
                                     </CardBorderColor>
                                 </Grid>
-                                <Grid xs={12} sm={6} lg={12}>
-                                    <CardBorderColor borderPosition="bottom" borderColor="secondary">
-                                        <Box px={{ xs: 2, sm: 3 }} pt={{ xs: 2, sm: 3 }} pb={1}>
-                                            <Typography variant="h3" color="secondary.dark">
+                                <Grid lg={12} sm={6} xs={12}>
+                                    <CardBorderColor borderColor="secondary" borderPosition="bottom">
+                                        <Box pb={1} pt={{ sm: 3, xs: 2 }} px={{ sm: 3, xs: 2 }}>
+                                            <Typography color="secondary.dark" variant="h3">
                                                 <CountUp
-                                                    start={0}
-                                                    end={71.684}
-                                                    duration={4}
-                                                    separator=""
-                                                    delay={3}
-                                                    decimals={3}
                                                     decimal=","
+                                                    decimals={3}
+                                                    delay={3}
+                                                    duration={4}
+                                                    end={71.684}
                                                     prefix="$"
+                                                    separator=""
+                                                    start={0}
                                                     suffix=""
                                                 />
                                             </Typography>
-                                            <Typography variant="h4" fontWeight={500}>
+                                            <Typography fontWeight={500} variant="h4">
                                                 {t("Expenses")}
                                             </Typography>
                                         </Box>
                                         <CardActions>
-                                            <IconButton size="small" color="primary">
+                                            <IconButton color="primary" size="small">
                                                 <MoreHorizTwoToneIcon />
                                             </IconButton>
                                         </CardActions>
                                         <LineChart
+                                            bottomAxis={null}
                                             height={130}
                                             leftAxis={null}
-                                            margin={{ top: 6, bottom: 0, left: 0, right: 0 }}
-                                            bottomAxis={null}
-                                            slotProps={{ legend: { hidden: true } }}
+                                            margin={{ bottom: 0, left: 0, right: 0, top: 6 }}
                                             series={[
                                                 {
-                                                    data: generateRandomData(),
-                                                    label: "Total sales",
                                                     area: true,
                                                     color: theme.palette.primary.main,
+                                                    data: generateRandomData(),
+                                                    label: "Total sales",
                                                     showMark: false,
                                                 },
                                             ]}
-                                            xAxis={[{ scaleType: "point", data: xLabels }]}
+                                            slotProps={{ legend: { hidden: true } }}
                                             sx={{
-                                                ".MuiLineElement-root": {
-                                                    strokeWidth: 3,
-                                                },
                                                 ".MuiAreaElement-root": {
                                                     fill: "url('#errorGradient')",
                                                     fillOpacity: theme.palette.mode === "dark" ? 0.76 : 1,
                                                 },
+                                                ".MuiLineElement-root": {
+                                                    strokeWidth: 3,
+                                                },
                                             }}
+                                            xAxis={[{ data: xLabels, scaleType: "point" }]}
                                         >
                                             <defs>
-                                                <linearGradient id="errorGradient" gradientTransform="rotate(90)">
+                                                <linearGradient gradientTransform="rotate(90)" id="errorGradient">
                                                     <stop offset="0%" stopColor={theme.palette.primary.main} />
                                                     <stop offset="100%" stopColor={theme.palette.background.paper} />
                                                 </linearGradient>
@@ -237,17 +240,17 @@ function FinancialStatus() {
                     </BoxComposed>
                 </Grid>
                 <Grid
-                    xs={12}
                     lg={7}
                     sx={{
                         display: "flex",
                         flexDirection: "column",
                     }}
+                    xs={12}
                 >
-                    <Box p={{ xs: 2, sm: 3 }}>
+                    <Box p={{ sm: 3, xs: 2 }}>
                         <Box>
                             <Typography variant="h4">{t("Monthly Financial Status")}</Typography>
-                            <Typography variant="subtitle2" color="text.secondary">
+                            <Typography color="text.secondary" variant="subtitle2">
                                 {t("Check how you're doing financially for current month")}
                             </Typography>
                         </Box>
@@ -256,41 +259,32 @@ function FinancialStatus() {
                     <Box flexGrow={1} px={2}>
                         <BarChart
                             height={380}
-                            margin={{ left: smUp ? 62 : 0, top: 56, right: smUp ? 22 : 0 }}
+                            margin={{ left: smUp ? 62 : 0, right: smUp ? 22 : 0, top: 56 }}
                             series={[
                                 {
+                                    color: theme.palette.primary.dark,
                                     data: generateRandomData(),
                                     label: t("Completed"),
                                     stack: "total",
-                                    color: theme.palette.primary.dark,
                                 },
                                 {
+                                    color: theme.palette.secondary.dark,
                                     data: generateRandomData(),
                                     label: t("Cancelled"),
                                     stack: "total",
-                                    color: theme.palette.secondary.dark,
-                                },
-                            ]}
-                            xAxis={[
-                                {
-                                    scaleType: "band",
-                                    data: xLabels,
-                                    // @ts-ignore
-                                    categoryGapRatio: 0.4,
-                                    barGapRatio: 0.3,
                                 },
                             ]}
                             slotProps={{
                                 legend: {
+                                    itemGap: 12,
+                                    itemMarkHeight: 12,
+                                    itemMarkWidth: 12,
                                     labelStyle: {
                                         fontWeight: 500,
                                     },
-                                    itemMarkWidth: 12,
-                                    itemMarkHeight: 12,
                                     markGap: 6,
-                                    itemGap: 12,
-                                    position: { vertical: "top", horizontal: "right" },
                                     padding: { top: 12 },
+                                    position: { horizontal: "right", vertical: "top" },
                                 },
                             }}
                             sx={{
@@ -298,50 +292,59 @@ function FinancialStatus() {
                                     fillOpacity: theme.palette.mode === "dark" ? 0.76 : 1,
                                     ry: theme.shape.borderRadius / 1.5,
                                 },
+                                ".MuiChartsAxis-left": {
+                                    display: { sm: "block", xs: "none" },
+                                },
                                 ".MuiChartsLegend-mark": {
                                     rx: theme.shape.borderRadius,
                                 },
-                                ".MuiChartsAxis-left": {
-                                    display: { xs: "none", sm: "block" },
-                                },
                             }}
+                            xAxis={[
+                                {
+                                    barGapRatio: 0.3,
+                                    // @ts-ignore
+                                    categoryGapRatio: 0.4,
+                                    data: xLabels,
+                                    scaleType: "band",
+                                },
+                            ]}
                         />
                     </Box>
                     <Divider />
                     <Box
-                        p={{ xs: 2, sm: 3 }}
+                        p={{ sm: 3, xs: 2 }}
                         sx={{
-                            textAlign: "center",
                             backgroundColor: (bgColorTheme) =>
                                 bgColorTheme.palette.mode === "dark"
                                     ? alpha(bgColorTheme.palette.neutral[25], 0.02)
                                     : neutral[25],
+                            textAlign: "center",
                         }}
                     >
                         <Button
                             size="large"
+                            startIcon={<PieChartTwoToneIcon />}
                             sx={{
-                                px: 2,
-                                transform: "translateY(0px)",
+                                "&:active": {
+                                    boxShadow: "none",
+                                },
+                                "&:hover": {
+                                    boxShadow: `0px 1px 4px ${alpha(
+                                        theme.palette.primary.main,
+                                        0.25,
+                                    )}, 0px 3px 12px 2px ${alpha(theme.palette.primary.main, 0.35)}`,
+                                    transform: "translateY(-2px)",
+                                },
                                 boxShadow: `0px 1px 4px ${alpha(
                                     theme.palette.primary.main,
                                     0.25,
                                 )}, 0px 3px 12px 2px ${alpha(theme.palette.primary.main, 0.35)}`,
                                 fontSize: theme.typography.pxToRem(14),
 
-                                "&:hover": {
-                                    transform: "translateY(-2px)",
-                                    boxShadow: `0px 1px 4px ${alpha(
-                                        theme.palette.primary.main,
-                                        0.25,
-                                    )}, 0px 3px 12px 2px ${alpha(theme.palette.primary.main, 0.35)}`,
-                                },
-                                "&:active": {
-                                    boxShadow: "none",
-                                },
+                                px: 2,
+                                transform: "translateY(0px)",
                             }}
                             variant="contained"
-                            startIcon={<PieChartTwoToneIcon />}
                         >
                             {t("Download Report")}
                         </Button>

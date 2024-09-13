@@ -2,28 +2,29 @@ import type { Dispatch, MouseEvent, SetStateAction } from "react"
 
 import GridViewTwoToneIcon from "@mui/icons-material/GridViewTwoTone"
 import TableRowsTwoToneIcon from "@mui/icons-material/TableRowsTwoTone"
+
 import { ToggleButton, ToggleButtonGroup } from "@mui/material"
 
 type ToggleViewIconsProps = {
-    toggleView: string | null
-    setToggleView: Dispatch<SetStateAction<string | null>>
+    setToggleView: Dispatch<SetStateAction<null | string>>
+    toggleView: null | string
 }
 
 function ToggleViewIcons(props: ToggleViewIconsProps) {
-    const { toggleView, setToggleView } = props
+    const { setToggleView, toggleView } = props
 
-    const handleViewOrientation = (_event: MouseEvent<HTMLElement>, newValue: string | null) => {
+    const handleViewOrientation = (_event: MouseEvent<HTMLElement>, newValue: null | string) => {
         setToggleView(newValue)
     }
 
     return (
         <ToggleButtonGroup
-            sx={{ ml: 1 }}
-            size="large"
             color="primary"
-            value={toggleView}
             exclusive
             onChange={handleViewOrientation}
+            size="large"
+            sx={{ ml: 1 }}
+            value={toggleView}
         >
             <ToggleButton value="table_view">
                 <TableRowsTwoToneIcon />

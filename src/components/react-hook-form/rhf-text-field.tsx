@@ -1,24 +1,29 @@
 import type { TextFieldProps } from "@mui/material/TextField"
-import TextField from "@mui/material/TextField"
+
 import { Controller, useFormContext } from "react-hook-form"
 
-type Props = TextFieldProps & {
-    name: string
-}
+import TextField from "@mui/material/TextField"
 
-export default function RHFTextField({ name, helperText, type, ...other }: Props) {
+type Props = {
+    name: string
+} & TextFieldProps
+
+export default function RHFTextField({ helperText, name, type, ...other }: Props) {
     const { control } = useFormContext()
 
     return (
         <Controller
-            name={name}
             control={control}
+            name={name}
             render={({ field, fieldState: { error } }) => (
                 <TextField
                     {...field}
+                    error={!!error}
                     fullWidth
-                    type={type}
-                    value={type === "number" && field.value === 0 ? "" : field.value}
+                    helperText={error?.message ?? helperText}
+                    inputProps={{
+                        autoComplete: "off",
+                    }}
                     onChange={(event) => {
                         if (type === "number") {
                             field.onChange(Number(event.target.value))
@@ -26,11 +31,8 @@ export default function RHFTextField({ name, helperText, type, ...other }: Props
                             field.onChange(event.target.value)
                         }
                     }}
-                    error={!!error}
-                    helperText={error?.message ?? helperText}
-                    inputProps={{
-                        autoComplete: "off",
-                    }}
+                    type={type}
+                    value={type === "number" && field.value === 0 ? "" : field.value}
                     {...other}
                 />
             )}

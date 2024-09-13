@@ -1,5 +1,8 @@
 import type { ChangeEvent } from "react"
+
 import { useState } from "react"
+
+import { useTranslation } from "react-i18next"
 
 import {
     Box,
@@ -13,7 +16,6 @@ import {
     Switch,
     Typography,
 } from "@mui/material"
-import { useTranslation } from "react-i18next"
 
 const StyledSwitch = styled(Switch)(() => ({
     "& .MuiSwitch-switchBase.Mui-checked": {
@@ -39,11 +41,11 @@ export default function SettingsNotifications() {
     }
 
     return (
-        <Grid container spacing={{ xs: 2, sm: 3 }}>
+        <Grid container spacing={{ sm: 3, xs: 2 }}>
             <Grid xs={12}>
                 <Box pb={2}>
                     <Typography variant="h5">{t("Account")}</Typography>
-                    <Typography variant="subtitle1" color="text.secondary">
+                    <Typography color="text.secondary" variant="subtitle1">
                         {t("Choose what notifications you want to receive")}
                     </Typography>
                 </Box>
@@ -51,49 +53,49 @@ export default function SettingsNotifications() {
                     <List>
                         <ListItem>
                             <ListItemText
-                                primaryTypographyProps={{
-                                    variant: "h6",
-                                    component: "label",
-                                    htmlFor: "checkedA",
-                                }}
-                                secondaryTypographyProps={{
-                                    variant: "subtitle2",
-                                    component: "label",
-                                    htmlFor: "checkedA",
-                                }}
                                 primary={t("Widthdraw Activity")}
+                                primaryTypographyProps={{
+                                    component: "label",
+                                    htmlFor: "checkedA",
+                                    variant: "h6",
+                                }}
                                 secondary={t("Receive an email when a widthdrawal is made")}
+                                secondaryTypographyProps={{
+                                    component: "label",
+                                    htmlFor: "checkedA",
+                                    variant: "subtitle2",
+                                }}
                             />
                             <StyledSwitch
-                                color="primary"
                                 checked={state.checkedA}
-                                onChange={handleChange}
+                                color="primary"
                                 id="checkedA"
                                 name="checkedA"
+                                onChange={handleChange}
                             />
                         </ListItem>
                         <Divider component="li" />
                         <ListItem>
                             <ListItemText
-                                primaryTypographyProps={{
-                                    variant: "h6",
-                                    component: "label",
-                                    htmlFor: "checkedB",
-                                }}
-                                secondaryTypographyProps={{
-                                    variant: "subtitle2",
-                                    component: "label",
-                                    htmlFor: "checkedB",
-                                }}
                                 primary={t("Weekly Report")}
+                                primaryTypographyProps={{
+                                    component: "label",
+                                    htmlFor: "checkedB",
+                                    variant: "h6",
+                                }}
                                 secondary={t("Receive account status weekly report in your inbox")}
+                                secondaryTypographyProps={{
+                                    component: "label",
+                                    htmlFor: "checkedB",
+                                    variant: "subtitle2",
+                                }}
                             />
                             <StyledSwitch
-                                color="primary"
                                 checked={state.checkedB}
-                                onChange={handleChange}
-                                name="checkedB"
+                                color="primary"
                                 id="checkedB"
+                                name="checkedB"
+                                onChange={handleChange}
                             />
                         </ListItem>
                     </List>
@@ -102,7 +104,7 @@ export default function SettingsNotifications() {
             <Grid xs={12}>
                 <Box pb={2}>
                     <Typography variant="h5">{t("Orders")}</Typography>
-                    <Typography variant="subtitle1" color="text.secondary">
+                    <Typography color="text.secondary" variant="subtitle1">
                         {t("Receive email notifications related to your orders activity")}
                     </Typography>
                 </Box>
@@ -110,47 +112,47 @@ export default function SettingsNotifications() {
                     <List>
                         <ListItem>
                             <ListItemText
-                                primaryTypographyProps={{
-                                    variant: "h6",
-                                    component: "label",
-                                    htmlFor: "checkedC",
-                                }}
-                                secondaryTypographyProps={{
-                                    variant: "subtitle2",
-                                    component: "label",
-                                    htmlFor: "checkedC",
-                                }}
                                 primary={t("Failed Payment")}
+                                primaryTypographyProps={{
+                                    component: "label",
+                                    htmlFor: "checkedC",
+                                    variant: "h6",
+                                }}
                                 secondary={t("Get a message when a payment fails")}
+                                secondaryTypographyProps={{
+                                    component: "label",
+                                    htmlFor: "checkedC",
+                                    variant: "subtitle2",
+                                }}
                             />
                             <StyledSwitch
-                                color="primary"
                                 checked={state.checkedC}
-                                onChange={handleChange}
+                                color="primary"
                                 name="checkedC"
+                                onChange={handleChange}
                             />
                         </ListItem>
                         <Divider component="li" />
                         <ListItem>
                             <ListItemText
-                                primaryTypographyProps={{
-                                    variant: "h6",
-                                    component: "label",
-                                    htmlFor: "checkedD",
-                                }}
-                                secondaryTypographyProps={{
-                                    variant: "subtitle2",
-                                    component: "label",
-                                    htmlFor: "checkedD",
-                                }}
                                 primary={t("Order Status Update")}
+                                primaryTypographyProps={{
+                                    component: "label",
+                                    htmlFor: "checkedD",
+                                    variant: "h6",
+                                }}
                                 secondary={t("Whenever an order is updated, get a notification on your phone")}
+                                secondaryTypographyProps={{
+                                    component: "label",
+                                    htmlFor: "checkedD",
+                                    variant: "subtitle2",
+                                }}
                             />
                             <StyledSwitch
-                                color="primary"
                                 checked={state.checkedD}
-                                onChange={handleChange}
+                                color="primary"
                                 name="checkedD"
+                                onChange={handleChange}
                             />
                         </ListItem>
                     </List>

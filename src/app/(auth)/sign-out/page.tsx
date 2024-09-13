@@ -2,8 +2,9 @@
 
 import { useRouter } from "next/navigation"
 
-import { Button, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
+
+import { Button, Typography } from "@mui/material"
 
 import FullScreenCenteredContainer from "src/components/base/full-height-width-centered-container"
 
@@ -14,7 +15,7 @@ function SignOutPage() {
     return (
         <FullScreenCenteredContainer>
             <Typography variant="body1">{t("You've Been Successfully Signed Out")}</Typography>
-            <Button variant="contained" onClick={() => router.push("/")}>
+            <Button onClick={() => router.push("/")} variant="contained">
                 {t("Go Back To The Home Page")}
             </Button>
         </FullScreenCenteredContainer>

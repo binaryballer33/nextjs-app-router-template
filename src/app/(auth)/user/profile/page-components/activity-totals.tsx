@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next"
+
 import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone"
 import ShoppingBagTwoToneIcon from "@mui/icons-material/ShoppingBagTwoTone"
 import StarTwoToneIcon from "@mui/icons-material/StarTwoTone"
+
 import { Box, Card, CardHeader, Divider, Typography } from "@mui/material"
-import { useTranslation } from "react-i18next"
 
 import { AvatarState } from "src/components/base/styles/avatar"
 
@@ -11,61 +13,61 @@ export default function ActivityTotals() {
 
     const activity = [
         {
+            icon: <ShoppingBagTwoToneIcon fontSize="small" />,
+            lists: 8,
             title: t("Orders"),
             total: 485,
-            lists: 8,
-            icon: <ShoppingBagTwoToneIcon fontSize="small" />,
         },
         {
+            icon: <FavoriteTwoToneIcon fontSize="small" />,
+            lists: 15,
             title: t("Favorites"),
             total: 64,
-            lists: 15,
-            icon: <FavoriteTwoToneIcon fontSize="small" />,
         },
         {
+            icon: <StarTwoToneIcon fontSize="small" />,
+            lists: 21,
             title: t("Reviews"),
             total: 642,
-            lists: 21,
-            icon: <StarTwoToneIcon fontSize="small" />,
         },
     ]
 
     return (
         <Card sx={{ maxWidth: "95%" }}>
-            <CardHeader title={t("Activity")} sx={{ textAlign: "center" }} />
+            <CardHeader sx={{ textAlign: "center" }} title={t("Activity")} />
             <Divider />
 
             {/* Activities */}
-            <Box px={2} py={{ xs: 2, sm: 3 }} display="flex" alignItems="flex-start" flexDirection="column">
+            <Box alignItems="flex-start" display="flex" flexDirection="column" px={2} py={{ sm: 3, xs: 2 }}>
                 {activity.map((activityItem) => (
                     <Box flex={1} key={activityItem.title} minWidth={1}>
                         {/* Avatar And Title */}
                         <Box display="flex">
                             <AvatarState
-                                state="primary"
                                 isSoft
+                                state="primary"
                                 sx={{
-                                    width: 42,
                                     height: 42,
+                                    width: 42,
                                 }}
                             >
                                 {activityItem.icon}
                             </AvatarState>
-                            <Typography sx={{ pt: 0.7, ml: 2 }} variant="h5">
+                            <Typography sx={{ ml: 2, pt: 0.7 }} variant="h5">
                                 {activityItem.title}
                             </Typography>
                         </Box>
 
                         {/* Category Totals */}
-                        <Box pl={1} pt={1} display="flex" justifyContent="space-between" minWidth={1}>
+                        <Box display="flex" justifyContent="space-between" minWidth={1} pl={1} pt={1}>
                             <Box pr={3}>
-                                <Typography gutterBottom variant="caption" fontSize={16} color="text.secondary">
+                                <Typography color="text.secondary" fontSize={16} gutterBottom variant="caption">
                                     {t("Total")}
                                 </Typography>
                                 <Typography variant="h4">{activityItem.total}</Typography>
                             </Box>
-                            <Box display={{ xs: "none", lg: "block" }}>
-                                <Typography gutterBottom variant="caption" fontSize={16} color="text.secondary">
+                            <Box display={{ lg: "block", xs: "none" }}>
+                                <Typography color="text.secondary" fontSize={16} gutterBottom variant="caption">
                                     {t("Lists")}
                                 </Typography>
                                 <Typography variant="h4">{activityItem.lists}</Typography>

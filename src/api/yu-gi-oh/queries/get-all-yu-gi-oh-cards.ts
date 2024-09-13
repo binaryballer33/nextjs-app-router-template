@@ -1,8 +1,9 @@
+import type { YuGiOhCard } from "src/types/yu-gi-oh/yu-gi-oh"
+
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
 import QUERY_KEYS from "src/api/query-keys"
-import type { YuGiOhCard } from "src/models/yu-gi-oh/yu-gi-oh"
 import routes from "src/router/routes"
 
 export async function getYuGiOhCards(): Promise<YuGiOhCard[]> {
@@ -11,7 +12,7 @@ export async function getYuGiOhCards(): Promise<YuGiOhCard[]> {
 
 export default function useGetYuGiOhCardsQuery() {
     return useQuery<YuGiOhCard[]>({
-        queryKey: QUERY_KEYS.YU_GI_OH_CARDS,
         queryFn: getYuGiOhCards,
+        queryKey: QUERY_KEYS.YU_GI_OH_CARDS,
     })
 }

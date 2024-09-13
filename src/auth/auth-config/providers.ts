@@ -1,13 +1,16 @@
+import type { Provider } from "next-auth/providers"
+
+import { LoginRequestSchema } from "src/types/forms/login"
+
 import { CredentialsSignin } from "@auth/core/errors"
 import Credentials from "@auth/core/providers/credentials"
 import { compare } from "bcryptjs"
-import type { Provider } from "next-auth/providers"
 import Facebook from "next-auth/providers/facebook"
 import Google from "next-auth/providers/google"
 
-import getUserByEmail from "src/actions/user/get-user-by-email"
-import { LoginRequestSchema } from "src/models/forms/login"
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "src/utils/secrets"
+
+import getUserByEmail from "src/actions/user/get-user-by-email"
 
 /*
  * Array of objects that define the authentication providers
@@ -15,27 +18,20 @@ import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "src/utils/secrets"
  */
 const providers: Provider[] = [
     Google({
-        clientId: GOOGLE_CLIENT_ID,
-        clientSecret: GOOGLE_CLIENT_SECRET,
-
         /*
          * allows one email account to be linked to multiple accounts
          * so you can sign in with credentials, but then also sign in with Google or Facebook
          */
         allowDangerousEmailAccountLinking: false, // keep it false, it's not recommended to do this
+        clientId: GOOGLE_CLIENT_ID,
+
+        clientSecret: GOOGLE_CLIENT_SECRET,
     }),
 
     // TODO: figure out how to do oauth with Facebook
     Facebook,
 
     Credentials({
-        name: "Credentials",
-
-        credentials: {
-            email: { label: "Email", type: "email" },
-            password: { label: "Password", type: "password" },
-        },
-
         /*
          * The authorize callback is invoked when the user clicks the sign-in button
          * and the credentials are submitted. It is the first callback to be called, next is the sign-in callback
@@ -62,17 +58,24 @@ const providers: Provider[] = [
 
             // return user object
             return {
-                firstName: existingUser.firstName,
-                lastName: existingUser.lastName,
                 email: existingUser.email,
-                role: existingUser.role,
+                emailVerified: existingUser.emailVerified!,
+                firstName: existingUser.firstName,
                 id: existingUser.id,
                 image: existingUser.imageUrl,
                 imageUrl: existingUser.imageUrl!,
+                lastName: existingUser.lastName,
                 name: `${existingUser.firstName} ${existingUser.lastName}`,
-                emailVerified: existingUser.emailVerified!,
+                role: existingUser.role,
             }
         },
+
+        credentials: {
+            email: { label: "Email", type: "email" },
+            password: { label: "Password", type: "password" },
+        },
+
+        name: "Credentials",
     }),
 ]
 

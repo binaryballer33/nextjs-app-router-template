@@ -1,7 +1,12 @@
+import type { Theme } from "@mui/material"
+import type { YuGiOhCard } from "src/types/yu-gi-oh/yu-gi-oh"
+
 import Image from "next/image"
 
+import clsx from "clsx"
+
 import MoreVertTwoToneIcon from "@mui/icons-material/MoreVertTwoTone"
-import type { Theme } from "@mui/material"
+
 import {
     Box,
     Card,
@@ -15,11 +20,10 @@ import {
     Typography,
     useMediaQuery,
 } from "@mui/material"
-import clsx from "clsx"
+
+import getYugiohFrameTypeColor from "src/utils/helper-functions/getYuGiOhFrameTypeColor"
 
 import FlexCenter from "src/components/base/flex-box/flex-center"
-import type { YuGiOhCard } from "src/models/yu-gi-oh/yu-gi-oh"
-import getYugiohFrameTypeColor from "src/utils/helper-functions/getYuGiOhFrameTypeColor"
 
 export const CardWrapper = styled(Card)(
     ({ theme }) => `
@@ -46,13 +50,13 @@ export const CardWrapper = styled(Card)(
 
 type GridCard2Props = {
     card: YuGiOhCard
-    selectedRecords: string[]
     handleSelectOneRecord: (event: any, id: string) => void
+    selectedRecords: string[]
     t: (token: string) => string
 }
 
 export default function GridCard(props: GridCard2Props) {
-    const { card, selectedRecords, handleSelectOneRecord, t } = props
+    const { card, handleSelectOneRecord, selectedRecords, t } = props
     const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
 
     const isRecordSelected = selectedRecords.includes(card.id.toString())
@@ -70,19 +74,19 @@ export default function GridCard(props: GridCard2Props) {
                 }}
             >
                 {/* Create The Label Icon Button */}
-                <Box px={2} pt={2} display="flex" alignItems="flex-start" justifyContent="space-between">
+                <Box alignItems="flex-start" display="flex" justifyContent="space-between" pt={2} px={2}>
                     <Link
                         href={card.ygoprodeck_url}
-                        underline="hover"
                         sx={{
                             //  keep the name on only one line to maintain card height consistency
                             // TODO: steal ellipses code from other app I think its blazar
                             display: "-webkit-box",
-                            WebkitBoxOrient: "vertical",
-                            WebkitLineClamp: 1,
                             overflow: "hidden",
                             textOverflow: "ellipsis",
+                            WebkitBoxOrient: "vertical",
+                            WebkitLineClamp: 1,
                         }}
+                        underline="hover"
                     >
                         {card.name}
                     </Link>
@@ -98,35 +102,35 @@ export default function GridCard(props: GridCard2Props) {
                 </Box>
 
                 {/* Create The Card Image, Record Type, Description, Archetype, Price */}
-                <Box p={2} display="flex" flexDirection={{ xs: "column", md: "row" }} alignItems="flex-start">
+                <Box alignItems="flex-start" display="flex" flexDirection={{ md: "row", xs: "column" }} p={2}>
                     {/* Create The Image */}
                     <Box
                         sx={{
+                            mb: { md: 0, xs: 2 },
                             mr: 1.5,
-                            mb: { xs: 2, md: 0 },
                         }}
                     >
-                        <Image src={card.imageUrl} alt="image" width={mdUp ? 180 : 250} height={250} priority />
+                        <Image alt="image" height={250} priority src={card.imageUrl} width={mdUp ? 180 : 250} />
                     </Box>
 
                     {/* Record Type, Description, Archetype, Price */}
                     <Box>
                         {/* Record Description */}
-                        <Stack gap={1} justifyContent="space-around" height={250}>
+                        <Stack gap={1} height={250} justifyContent="space-around">
                             <Chip
                                 label={t(card.type)}
-                                sx={{ mb: 2, maxWidth: "50%", bgcolor: getYugiohFrameTypeColor(card.frameType) }}
+                                sx={{ bgcolor: getYugiohFrameTypeColor(card.frameType), maxWidth: "50%", mb: 2 }}
                             />
 
-                            <Card elevation={1} sx={{ p: 1, height: 150, overflow: "scroll" }}>
+                            <Card elevation={1} sx={{ height: 150, overflow: "scroll", p: 1 }}>
                                 <Typography
-                                    component="span"
-                                    variant="body2"
                                     color="text.secondary"
+                                    component="span"
                                     sx={{
-                                        overflow: "scroll",
                                         height: 150,
+                                        overflow: "scroll",
                                     }}
+                                    variant="body2"
                                 >
                                     {card.desc}
                                 </Typography>
@@ -147,14 +151,14 @@ export default function GridCard(props: GridCard2Props) {
 
                 <Divider />
                 {/* Record Id And Card Check Box */}
-                <Box pl={2} py={1} pr={1} display="flex" alignItems="center" justifyContent="space-between">
+                <Box alignItems="center" display="flex" justifyContent="space-between" pl={2} pr={1} py={1}>
                     <Typography>
                         {t("Card #")} <b>{card.id}</b>
                     </Typography>
 
                     <FlexCenter>
                         {/* Record Price */}
-                        <Typography variant="h6" fontWeight={500}>
+                        <Typography fontWeight={500} variant="h6">
                             ${card.price}
                         </Typography>
 

@@ -1,31 +1,35 @@
+import type { TextFieldProps } from "@mui/material/TextField"
+import type { Country, Value } from "react-phone-number-input/input"
+
 import { forwardRef, useCallback, useState } from "react"
 
+import PhoneNumberInput from "react-phone-number-input/input"
+
 import CloseIcon from "@mui/icons-material/Close"
+
 import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
 import InputAdornment from "@mui/material/InputAdornment"
 import { inputBaseClasses } from "@mui/material/InputBase"
-import type { TextFieldProps } from "@mui/material/TextField"
 import TextField from "@mui/material/TextField"
-import type { Country, Value } from "react-phone-number-input/input"
-import PhoneNumberInput from "react-phone-number-input/input"
+
+import type { PhoneInputProps } from "./types"
 
 import CountryListPopover from "./list"
-import type { PhoneInputProps } from "./types"
 import { getCountryCode } from "./utils"
 
 const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
     (
         {
-            sx,
-            size,
-            value,
+            country: inputCountryCode,
+            disableSelect,
             label,
             onChange,
             placeholder,
-            disableSelect,
+            size,
+            sx,
+            value,
             variant = "outlined",
-            country: inputCountryCode,
             ...other
         },
         ref,
@@ -47,22 +51,22 @@ const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
         return (
             <Box
                 sx={{
-                    "--popover-button-mr": "12px",
                     "--popover-button-height": "22px",
+                    "--popover-button-mr": "12px",
                     "--popover-button-width": variant === "standard" ? "48px" : "60px",
-                    position: "relative",
                     [`& .${inputBaseClasses.input}`]: {
                         pl: "calc(var(--popover-button-width) + var(--popover-button-mr))",
                     },
+                    position: "relative",
                     ...sx,
                 }}
             >
                 {!disableSelect && (
                     <CountryListPopover
-                        searchCountry={searchCountry}
                         countryCode={selectedCountry}
                         onClickCountry={(inputValue: Country) => setSelectedCountry(inputValue)}
                         onSearchCountry={(inputValue: string) => setSearchCountry(inputValue)}
+                        searchCountry={searchCountry}
                         sx={{
                             pl: variant === "standard" ? 0 : 1.5,
                             ...(variant === "standard" &&
@@ -81,27 +85,27 @@ const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
                 )}
 
                 <PhoneNumberInput
-                    ref={ref}
-                    size={size}
-                    label={label}
-                    value={cleanValue}
-                    variant={variant}
-                    onChange={onChange}
-                    hiddenLabel={!label}
                     country={selectedCountry}
+                    hiddenLabel={!label}
                     inputComponent={CustomInput}
                     InputLabelProps={{ shrink: true }}
-                    placeholder={placeholder ?? "Enter phone number"}
                     InputProps={{
                         endAdornment: cleanValue && (
                             <InputAdornment position="end">
-                                <IconButton size="small" edge="end" onClick={handleClear}>
+                                <IconButton edge="end" onClick={handleClear} size="small">
                                     {/* <Iconify width={16} icon="mingcute:close-line" /> */}
                                     <CloseIcon sx={{ width: 16 }} />
                                 </IconButton>
                             </InputAdornment>
                         ),
                     }}
+                    label={label}
+                    onChange={onChange}
+                    placeholder={placeholder ?? "Enter phone number"}
+                    ref={ref}
+                    size={size}
+                    value={cleanValue}
+                    variant={variant}
                     {...other}
                 />
             </Box>

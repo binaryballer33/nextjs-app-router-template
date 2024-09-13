@@ -1,12 +1,15 @@
 "use client"
 
+import { useTranslation } from "react-i18next"
+
 import WarningTwoToneIcon from "@mui/icons-material/WarningTwoTone"
 import WestRoundedIcon from "@mui/icons-material/WestRounded"
+
 import { Box, Button, Container, Divider, Stack, Typography } from "@mui/material"
-import { useTranslation } from "react-i18next"
 
 import RouterLink from "src/components/base/router-link"
 import { AvatarState } from "src/components/base/styles/avatar"
+
 import routes from "src/router/routes"
 
 function Page() {
@@ -15,57 +18,57 @@ function Page() {
     return (
         <Container maxWidth="sm">
             <Stack
-                spacing={2}
-                height="100dvh"
-                justifyContent="center"
                 alignItems="center"
                 direction="column"
+                height="100dvh"
+                justifyContent="center"
+                spacing={2}
                 textAlign="center"
             >
                 <AvatarState
-                    state="warning"
                     isSoft
+                    state="warning"
                     sx={{
-                        width: 84,
                         height: 84,
+                        width: 84,
                     }}
                 >
                     <WarningTwoToneIcon fontSize="large" />
                 </AvatarState>
-                <Stack width="100%" spacing={{ xs: 2, sm: 3 }}>
+                <Stack spacing={{ sm: 3, xs: 2 }} width="100%">
                     <Box>
                         <Typography
                             color="text.primary"
-                            variant="h2"
                             fontWeight={700}
                             gutterBottom
                             sx={{
-                                px: { xs: 0, sm: 2, md: 3 },
+                                px: { md: 3, sm: 2, xs: 0 },
                             }}
+                            variant="h2"
                         >
                             {t("Page not found")}
                         </Typography>
-                        <Typography color="text.secondary" variant="h4" fontWeight={500}>
+                        <Typography color="text.secondary" fontWeight={500} variant="h4">
                             {t("We moved the content to a different page")}
                         </Typography>
                     </Box>
                     <Divider>
                         <Divider
                             sx={{
+                                borderColor: "primary.main",
+                                borderRadius: 22,
                                 borderWidth: 4,
                                 width: 60,
-                                borderRadius: 22,
-                                borderColor: "primary.main",
                             }}
                         />
                     </Divider>
                     <Box>
                         <Button
-                            variant="outlined"
                             color="secondary"
                             component={RouterLink}
                             href={routes.index}
                             startIcon={<WestRoundedIcon />}
+                            variant="outlined"
                         >
                             {t("Go to homepage")}
                         </Button>

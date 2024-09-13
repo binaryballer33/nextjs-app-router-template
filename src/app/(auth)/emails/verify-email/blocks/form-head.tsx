@@ -1,37 +1,37 @@
+import type { BoxProps } from "@mui/material/Box"
 import type { ReactNode } from "react"
 
-import type { BoxProps } from "@mui/material/Box"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
 // ----------------------------------------------------------------------
 
-type FormHeadProps = BoxProps & {
+type FormHeadProps = {
+    description?: ReactNode
     icon?: ReactNode
     title: ReactNode
-    description?: ReactNode
-}
+} & BoxProps
 
-export default function FormHead({ sx, icon, title, description, ...other }: FormHeadProps) {
+export default function FormHead({ description, icon, sx, title, ...other }: FormHeadProps) {
     return (
         <>
             {icon && (
-                <Box component="span" display="inline-flex" sx={{ mx: "auto", mb: 3 }}>
+                <Box component="span" display="inline-flex" sx={{ mb: 3, mx: "auto" }}>
                     {icon}
                 </Box>
             )}
 
             <Box
-                gap={1.5}
                 display="flex"
                 flexDirection="column"
+                gap={1.5}
                 sx={{ mb: 5, textAlign: "center", whiteSpace: "pre-line", ...sx }}
                 {...other}
             >
                 <Typography variant="h5">{title}</Typography>
 
                 {description && (
-                    <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                    <Typography sx={{ color: "text.secondary" }} variant="body2">
                         {description}
                     </Typography>
                 )}

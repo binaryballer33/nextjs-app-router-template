@@ -1,93 +1,62 @@
 "use server"
 
+import type { AuthResponse } from "src/types/auth/auth-response"
+import type { RegisterRequest } from "src/types/forms/register"
+
+import { RegisterRequestSchema } from "src/types/forms/register"
+
 import { revalidatePath } from "next/cache"
 
 import { hash } from "bcryptjs"
 
-import getUserByEmail from "src/actions/user/get-user-by-email"
-import createVerificationToken from "src/actions/verification-token/createVerificationToken"
-import { createAuthResponse } from "src/models/auth/auth-response"
-import type { RegisterRequest } from "src/models/forms/register"
-import { RegisterRequestSchema } from "src/models/forms/register"
 import prisma from "src/utils/database/prisma"
 import sendVerificationEmail from "src/utils/emails/send-verification-email"
 
-export default async function register(credentials: RegisterRequest) {
-    const { firstName, lastName, email, password } = RegisterRequestSchema.parse(credentials)
+import getUserByEmail from "src/actions/user/get-user-by-email"
+import createVerificationToken from "src/actions/verification-token/createVerificationToken"
+
+export default async function register(credentials: RegisterRequest): Promise<AuthResponse> {
+    const { email, firstName, lastName, password } = RegisterRequestSchema.parse(credentials)
     const hashedPassword = await hash(password, 10)
     const placeholderImage = "https://images.unsplash.com/photo-1569511502671-8c1bbf96fc8d?w=320&ah=320"
 
     const userAlreadyExists = await getUserByEmail(email)
-    if (userAlreadyExists) {
-        return createAuthResponse({
-            status: 500,
-            success: null,
-            error: "User Already Exists",
-            user: null,
-        })
-    }
+    if (userAlreadyExists) return { error: "User Already Exists", status: 500 }
 
     // TODO: add terms and conditions later
     try {
         const registeredUser = await prisma.user.create({
             data: {
-                firstName,
-                lastName,
                 email,
                 encryptedPassword: hashedPassword, // MAKE SURE HASHED PW IS STORED, NOT PLAINTEXT
-                imageUrl: placeholderImage,
+                firstName,
                 image: placeholderImage,
+                imageUrl: placeholderImage,
+                lastName,
             },
         })
-        if (!registeredUser) {
-            return createAuthResponse({
-                status: 500,
-                success: null,
-                error: "Error Registering User",
-                user: null,
-            })
-        }
+        if (!registeredUser) return { error: "Error Registering User", status: 500 }
 
         // generate a verification token for the newly registered user
         const verificationToken = await createVerificationToken(registeredUser.email)
-        if (!verificationToken) {
-            return createAuthResponse({
-                status: 500,
-                success: null,
-                error: "Error Creating Verification Token",
-                user: null,
-            })
-        }
+        if (!verificationToken) return { error: "Error Creating Verification Token", status: 500 }
 
         // send the verification email to the newly created user
         const verificationEmail = await sendVerificationEmail(verificationToken.email, verificationToken!.token)
-        if (!verificationEmail) {
-            return createAuthResponse({
-                status: 500,
-                success: null,
-                error: "Error Sending Verification Email",
-                user: null,
-            })
-        }
+        if (!verificationEmail) return { error: "Error Sending Verification Email", status: 500 }
 
         // remove hashed password from response
         registeredUser.encryptedPassword = null
         revalidatePath("/")
 
-        return createAuthResponse({
+        return {
             status: 200,
             success: `Successfully Created Account For User: ${registeredUser.firstName} ${registeredUser.lastName}`,
-            error: null,
             user: registeredUser,
-        })
+        }
     } catch (error) {
         console.error(`Error Registering User: ${error}`)
 
-        return createAuthResponse({
-            status: 500,
-            success: null,
-            error: "Error Registering User And Sending Verification Email",
-            user: null,
-        })
+        return { error: "Error Registering User And Sending Verification Email", status: 500 }
     }
 }

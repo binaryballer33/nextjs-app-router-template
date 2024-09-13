@@ -1,4 +1,5 @@
 import type { Country } from "react-phone-number-input"
+
 import { parsePhoneNumber } from "react-phone-number-input"
 
 import countries from "src/mocks/countries"
@@ -24,8 +25,8 @@ export function getCountry(countryCode?: Country) {
 // ----------------------------------------------------------------------
 
 type ApplyFilterProps = {
-    query: string
     inputData: typeof countries
+    query: string
 }
 
 export function applyFilter({ inputData, query }: ApplyFilterProps) {
@@ -33,7 +34,7 @@ export function applyFilter({ inputData, query }: ApplyFilterProps) {
 
     const lowerCaseQuery = query.toLowerCase()
 
-    return inputData.filter(({ label, code, phone }) =>
+    return inputData.filter(({ code, label, phone }) =>
         [label, code, phone].some((field) => field.toLowerCase().includes(lowerCaseQuery)),
     )
 }

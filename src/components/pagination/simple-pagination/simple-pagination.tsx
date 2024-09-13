@@ -1,4 +1,5 @@
 import type { ChangeEvent, MouseEvent } from "react"
+
 import { useState } from "react"
 
 import { Card, CardActions, CardContent, Divider, TablePagination, Typography } from "@mui/material"
@@ -27,28 +28,28 @@ export default function Pagination() {
             <Divider />
             <CardActions
                 sx={{
-                    ".MuiTablePagination-toolbar": {
-                        justifyContent: "space-between",
-                    },
-
                     ".MuiTablePagination-spacer": {
                         display: "none",
                     },
+
+                    ".MuiTablePagination-toolbar": {
+                        justifyContent: "space-between",
+                    },
                 }}
             >
-                <Typography sx={{ pr: 1 }} variant="subtitle2" color="text.secondary">
+                <Typography color="text.secondary" sx={{ pr: 1 }} variant="subtitle2">
                     Showing
                 </Typography>
                 <TablePagination
-                    component="div"
-                    count={100}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    rowsPerPage={rowsPerPage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    rowsPerPageOptions={[]}
                     // @ts-ignore
                     ActionsComponent={PaginationActions}
+                    component="div"
+                    count={100}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    page={page}
+                    rowsPerPage={rowsPerPage}
+                    rowsPerPageOptions={[]}
                 />
             </CardActions>
         </Card>

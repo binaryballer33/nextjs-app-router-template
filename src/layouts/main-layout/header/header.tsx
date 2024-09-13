@@ -1,11 +1,13 @@
 "use client"
 
+import type { Theme } from "@mui/material"
+
 import { useRouter } from "next/navigation"
 
 import LockIcon from "@mui/icons-material/Lock"
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded"
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded"
-import type { Theme } from "@mui/material"
+
 import {
     AppBar,
     Avatar,
@@ -18,12 +20,15 @@ import {
     useMediaQuery,
     useTheme,
 } from "@mui/material"
+
 import { useSession } from "next-auth/react"
 
-import { DividerLight } from "src/components/base/styles/card"
 import useDialog from "src/hooks/use-dialog"
 import useMobileNav from "src/hooks/use-mobile-nav"
 import usePopover from "src/hooks/use-popover"
+
+import { DividerLight } from "src/components/base/styles/card"
+
 import useHorizontalNavBarItems from "src/router/horizontal-navbar-routes"
 import routes from "src/router/routes"
 import { neutral } from "src/theme/theme"
@@ -37,14 +42,14 @@ import BasicSpotlightSearch from "./navbar-icons/search-icon/search-icon"
 import ThemeModeToggler from "./navbar-icons/theme-mode-toggler/theme-mode-toggler"
 
 const HeaderWrapper = styled(AppBar)(({ theme }) => ({
-    display: "flex",
-    position: "sticky",
-    top: 0,
     background: theme.palette.background.default,
     color: theme.palette.mode === "dark" ? neutral[100] : neutral[900],
-    zIndex: 10,
+    display: "flex",
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
+    position: "sticky",
+    top: 0,
+    zIndex: 10,
 }))
 
 export default function Header() {
@@ -62,22 +67,22 @@ export default function Header() {
 
     return (
         <>
-            <HeaderWrapper role="banner" elevation={0}>
-                <Stack py={3} flex={1} direction="row" justifyContent="space-between" alignItems="center">
+            <HeaderWrapper elevation={0} role="banner">
+                <Stack alignItems="center" direction="row" flex={1} justifyContent="space-between" py={3}>
                     {/* Desktop NavBar Section */}
                     <Stack
+                        alignItems="center"
                         direction="row"
                         divider={
                             <DividerLight
-                                sx={{
-                                    height: 24,
-                                    alignSelf: "center",
-                                }}
-                                orientation="vertical"
                                 flexItem
+                                orientation="vertical"
+                                sx={{
+                                    alignSelf: "center",
+                                    height: 24,
+                                }}
                             />
                         }
-                        alignItems="center"
                         spacing={2}
                     >
                         <Box sx={{ transform: "scale(.86)" }}>
@@ -90,36 +95,36 @@ export default function Header() {
 
                     {/* Header Icons Section */}
                     <Stack
+                        alignItems="center"
                         direction="row"
                         divider={
                             <DividerLight
-                                sx={{
-                                    height: 24,
-                                    alignSelf: "center",
-                                }}
-                                orientation="vertical"
                                 flexItem
+                                orientation="vertical"
+                                sx={{
+                                    alignSelf: "center",
+                                    height: 24,
+                                }}
                             />
                         }
-                        alignItems="center"
-                        spacing={{ xs: 1, sm: 2 }}
+                        spacing={{ sm: 2, xs: 1 }}
                     >
                         {/* Other Header Icons */}
                         <>
-                            <Stack display="flex" spacing={1} direction="row" alignItems="center">
+                            <Stack alignItems="center" direction="row" display="flex" spacing={1}>
                                 {smUp && (
                                     <IconButton
-                                        onClick={dialog.handleOpen}
                                         color="inherit"
+                                        onClick={dialog.handleOpen}
                                         sx={{
+                                            "& .MuiSvgIcon-root": {
+                                                fontSize: 22,
+                                            },
                                             "&:hover": {
                                                 background: theme.palette.primary.main,
                                                 color: theme.palette.primary.contrastText,
                                             },
                                             p: 1,
-                                            "& .MuiSvgIcon-root": {
-                                                fontSize: 22,
-                                            },
                                         }}
                                     >
                                         <Tooltip title="Search The Page">
@@ -131,14 +136,14 @@ export default function Header() {
 
                             <LanguageDropdown
                                 sx={{
+                                    "& .MuiSvgIcon-root": {
+                                        fontSize: 22,
+                                    },
                                     "&:hover": {
                                         background: theme.palette.primary.main,
                                         color: theme.palette.primary.contrastText,
                                     },
                                     p: 1,
-                                    "& .MuiSvgIcon-root": {
-                                        fontSize: 22,
-                                    },
                                 }}
                             />
 
@@ -149,19 +154,19 @@ export default function Header() {
                         {session?.user ? (
                             <Tooltip title="User">
                                 <IconButton
-                                    id="profile-button"
+                                    aria-controls={popover.open ? "profile-menu" : undefined}
+                                    aria-expanded={popover.open ? "true" : undefined}
+                                    aria-haspopup="true"
                                     color="primary"
+                                    id="profile-button"
+                                    onClick={popover.handleOpen}
+                                    ref={popover.anchorRef}
                                     sx={{
-                                        p: 0,
                                         "&:hover": {
                                             boxShadow: `0 0 0 3px ${theme.palette.primary.main}`,
                                         },
+                                        p: 0,
                                     }}
-                                    aria-controls={popover.open ? "profile-menu" : undefined}
-                                    aria-haspopup="true"
-                                    aria-expanded={popover.open ? "true" : undefined}
-                                    onClick={popover.handleOpen}
-                                    ref={popover.anchorRef}
                                 >
                                     <Avatar
                                         alt="Shaquille Mandy"
@@ -185,17 +190,17 @@ export default function Header() {
                         {/* Show Mobile Menu Icon Button */}
                         {!lgUp && (
                             <IconButton
-                                onClick={handleOpen}
                                 color="inherit"
+                                onClick={handleOpen}
                                 sx={{
+                                    "& .MuiSvgIcon-root": {
+                                        fontSize: 22,
+                                    },
                                     "&:hover": {
                                         background: theme.palette.primary.main,
                                         color: theme.palette.primary.contrastText,
                                     },
                                     p: 1,
-                                    "& .MuiSvgIcon-root": {
-                                        fontSize: 22,
-                                    },
                                 }}
                             >
                                 <MenuRoundedIcon />
@@ -208,11 +213,11 @@ export default function Header() {
                         <BasicSpotlightSearch onClose={dialog.handleClose} open={dialog.open} />
 
                         <ProfileIconDropdown
-                            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                            transformOrigin={{ vertical: "top", horizontal: "center" }}
                             anchorEl={popover.anchorRef.current}
+                            anchorOrigin={{ horizontal: "center", vertical: "top" }}
                             onClose={popover.handleClose}
                             open={popover.open}
+                            transformOrigin={{ horizontal: "center", vertical: "top" }}
                         />
                     </>
                 </Stack>
@@ -222,17 +227,17 @@ export default function Header() {
             {!lgUp && (
                 <SwipeableDrawer
                     anchor="left"
-                    onClose={handleClose}
-                    onOpen={handleOpen}
-                    open={open}
                     ModalProps={{
                         keepMounted: true,
                     }}
+                    onClose={handleClose}
+                    onOpen={handleOpen}
+                    open={open}
                     PaperProps={{
                         sx: {
-                            overflow: "hidden",
                             backgroundColor: neutral[900],
                             boxShadow: (boxShadowTheme) => boxShadowTheme.shadows[0],
+                            overflow: "hidden",
                         },
                     }}
                     variant="temporary"

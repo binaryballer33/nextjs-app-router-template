@@ -8,19 +8,19 @@ export default function NoView({ t }: NoViewProps) {
     return (
         <Box
             sx={{
+                p: { sm: 3, xs: 2 },
                 textAlign: "center",
-                p: { xs: 2, sm: 3 },
             }}
         >
             <Typography
                 align="center"
-                variant="h4"
                 color="text.secondary"
                 fontWeight={500}
-                sx={{
-                    my: { xs: 2, sm: 3, md: 5 },
-                }}
                 gutterBottom
+                sx={{
+                    my: { md: 5, sm: 3, xs: 2 },
+                }}
+                variant="h4"
             >
                 {t("Choose between Table view or Grid views for displaying the records.")}
             </Typography>

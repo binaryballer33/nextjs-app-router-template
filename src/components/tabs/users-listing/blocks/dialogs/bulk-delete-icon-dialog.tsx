@@ -1,9 +1,13 @@
 import { useState } from "react"
 
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
+
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded"
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded"
 import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded"
 import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded"
+
 import {
     alpha,
     Box,
@@ -19,8 +23,6 @@ import {
     useMediaQuery,
     useTheme,
 } from "@mui/material"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
 
 import { AvatarState } from "src/components/base/styles/avatar"
 import ButtonIcon from "src/components/base/styles/button-icon"
@@ -48,25 +50,25 @@ function BulkDeleteIconDialog() {
         toast.custom(
             (message) => (
                 //  Toast Component
-                <Card elevation={21} className={`${message.visible ? "animate-enter" : "animate-leave"}`}>
+                <Card className={`${message.visible ? "animate-enter" : "animate-leave"}`} elevation={21}>
                     <Box
                         sx={{
-                            position: "relative",
-                            minWidth: 320,
                             maxWidth: 340,
+                            minWidth: 320,
+                            position: "relative",
                         }}
                     >
                         {/* Dismiss The Toast Button */}
                         <IconButton
                             color="primary"
+                            onClick={() => toast.dismiss(message.id)}
+                            size="small"
                             sx={{
                                 p: 0.2,
                                 position: "absolute",
                                 right: (prTheme) => prTheme.spacing(1),
                                 top: (ptTheme) => ptTheme.spacing(1),
                             }}
-                            size="small"
-                            onClick={() => toast.dismiss(message.id)}
                         >
                             <CloseRoundedIcon fontSize="inherit" />
                         </IconButton>
@@ -74,48 +76,48 @@ function BulkDeleteIconDialog() {
                         {/* Toast Content */}
                         <Box
                             sx={{
-                                px: 2,
-                                py: 1.5,
-                                display: "flex",
-                                transition: "none",
-                                alignItems: "flex-start",
                                 "&:hover": {
                                     backgroundColor: (bgColorTheme) => alpha(bgColorTheme.palette.primary.main, 0.01),
                                 },
+                                alignItems: "flex-start",
+                                display: "flex",
+                                px: 2,
+                                py: 1.5,
+                                transition: "none",
                             }}
                         >
                             {/* Toast Avatar */}
                             <AvatarState
                                 state="error"
-                                variant="rounded"
-                                useShadow
                                 sx={{
-                                    width: 40,
                                     height: 40,
                                     mt: 0.4,
+                                    width: 40,
                                 }}
+                                useShadow
+                                variant="rounded"
                             >
                                 <WarningAmberRoundedIcon fontSize="small" />
                             </AvatarState>
 
                             {/* Toast Text */}
-                            <Box ml={1.5} flex={1} pt={0.5} overflow="hidden">
+                            <Box flex={1} ml={1.5} overflow="hidden" pt={0.5}>
                                 <Typography sx={{ pb: 1 }} variant="h6">
                                     Items deleted successfully
                                 </Typography>
-                                <Typography variant="subtitle1" color="text.secondary">
+                                <Typography color="text.secondary" variant="subtitle1">
                                     The entries you selected have been removed successfully.
                                 </Typography>
-                                <Stack mt={1.5} mb={0.5} spacing={1} direction="row">
+                                <Stack direction="row" mb={0.5} mt={1.5} spacing={1}>
                                     <Button
-                                        variant="outlined"
                                         color="secondary"
+                                        onClick={() => toast.dismiss(message.id)}
                                         size="small"
+                                        startIcon={<ReplayRoundedIcon fontSize="small" />}
                                         sx={{
                                             color: "primary.main",
                                         }}
-                                        startIcon={<ReplayRoundedIcon fontSize="small" />}
-                                        onClick={() => toast.dismiss(message.id)}
+                                        variant="outlined"
                                     >
                                         Undo
                                     </Button>
@@ -136,12 +138,12 @@ function BulkDeleteIconDialog() {
             {/* Display Delete Button With Text On Tablet And Up Screen Size */}
             {smUp ? (
                 <Button
-                    variant="outlined"
                     color="secondary"
+                    onClick={handleClickOpen}
                     size="small"
                     startIcon={<DeleteOutlineRoundedIcon fontSize="small" />}
                     sx={{ color: "error.main" }}
-                    onClick={handleClickOpen}
+                    variant="outlined"
                 >
                     {t("Delete selected")}
                 </Button>
@@ -149,26 +151,26 @@ function BulkDeleteIconDialog() {
                 //  Display Delete Icon Button No Text On Mobile Screen Size
                 <Tooltip arrow placement="top" title={t("Delete selected")}>
                     <ButtonIcon
-                        variant="outlined"
                         color="error"
-                        sx={{ color: "error.main" }}
+                        onClick={handleClickOpen}
                         size="small"
                         startIcon={<DeleteOutlineRoundedIcon fontSize="small" />}
-                        onClick={handleClickOpen}
+                        sx={{ color: "error.main" }}
+                        variant="outlined"
                     />
                 </Tooltip>
             )}
 
             {/* If Delete Icon Clicked Show Dialog To Confirm Deletion */}
             <Dialog
-                open={open}
-                onClose={handleClose}
                 aria-labelledby="basic-dialog-title"
-                maxWidth="sm"
                 fullWidth
+                maxWidth="sm"
+                onClose={handleClose}
+                open={open}
                 sx={{
                     ".MuiDialog-container": {
-                        alignItems: { xs: "flex-end", sm: "center" },
+                        alignItems: { sm: "center", xs: "flex-end" },
                     },
                 }}
             >
@@ -177,27 +179,27 @@ function BulkDeleteIconDialog() {
                 </DialogContent>
                 <DialogActions
                     sx={{
+                        "& > :not(:first-of-type)": {
+                            marginBottom: { sm: 0, xs: theme.spacing(1) },
+                            marginLeft: { sm: theme.spacing(1), xs: 0 },
+                        },
                         backgroundColor: (bgColorTheme) =>
                             bgColorTheme.palette.mode === "dark"
                                 ? alpha(bgColorTheme.palette.neutral[25], 0.02)
                                 : "neutral.25",
-                        flexDirection: { xs: "column-reverse", sm: "row" },
 
-                        "& > :not(:first-of-type)": {
-                            marginLeft: { xs: 0, sm: theme.spacing(1) },
-                            marginBottom: { xs: theme.spacing(1), sm: 0 },
-                        },
+                        flexDirection: { sm: "row", xs: "column-reverse" },
                     }}
                 >
-                    <Button variant="outlined" color="secondary" autoFocus fullWidth={!smUp} onClick={handleClose}>
+                    <Button autoFocus color="secondary" fullWidth={!smUp} onClick={handleClose} variant="outlined">
                         Cancel
                     </Button>
                     <Button
-                        color="error"
-                        variant="contained"
-                        onClick={handleNotificationClick}
                         autoFocus
+                        color="error"
                         fullWidth={!smUp}
+                        onClick={handleNotificationClick}
+                        variant="contained"
                     >
                         Delete
                     </Button>

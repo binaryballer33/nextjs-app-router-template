@@ -1,28 +1,29 @@
+import type { CountrySelectProps } from "src/components/country-select/country-select"
+
 import { Controller, useFormContext } from "react-hook-form"
 
-import type { CountrySelectProps } from "src/components/country-select/country-select"
 import { CountrySelect } from "src/components/country-select/country-select"
 
 export default function RHFCountrySelect({
-    name,
     helperText,
+    name,
     ...other
-}: CountrySelectProps & {
+}: {
     name: string
-}) {
+} & CountrySelectProps) {
     const { control, setValue } = useFormContext()
 
     return (
         <Controller
-            name={name}
             control={control}
+            name={name}
             render={({ field, fieldState: { error } }) => (
                 <CountrySelect
-                    id={`rhf-country-select-${name}`}
-                    value={field.value}
-                    onChange={(_event, newValue) => setValue(name, newValue, { shouldValidate: true })}
                     error={!!error}
                     helperText={error?.message ?? helperText}
+                    id={`rhf-country-select-${name}`}
+                    onChange={(_event, newValue) => setValue(name, newValue, { shouldValidate: true })}
+                    value={field.value}
                     {...other}
                 />
             )}

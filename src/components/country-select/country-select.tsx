@@ -3,51 +3,53 @@ import type {
     AutocompleteRenderGetTagProps,
     AutocompleteRenderInputParams,
 } from "@mui/material/Autocomplete"
+import type { TextFieldProps } from "@mui/material/TextField"
+
 import Autocomplete from "@mui/material/Autocomplete"
 import Chip from "@mui/material/Chip"
 import { filledInputClasses } from "@mui/material/FilledInput"
 import InputAdornment from "@mui/material/InputAdornment"
 import { outlinedInputClasses } from "@mui/material/OutlinedInput"
-import type { TextFieldProps } from "@mui/material/TextField"
 import TextField from "@mui/material/TextField"
 
 import { FlagIcon } from "src/components/country-select/flag-icon"
+
 import countries from "src/mocks/countries"
 
 import { displayValueByCountryCode, getCountry } from "./utils"
 
 export const iconifyClasses = {
-    root: "mnl__icon__root",
     flag: "mnl__icon__flag",
+    root: "mnl__icon__root",
 }
 
 type Value = string
 
 export type AutocompleteBaseProps = Omit<
     AutocompleteProps<any, boolean, boolean, boolean>,
-    "options" | "renderOption" | "renderInput" | "renderTags" | "getOptionLabel"
+    "getOptionLabel" | "options" | "renderInput" | "renderOption" | "renderTags"
 >
 
-export type CountrySelectProps = AutocompleteBaseProps & {
-    label?: string
+export type CountrySelectProps = {
     error?: boolean
-    placeholder?: string
-    hiddenLabel?: boolean
-    getValue?: "label" | "code"
+    getValue?: "code" | "label"
     helperText?: React.ReactNode
+    hiddenLabel?: boolean
+    label?: string
+    placeholder?: string
     variant?: TextFieldProps["variant"]
-}
+} & AutocompleteBaseProps
 
 export function CountrySelect({
-    id,
-    label,
     error,
-    variant,
-    multiple,
+    getValue = "label",
     helperText,
     hiddenLabel,
+    id,
+    label,
+    multiple,
     placeholder,
-    getValue = "label",
+    variant,
     ...other
 }: CountrySelectProps) {
     const options = countries.map((country) => (getValue === "label" ? country.label : country.code))
@@ -62,9 +64,9 @@ export function CountrySelect({
         return (
             <li {...props} key={country.label}>
                 <FlagIcon
-                    key={country.label}
                     code={country.code}
-                    sx={{ mr: 1, width: 22, height: 22, borderRadius: "50%" }}
+                    key={country.label}
+                    sx={{ borderRadius: "50%", height: 22, mr: 1, width: 22 }}
                 />
                 {country.label} ({country.code}) +{country.phone}
             </li>
@@ -76,16 +78,16 @@ export function CountrySelect({
 
         const baseField = {
             ...params,
-            label,
-            variant,
-            placeholder,
+            error: !!error,
             helperText,
             hiddenLabel,
-            error: !!error,
             inputProps: {
                 ...params.inputProps,
                 autoComplete: "new-password",
             },
+            label,
+            placeholder,
+            variant,
         }
 
         if (multiple) {
@@ -100,19 +102,19 @@ export function CountrySelect({
                     startAdornment: (
                         <InputAdornment position="start" sx={{ ...(!country.code && { display: "none" }) }}>
                             <FlagIcon
-                                key={country.label}
                                 code={country.code}
-                                sx={{ width: 22, height: 22, borderRadius: "50%" }}
+                                key={country.label}
+                                sx={{ borderRadius: "50%", height: 22, width: 22 }}
                             />
                         </InputAdornment>
                     ),
                 }}
                 sx={{
-                    [`& .${outlinedInputClasses.root}`]: {
-                        [`& .${iconifyClasses.flag}`]: { ml: 0.5, mr: -0.5 },
-                    },
                     [`& .${filledInputClasses.root}`]: {
                         [`& .${iconifyClasses.flag}`]: { ml: 0.5, mr: -0.5, mt: hiddenLabel ? 0 : -2 },
+                    },
+                    [`& .${outlinedInputClasses.root}`]: {
+                        [`& .${iconifyClasses.flag}`]: { ml: 0.5, mr: -0.5 },
                     },
                 }}
             />
@@ -126,18 +128,18 @@ export function CountrySelect({
             return (
                 <Chip
                     {...getTagProps({ index })}
+                    icon={
+                        <FlagIcon
+                            code={country.code}
+                            key={country.label}
+                            sx={{ borderRadius: "50%", height: 16, width: 16 }}
+                        />
+                    }
                     key={country.label}
                     label={country.label}
                     size="small"
                     // @ts-ignore
                     variant="soft"
-                    icon={
-                        <FlagIcon
-                            key={country.label}
-                            code={country.code}
-                            sx={{ width: 16, height: 16, borderRadius: "50%" }}
-                        />
-                    }
                 />
             )
         })
@@ -146,15 +148,15 @@ export function CountrySelect({
 
     return (
         <Autocomplete
+            autoHighlight={!multiple}
+            disableCloseOnSelect={multiple}
+            getOptionLabel={getOptionLabel}
             id={`country-select-${id}`}
             multiple={multiple}
             options={options}
-            autoHighlight={!multiple}
-            disableCloseOnSelect={multiple}
-            renderOption={renderOption}
             renderInput={renderInput}
+            renderOption={renderOption}
             renderTags={multiple ? renderTags : undefined}
-            getOptionLabel={getOptionLabel}
             {...other}
         />
     )

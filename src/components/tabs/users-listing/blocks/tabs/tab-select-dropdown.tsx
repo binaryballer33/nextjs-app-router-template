@@ -3,26 +3,26 @@ import type { ChangeEvent, Dispatch, SetStateAction } from "react"
 import { MenuItem, Select } from "@mui/material"
 
 type Tab = {
-    value: string
-    label: string
     count: number
+    label: string
+    value: string
 }
 
 type Filters = {
-    role?: string | null
+    role?: null | string
 }
 
 type TabSelectDropdownProps = {
     filters: any
-    tabs: Tab[]
-    setSelectedItems: Dispatch<SetStateAction<string[]>>
-    setFilters: Dispatch<SetStateAction<Filters>>
     handlePageChange: (_event: any, newPage: number) => void
+    setFilters: Dispatch<SetStateAction<Filters>>
+    setSelectedItems: Dispatch<SetStateAction<string[]>>
     t: (token: string) => string
+    tabs: Tab[]
 }
 
 export default function TabSelectDropdown(props: TabSelectDropdownProps) {
-    const { filters, tabs, setSelectedItems, setFilters, handlePageChange, t } = props
+    const { filters, handlePageChange, setFilters, setSelectedItems, t, tabs } = props
 
     const handleSelectChange = (event: ChangeEvent<{ value: unknown }>) => {
         const selectedValue = event.target.value as string
@@ -38,10 +38,10 @@ export default function TabSelectDropdown(props: TabSelectDropdownProps) {
 
     return (
         <Select
-            value={filters.role || "all"}
+            fullWidth
             // @ts-ignore
             onChange={handleSelectChange}
-            fullWidth
+            value={filters.role || "all"}
         >
             {tabs.map((tab) => (
                 <MenuItem key={tab.value} value={tab.value}>

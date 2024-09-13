@@ -1,17 +1,20 @@
 import type { TextFieldProps } from "@mui/material/TextField"
 import type { DatePickerProps } from "@mui/x-date-pickers/DatePicker"
-import { DatePicker } from "@mui/x-date-pickers/DatePicker"
 import type { MobileDateTimePickerProps } from "@mui/x-date-pickers/MobileDateTimePicker"
-import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker"
 import type { Dayjs } from "dayjs"
-import dayjs from "dayjs"
+
 import { Controller, useFormContext } from "react-hook-form"
+
+import dayjs from "dayjs"
+
+import { DatePicker } from "@mui/x-date-pickers/DatePicker"
+import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker"
 
 import { formatStr } from "src/utils/format-time"
 
-type RHFDatePickerProps = DatePickerProps<Dayjs> & {
+type RHFDatePickerProps = {
     name: string
-}
+} & DatePickerProps<Dayjs>
 
 // TODO: get rid of type errors
 export default function RHFDatePicker({ name, slotProps, ...other }: RHFDatePickerProps) {
@@ -19,23 +22,23 @@ export default function RHFDatePicker({ name, slotProps, ...other }: RHFDatePick
 
     return (
         <Controller
-            name={name}
             control={control}
+            name={name}
             render={({ field, fieldState: { error } }) => (
                 <DatePicker
                     {...field}
-                    value={dayjs(field.value)}
-                    onChange={(newValue) => field.onChange(dayjs(newValue).format())}
                     format={formatStr.split.date}
+                    onChange={(newValue) => field.onChange(dayjs(newValue).format())}
                     slotProps={{
                         ...slotProps,
                         textField: {
-                            fullWidth: true,
                             error: !!error,
+                            fullWidth: true,
                             helperText: error?.message ?? (slotProps?.textField as TextFieldProps)?.helperText,
                             ...slotProps?.textField,
                         },
                     }}
+                    value={dayjs(field.value)}
                     {...other}
                 />
             )}
@@ -43,32 +46,32 @@ export default function RHFDatePicker({ name, slotProps, ...other }: RHFDatePick
     )
 }
 
-type RHFMobileDateTimePickerProps = MobileDateTimePickerProps<Dayjs> & {
+type RHFMobileDateTimePickerProps = {
     name: string
-}
+} & MobileDateTimePickerProps<Dayjs>
 
 export function RHFMobileDateTimePicker({ name, slotProps, ...other }: RHFMobileDateTimePickerProps) {
     const { control } = useFormContext()
 
     return (
         <Controller
-            name={name}
             control={control}
+            name={name}
             render={({ field, fieldState: { error } }) => (
                 <MobileDateTimePicker
                     {...field}
-                    value={dayjs(field.value)}
-                    onChange={(newValue) => field.onChange(dayjs(newValue).format())}
                     format={formatStr.split.dateTime}
+                    onChange={(newValue) => field.onChange(dayjs(newValue).format())}
                     slotProps={{
                         textField: {
-                            fullWidth: true,
                             error: !!error,
+                            fullWidth: true,
                             helperText: error?.message ?? (slotProps?.textField as TextFieldProps)?.helperText,
                             ...slotProps?.textField,
                         },
                         ...slotProps,
                     }}
+                    value={dayjs(field.value)}
                     {...other}
                 />
             )}

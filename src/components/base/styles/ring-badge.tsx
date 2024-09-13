@@ -1,6 +1,6 @@
 import { alpha, Badge, styled } from "@mui/material"
 
-type BadgeVariant = "colorPrimary" | "colorSecondary" | "colorWarning" | "colorSuccess" | "colorError" | "colorInfo"
+type BadgeVariant = "colorError" | "colorInfo" | "colorPrimary" | "colorSecondary" | "colorSuccess" | "colorWarning"
 
 const badgeVariants: BadgeVariant[] = [
     "colorPrimary",

@@ -1,11 +1,12 @@
+import type { SavedItemWithoutId } from "src/types/saved-item"
+import type { YuGiOhCard } from "src/types/yu-gi-oh/yu-gi-oh"
+
 import { randomUUID } from "crypto"
 import fs from "fs"
 
 import { Prisma } from "@prisma/client"
 import { hash } from "bcryptjs"
 
-import type { SavedItemWithoutId } from "src/models/saved-item"
-import type { YuGiOhCard } from "src/models/yu-gi-oh/yu-gi-oh"
 import prisma from "src/utils/database/prisma"
 
 import CartItemUncheckedCreateInput = Prisma.CartItemUncheckedCreateInput
@@ -23,6 +24,8 @@ async function dropTables() {
     await prisma.cartItem.deleteMany({})
     await prisma.user.deleteMany({})
     await prisma.yugiohCard.deleteMany({})
+    await prisma.account.deleteMany({})
+    await prisma.verificationToken.deleteMany({})
 
     console.log("Dropped Tables Successfully\n")
 }
@@ -67,26 +70,26 @@ async function createUsers() {
     try {
         await prisma.user.create({
             data: {
-                id: gmailUserId,
                 email: "rashadmandy@gmail.com",
-                firstName: "Rashad",
-                lastName: "Mandy",
-                encryptedPassword: hashedPasswordForGmailUser, // password to login will be password
-                imageUrl: placeholderImage,
-                image: placeholderImage,
                 emailVerified: new Date(), // can only log in with email verification
+                encryptedPassword: hashedPasswordForGmailUser, // password to login will be password
+                firstName: "Rashad",
+                id: gmailUserId,
+                image: placeholderImage,
+                imageUrl: placeholderImage,
+                lastName: "Mandy",
             },
         })
 
         await prisma.user.create({
             data: {
-                id: outlookUserId,
                 email: "rashadmandy@outlook.com",
-                firstName: "Rashad",
-                lastName: "Mandy",
                 encryptedPassword: hashedPasswordForOutlookUser, // password to login will be password
-                imageUrl: placeholderImage,
+                firstName: "Rashad",
+                id: outlookUserId,
                 image: placeholderImage,
+                imageUrl: placeholderImage,
+                lastName: "Mandy",
             },
         })
         console.log("Successfully Created User with Gmail ID: ", gmailUserId)
@@ -127,16 +130,16 @@ async function createRandomCartItems(userId: string, amountOfRandomCartItems: nu
         .fill({})
         .map(() => {
             const randomCard = cards[Math.floor(Math.random() * cards.length)]
-            const { name, frameType, price, id } = randomCard
+            const { frameType, id, name, price } = randomCard
             const randomQuantity = Math.floor(Math.random() * 10.0)
 
             return {
-                userId,
-                yugiohCardId: id,
+                desc: frameType,
                 name,
                 price,
                 quantity: randomQuantity,
-                desc: frameType,
+                userId,
+                yugiohCardId: id,
             }
         })
 

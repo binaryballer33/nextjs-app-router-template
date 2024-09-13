@@ -1,39 +1,39 @@
 import type { ChangeEvent } from "react"
+import type { YuGiOhCard } from "src/types/yu-gi-oh/yu-gi-oh"
 
 import { Box, Card, Table, TableBody, TableContainer, TablePagination } from "@mui/material"
 
 import TableColumns from "src/components/tabs/users-listing/blocks/views/table-view/table-columns"
 import TableRecord from "src/components/tabs/users-listing/blocks/views/table-view/table-record"
-import type { YuGiOhCard } from "src/models/yu-gi-oh/yu-gi-oh"
 
 type TableViewProps = {
-    page: number
+    filteredRecords: any[]
+    handleLimitChange: (event: ChangeEvent<HTMLInputElement>) => void
+    handlePageChange: (event: unknown, newPage: number) => void
+    handleSelectAllRecords: (event: ChangeEvent<HTMLInputElement>) => void
+    handleSelectOneRecord: (event: ChangeEvent<HTMLInputElement>, id: string) => void
     limit: number
-    selectedRecords: string[]
+    page: number
     paginatedRecords: YuGiOhCard[]
     selectedAllRecords: boolean
+    selectedRecords: string[]
     selectedSomeRecords: boolean
-    filteredRecords: any[]
-    handlePageChange: (event: unknown, newPage: number) => void
-    handleLimitChange: (event: ChangeEvent<HTMLInputElement>) => void
-    handleSelectOneRecord: (event: ChangeEvent<HTMLInputElement>, id: string) => void
-    handleSelectAllRecords: (event: ChangeEvent<HTMLInputElement>) => void
     t: (token: string) => string
 }
 
 export default function TableView(props: TableViewProps) {
     const {
-        page,
-        limit,
-        selectedRecords,
-        paginatedRecords,
         filteredRecords,
-        selectedAllRecords,
-        selectedSomeRecords,
-        handlePageChange,
         handleLimitChange,
-        handleSelectOneRecord,
+        handlePageChange,
         handleSelectAllRecords,
+        handleSelectOneRecord,
+        limit,
+        page,
+        paginatedRecords,
+        selectedAllRecords,
+        selectedRecords,
+        selectedSomeRecords,
         t,
     } = props
 
@@ -45,9 +45,9 @@ export default function TableView(props: TableViewProps) {
                     <Table>
                         {/* Table Column Headers */}
                         <TableColumns
+                            handleSelectAllRecords={handleSelectAllRecords}
                             selectedAllRecords={selectedAllRecords}
                             selectedSomeRecords={selectedSomeRecords}
-                            handleSelectAllRecords={handleSelectAllRecords}
                             t={t}
                         />
 
@@ -55,10 +55,10 @@ export default function TableView(props: TableViewProps) {
                             {/* Create The Table Rows From The Paginated Data */}
                             {paginatedRecords.map((item) => (
                                 <TableRecord
+                                    handleSelectOneRecord={handleSelectOneRecord}
                                     key={item.name}
                                     record={item}
                                     selectedRecords={selectedRecords}
-                                    handleSelectOneRecord={handleSelectOneRecord}
                                     t={t}
                                 />
                             ))}
@@ -87,11 +87,11 @@ export default function TableView(props: TableViewProps) {
                     rowsPerPageOptions={[5, 10, 25, 50, 100]}
                     slotProps={{
                         select: {
-                            variant: "outlined",
                             size: "small",
                             sx: {
                                 p: 0,
                             },
+                            variant: "outlined",
                         },
                     }}
                 />

@@ -2,10 +2,12 @@
 
 import { type ReactNode } from "react"
 
+import { Provider as ReduxProvider } from "react-redux"
+
+import { NextAppDirEmotionCacheProvider } from "tss-react/next/appDir"
+
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
-import { Provider as ReduxProvider } from "react-redux"
-import { NextAppDirEmotionCacheProvider } from "tss-react/next/appDir"
 
 import SidebarProvider from "src/contexts/sidebar-context"
 import ReactQueryClientProvider from "src/layouts/providers/query-client-provider"

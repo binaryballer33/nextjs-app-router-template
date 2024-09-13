@@ -1,7 +1,10 @@
+import type { YuGiOhCard } from "src/types/yu-gi-oh/yu-gi-oh"
+
 import Image from "next/image"
 
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone"
 import LaunchTwoToneIcon from "@mui/icons-material/LaunchTwoTone"
+
 import {
     Box,
     Card,
@@ -16,9 +19,9 @@ import {
     Typography,
 } from "@mui/material"
 
-import FlexCenter from "src/components/base/flex-box/flex-center"
-import type { YuGiOhCard } from "src/models/yu-gi-oh/yu-gi-oh"
 import getYugiohFrameTypeColor from "src/utils/helper-functions/getYuGiOhFrameTypeColor"
+
+import FlexCenter from "src/components/base/flex-box/flex-center"
 
 const TableCellWrapper = styled(TableCell)(
     () => `
@@ -27,14 +30,14 @@ const TableCellWrapper = styled(TableCell)(
 )
 
 type TableRowProps = {
+    handleSelectOneRecord: (event: any, id: string) => void
     record: YuGiOhCard
     selectedRecords: string[]
-    handleSelectOneRecord: (event: any, id: string) => void
     t: (token: string) => string
 }
 
 export default function TableRecord(props: TableRowProps) {
-    const { record, selectedRecords, handleSelectOneRecord, t } = props
+    const { handleSelectOneRecord, record, selectedRecords, t } = props
     const isRecordSelected = selectedRecords.includes(record.id.toString())
 
     return (
@@ -51,15 +54,15 @@ export default function TableRecord(props: TableRowProps) {
 
             {/* Record Image Column  */}
             <TableCellWrapper>
-                <Box display="flex" alignItems="center">
+                <Box alignItems="center" display="flex">
                     <div
                         style={{
                             height: "50px !important",
-                            width: "50px !important",
                             objectFit: "cover",
+                            width: "50px !important",
                         }}
                     >
-                        <Image alt={record.name} src={record.imageUrl} height={50} width={50} priority />
+                        <Image alt={record.name} height={50} priority src={record.imageUrl} width={50} />
                     </div>
                 </Box>
             </TableCellWrapper>
@@ -67,7 +70,7 @@ export default function TableRecord(props: TableRowProps) {
             {/* Record Name Column */}
             <TableCellWrapper>
                 <Box>
-                    <Link variant="subtitle2" fontWeight={500} href={record.ygoprodeck_url} underline="hover">
+                    <Link fontWeight={500} href={record.ygoprodeck_url} underline="hover" variant="subtitle2">
                         {record.name}
                     </Link>
                 </Box>
@@ -90,8 +93,8 @@ export default function TableRecord(props: TableRowProps) {
                 <Card elevation={1} sx={{ p: 1 }}>
                     <Typography
                         sx={{
-                            maxHeight: 50,
                             display: "block",
+                            maxHeight: 50,
                             overflow: "scroll",
                         }}
                     >
@@ -119,14 +122,14 @@ export default function TableRecord(props: TableRowProps) {
             <TableCellWrapper align="center">
                 <Typography noWrap>
                     {/* Open Action Icon */}
-                    <Tooltip title={t("View")} arrow>
+                    <Tooltip arrow title={t("View")}>
                         <IconButton color="secondary">
                             <LaunchTwoToneIcon fontSize="small" />
                         </IconButton>
                     </Tooltip>
 
                     {/* Edit Record Action Icon */}
-                    <Tooltip title={t("Delete")} arrow>
+                    <Tooltip arrow title={t("Delete")}>
                         <IconButton color="secondary">
                             <DeleteTwoToneIcon fontSize="small" />
                         </IconButton>

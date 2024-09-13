@@ -1,11 +1,22 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import type { SubmitHandler } from "react-hook-form"
+import type { OAuthProvider, RegisterRequest } from "src/types/forms/register"
+
+import oAuthProviders from "src/types/forms/common"
+import { defaultValuesRegisterRequest, RegisterRequestSchema } from "src/types/forms/register"
 
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
+import { useCallback, useState } from "react"
+
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
+
 import { zodResolver } from "@hookform/resolvers/zod"
+
 import {
     Alert,
     Box,
@@ -18,17 +29,13 @@ import {
     Typography,
     useTheme,
 } from "@mui/material"
+
 import { signIn } from "next-auth/react"
-import type { SubmitHandler } from "react-hook-form"
-import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
 
 import register from "src/actions/auth/register"
+
 import RouterLink from "src/components/base/router-link"
-import oAuthProviders from "src/models/forms/common"
-import type { OAuthProvider, RegisterRequest } from "src/models/forms/register"
-import { defaultValuesRegisterRequest, RegisterRequestSchema } from "src/models/forms/register"
+
 import routes from "src/router/routes"
 
 import RegisterFormInput from "./register-form-input"
@@ -47,12 +54,12 @@ export default function RegisterPage() {
     const router = useRouter()
 
     const {
-        register: registerInputField,
-        handleSubmit: handleSubmitHookForm,
-        reset: resetFormFields,
-        watch: watchFormField,
-        setValue: setFormValue,
         formState: { errors },
+        handleSubmit: handleSubmitHookForm,
+        register: registerInputField,
+        reset: resetFormFields,
+        setValue: setFormValue,
+        watch: watchFormField,
     } = useForm<RegisterRequest>({
         defaultValues: defaultValuesRegisterRequest,
         resolver: zodResolver(RegisterRequestSchema),
@@ -70,11 +77,11 @@ export default function RegisterPage() {
             const response = await register(credentials)
             setIsLoading(false)
 
-            if (response.success) {
+            if (response.status === 200) {
                 toast.success(response.success)
                 router.push(routes.auth.login)
             }
-            if (response.error) toast.error(response.error, { duration: 5000 })
+            if (response.status === 400 || response.status === 500) toast.error(response.error, { duration: 5000 })
         },
         [resetFormFields, router],
     )
@@ -83,8 +90,7 @@ export default function RegisterPage() {
         resetFormFields()
     }, [resetFormFields])
 
-    let inputFields = Object.keys(defaultValuesRegisterRequest) // get the text fields from the initial form state
-    inputFields = inputFields.filter((inputName) => inputName !== "terms") // don't create an input field for the terms checkbox
+    const inputFields = ["firstName", "lastName", "email", "password", "confirmPassword"]
 
     const isDarkMode = theme.palette.mode === "dark"
 
@@ -106,34 +112,34 @@ export default function RegisterPage() {
             onSubmit={handleSubmitHookForm(handleSubmit)}
             style={{ display: "flex", flexDirection: "column", padding: "16px 0px" }}
         >
-            <Box py={{ xs: 2, sm: 3 }} mx={{ xl: 6 }}>
+            <Box mx={{ xl: 6 }} py={{ sm: 3, xs: 2 }}>
                 {/* Form Header */}
                 <Container maxWidth="sm">
-                    <Typography align="center" variant="h4" gutterBottom>
+                    <Typography align="center" gutterBottom variant="h4">
                         {t("Create new account")}
                     </Typography>
-                    <Typography align="center" variant="body1" fontWeight={400}>
+                    <Typography align="center" fontWeight={400} variant="body1">
                         {t("Join our platform by creating a new account for exclusive access")}
                     </Typography>
                 </Container>
 
                 {/* Form Content */}
-                <Stack mt={{ xs: 2, sm: 3 }} justifyContent="center" alignItems="center" spacing={{ xs: 2, sm: 3 }}>
+                <Stack alignItems="center" justifyContent="center" mt={{ sm: 3, xs: 2 }} spacing={{ sm: 3, xs: 2 }}>
                     {/* OAuth Sign In Buttons */}
                     <Container maxWidth="sm">
-                        <Stack justifyContent="center" direction={{ xs: "column", sm: "row" }} spacing={1}>
+                        <Stack direction={{ sm: "row", xs: "column" }} justifyContent="center" spacing={1}>
                             {updatedOAuthProviders.map((provider) => (
                                 <Button
-                                    fullWidth
+                                    color="secondary"
                                     disabled={isLoading}
+                                    fullWidth
+                                    key={provider.id}
+                                    onClick={() => onAuth(provider.id).catch(() => {})}
+                                    startIcon={<Image alt="Google" height={24} src={provider.logo} width={24} />}
                                     sx={{
                                         whiteSpace: "nowrap",
                                     }}
                                     variant="outlined"
-                                    color="secondary"
-                                    key={provider.id}
-                                    onClick={() => onAuth(provider.id).catch(() => {})}
-                                    startIcon={<Image height={24} width={24} alt="Google" src={provider.logo} />}
                                 >
                                     {t(`Sign up with ${provider.name}`)}
                                 </Button>
@@ -152,12 +158,12 @@ export default function RegisterPage() {
                             {/* Input Fields For Firstname, Lastname, Email, Password And Confirm Password */}
                             {inputFields.map((inputName) => (
                                 <RegisterFormInput
-                                    key={inputName}
-                                    register={registerInputField}
-                                    watchFormField={watchFormField}
-                                    setFormValue={setFormValue}
                                     errors={errors}
                                     inputName={inputName as keyof RegisterRequest}
+                                    key={inputName}
+                                    register={registerInputField}
+                                    setFormValue={setFormValue}
+                                    watchFormField={watchFormField}
                                 />
                             ))}
 
@@ -185,9 +191,9 @@ export default function RegisterPage() {
                                     {/* Reset Form Button */}
                                     <Button
                                         disabled={isLoading}
-                                        variant="outlined"
-                                        size="small"
                                         onClick={handleClearForm}
+                                        size="small"
+                                        variant="outlined"
                                     >
                                         {t("Clear Form")}
                                     </Button>
@@ -196,7 +202,7 @@ export default function RegisterPage() {
 
                             {/* Create Account Button */}
                             <Grid xs={12}>
-                                <Button disabled={isLoading} variant="contained" type="submit" size="large" fullWidth>
+                                <Button disabled={isLoading} fullWidth size="large" type="submit" variant="contained">
                                     {t("Create account")}
                                 </Button>
                             </Grid>
@@ -209,15 +215,15 @@ export default function RegisterPage() {
                             )}
 
                             {/* Already a Member? Link To Login Page */}
-                            <Grid xs={12} textAlign="center">
-                                <Typography component="span" color="text.secondary">
+                            <Grid textAlign="center" xs={12}>
+                                <Typography color="text.secondary" component="span">
                                     {t("Already a Member?")}
                                 </Typography>{" "}
                                 <Link
                                     component={RouterLink}
+                                    fontWeight={500}
                                     href={routes.auth.login}
                                     underline="hover"
-                                    fontWeight={500}
                                 >
                                     {t("Sign in here")}
                                 </Link>

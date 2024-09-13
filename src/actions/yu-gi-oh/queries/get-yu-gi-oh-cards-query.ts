@@ -7,11 +7,11 @@ export default async function getYuGiOhCardsQuery(page = 0, limit = 50) {
 
     try {
         return await prisma.yugiohCard.findMany({
-            take: limit,
             orderBy: {
                 name: "desc",
             },
             skip: skipPreviousRecords,
+            take: limit,
         })
     } catch (error) {
         console.error(`Error Fetching Yu-Gi-Oh Cards: ${error}`)

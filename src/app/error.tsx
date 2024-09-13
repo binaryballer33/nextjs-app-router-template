@@ -12,10 +12,10 @@ function Page() {
     return (
         <FullScreenCenteredContainer>
             <Typography>Sorry, something went wrong</Typography>
-            <Button variant="contained" onClick={() => router.push("/")}>
+            <Button onClick={() => router.push("/")} variant="contained">
                 Go back to the home page
             </Button>
-            <Button variant="contained" onClick={() => router.back()}>
+            <Button onClick={() => router.back()} variant="contained">
                 Go back to the previous page
             </Button>
         </FullScreenCenteredContainer>

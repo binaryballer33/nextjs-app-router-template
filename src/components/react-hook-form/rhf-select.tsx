@@ -1,41 +1,42 @@
-import type { ReactNode } from "react"
-
-import Box from "@mui/material/Box"
 import type { CheckboxProps } from "@mui/material/Checkbox"
-import Checkbox from "@mui/material/Checkbox"
 import type { ChipProps } from "@mui/material/Chip"
-import Chip from "@mui/material/Chip"
 import type { FormControlProps } from "@mui/material/FormControl"
-import FormControl from "@mui/material/FormControl"
 import type { FormHelperTextProps } from "@mui/material/FormHelperText"
-import FormHelperText from "@mui/material/FormHelperText"
 import type { InputLabelProps } from "@mui/material/InputLabel"
-import InputLabel from "@mui/material/InputLabel"
-import MenuItem from "@mui/material/MenuItem"
 import type { SelectProps } from "@mui/material/Select"
-import Select from "@mui/material/Select"
 import type { SxProps, Theme } from "@mui/material/styles"
 import type { TextFieldProps } from "@mui/material/TextField"
-import TextField from "@mui/material/TextField"
+import type { ReactNode } from "react"
+
 import { Controller, useFormContext } from "react-hook-form"
 
-type RHFSelectProps = TextFieldProps & {
+import Box from "@mui/material/Box"
+import Checkbox from "@mui/material/Checkbox"
+import Chip from "@mui/material/Chip"
+import FormControl from "@mui/material/FormControl"
+import FormHelperText from "@mui/material/FormHelperText"
+import InputLabel from "@mui/material/InputLabel"
+import MenuItem from "@mui/material/MenuItem"
+import Select from "@mui/material/Select"
+import TextField from "@mui/material/TextField"
+
+type RHFSelectProps = {
+    children: ReactNode
     name: string
     native?: boolean
-    children: ReactNode
     slotProps?: {
         paper?: SxProps<Theme>
     }
-}
+} & TextFieldProps
 
 export default function RHFSelect({
+    children,
+    helperText,
+    InputLabelProps,
+    inputProps,
     name,
     native,
-    children,
     slotProps,
-    helperText,
-    inputProps,
-    InputLabelProps,
     ...other
 }: RHFSelectProps) {
     const { control } = useFormContext()
@@ -44,22 +45,22 @@ export default function RHFSelect({
 
     return (
         <Controller
-            name={name}
             control={control}
+            name={name}
             render={({ field, fieldState: { error } }) => (
                 <TextField
                     {...field}
-                    select
+                    error={!!error}
                     fullWidth
-                    SelectProps={{
-                        native,
-                        MenuProps: { PaperProps: { sx: { maxHeight: 220, ...slotProps?.paper } } },
-                        sx: { textTransform: "capitalize" },
-                    }}
+                    helperText={error ? error?.message : helperText}
                     InputLabelProps={{ htmlFor: labelId, ...InputLabelProps }}
                     inputProps={{ id: labelId, ...inputProps }}
-                    error={!!error}
-                    helperText={error ? error?.message : helperText}
+                    select
+                    SelectProps={{
+                        MenuProps: { PaperProps: { sx: { maxHeight: 220, ...slotProps?.paper } } },
+                        native,
+                        sx: { textTransform: "capitalize" },
+                    }}
                     {...other}
                 >
                     {children}
@@ -71,35 +72,35 @@ export default function RHFSelect({
 
 // ----------------------------------------------------------------------
 
-type RHFMultiSelectProps = FormControlProps & {
-    name: string
-    label?: string
-    chip?: boolean
+type RHFMultiSelectProps = {
     checkbox?: boolean
-    placeholder?: string
+    chip?: boolean
     helperText?: ReactNode
+    label?: string
+    name: string
     options: {
         label: string
         value: string
     }[]
+    placeholder?: string
     slotProps?: {
-        chip?: ChipProps
-        select: SelectProps
         checkbox?: CheckboxProps
-        inputLabel?: InputLabelProps
+        chip?: ChipProps
         formHelperText?: FormHelperTextProps
+        inputLabel?: InputLabelProps
+        select: SelectProps
     }
-}
+} & FormControlProps
 
 export function RHFMultiSelect({
-    name,
-    chip,
-    label,
-    options,
     checkbox,
+    chip,
+    helperText,
+    label,
+    name,
+    options,
     placeholder,
     slotProps,
-    helperText,
     ...other
 }: RHFMultiSelectProps) {
     const { control } = useFormContext()
@@ -108,8 +109,8 @@ export function RHFMultiSelect({
 
     return (
         <Controller
-            name={name}
             control={control}
+            name={name}
             render={({ field, fieldState: { error } }) => (
                 <FormControl error={!!error} {...other}>
                     {label && (
@@ -120,9 +121,9 @@ export function RHFMultiSelect({
 
                     <Select
                         {...field}
-                        multiple
                         displayEmpty={!!placeholder}
                         label={label}
+                        multiple
                         renderValue={(selected) => {
                             const selectedItems = options.filter((item) => (selected as string[]).includes(item.value))
 
@@ -132,14 +133,14 @@ export function RHFMultiSelect({
 
                             if (chip) {
                                 return (
-                                    <Box sx={{ gap: 0.5, display: "flex", flexWrap: "wrap" }}>
+                                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                                         {selectedItems.map((item) => (
                                             <Chip
                                                 key={item.value}
+                                                label={item.label}
                                                 size="small"
                                                 // @ts-ignore
                                                 variant="soft"
-                                                label={item.label}
                                                 {...slotProps?.chip}
                                             />
                                         ))}
@@ -156,9 +157,9 @@ export function RHFMultiSelect({
                             <MenuItem key={option.value} value={option.value}>
                                 {checkbox && (
                                     <Checkbox
-                                        size="small"
-                                        disableRipple
                                         checked={field.value.includes(option.value)}
+                                        disableRipple
+                                        size="small"
                                         {...slotProps?.checkbox}
                                     />
                                 )}

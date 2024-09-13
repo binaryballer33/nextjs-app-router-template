@@ -2,9 +2,10 @@
 
 import { randomUUID } from "crypto"
 
+import prisma from "src/utils/database/prisma"
+
 import deleteVerificationTokenById from "src/actions/verification-token/delete-verification-token-by-id"
 import getVerificationTokenByEmail from "src/actions/verification-token/get-verification-token-by-email"
-import prisma from "src/utils/database/prisma"
 
 export default async function createVerificationToken(email: string) {
     const token = randomUUID()
@@ -17,9 +18,9 @@ export default async function createVerificationToken(email: string) {
 
         const verificationToken = await prisma.verificationToken.create({
             data: {
-                token,
                 email,
                 expires,
+                token,
             },
         })
 

@@ -1,23 +1,23 @@
 import { alpha, MenuList, styled } from "@mui/material"
 
-type Variant = "pills" | "square" | "indicator" | "rounded"
-type Color = "primary" | "secondary" | "error" | "success"
+type Variant = "indicator" | "pills" | "rounded" | "square"
+type Color = "error" | "primary" | "secondary" | "success"
 
 const generateBaseStyles = (theme: any, color: Color, variant: Variant) => {
     const commonStyles = {
-        padding: theme.spacing(1, 1, 1, 2),
-        marginBottom: "1px",
-        minWidth: 240,
-        position: "relative",
-        color: theme.palette.mode === "dark" ? theme.palette.neutral[700] : theme.palette.neutral[600],
         "&:last-child": {
             marginBottom: 0,
         },
-
         "&.Mui-selected, &.Mui-selected:hover, &:hover, &.MuiButtonBase-root:active": {
             background: alpha(theme.palette[color].main, 0.06),
             color: theme.palette[color].main,
         },
+        color: theme.palette.mode === "dark" ? theme.palette.neutral[700] : theme.palette.neutral[600],
+        marginBottom: "1px",
+        minWidth: 240,
+        padding: theme.spacing(1, 1, 1, 2),
+
+        position: "relative",
     }
 
     switch (variant) {
@@ -39,34 +39,34 @@ const generateBaseStyles = (theme: any, color: Color, variant: Variant) => {
         case "indicator":
             return {
                 ...commonStyles,
-                borderRadius: theme.shape.borderRadius,
-                borderTopLeftRadius: 0,
-                borderBottomLeftRadius: 0,
                 "&::before": {
-                    left: 0,
-                    width: 0,
                     background: theme.palette[color].main,
+                    borderBottomRightRadius: theme.shape.borderRadius,
+                    borderTopRightRadius: theme.shape.borderRadius,
                     content: '" "',
-                    top: "50%",
-                    marginTop: "-10px",
                     height: 0,
-                    transition: theme.transitions.create(["all"]),
+                    left: 0,
+                    marginTop: "-10px",
                     opacity: 0,
                     position: "absolute",
-                    borderTopRightRadius: theme.shape.borderRadius,
-                    borderBottomRightRadius: theme.shape.borderRadius,
+                    top: "50%",
+                    transition: theme.transitions.create(["all"]),
+                    width: 0,
                 },
                 "&.Mui-selected, &:hover, &.MuiButtonBase-root:active": {
-                    color: theme.palette[color].main,
-                    background: alpha(theme.palette[color].main, 0.06),
                     "&::before": {
                         height: "100%",
-                        opacity: 1,
-                        width: "4px",
                         margin: 0,
+                        opacity: 1,
                         top: 0,
+                        width: "4px",
                     },
+                    background: alpha(theme.palette[color].main, 0.06),
+                    color: theme.palette[color].main,
                 },
+                borderBottomLeftRadius: 0,
+                borderRadius: theme.shape.borderRadius,
+                borderTopLeftRadius: 0,
             }
         default:
             return {

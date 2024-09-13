@@ -9,13 +9,13 @@ export default function NoDataResults(props: NoDataResultsProps) {
 
     return (
         <Typography
+            align="center"
+            color="text.secondary"
+            fontWeight={500}
             sx={{
-                py: { xs: 2, sm: 3, md: 6, lg: 10 },
+                py: { lg: 10, md: 6, sm: 3, xs: 2 },
             }}
             variant="h3"
-            color="text.secondary"
-            align="center"
-            fontWeight={500}
         >
             {t("We couldn't find any records matching your search criteria")}
         </Typography>

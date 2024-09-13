@@ -1,35 +1,36 @@
+import type { AutocompleteProps } from "@mui/material/Autocomplete"
+import type { TextFieldProps } from "@mui/material/TextField"
 import type { ReactNode } from "react"
 
-import type { AutocompleteProps } from "@mui/material/Autocomplete"
-import Autocomplete from "@mui/material/Autocomplete"
-import type { TextFieldProps } from "@mui/material/TextField"
-import TextField from "@mui/material/TextField"
 import { Controller, useFormContext } from "react-hook-form"
+
+import Autocomplete from "@mui/material/Autocomplete"
+import TextField from "@mui/material/TextField"
 
 export type AutocompleteBaseProps = Omit<AutocompleteProps<any, boolean, boolean, boolean>, "renderInput">
 
-export type RHFAutocompleteProps = AutocompleteBaseProps & {
-    name: string
-    label?: string
-    placeholder?: string
+export type RHFAutocompleteProps = {
     helperText?: ReactNode
+    label?: string
+    name: string
+    placeholder?: string
     variant?: TextFieldProps["variant"]
-}
+} & AutocompleteBaseProps
 
 export default function RHFAutocomplete({
-    name,
-    label,
-    variant,
     helperText,
+    label,
+    name,
     placeholder,
+    variant,
     ...other
 }: RHFAutocompleteProps) {
     const { control, setValue } = useFormContext()
 
     return (
         <Controller
-            name={name}
             control={control}
+            name={name}
             render={({ field, fieldState: { error } }) => (
                 <Autocomplete
                     {...field}
@@ -38,12 +39,12 @@ export default function RHFAutocomplete({
                     renderInput={(params) => (
                         <TextField
                             {...params}
-                            label={label}
-                            placeholder={placeholder}
-                            variant={variant}
                             error={!!error}
                             helperText={error ? error?.message : helperText}
                             inputProps={{ ...params.inputProps, autoComplete: "new-password" }}
+                            label={label}
+                            placeholder={placeholder}
+                            variant={variant}
                         />
                     )}
                     {...other}

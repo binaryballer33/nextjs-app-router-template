@@ -2,18 +2,22 @@
 
 import { useSearchParams } from "next/navigation"
 
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
+
 import { zodResolver } from "@hookform/resolvers/zod"
+import { z as zod } from "zod"
+
 import EmailIcon from "@mui/icons-material/Email"
+
 import LoadingButton from "@mui/lab/LoadingButton"
 import { Container } from "@mui/material"
 import Box from "@mui/material/Box"
-import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
-import { z as zod } from "zod"
 
-import verifyEmailRequest from "src/api/emails/mutations/verify-email"
 import Field from "src/components/react-hook-form/fields"
 import Form from "src/components/react-hook-form/form-provider"
+
+import verifyEmailRequest from "src/api/emails/mutations/verify-email"
 import routes from "src/router/routes"
 
 import FormHead from "./blocks/form-head"
@@ -40,13 +44,13 @@ export default function VerifyEmailPage() {
     const token = searchParams.get("token")
 
     const methods = useForm<VerifySchemaType>({
-        resolver: zodResolver(VerifySchema),
         defaultValues,
+        resolver: zodResolver(VerifySchema),
     })
 
     const {
-        handleSubmit,
         formState: { isSubmitting },
+        handleSubmit,
     } = methods
 
     const onSubmit = handleSubmit(async () => {
@@ -57,7 +61,7 @@ export default function VerifyEmailPage() {
 
         const response = await verifyEmailRequest(token)
 
-        if (response.success) toast.success(response.success)
+        if (response.status === 200) toast.success(response.success)
         else toast.error(response.error)
     })
 
@@ -65,26 +69,26 @@ export default function VerifyEmailPage() {
         <Container
             maxWidth="sm"
             sx={{
-                minHeight: "75dvh",
+                alignItems: "center",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                alignItems: "center",
+                minHeight: "75dvh",
             }}
         >
             <FormHead
+                description={`We've Emailed A 6-digit Confirmation Code. \nPlease Enter The Code In The Box Below To Verify Your Email.`}
                 icon={<EmailIcon />}
                 title="Please Check Your Email!"
-                description={`We've Emailed A 6-digit Confirmation Code. \nPlease Enter The Code In The Box Below To Verify Your Email.`}
             />
 
             <Form methods={methods} onSubmit={onSubmit}>
-                <Box gap={3} display="flex" flexDirection="column">
+                <Box display="flex" flexDirection="column" gap={3}>
                     <Field.Text
-                        name="email"
-                        label="Email Address"
-                        placeholder="example@gmail.com"
                         InputLabelProps={{ shrink: true }}
+                        label="Email Address"
+                        name="email"
+                        placeholder="example@gmail.com"
                         variant="outlined"
                     />
 
@@ -92,18 +96,18 @@ export default function VerifyEmailPage() {
 
                     <LoadingButton
                         fullWidth
+                        loading={isSubmitting}
+                        loadingIndicator="Verifying Code..."
                         size="large"
                         type="submit"
                         variant="outlined"
-                        loading={isSubmitting}
-                        loadingIndicator="Verifying Code..."
                     >
                         Verify
                     </LoadingButton>
                 </Box>
             </Form>
 
-            <FormResendCode onResendCode={() => {}} value={0} disabled={false} />
+            <FormResendCode disabled={false} onResendCode={() => {}} value={0} />
 
             <FormReturnLink href={routes.auth.login} />
         </Container>

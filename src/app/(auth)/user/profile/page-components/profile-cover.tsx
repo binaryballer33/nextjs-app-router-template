@@ -1,8 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import type { Theme } from "@mui/material"
+import type { User } from "src/mocks/user-mocks"
+
+import { useTranslation } from "react-i18next"
+
 import ArrowForwardTwoToneIcon from "@mui/icons-material/ArrowForwardTwoTone"
 import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone"
 import UploadTwoToneIcon from "@mui/icons-material/UploadTwoTone"
-import type { Theme } from "@mui/material"
+
 import {
     Avatar,
     Box,
@@ -17,12 +22,9 @@ import {
     Typography,
     useMediaQuery,
 } from "@mui/material"
-import PropTypes from "prop-types"
-import { useTranslation } from "react-i18next"
 
 import ButtonIcon from "src/components/base/styles/button-icon"
 import { VisuallyHiddenInputNative } from "src/components/base/styles/visually-hidden"
-import type { User } from "src/mocks/user-mocks"
 
 const AvatarWrapper = styled(Card)(
     ({ theme }) => `
@@ -90,9 +92,9 @@ export default function ProfileCover({ user }: ProfileCoverProps) {
 
     return (
         <>
-            <Box display="flex" alignItems="center" mb={{ xs: 2, sm: 3 }}>
+            <Box alignItems="center" display="flex" mb={{ sm: 3, xs: 2 }}>
                 <Box>
-                    <Typography variant="h3" component="h3" sx={{ pb: 0.5 }}>
+                    <Typography component="h3" sx={{ pb: 0.5 }} variant="h3">
                         {`${user.name}'s ${t("profile")}`}
                     </Typography>
                     <Typography variant="subtitle1">
@@ -102,17 +104,17 @@ export default function ProfileCover({ user }: ProfileCoverProps) {
             </Box>
             <CardCover>
                 <CardMedia image={user.coverImg} />
-                <CardCoverAction sx={{ position: "absolute", top: 10, right: { xs: 12, sm: 10 } }}>
+                <CardCoverAction sx={{ position: "absolute", right: { sm: 10, xs: 12 }, top: 10 }}>
                     <VisuallyHiddenInputNative accept="image/*" id="change-cover" multiple type="file" />
                     <label htmlFor="change-cover">
-                        <Button startIcon={<UploadTwoToneIcon />} variant="contained" color="primary" component="span">
+                        <Button color="primary" component="span" startIcon={<UploadTwoToneIcon />} variant="contained">
                             {t("Change cover")}
                         </Button>
                     </label>
                 </CardCoverAction>
             </CardCover>
             <AvatarWrapper>
-                <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+                <Avatar alt={user.name} src={user.avatar} variant="rounded" />
                 <ButtonUploadWrapper>
                     <VisuallyHiddenInputNative
                         accept="image/*"
@@ -121,47 +123,47 @@ export default function ProfileCover({ user }: ProfileCoverProps) {
                         type="file"
                     />
                     <label htmlFor="icon-button-file">
-                        <IconButton component="span" color="primary">
+                        <IconButton color="primary" component="span">
                             <UploadTwoToneIcon />
                         </IconButton>
                     </label>
                 </ButtonUploadWrapper>
             </AvatarWrapper>
-            <Box pt={2} pl={2}>
+            <Box pl={2} pt={2}>
                 <Typography variant="h4">
                     {user.name}
-                    <Typography variant="h6" fontWeight={500} sx={{ pl: 0.5 }} color="text.secondary" component="span">
+                    <Typography color="text.secondary" component="span" fontWeight={500} sx={{ pl: 0.5 }} variant="h6">
                         ({user.jobtitle})
                     </Typography>
                 </Typography>
-                <Typography variant="subtitle1" color="text.secondary">
+                <Typography color="text.secondary" variant="subtitle1">
                     {user.description}
                 </Typography>
                 <Stack
-                    mt={2}
-                    gap={{ xs: 1, sm: 1.5 }}
-                    flexDirection={{ xs: "column", sm: "row" }}
                     divider={<Divider flexItem orientation={smUp ? "vertical" : "horizontal"} />}
+                    flexDirection={{ sm: "row", xs: "column" }}
+                    gap={{ sm: 1.5, xs: 1 }}
+                    mt={2}
                 >
-                    <Chip variant="outlined" color="info" label={user.location} />
+                    <Chip color="info" label={user.location} variant="outlined" />
                     <Chip
-                        variant="outlined"
                         color="info"
                         label={
                             <>
                                 {user.followers} {t("followers")}
                             </>
                         }
+                        variant="outlined"
                     />
-                    <Button size="small" endIcon={<ArrowForwardTwoToneIcon />}>
+                    <Button endIcon={<ArrowForwardTwoToneIcon />} size="small">
                         {t("See all")}
                         {` ${user.followers} `}
                         {t("connections")}
                     </Button>
                 </Stack>
                 <Divider sx={{ ml: -2.5, my: 2 }} />
-                <Box display="flex" alignItems="center" justifyContent="space-between">
-                    <Stack spacing={1} direction="row">
+                <Box alignItems="center" display="flex" justifyContent="space-between">
+                    <Stack direction="row" spacing={1}>
                         <Button size="small" variant="contained">
                             {t("Follow")}
                         </Button>
@@ -176,9 +178,4 @@ export default function ProfileCover({ user }: ProfileCoverProps) {
             </Box>
         </>
     )
-}
-
-ProfileCover.propTypes = {
-    // @ts-ignore
-    user: PropTypes.object.isRequired,
 }

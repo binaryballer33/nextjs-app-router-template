@@ -13,25 +13,25 @@ export default function Profile() {
 
     return (
         <Stack
-            justifyContent="space-around"
-            spacing={{ xs: 2, sm: 3 }}
             alignItems="center"
-            direction={{ xs: "column", sm: "row" }}
+            direction={{ sm: "row", xs: "column" }}
+            justifyContent="space-around"
+            spacing={{ sm: 3, xs: 2 }}
         >
             <IconButton
+                aria-controls={popover.open ? "profile-menu" : undefined}
+                aria-expanded={popover.open ? "true" : undefined}
+                aria-haspopup="true"
+                color="primary"
                 id="profile-button"
+                onClick={popover.handleOpen}
+                ref={popover.anchorRef}
                 sx={{
-                    p: 0,
                     "&:hover": {
                         boxShadow: `0 0 0 3px ${theme.palette.primary.main}`,
                     },
+                    p: 0,
                 }}
-                color="primary"
-                aria-controls={popover.open ? "profile-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={popover.open ? "true" : undefined}
-                onClick={popover.handleOpen}
-                ref={popover.anchorRef}
             >
                 <Avatar
                     alt="Shaquille Mandy"
@@ -44,11 +44,11 @@ export default function Profile() {
                 />
             </IconButton>
             <ProfileIconDropdown
-                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                transformOrigin={{ vertical: "top", horizontal: "center" }}
                 anchorEl={popover.anchorRef.current}
+                anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
                 onClose={popover.handleClose}
                 open={popover.open}
+                transformOrigin={{ horizontal: "center", vertical: "top" }}
             />
         </Stack>
     )

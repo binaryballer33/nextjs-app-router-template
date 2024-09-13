@@ -1,19 +1,19 @@
+import type { SxProps, Theme } from "@mui/material"
 import type { ReactNode } from "react"
 
-import type { SxProps, Theme } from "@mui/material"
 import { Box, useTheme } from "@mui/material"
 
 import Scrollbar from "src/components/base/scrollbar"
 
 type ScrollableContainerProps = {
-    height?: number
     children?: ReactNode
-    useCustomScrollbar?: boolean
+    height?: number
     sx?: SxProps<Theme>
+    useCustomScrollbar?: boolean
 }
 
 export default function ScrollableContainer(props: ScrollableContainerProps) {
-    const { height, children, useCustomScrollbar, ...other } = props
+    const { children, height, useCustomScrollbar, ...other } = props
     const theme = useTheme()
 
     const isDarkMode = theme.palette.mode === "dark"
@@ -21,7 +21,7 @@ export default function ScrollableContainer(props: ScrollableContainerProps) {
     const content = useCustomScrollbar ? <Scrollbar dark={isDarkMode}>{children}</Scrollbar> : children
 
     return (
-        <Box overflow="auto" height={height || 256} {...other}>
+        <Box height={height || 256} overflow="auto" {...other}>
             {content}
         </Box>
     )

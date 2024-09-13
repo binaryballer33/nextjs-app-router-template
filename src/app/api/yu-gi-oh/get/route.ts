@@ -1,8 +1,9 @@
 import type { NextRequest } from "next/server"
+import type { ServerResponse } from "src/types/server-response"
+
 import { NextResponse } from "next/server"
 
 import getYuGiOhCardsQuery from "src/actions/yu-gi-oh/queries/get-yu-gi-oh-cards-query"
-import type { ServerResponse } from "src/models/server-response"
 
 // eslint-disable-next-line import/prefer-default-export
 export async function GET(request: NextRequest) {
@@ -14,15 +15,15 @@ export async function GET(request: NextRequest) {
 
     if (yugiohCards) {
         return NextResponse.json({
-            status: 200,
-            message: `Successfully Fetched All ${yugiohCards.length} Yu-Gi-Oh Cards`,
             cards: yugiohCards,
+            message: `Successfully Fetched All ${yugiohCards.length} Yu-Gi-Oh Cards`,
+            status: 200,
         } as ServerResponse)
     }
 
     return NextResponse.json({
-        status: 500,
-        message: `Error, Failed To Fetch Yu-Gi-Oh Cards, Check Your Query And Try Again:`,
         cards: [],
+        message: `Error, Failed To Fetch Yu-Gi-Oh Cards, Check Your Query And Try Again:`,
+        status: 500,
     } as ServerResponse)
 }

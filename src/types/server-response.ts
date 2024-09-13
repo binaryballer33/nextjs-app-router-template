@@ -1,4 +1,4 @@
 export type ServerResponse = {
-    status: number
     message: string
+    status: number
 }

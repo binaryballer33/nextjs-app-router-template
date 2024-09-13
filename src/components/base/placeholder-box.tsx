@@ -1,19 +1,21 @@
 import type { SxProps, Theme } from "@mui/material"
-import { alpha, Box, Typography, useTheme } from "@mui/material"
+
 import { useTranslation } from "react-i18next"
 
+import { alpha, Box, Typography, useTheme } from "@mui/material"
+
 type PlaceholderBoxProps = {
-    title?: string
-    height?: number
-    fixedHeight?: number
-    flex?: number
     dark?: boolean
     disableHover?: boolean
+    fixedHeight?: number
+    flex?: number
+    height?: number
     sx?: SxProps<Theme>
+    title?: string
 }
 
 export default function PlaceholderBox(props: PlaceholderBoxProps) {
-    const { title, height, disableHover, fixedHeight, flex, dark = false, sx, ...other } = props
+    const { dark = false, disableHover, fixedHeight, flex, height, sx, title, ...other } = props
     const { t } = useTranslation()
     const theme = useTheme()
 
@@ -44,28 +46,28 @@ export default function PlaceholderBox(props: PlaceholderBoxProps) {
         <Box
             sx={{
                 ...sx,
-                flex: flex ? 1 : 0,
-                borderRadius: `${theme.shape.borderRadius}px`,
-                borderStyle: "dashed",
-                borderWidth: 1,
-                borderColor: theme.palette.mode === "dark" ? theme.palette.neutral[800] : theme.palette.neutral[500],
-                minHeight: height || 40,
-                height: fixedHeight || "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: isDarkMode ? darkBackground : lightBackground,
-
                 "&:hover": {
                     borderColor: getBorderColor(),
                     // @ts-ignore
                     boxShadow: !disableHover && theme.shadows[7],
                 },
+                alignItems: "center",
+                background: isDarkMode ? darkBackground : lightBackground,
+                borderColor: theme.palette.mode === "dark" ? theme.palette.neutral[800] : theme.palette.neutral[500],
+                borderRadius: `${theme.shape.borderRadius}px`,
+                borderStyle: "dashed",
+                borderWidth: 1,
+                display: "flex",
+                flex: flex ? 1 : 0,
+                height: fixedHeight || "100%",
+                justifyContent: "center",
+
+                minHeight: height || 40,
             }}
             {...other}
         >
             {title && (
-                <Typography variant="h3" fontWeight={600}>
+                <Typography fontWeight={600} variant="h3">
                     {t(title)}
                 </Typography>
             )}

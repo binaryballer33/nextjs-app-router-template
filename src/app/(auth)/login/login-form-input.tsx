@@ -1,9 +1,15 @@
+import type { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form"
+import type { LoginRequest } from "src/types/forms/login"
+
 import { useState } from "react"
 
-import { Visibility, VisibilityOff } from "@mui/icons-material"
+import { useTranslation } from "react-i18next"
+
 import ClearIcon from "@mui/icons-material/Clear"
 import KeyIcon from "@mui/icons-material/Key"
 import MailOutlineRoundedIcon from "@mui/icons-material/MailOutlineRounded"
+
+import { Visibility, VisibilityOff } from "@mui/icons-material"
 import {
     Box,
     FilledInput,
@@ -15,23 +21,20 @@ import {
     Tooltip,
     Typography,
 } from "@mui/material"
-import type { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form"
-import { useTranslation } from "react-i18next"
 
 import ButtonIcon from "src/components/base/styles/button-icon"
-import type { LoginRequest } from "src/models/forms/login"
 
 type LoginFormInputProps = {
-    register: UseFormRegister<LoginRequest>
     errors: FieldErrors<LoginRequest>
-    watchFormField: UseFormWatch<LoginRequest>
-    setFormValue: UseFormSetValue<LoginRequest>
     inputName: keyof LoginRequest // must be lowercase
     placeholder: string
+    register: UseFormRegister<LoginRequest>
+    setFormValue: UseFormSetValue<LoginRequest>
+    watchFormField: UseFormWatch<LoginRequest>
 }
 
 function LoginFormInput(props: LoginFormInputProps) {
-    const { register, watchFormField, setFormValue, errors, inputName, placeholder } = props
+    const { errors, inputName, placeholder, register, setFormValue, watchFormField } = props
     const [showPassword, setShowPassword] = useState(false)
 
     const { t } = useTranslation()
@@ -49,16 +52,16 @@ function LoginFormInput(props: LoginFormInputProps) {
 
     return (
         <Grid xs={12}>
-            <FormControl fullWidth error={Boolean(errors[inputName.toString()])}>
+            <FormControl error={Boolean(errors[inputName.toString()])} fullWidth>
                 {/* Form Input Label And Button */}
-                <Box display="flex" gap={2} p={1} justifyContent="space-between" alignItems="center">
+                <Box alignItems="center" display="flex" gap={2} justifyContent="space-between" p={1}>
                     {/* Input Label */}
                     <Typography
-                        variant="h6"
-                        gutterBottom
                         component="label"
-                        htmlFor={`${inputName}-input`}
                         fontWeight={500}
+                        gutterBottom
+                        htmlFor={`${inputName}-input`}
+                        variant="h6"
                     >
                         {t(inputNameForTypography)}
                     </Typography>
@@ -66,10 +69,10 @@ function LoginFormInput(props: LoginFormInputProps) {
                     {/* Password Field Visibility Button */}
                     {inputName === "password" && (
                         <ButtonIcon
-                            variant="outlined"
                             color="secondary"
-                            sx={{ mr: -0.8, mb: 1 }}
                             onClick={handlePasswordVisibility}
+                            sx={{ mb: 1, mr: -0.8 }}
+                            variant="outlined"
                         >
                             {showPassword ? (
                                 <Tooltip title={t("hide password")}>
@@ -88,22 +91,7 @@ function LoginFormInput(props: LoginFormInputProps) {
                 <FilledInput
                     hiddenLabel
                     {...register(inputName)}
-                    type={getType(inputName)}
-                    id={`${inputName}-input`}
-                    placeholder={`Write your ${placeholder}`}
                     autoComplete={inputName}
-                    required
-                    startAdornment={
-                        inputName === "email" ? (
-                            <InputAdornment position="start">
-                                <MailOutlineRoundedIcon fontSize="small" />
-                            </InputAdornment>
-                        ) : (
-                            <InputAdornment position="start">
-                                <KeyIcon />
-                            </InputAdornment>
-                        )
-                    }
                     endAdornment={
                         // only show clear icon if textfield is not empty
                         watchFormField(inputName as keyof LoginRequest) !== "" && (
@@ -117,6 +105,21 @@ function LoginFormInput(props: LoginFormInputProps) {
                             </InputAdornment>
                         )
                     }
+                    id={`${inputName}-input`}
+                    placeholder={`Write your ${placeholder}`}
+                    required
+                    startAdornment={
+                        inputName === "email" ? (
+                            <InputAdornment position="start">
+                                <MailOutlineRoundedIcon fontSize="small" />
+                            </InputAdornment>
+                        ) : (
+                            <InputAdornment position="start">
+                                <KeyIcon />
+                            </InputAdornment>
+                        )
+                    }
+                    type={getType(inputName)}
                 />
                 {errors[inputName.toString()] && (
                     <FormHelperText>{t(errors[inputName.toString()].message as string)}</FormHelperText>

@@ -1,22 +1,22 @@
+import type { BoxProps } from "@mui/material/Box"
 import type { ReactNode } from "react"
 
-import type { BoxProps } from "@mui/material/Box"
 import Box from "@mui/material/Box"
 
-type FullScreenCenteredContainerProps = BoxProps & {
+type FullScreenCenteredContainerProps = {
     children: ReactNode
-}
+} & BoxProps
 
 function FullScreenCenteredContainer({ children, ...rest }: FullScreenCenteredContainerProps) {
     return (
         <Box
+            alignItems="center"
             display="flex"
             flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
             gap={2}
-            minWidth="100dvw"
+            justifyContent="center"
             minHeight="100dvh"
+            minWidth="100dvw"
             {...rest}
         >
             {children}

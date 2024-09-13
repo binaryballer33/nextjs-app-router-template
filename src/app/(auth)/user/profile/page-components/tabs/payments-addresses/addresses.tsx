@@ -1,6 +1,7 @@
+import { useTranslation } from "react-i18next"
+
 import { ArrowForwardTwoTone } from "@mui/icons-material"
 import { Box, Button, Card, CardHeader, Divider, Typography } from "@mui/material"
-import { useTranslation } from "react-i18next"
 
 export default function Addresses() {
     const { t } = useTranslation()
@@ -11,19 +12,19 @@ export default function Addresses() {
 
     return (
         <Card>
-            <CardHeader title={t("Delivery Addresses")} subheader={addresses.delivery + t(" Saved addresses")} />
+            <CardHeader subheader={addresses.delivery + t(" Saved addresses")} title={t("Delivery Addresses")} />
             <Divider />
             <Box p={2}>
-                <Typography variant="caption" fontWeight={600}>
+                <Typography fontWeight={600} variant="caption">
                     {t("Favorite")}
                 </Typography>
-                <Box px={1.5} pb={2} pt={1}>
-                    <Typography variant="h5" gutterBottom>
+                <Box pb={2} pt={1} px={1.5}>
+                    <Typography gutterBottom variant="h5">
                         Kadin Westervelt
                     </Typography>
                     <Typography variant="subtitle1">348 Gold St. Bethel, PA 15102</Typography>
                 </Box>
-                <Button fullWidth variant="outlined" endIcon={<ArrowForwardTwoTone />}>
+                <Button endIcon={<ArrowForwardTwoTone />} fullWidth variant="outlined">
                     {t("Manage")}
                 </Button>
             </Box>

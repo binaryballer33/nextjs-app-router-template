@@ -2,8 +2,9 @@
 
 import type { ReactNode } from "react"
 
-import { Box } from "@mui/material"
 import PropTypes from "prop-types"
+
+import { Box } from "@mui/material"
 
 import Footer from "./footer/footer"
 import Header from "./header/header"
@@ -14,7 +15,7 @@ type MainLayoutProps = {
 
 export default function MainLayout({ children }: MainLayoutProps) {
     return (
-        <Box width="95%" m="auto">
+        <Box m="auto" width="95%">
             <Header />
             <Box my={2}>{children}</Box>
             <Footer />

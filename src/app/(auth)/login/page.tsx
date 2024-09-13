@@ -1,11 +1,23 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import type { SubmitHandler } from "react-hook-form"
+import type { LoginRequest } from "src/types/forms/login"
+import type { OAuthProvider } from "src/types/forms/register"
+
+import oAuthProviders from "src/types/forms/common"
+import { defaultValuesLoginRequest, LoginRequestSchema } from "src/types/forms/login"
 
 import Image from "next/image"
 import { useSearchParams } from "next/navigation"
 
+import { useCallback, useState } from "react"
+
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
+
 import { zodResolver } from "@hookform/resolvers/zod"
+
 import {
     Alert,
     Box,
@@ -18,18 +30,13 @@ import {
     Typography,
     useTheme,
 } from "@mui/material"
+
 import { signIn } from "next-auth/react"
-import type { SubmitHandler } from "react-hook-form"
-import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
 
 import login from "src/actions/auth/login"
+
 import RouterLink from "src/components/base/router-link"
-import oAuthProviders from "src/models/forms/common"
-import type { LoginRequest } from "src/models/forms/login"
-import { defaultValuesLoginRequest, LoginRequestSchema } from "src/models/forms/login"
-import type { OAuthProvider } from "src/models/forms/register"
+
 import routes from "src/router/routes"
 
 import LoginFormInput from "./login-form-input"
@@ -53,12 +60,12 @@ export default function LoginPage() {
     const { t } = useTranslation()
 
     const {
-        register: registerInputField,
-        handleSubmit: handleSubmitHookForm,
-        reset: resetFormFields,
-        watch: watchFormField,
-        setValue: setFormValue,
         formState: { errors },
+        handleSubmit: handleSubmitHookForm,
+        register: registerInputField,
+        reset: resetFormFields,
+        setValue: setFormValue,
+        watch: watchFormField,
     } = useForm<LoginRequest>({
         defaultValues: defaultValuesLoginRequest,
         resolver: zodResolver(LoginRequestSchema),
@@ -80,12 +87,12 @@ export default function LoginPage() {
             const response = await login(credentials) // Call the login action to sign in the user with next auth
             setIsLoading(false)
 
-            if (response.error) {
+            if (response.status === 400 || response.status === 500) {
                 toast.error(response.error)
                 return
             }
 
-            if (response.success) {
+            if (response.status === 200) {
                 toast.success(response.success)
 
                 // TODO: temporary fix for refreshing session
@@ -118,31 +125,31 @@ export default function LoginPage() {
         >
             {/* Form Header */}
             <Container maxWidth="sm">
-                <Typography align="center" variant="h4" gutterBottom>
+                <Typography align="center" gutterBottom variant="h4">
                     {t("Sign in")}
                 </Typography>
-                <Typography align="center" variant="body1" fontWeight={400}>
+                <Typography align="center" fontWeight={400} variant="body1">
                     {t("Access your account and continue your journey")}
                 </Typography>
             </Container>
 
             {/* Form Content */}
-            <Stack mt={{ xs: 2, sm: 3 }} justifyContent="center" alignItems="center" spacing={{ xs: 2, sm: 3 }}>
+            <Stack alignItems="center" justifyContent="center" mt={{ sm: 3, xs: 2 }} spacing={{ sm: 3, xs: 2 }}>
                 {/* OAuth Sign In Buttons */}
                 <Container maxWidth="sm">
-                    <Stack justifyContent="center" direction={{ xs: "column", sm: "row" }} spacing={1}>
+                    <Stack direction={{ sm: "row", xs: "column" }} justifyContent="center" spacing={1}>
                         {updatedOAuthProviders.map((provider) => (
                             <Button
-                                fullWidth
+                                color="secondary"
                                 disabled={isLoading}
+                                fullWidth
+                                key={provider.id}
+                                onClick={() => onAuth(provider.id).catch(() => {})}
+                                startIcon={<Image alt={provider.name} height={24} src={provider.logo} width={24} />}
                                 sx={{
                                     whiteSpace: "nowrap",
                                 }}
                                 variant="outlined"
-                                color="secondary"
-                                key={provider.id}
-                                onClick={() => onAuth(provider.id).catch(() => {})}
-                                startIcon={<Image height={24} width={24} alt={provider.name} src={provider.logo} />}
                             >
                                 {t(`Sign in with ${provider.name}`)}
                             </Button>
@@ -161,13 +168,13 @@ export default function LoginPage() {
                         {/* Email And Password Inputs */}
                         {inputFields.map((inputName) => (
                             <LoginFormInput
-                                key={inputName}
-                                register={registerInputField}
                                 errors={errors}
                                 inputName={inputName as keyof LoginRequest}
+                                key={inputName}
                                 placeholder={inputName}
-                                watchFormField={watchFormField}
+                                register={registerInputField}
                                 setFormValue={setFormValue}
+                                watchFormField={watchFormField}
                             />
                         ))}
 
@@ -181,9 +188,9 @@ export default function LoginPage() {
                                 {/* Reset Form Button */}
                                 <Button
                                     disabled={isLoading}
-                                    variant="outlined"
-                                    size="small"
                                     onClick={() => resetFormFields()}
+                                    size="small"
+                                    variant="outlined"
                                 >
                                     {t("Clear Form")}
                                 </Button>
@@ -192,17 +199,17 @@ export default function LoginPage() {
 
                         {/* Submit Button */}
                         <Grid xs={12}>
-                            <Button disabled={isLoading} variant="contained" type="submit" size="large" fullWidth>
+                            <Button disabled={isLoading} fullWidth size="large" type="submit" variant="contained">
                                 {isLoading ? t("Signing In") : t("Sign in")}
                             </Button>
                         </Grid>
 
                         {/* Sign Up Link */}
-                        <Grid xs={12} textAlign="center">
-                            <Typography component="span" color="text.secondary">
+                        <Grid textAlign="center" xs={12}>
+                            <Typography color="text.secondary" component="span">
                                 {t("Not a Member yet?")}
                             </Typography>{" "}
-                            <Link component={RouterLink} href={routes.auth.register} underline="hover" fontWeight={500}>
+                            <Link component={RouterLink} fontWeight={500} href={routes.auth.register} underline="hover">
                                 {t("Sign up")}
                             </Link>
                         </Grid>
@@ -210,7 +217,7 @@ export default function LoginPage() {
                         {/* Error Alert */}
                         {errors.root && (
                             <Grid xs={12}>
-                                <Alert variant="outlined" severity="error">
+                                <Alert severity="error" variant="outlined">
                                     {t(errors.root.message as string)}
                                 </Alert>
                             </Grid>

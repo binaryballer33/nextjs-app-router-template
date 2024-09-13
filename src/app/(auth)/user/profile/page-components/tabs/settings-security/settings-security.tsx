@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next"
+
 import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone"
+
 import {
     Avatar,
     Box,
@@ -15,7 +18,6 @@ import {
     Typography,
     useTheme,
 } from "@mui/material"
-import { useTranslation } from "react-i18next"
 
 import { AvatarState } from "src/components/base/styles/avatar"
 import ButtonSoft from "src/components/base/styles/button-soft"
@@ -35,17 +37,17 @@ export default function SettingsSecurity() {
     return (
         <Grid
             container
-            spacing={{ xs: 2, sm: 3 }}
+            spacing={{ sm: 3, xs: 2 }}
             sx={{
                 "& .MuiListItem-root": {
-                    display: { xs: "block", sm: "flex" },
+                    display: { sm: "flex", xs: "block" },
                 },
             }}
         >
             <Grid xs={12}>
                 <Box pb={2}>
                     <Typography variant="h5">{t("Social Accounts")}</Typography>
-                    <Typography variant="subtitle1" color="text.secondary">
+                    <Typography color="text.secondary" variant="subtitle1">
                         {t("Manage connected social accounts options")}
                     </Typography>
                 </Box>
@@ -58,25 +60,25 @@ export default function SettingsSecurity() {
                                 }}
                             >
                                 <Avatar
-                                    sx={{
-                                        width: theme.spacing(5),
-                                        height: theme.spacing(5),
-                                    }}
                                     src="/placeholders/logo/google-icon.svg"
+                                    sx={{
+                                        height: theme.spacing(5),
+                                        width: theme.spacing(5),
+                                    }}
                                 />
                             </ListItemAvatar>
                             <ListItemText
-                                sx={{
-                                    py: { xs: 2, sm: 0 },
-                                    pr: { xs: 0, sm: 1 },
-                                    m: 0,
-                                }}
-                                primaryTypographyProps={{ variant: "h5", gutterBottom: true }}
+                                primary={t("Google")}
+                                primaryTypographyProps={{ gutterBottom: true, variant: "h5" }}
+                                secondary={t("A Google account hasn’t been yet added to your account")}
                                 secondaryTypographyProps={{
                                     variant: "subtitle2",
                                 }}
-                                primary={t("Google")}
-                                secondary={t("A Google account hasn’t been yet added to your account")}
+                                sx={{
+                                    m: 0,
+                                    pr: { sm: 1, xs: 0 },
+                                    py: { sm: 0, xs: 2 },
+                                }}
                             />
                             <Button color="secondary" size="large" variant="contained">
                                 {t("Connect")}
@@ -98,33 +100,33 @@ export default function SettingsSecurity() {
                                     isSoft
                                     state="success"
                                     sx={{
-                                        width: theme.spacing(5),
                                         height: theme.spacing(5),
+                                        width: theme.spacing(5),
                                     }}
                                 >
                                     <DoneTwoToneIcon />
                                 </AvatarState>
                             </ListItemAvatar>
                             <ListItemText
-                                sx={{
-                                    py: { xs: 2, sm: 0 },
-                                    pr: { xs: 0, sm: 1 },
-                                    m: 0,
-                                }}
-                                primaryTypographyProps={{ variant: "h5", gutterBottom: true }}
+                                primary={t("Facebook")}
+                                primaryTypographyProps={{ gutterBottom: true, variant: "h5" }}
+                                secondary={t("Your Facebook account has been successfully connected")}
                                 secondaryTypographyProps={{
                                     variant: "subtitle2",
                                 }}
-                                primary={t("Facebook")}
-                                secondary={t("Your Facebook account has been successfully connected")}
+                                sx={{
+                                    m: 0,
+                                    pr: { sm: 1, xs: 0 },
+                                    py: { sm: 0, xs: 2 },
+                                }}
                             />
                             <ButtonSoft
                                 color="error"
                                 size="large"
-                                variant="contained"
                                 sx={{
                                     whiteSpace: "nowrap",
                                 }}
+                                variant="contained"
                             >
                                 {t("Revoke access")}
                             </ButtonSoft>
@@ -140,33 +142,33 @@ export default function SettingsSecurity() {
                                     isSoft
                                     state="success"
                                     sx={{
-                                        width: theme.spacing(5),
                                         height: theme.spacing(5),
+                                        width: theme.spacing(5),
                                     }}
                                 >
                                     <DoneTwoToneIcon />
                                 </AvatarState>
                             </ListItemAvatar>
                             <ListItemText
-                                sx={{
-                                    py: { xs: 2, sm: 0 },
-                                    pr: { xs: 0, sm: 1 },
-                                    m: 0,
-                                }}
-                                primaryTypographyProps={{ variant: "h5", gutterBottom: true }}
+                                primary={t("Twitter")}
+                                primaryTypographyProps={{ gutterBottom: true, variant: "h5" }}
+                                secondary={t("Your Twitter account was last syncronized 6 days ago")}
                                 secondaryTypographyProps={{
                                     variant: "subtitle2",
                                 }}
-                                primary={t("Twitter")}
-                                secondary={t("Your Twitter account was last syncronized 6 days ago")}
+                                sx={{
+                                    m: 0,
+                                    pr: { sm: 1, xs: 0 },
+                                    py: { sm: 0, xs: 2 },
+                                }}
                             />
                             <ButtonSoft
                                 color="error"
                                 size="large"
-                                variant="contained"
                                 sx={{
                                     whiteSpace: "nowrap",
                                 }}
+                                variant="contained"
                             >
                                 {t("Revoke access")}
                             </ButtonSoft>
@@ -177,7 +179,7 @@ export default function SettingsSecurity() {
             <Grid xs={12}>
                 <Box pb={2}>
                     <Typography variant="h5">{t("Security")}</Typography>
-                    <Typography variant="subtitle1" color="text.secondary">
+                    <Typography color="text.secondary" variant="subtitle1">
                         {t("Change your security preferences below")}
                     </Typography>
                 </Box>
@@ -185,26 +187,26 @@ export default function SettingsSecurity() {
                     <List disablePadding>
                         <ListItem sx={{ p: 2 }}>
                             <ListItemText
-                                sx={{
-                                    pl: 0,
-                                    pr: { xs: 0, sm: 1 },
-                                    m: 0,
-                                }}
+                                primary={t("Change password")}
                                 primaryTypographyProps={{
                                     variant: "h5",
                                 }}
+                                secondary={t("You can change your password here")}
                                 secondaryTypographyProps={{
                                     variant: "subtitle2",
                                 }}
-                                primary={t("Change password")}
-                                secondary={t("You can change your password here")}
+                                sx={{
+                                    m: 0,
+                                    pl: 0,
+                                    pr: { sm: 1, xs: 0 },
+                                }}
                             />
                             <Button
                                 size="large"
-                                variant="outlined"
                                 sx={{
                                     whiteSpace: "nowrap",
                                 }}
+                                variant="outlined"
                             >
                                 {t("Change password")}
                             </Button>
@@ -212,25 +214,25 @@ export default function SettingsSecurity() {
                         <Divider component="li" />
                         <ListItem sx={{ p: 2 }}>
                             <ListItemText
-                                sx={{
-                                    pl: 0,
-                                    pr: { xs: 0, sm: 1 },
-                                    m: 0,
-                                }}
-                                primaryTypographyProps={{
-                                    variant: "h5",
-                                    component: "label",
-                                    htmlFor: "checkedD",
-                                }}
-                                secondaryTypographyProps={{
-                                    variant: "subtitle2",
-                                    component: "label",
-                                    htmlFor: "checkedD",
-                                }}
                                 primary={t("Two-factor authentication")}
+                                primaryTypographyProps={{
+                                    component: "label",
+                                    htmlFor: "checkedD",
+                                    variant: "h5",
+                                }}
                                 secondary={t("Enable PIN verification for all sign in attempts")}
+                                secondaryTypographyProps={{
+                                    component: "label",
+                                    htmlFor: "checkedD",
+                                    variant: "subtitle2",
+                                }}
+                                sx={{
+                                    m: 0,
+                                    pl: 0,
+                                    pr: { sm: 1, xs: 0 },
+                                }}
                             />
-                            <StyledSwitch id="checkedD" name="checkedD" color="primary" />
+                            <StyledSwitch color="primary" id="checkedD" name="checkedD" />
                         </ListItem>
                     </List>
                 </Card>

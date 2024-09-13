@@ -1,29 +1,30 @@
+import type { FormHelperTextProps } from "@mui/material/FormHelperText"
+import type { RatingProps } from "@mui/material/Rating"
+import type { SxProps, Theme } from "@mui/material/styles"
 import type { ReactNode } from "react"
 
-import Box from "@mui/material/Box"
-import type { FormHelperTextProps } from "@mui/material/FormHelperText"
-import FormHelperText from "@mui/material/FormHelperText"
-import type { RatingProps } from "@mui/material/Rating"
-import Rating from "@mui/material/Rating"
-import type { SxProps, Theme } from "@mui/material/styles"
 import { Controller, useFormContext } from "react-hook-form"
 
-type Props = RatingProps & {
-    name: string
-    helperText?: ReactNode
-    slotProps?: {
-        wrap?: SxProps<Theme>
-        formHelperText?: FormHelperTextProps
-    }
-}
+import Box from "@mui/material/Box"
+import FormHelperText from "@mui/material/FormHelperText"
+import Rating from "@mui/material/Rating"
 
-export default function RHFRating({ name, helperText, slotProps, ...other }: Props) {
+type Props = {
+    helperText?: ReactNode
+    name: string
+    slotProps?: {
+        formHelperText?: FormHelperTextProps
+        wrap?: SxProps<Theme>
+    }
+} & RatingProps
+
+export default function RHFRating({ helperText, name, slotProps, ...other }: Props) {
     const { control } = useFormContext()
 
     return (
         <Controller
-            name={name}
             control={control}
+            name={name}
             render={({ field, fieldState: { error } }) => (
                 <Box sx={slotProps?.wrap}>
                     <Rating

@@ -1,9 +1,11 @@
 import { type ReactNode } from "react"
 
-import { Box } from "@mui/material"
 import PropTypes from "prop-types"
 
+import { Box } from "@mui/material"
+
 import useMobileNav from "src/hooks/use-mobile-nav"
+
 import useVerticalNavBarItems from "src/router/vertical-navbar-routes"
 
 import Sidebar from "./sidebar"
@@ -22,8 +24,8 @@ export default function SideBarLayout(props: SideBarLayoutProps) {
             <Sidebar
                 navbarItems={navbarItems}
                 onClose={mobileNav.handleClose}
-                open={mobileNav.open}
                 onOpen={mobileNav.handleOpen}
+                open={mobileNav.open}
             />
             <Box
                 flex={1}

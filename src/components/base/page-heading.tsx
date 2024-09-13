@@ -1,53 +1,54 @@
 "use client"
 
+import type { SxProps, Theme } from "@mui/material"
 import type { ReactNode } from "react"
 
-import type { SxProps, Theme } from "@mui/material"
-import { Box, Divider, Stack, Typography, useMediaQuery } from "@mui/material"
 import { useTranslation } from "react-i18next"
 
+import { Box, Divider, Stack, Typography, useMediaQuery } from "@mui/material"
+
 type PageHeadingProps = {
-    iconBox?: ReactNode
-    title: string
-    description?: string
-    topSection?: ReactNode
-    bottomText?: string
     actions?: ReactNode
     background?: string
+    bottomText?: string
+    description?: string
+    iconBox?: ReactNode
     sx?: SxProps<Theme>
+    title: string
+    topSection?: ReactNode
 }
 
 export default function PageHeading(props: PageHeadingProps) {
-    const { iconBox, title, description, topSection, bottomText, actions, background, sx } = props
+    const { actions, background, bottomText, description, iconBox, sx, title, topSection } = props
     const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
     const { t } = useTranslation()
 
     return (
         <Stack sx={{ backgroundColor: background, ...sx }}>
             <Stack
-                direction={{ xs: "column", md: "row" }}
-                spacing={0}
-                display="flex"
                 alignItems="center"
+                direction={{ md: "row", xs: "column" }}
+                display="flex"
                 justifyContent="space-between"
+                spacing={0}
                 width="100%"
             >
                 <Stack
-                    direction={{ xs: "column", md: "row" }}
-                    className="PageTitleContent"
-                    spacing={2}
-                    display="flex"
                     alignItems="center"
+                    className="PageTitleContent"
+                    direction={{ md: "row", xs: "column" }}
+                    display="flex"
                     overflow="hidden"
+                    spacing={2}
                 >
                     {iconBox}
-                    <Stack textAlign={{ xs: "center", md: "left" }} spacing={0.3} overflow="hidden">
+                    <Stack overflow="hidden" spacing={0.3} textAlign={{ md: "left", xs: "center" }}>
                         {topSection}
-                        <Typography variant="h3" noWrap>
+                        <Typography noWrap variant="h3">
                             {t(title)}
                         </Typography>
                         {description && (
-                            <Typography variant="h5" color="text.secondary" fontWeight={400} noWrap={mdUp && true}>
+                            <Typography color="text.secondary" fontWeight={400} noWrap={mdUp && true} variant="h5">
                                 {t(description)}
                             </Typography>
                         )}
@@ -57,8 +58,8 @@ export default function PageHeading(props: PageHeadingProps) {
             </Stack>
             {bottomText && (
                 <Box my={2}>
-                    <Divider sx={{ width: { xs: 1, md: "75%" }, mb: 2 }} />
-                    <Typography variant="body1" color="textSecondary" sx={{ textAlign: { xs: "center", md: "left" } }}>
+                    <Divider sx={{ mb: 2, width: { md: "75%", xs: 1 } }} />
+                    <Typography color="textSecondary" sx={{ textAlign: { md: "left", xs: "center" } }} variant="body1">
                         {t(bottomText)}
                     </Typography>
                 </Box>

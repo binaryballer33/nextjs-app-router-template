@@ -1,7 +1,13 @@
 import type { ChangeEvent, MouseEvent } from "react"
+
 import { useState } from "react"
 
+import { useTranslation } from "react-i18next"
+
+import { format, subDays, subHours, subWeeks } from "date-fns"
+
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone"
+
 import {
     Card,
     CardActions,
@@ -19,8 +25,6 @@ import {
     Typography,
     useTheme,
 } from "@mui/material"
-import { format, subDays, subHours, subWeeks } from "date-fns"
-import { useTranslation } from "react-i18next"
 
 import PaginationActions from "src/components/pagination/simple-pagination/pagination-actions"
 
@@ -42,49 +46,49 @@ export default function SettingsSecurity() {
 
     const logs = [
         {
-            id: 1,
             browser: " Safari/537.36",
+            date: subDays(new Date(), 2).getTime(),
+            id: 1,
             ipaddress: "3.70.73.142",
             location: "United States",
-            date: subDays(new Date(), 2).getTime(),
         },
         {
-            id: 2,
             browser: "Chrome/36.0.1985.67",
+            date: subDays(new Date(), 6).getTime(),
+            id: 2,
             ipaddress: "138.13.136.179",
             location: "China",
-            date: subDays(new Date(), 6).getTime(),
         },
         {
-            id: 3,
             browser: "Googlebot/2.1",
+            date: subHours(new Date(), 15).getTime(),
+            id: 3,
             ipaddress: "119.229.170.253",
             location: "China",
-            date: subHours(new Date(), 15).getTime(),
         },
         {
-            id: 4,
             browser: "AppleWebKit/535.1",
+            date: subDays(new Date(), 4).getTime(),
+            id: 4,
             ipaddress: "206.8.99.49",
             location: "Philippines",
-            date: subDays(new Date(), 4).getTime(),
         },
         {
-            id: 5,
             browser: "Mozilla/5.0",
+            date: subWeeks(new Date(), 3).getTime(),
+            id: 5,
             ipaddress: "235.40.59.85",
             location: "China",
-            date: subWeeks(new Date(), 3).getTime(),
         },
     ]
 
     return (
         <Card>
             <CardHeader
-                subheaderTypographyProps={{}}
-                titleTypographyProps={{}}
-                title={t("Access Logs")}
                 subheader={t("Recent sign in activity logs")}
+                subheaderTypographyProps={{}}
+                title={t("Access Logs")}
+                titleTypographyProps={{}}
             />
             <Divider />
             <TableContainer
@@ -106,20 +110,20 @@ export default function SettingsSecurity() {
                     </TableHead>
                     <TableBody>
                         {logs.map((log) => (
-                            <TableRow key={log.id} hover>
+                            <TableRow hover key={log.id}>
                                 <TableCell>{log.browser}</TableCell>
                                 <TableCell>{log.ipaddress}</TableCell>
                                 <TableCell>{log.location}</TableCell>
                                 <TableCell>{format(log.date, "dd MMMM, yyyy - h:mm:ss a")}</TableCell>
                                 <TableCell align="right">
-                                    <Tooltip placement="top" title={t("Delete")} arrow>
+                                    <Tooltip arrow placement="top" title={t("Delete")}>
                                         <IconButton
+                                            color="inherit"
+                                            size="small"
                                             sx={{
                                                 "&:hover": {},
                                                 color: theme.palette.error.main,
                                             }}
-                                            color="inherit"
-                                            size="small"
                                         >
                                             <DeleteTwoToneIcon fontSize="small" />
                                         </IconButton>
@@ -132,29 +136,29 @@ export default function SettingsSecurity() {
             </TableContainer>
             <CardActions
                 sx={{
-                    p: 2,
+                    ".MuiTablePagination-spacer": {
+                        display: "none",
+                    },
                     ".MuiTablePagination-toolbar": {
                         justifyContent: "space-between",
                     },
 
-                    ".MuiTablePagination-spacer": {
-                        display: "none",
-                    },
+                    p: 2,
                 }}
             >
-                <Typography sx={{ pr: 1 }} variant="subtitle2" color="text.secondary">
+                <Typography color="text.secondary" sx={{ pr: 1 }} variant="subtitle2">
                     Showing
                 </Typography>
                 <TablePagination
-                    component="div"
-                    count={80}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    rowsPerPage={rowsPerPage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    rowsPerPageOptions={[]}
                     // @ts-ignore
                     ActionsComponent={PaginationActions}
+                    component="div"
+                    count={80}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    page={page}
+                    rowsPerPage={rowsPerPage}
+                    rowsPerPageOptions={[]}
                 />
             </CardActions>
         </Card>

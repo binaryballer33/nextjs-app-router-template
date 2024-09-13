@@ -1,22 +1,23 @@
+import type { SliderProps } from "@mui/material/Slider"
 import type { ReactNode } from "react"
 
-import FormHelperText from "@mui/material/FormHelperText"
-import type { SliderProps } from "@mui/material/Slider"
-import Slider from "@mui/material/Slider"
 import { Controller, useFormContext } from "react-hook-form"
 
-type Props = SliderProps & {
-    name: string
-    helperText?: ReactNode
-}
+import FormHelperText from "@mui/material/FormHelperText"
+import Slider from "@mui/material/Slider"
 
-export default function RHFSlider({ name, helperText, ...other }: Props) {
+type Props = {
+    helperText?: ReactNode
+    name: string
+} & SliderProps
+
+export default function RHFSlider({ helperText, name, ...other }: Props) {
     const { control } = useFormContext()
 
     return (
         <Controller
-            name={name}
             control={control}
+            name={name}
             render={({ field, fieldState: { error } }) => (
                 <>
                     <Slider {...field} valueLabelDisplay="auto" {...other} />

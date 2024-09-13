@@ -1,16 +1,18 @@
 "use client"
 
-import { useCallback } from "react"
-
 import { useRouter } from "next/navigation"
 
-import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone"
-import { alpha, Box, Button, Divider, ListItemText, Menu, MenuItem, useTheme } from "@mui/material"
-import PropTypes from "prop-types"
+import { useCallback } from "react"
+
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
+import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone"
+
+import { alpha, Box, Button, Divider, ListItemText, Menu, MenuItem, useTheme } from "@mui/material"
+
 import signOut from "src/actions/auth/sign-out"
+
 import profileIconDropdownNavItems from "src/router/profile-dropdown-icon-routes"
 import routes from "src/router/routes"
 import { neutral } from "src/theme/theme"
@@ -18,22 +20,22 @@ import { neutral } from "src/theme/theme"
 import AvatarTitleDescriptionAlternate from "./profile-icon-avatar-title-description"
 
 type Origin = {
-    vertical: "top" | "bottom" | "center"
-    horizontal: "left" | "right" | "center"
+    horizontal: "center" | "left" | "right"
+    vertical: "bottom" | "center" | "top"
 }
 
 type ProfileDropdownProps = {
-    anchorEl: null | Element
+    anchorEl: Element | null
+    anchorOrigin?: Origin
     onClose: () => void
     open?: boolean
-    anchorOrigin?: Origin
     transformOrigin?: Origin
 }
 
 // TODO: maybe I need useSession here, maybe I don't
 // TODO: on mobile phones turn this dropdown into a bottom mobile navigation bar
 export default function ProfileIconDropdown(props: ProfileDropdownProps) {
-    const { anchorEl, onClose, open, anchorOrigin, transformOrigin, ...other } = props
+    const { anchorEl, anchorOrigin, onClose, open, transformOrigin, ...other } = props
 
     const router = useRouter()
     const theme = useTheme()
@@ -60,43 +62,43 @@ export default function ProfileIconDropdown(props: ProfileDropdownProps) {
 
     return (
         <Menu
-            id="settings-menu"
-            component="div"
             anchorEl={anchorEl}
-            open={!!open}
-            onClose={onClose}
+            anchorOrigin={anchorOrigin || { horizontal: "right", vertical: "top" }}
+            component="div"
+            id="settings-menu"
             MenuListProps={{
                 "aria-labelledby": "settings-button",
                 sx: {
                     p: 0,
                 },
             }}
-            anchorOrigin={anchorOrigin || { vertical: "top", horizontal: "right" }}
-            transformOrigin={transformOrigin || { vertical: "top", horizontal: "right" }}
+            onClose={onClose}
+            open={!!open}
             sx={{
                 "& .MuiMenu-list": {
                     width: 280,
                 },
 
                 "& .MuiMenuItem-root": {
-                    borderRadius: theme.shape.borderRadius,
-                    pr: theme.spacing(0.5),
-                    mx: theme.spacing(1),
-
                     "& .MuiSvgIcon-root": {
                         opacity: 0.5,
                     },
-
                     "&.Mui-selected, &.Mui-selected:hover, &:hover, &.MuiButtonBase-root:active": {
-                        background: alpha(theme.palette.primary.main, 0.1),
-                        color: theme.palette.primary.dark,
-
                         "& .MuiSvgIcon-root": {
                             opacity: 0.8,
                         },
+                        background: alpha(theme.palette.primary.main, 0.1),
+
+                        color: theme.palette.primary.dark,
                     },
+                    borderRadius: theme.shape.borderRadius,
+
+                    mx: theme.spacing(1),
+
+                    pr: theme.spacing(0.5),
                 },
             }}
+            transformOrigin={transformOrigin || { horizontal: "right", vertical: "top" }}
             {...other}
         >
             <Box
@@ -105,8 +107,8 @@ export default function ProfileIconDropdown(props: ProfileDropdownProps) {
                         bgColortheme.palette.mode === "dark"
                             ? alpha(bgColortheme.palette.neutral[25], 0.02)
                             : neutral[25],
-                    p: 1.5,
                     overflow: "hidden",
+                    p: 1.5,
                 }}
             >
                 <AvatarTitleDescriptionAlternate />
@@ -117,9 +119,9 @@ export default function ProfileIconDropdown(props: ProfileDropdownProps) {
             {profileIconDropdownNavItems.map((item) => (
                 <MenuItem
                     component="div"
-                    selected={item.title === "Email Notifications"}
                     key={item.title}
                     onClick={() => handleNavItemClick(item.route!)}
+                    selected={item.title === "Email Notifications"}
                     sx={{
                         "&:hover .MuiListItemText-primary": {
                             color: theme.palette.mode === "dark" ? "text.primary" : "primary.main",
@@ -127,10 +129,10 @@ export default function ProfileIconDropdown(props: ProfileDropdownProps) {
                     }}
                 >
                     <ListItemText
+                        primary={t(item.title)}
                         primaryTypographyProps={{
                             fontWeight: 500,
                         }}
-                        primary={t(item.title)}
                     />
                     {item.icon}
                 </MenuItem>
@@ -150,10 +152,4 @@ export default function ProfileIconDropdown(props: ProfileDropdownProps) {
             </Box>
         </Menu>
     )
-}
-
-ProfileIconDropdown.propTypes = {
-    anchorEl: PropTypes.any,
-    onClose: PropTypes.func,
-    open: PropTypes.bool,
 }

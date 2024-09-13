@@ -1,10 +1,16 @@
+import type { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form"
+import type { RegisterRequest } from "src/types/forms/register"
+
 import { useState } from "react"
 
-import { Visibility, VisibilityOff } from "@mui/icons-material"
+import { useTranslation } from "react-i18next"
+
 import ClearIcon from "@mui/icons-material/Clear"
 import EditIcon from "@mui/icons-material/Edit"
 import KeyIcon from "@mui/icons-material/Key"
 import MailOutlineRoundedIcon from "@mui/icons-material/MailOutlineRounded"
+
+import { Visibility, VisibilityOff } from "@mui/icons-material"
 import {
     Box,
     FilledInput,
@@ -16,11 +22,8 @@ import {
     Tooltip,
     Typography,
 } from "@mui/material"
-import type { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form"
-import { useTranslation } from "react-i18next"
 
 import ButtonIcon from "src/components/base/styles/button-icon"
-import type { RegisterRequest } from "src/models/forms/register"
 
 // set the input type based on the inputName and showPassword state for the password fields
 function getInputType(inputName: keyof RegisterRequest, isVisible: boolean) {
@@ -80,19 +83,19 @@ function useGetAllTypographies(inputName: keyof RegisterRequest) {
             ? "Write your password again"
             : `Write your ${inputNameTypography.toLowerCase()}`
 
-    return { inputNameTypography, tooltipTypopgraphy, placeholderTypography }
+    return { inputNameTypography, placeholderTypography, tooltipTypopgraphy }
 }
 
 type RegisterFormInputProps = {
-    register: UseFormRegister<RegisterRequest>
     errors: FieldErrors<RegisterRequest>
-    watchFormField: UseFormWatch<RegisterRequest>
-    setFormValue: UseFormSetValue<RegisterRequest>
     inputName: keyof RegisterRequest // must be lowercase
+    register: UseFormRegister<RegisterRequest>
+    setFormValue: UseFormSetValue<RegisterRequest>
+    watchFormField: UseFormWatch<RegisterRequest>
 }
 
 function RegisterFormInput(props: RegisterFormInputProps) {
-    const { register, watchFormField, setFormValue, errors, inputName } = props
+    const { errors, inputName, register, setFormValue, watchFormField } = props
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
@@ -101,21 +104,21 @@ function RegisterFormInput(props: RegisterFormInputProps) {
     const handlePasswordVisibility = () => setShowPassword(!showPassword)
     const handleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword)
 
-    const { inputNameTypography, tooltipTypopgraphy, placeholderTypography } = useGetAllTypographies(inputName)
+    const { inputNameTypography, placeholderTypography, tooltipTypopgraphy } = useGetAllTypographies(inputName)
 
     return (
         // Set Grid to half width if inputName is firstname or lastname else full width
         <Grid xs={inputName === "firstName" || inputName === "lastName" ? 6 : 12}>
-            <FormControl fullWidth error={Boolean(errors[inputName.toString()])}>
+            <FormControl error={Boolean(errors[inputName.toString()])} fullWidth>
                 {/* Form Input Label And Visibility Button */}
-                <Box display="flex" gap={2} p={1} justifyContent="space-between" alignItems="center">
+                <Box alignItems="center" display="flex" gap={2} justifyContent="space-between" p={1}>
                     {/* Input Label */}
                     <Typography
-                        variant="h6"
-                        gutterBottom
                         component="label"
-                        htmlFor={`${inputName}-input`}
                         fontWeight={500}
+                        gutterBottom
+                        htmlFor={`${inputName}-input`}
+                        variant="h6"
                     >
                         {t(inputNameTypography)}
                     </Typography>
@@ -123,12 +126,12 @@ function RegisterFormInput(props: RegisterFormInputProps) {
                     {/* Password Field Visibility Button */}
                     {inputName === "password" || inputName === "confirmPassword" ? (
                         <ButtonIcon
-                            variant="outlined"
                             color="secondary"
-                            sx={{ mr: -0.8, mb: 1 }}
                             onClick={
                                 inputName === "password" ? handlePasswordVisibility : handleConfirmPasswordVisibility
                             }
+                            sx={{ mb: 1, mr: -0.8 }}
+                            variant="outlined"
                         >
                             {(inputName === "password" ? showPassword : showConfirmPassword) ? (
                                 <Tooltip title={t(`hide ${inputName}`)}>
@@ -147,12 +150,7 @@ function RegisterFormInput(props: RegisterFormInputProps) {
                 <FilledInput
                     hiddenLabel
                     {...register(inputName)}
-                    type={getInputType(inputName, inputName === "password" ? showPassword : showConfirmPassword)}
-                    id={`${inputName}-input`}
-                    placeholder={placeholderTypography}
                     autoComplete={inputName}
-                    required
-                    startAdornment={getStartAdornment(inputName)}
                     endAdornment={
                         // only show clear icon if textfield is not empty
                         watchFormField(inputName as keyof RegisterRequest) !== "" && (
@@ -166,6 +164,11 @@ function RegisterFormInput(props: RegisterFormInputProps) {
                             </InputAdornment>
                         )
                     }
+                    id={`${inputName}-input`}
+                    placeholder={placeholderTypography}
+                    required
+                    startAdornment={getStartAdornment(inputName)}
+                    type={getInputType(inputName, inputName === "password" ? showPassword : showConfirmPassword)}
                 />
                 {errors[inputName.toString()] && (
                     <FormHelperText>{t(errors[inputName.toString()].message as string)}</FormHelperText>

@@ -1,32 +1,33 @@
+import type { LinkProps } from "@mui/material/Link"
 import type { ReactNode } from "react"
 
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
-import type { LinkProps } from "@mui/material/Link"
+
 import Link from "@mui/material/Link"
 
 import RouterLink from "src/components/base/router-link"
 
-type FormReturnLinkProps = LinkProps & {
+type FormReturnLinkProps = {
     href: string
     icon?: ReactNode
     label?: ReactNode
-}
+} & LinkProps
 
-export default function FormReturnLink({ sx, href, children, label, icon, ...other }: FormReturnLinkProps) {
+export default function FormReturnLink({ href, icon, label, sx, ...other }: FormReturnLinkProps) {
     return (
         <Link
+            color="inherit"
             component={RouterLink}
             href={href}
-            color="inherit"
-            variant="subtitle2"
             sx={{
-                mt: 3,
-                gap: 0.5,
-                mx: "auto",
                 alignItems: "center",
                 display: "inline-flex",
+                gap: 0.5,
+                mt: 3,
+                mx: "auto",
                 ...sx,
             }}
+            variant="subtitle2"
             {...other}
         >
             {icon || <ArrowBackIosNewIcon width={16} />}

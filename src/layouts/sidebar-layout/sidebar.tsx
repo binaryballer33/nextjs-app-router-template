@@ -1,16 +1,21 @@
+import type { Theme } from "@mui/material"
+import type { NavBarItem } from "src/types/navbar-item"
+
 import { useState } from "react"
+
+import PropTypes from "prop-types"
 
 import KeyboardArrowLeftTwoToneIcon from "@mui/icons-material/KeyboardArrowLeftTwoTone"
 import KeyboardArrowRightTwoToneIcon from "@mui/icons-material/KeyboardArrowRightTwoTone"
-import type { Theme } from "@mui/material"
+
 import { Box, Drawer, IconButton, styled, SwipeableDrawer, Typography, useMediaQuery, useTheme } from "@mui/material"
+
 import { useSession } from "next-auth/react"
-import PropTypes from "prop-types"
+
+import Scrollbar from "src/components/base/scrollbar"
 
 import ActivityTotals from "src/app/(auth)/user/profile/page-components/activity-totals"
-import Scrollbar from "src/components/base/scrollbar"
 import { useSidebarContext } from "src/contexts/sidebar-context"
-import type { NavBarItem } from "src/models/navbar-item"
 import { SIDEBAR_WIDTH_COLLAPSED, SIDEBAR_WIDTH_PROFILE_PAGE } from "src/theme/utils"
 
 import SidebarFooter from "./sidebar-footer"
@@ -19,21 +24,21 @@ import SidebarNavMenuCollapsed from "./sidebar-nav-menu-collapsed"
 import TenantSwitcher from "./sidebar-tenant-switcher"
 
 const SidebarWrapper = styled(Box)(({ theme }) => ({
-    height: "100dvh",
     color: theme.palette.text.secondary,
     display: "flex",
     flexDirection: "column",
+    height: "100dvh",
 }))
 
 type SidebarProps = {
+    navbarItems?: NavBarItem[]
     onClose?: () => void
     onOpen?: () => void
     open?: boolean
-    navbarItems?: NavBarItem[]
 }
 
 export default function Sidebar(props: SidebarProps) {
-    const { onClose, onOpen, navbarItems, open, ...other } = props
+    const { navbarItems, onClose, onOpen, open, ...other } = props
     const theme = useTheme()
     const lgUp = useMediaQuery((desktopTheme: Theme) => desktopTheme.breakpoints.up("lg"))
     const mdUp = useMediaQuery((tabletTheme: Theme) => tabletTheme.breakpoints.up("md"))
@@ -42,22 +47,22 @@ export default function Sidebar(props: SidebarProps) {
 
     const sampleTenants = [
         {
-            id: 1,
-            name: "TechSolutions",
-            logo: "/placeholders/logo/adobe.jpg",
             description: "A leading tech consultancy firm.",
+            id: 1,
+            logo: "/placeholders/logo/adobe.jpg",
+            name: "TechSolutions",
         },
         {
-            id: 2,
-            name: "GreenGrocers",
-            logo: "/placeholders/logo/ibm.jpg",
             description: "Organic produce suppliers since 1990.",
+            id: 2,
+            logo: "/placeholders/logo/ibm.jpg",
+            name: "GreenGrocers",
         },
         {
-            id: 3,
-            name: "UrbanArch",
-            logo: "/placeholders/logo/oracle.jpg",
             description: "Modern architectural designs and solutions.",
+            id: 3,
+            logo: "/placeholders/logo/oracle.jpg",
+            name: "UrbanArch",
         },
     ]
 
@@ -105,39 +110,36 @@ export default function Sidebar(props: SidebarProps) {
             component="nav"
             role="navigation"
             sx={{
-                width: getSidebarWidthForSidebarWrapper(),
+                "&::after": {
+                    bottom: "-95px",
+                    content: '""',
+                    display: "block",
+                    height: "250px",
+                    position: "absolute",
+                    right: "-85px",
+                    width: "280px",
+                },
                 "&::before": {
                     content: '""',
-                    width: "280px",
+                    display: "block",
                     height: "250px",
+                    left: "-85px",
                     position: "absolute",
                     top: "-95px",
-                    left: "-85px",
-                    display: "block",
-                },
-                "&::after": {
-                    content: '""',
                     width: "280px",
-                    height: "250px",
-                    position: "absolute",
-                    bottom: "-95px",
-                    right: "-85px",
-                    display: "block",
                 },
+                width: getSidebarWidthForSidebarWrapper(),
             }}
         >
             <Box
-                p={2}
-                display="flex"
-                justifyContent={{
-                    xs: "flex-start",
-                    md: getJustifyContent(),
-                }}
                 alignItems="center"
+                display="flex"
+                justifyContent={{ md: getJustifyContent(), xs: "flex-start" }}
+                p={2}
             >
                 {/* SideBar Header */}
                 {(isSidebarCollapsed && isSidebarHovered) || !isSidebarCollapsed ? (
-                    <Typography variant="h6" color="primary">
+                    <Typography color="primary" variant="h6">
                         Welcome {session?.user?.email?.slice(0, session?.user?.email?.indexOf("@"))}
                     </Typography>
                 ) : null}
@@ -145,23 +147,22 @@ export default function Sidebar(props: SidebarProps) {
                 {/* Show Arrow IconButton */}
                 {lgUp && (
                     <IconButton
+                        onClick={toggleSidebarCollapsed}
+                        size="small"
                         sx={{
-                            display: getDisplay(),
-
-                            color: theme.palette.text.secondary,
-                            textAlign: "left",
-                            borderWidth: 1,
-                            borderStyle: "solid",
-                            borderColor: theme.palette.divider,
-
                             "&:hover": {
                                 background: theme.palette.action.hover,
-                                color: theme.palette.text.primary,
                                 borderColor: theme.palette.divider,
+                                color: theme.palette.text.primary,
                             },
+
+                            borderColor: theme.palette.divider,
+                            borderStyle: "solid",
+                            borderWidth: 1,
+                            color: theme.palette.text.secondary,
+                            display: getDisplay(),
+                            textAlign: "left",
                         }}
-                        size="small"
-                        onClick={toggleSidebarCollapsed}
                     >
                         {isSidebarCollapsed ? (
                             <KeyboardArrowRightTwoToneIcon fontSize="small" />
@@ -175,22 +176,22 @@ export default function Sidebar(props: SidebarProps) {
             {/* Sidebar Content Area */}
             <Box flex={1} overflow="auto" position="relative" zIndex={6}>
                 <Scrollbar dark>
-                    {/* Render Approriate Sidebar */}
+                    {/* Render Appropriate Sidebar */}
                     {renderSidebarNavMenu()}
 
                     {/*
-              Show if medium screen and up with sidebar not collasped
-              also show if medium screen and up with the sidebar collasped and you hover,
+              Show if medium screen and up with sidebar not collapsed
+              also show if medium screen and up with the sidebar collapsed and you hover,
           */}
                     {mdUp && (!isSidebarCollapsed || (isSidebarCollapsed && isSidebarHovered)) && (
                         <>
                             {/* Item Switcher */}
                             <TenantSwitcher
-                                sidebarCollapsed={isSidebarCollapsed}
-                                isHovered={isSidebarHovered}
-                                tenants={sampleTenants}
                                 currentTenant={currentTenant}
+                                isHovered={isSidebarHovered}
                                 onSwitch={handleTenantSwitch}
+                                sidebarCollapsed={isSidebarCollapsed}
+                                tenants={sampleTenants}
                             />
 
                             {/* Activity Totals */}
@@ -208,26 +209,26 @@ export default function Sidebar(props: SidebarProps) {
         return (
             <Drawer
                 anchor="left"
-                open
                 ModalProps={{ keepMounted: true }}
                 onMouseEnter={() => toggleSidebarHover(true)}
                 onMouseLeave={() => toggleSidebarHover(false)}
+                open
                 PaperProps={{
                     // @ts-ignore
                     sx: {
-                        overflow: "scroll",
-                        border: 0,
-                        top: "90px !important", // places the sidebar below the header
-                        left: "24px !important",
-                        zIndex: 5,
-                        borderRight: `1px solid ${theme.palette.divider}`,
                         backgroundColor: theme.palette.background.default,
-                        width: getSidebarWidthForDrawer(),
+                        border: 0,
+                        borderRight: `1px solid ${theme.palette.divider}`,
                         boxShadow: (boxShadowTheme) => getBoxShadow(boxShadowTheme),
-
-                        position: isSidebarCollapsed ? "sticky" : "sticky",
                         height: "100dvh",
+                        left: "24px !important",
+                        overflow: "scroll",
+                        position: isSidebarCollapsed ? "sticky" : "sticky",
+                        top: "90px !important", // places the sidebar below the header
+
                         transition: (transitionTheme) => transitionTheme.transitions.create(["width", "box-shadow"]),
+                        width: getSidebarWidthForDrawer(),
+                        zIndex: 5,
                     },
                 }}
                 variant="persistent"
@@ -240,17 +241,17 @@ export default function Sidebar(props: SidebarProps) {
     return (
         <SwipeableDrawer
             anchor="left"
-            onClose={onClose || (() => {})}
-            onOpen={onOpen || (() => {})}
-            open={open}
             ModalProps={{
                 keepMounted: true,
             }}
+            onClose={onClose || (() => {})}
+            onOpen={onOpen || (() => {})}
+            open={open}
             PaperProps={{
                 sx: {
                     backgroundColor: theme.palette.background.default,
-                    overflow: "hidden",
                     boxShadow: (boxShadowTheme) => boxShadowTheme.shadows[24],
+                    overflow: "hidden",
                 },
             }}
             variant="temporary"
@@ -262,7 +263,7 @@ export default function Sidebar(props: SidebarProps) {
 }
 
 Sidebar.propTypes = {
-    onOpen: PropTypes.func,
     onClose: PropTypes.func,
+    onOpen: PropTypes.func,
     open: PropTypes.bool,
 }

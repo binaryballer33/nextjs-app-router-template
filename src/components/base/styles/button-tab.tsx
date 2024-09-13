@@ -1,61 +1,61 @@
+import type { ButtonProps, TabProps, Theme } from "@mui/material"
 import type { ReactNode } from "react"
 
-import type { ButtonProps, TabProps, Theme } from "@mui/material"
 import { alpha, Button, lighten, styled, Tab } from "@mui/material"
 
 type BaseButtonTabProps = {
-    componentType: "tab" | "button"
     children?: ReactNode
+    componentType: "button" | "tab"
 }
 
 type ButtonTabProps =
-    | (BaseButtonTabProps & TabProps & { componentType: "tab" })
-    | (BaseButtonTabProps & ButtonProps & { componentType: "button" })
+    | ({ componentType: "button" } & BaseButtonTabProps & ButtonProps)
+    | ({ componentType: "tab" } & BaseButtonTabProps & TabProps)
 
 const commonStyles = (theme: Theme) => ({
-    fontSize: 15,
-    letterSpacing: -0.025,
-    fontWeight: 600,
-    padding: theme.spacing(1, 2.2),
-    color: theme.palette.mode === "dark" ? theme.palette.neutral[500] : theme.palette.neutral[800],
-    background: theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.01) : theme.palette.neutral[25],
-    borderRadius: 0,
-    borderTopLeftRadius: theme.shape.borderRadius,
-    borderTopRightRadius: theme.shape.borderRadius,
-    border:
-        theme.palette.mode === "dark"
-            ? `1px solid ${alpha(theme.palette.neutral[800], 0.3)}`
-            : `1px solid ${theme.palette.neutral[300]}`,
-    marginLeft: 0,
-    marginRight: theme.spacing(1),
-    borderBottom: 0,
     "&::after": {
-        height: 0,
-        content: '""',
-        width: "100%",
-        position: "absolute",
-        bottom: -2,
-        left: 0,
         background:
             theme.palette.mode === "dark" ? lighten(theme.palette.neutral[900], 0.035) : theme.palette.common.white,
+        bottom: -2,
+        content: '""',
+        height: 0,
+        left: 0,
+        position: "absolute",
+        width: "100%",
     },
     "&:hover": {
-        color: theme.palette.mode === "dark" ? theme.palette.neutral[200] : theme.palette.neutral[900],
-        borderColor:
-            theme.palette.mode === "dark" ? alpha(theme.palette.neutral[700], 0.5) : theme.palette.neutral[400],
         background:
             theme.palette.mode === "dark" ? alpha(theme.palette.background.paper, 0.6) : theme.palette.common.white,
+        borderColor:
+            theme.palette.mode === "dark" ? alpha(theme.palette.neutral[700], 0.5) : theme.palette.neutral[400],
+        color: theme.palette.mode === "dark" ? theme.palette.neutral[200] : theme.palette.neutral[900],
     },
     "&.Mui-selected": {
-        color: theme.palette.mode === "dark" ? theme.palette.neutral[25] : theme.palette.neutral[900],
+        "&::after": {
+            height: 2,
+        },
         background:
             theme.palette.mode === "dark" ? lighten(theme.palette.neutral[900], 0.035) : theme.palette.common.white,
         borderColor:
             theme.palette.mode === "dark" ? alpha(theme.palette.neutral[600], 0.4) : theme.palette.neutral[400],
-        "&::after": {
-            height: 2,
-        },
+        color: theme.palette.mode === "dark" ? theme.palette.neutral[25] : theme.palette.neutral[900],
     },
+    background: theme.palette.mode === "dark" ? alpha(theme.palette.neutral[25], 0.01) : theme.palette.neutral[25],
+    border:
+        theme.palette.mode === "dark"
+            ? `1px solid ${alpha(theme.palette.neutral[800], 0.3)}`
+            : `1px solid ${theme.palette.neutral[300]}`,
+    borderBottom: 0,
+    borderRadius: 0,
+    borderTopLeftRadius: theme.shape.borderRadius,
+    borderTopRightRadius: theme.shape.borderRadius,
+    color: theme.palette.mode === "dark" ? theme.palette.neutral[500] : theme.palette.neutral[800],
+    fontSize: 15,
+    fontWeight: 600,
+    letterSpacing: -0.025,
+    marginLeft: 0,
+    marginRight: theme.spacing(1),
+    padding: theme.spacing(1, 2.2),
 })
 
 const StyledTab = styled(Tab)(({ theme }) => ({
@@ -68,7 +68,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }))
 
 export default function BaseButtonTab(props: ButtonTabProps) {
-    const { componentType, children, ...otherProps } = props
+    const { children, componentType, ...otherProps } = props
 
     return componentType === "tab" ? (
         <StyledTab {...(otherProps as TabProps)} />

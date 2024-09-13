@@ -1,29 +1,30 @@
-import { forwardRef } from "react"
-
 import type { BoxProps } from "@mui/material/Box"
-import Box from "@mui/material/Box"
 import type { SxProps, Theme } from "@mui/material/styles"
 
+import { forwardRef } from "react"
+
+import Box from "@mui/material/Box"
+
 const iconifyClasses = {
-    root: "mnl__icon__root",
     flag: "mnl__icon__flag",
+    root: "mnl__icon__root",
 }
 
-export type FlagIconProps = BoxProps & {
+export type FlagIconProps = {
     code?: string
-}
+} & BoxProps
 
-export const FlagIcon = forwardRef<HTMLSpanElement, FlagIconProps>(({ code, className, sx, ...other }, ref) => {
+export const FlagIcon = forwardRef<HTMLSpanElement, FlagIconProps>(({ className, code, sx, ...other }, ref) => {
     const baseStyles: SxProps<Theme> = {
-        width: 26,
-        height: 20,
-        flexShrink: 0,
-        overflow: "hidden",
-        borderRadius: "5px",
         alignItems: "center",
-        display: "inline-flex",
-        justifyContent: "center",
         bgcolor: "background.neutral",
+        borderRadius: "5px",
+        display: "inline-flex",
+        flexShrink: 0,
+        height: 20,
+        justifyContent: "center",
+        overflow: "hidden",
+        width: 26,
     }
 
     if (!code) {
@@ -32,22 +33,22 @@ export const FlagIcon = forwardRef<HTMLSpanElement, FlagIconProps>(({ code, clas
 
     return (
         <Box
-            ref={ref}
-            component="span"
             className={iconifyClasses.flag.concat(className ? ` ${className}` : "")}
+            component="span"
+            ref={ref}
             sx={{ ...baseStyles, ...sx }}
             {...other}
         >
             <Box
+                alt={code}
                 component="img"
                 loading="lazy"
-                alt={code}
                 src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${code?.toUpperCase()}.svg`}
                 sx={{
-                    width: 1,
                     height: 1,
                     maxWidth: "unset",
                     objectFit: "cover",
+                    width: 1,
                 }}
             />
         </Box>

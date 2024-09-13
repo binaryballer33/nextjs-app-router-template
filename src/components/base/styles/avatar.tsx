@@ -1,14 +1,15 @@
 import type { AvatarProps, PaletteColor, Theme } from "@mui/material"
+
 import { alpha, Avatar, styled } from "@mui/material"
 
-type PaletteColorKey = "success" | "error" | "warning" | "info" | "primary" | "secondary"
+type PaletteColorKey = "error" | "info" | "primary" | "secondary" | "success" | "warning"
 
-type AvatarStateProps = AvatarProps & {
-    state?: PaletteColorKey | "light"
-    useShadow?: boolean
+type AvatarStateProps = {
     isSoft?: boolean
     isUpload?: boolean
-}
+    state?: "light" | PaletteColorKey
+    useShadow?: boolean
+} & AvatarProps
 
 const getStateStyles = (theme: Theme, state?: AvatarStateProps["state"], useShadow?: boolean, isSoft?: boolean) => {
     let backgroundColor: string | undefined
@@ -23,12 +24,12 @@ const getStateStyles = (theme: Theme, state?: AvatarStateProps["state"], useShad
     }
 
     const shadowStrengths: Record<PaletteColorKey, number> = {
-        success: 2,
         error: 3,
-        warning: 4,
         info: 5,
         primary: 1,
         secondary: 16,
+        success: 2,
+        warning: 4,
     }
 
     switch (state) {
@@ -58,7 +59,7 @@ const getStateStyles = (theme: Theme, state?: AvatarStateProps["state"], useShad
 
 export const AvatarState = styled(Avatar, {
     shouldForwardProp: (prop) => prop !== "state" && prop !== "useShadow" && prop !== "isSoft",
-})<AvatarStateProps>(({ theme, state, useShadow, isSoft }) => {
+})<AvatarStateProps>(({ isSoft, state, theme, useShadow }) => {
     const { backgroundColor, boxShadow, color } = getStateStyles(theme, state, useShadow, isSoft)
     return {
         backgroundColor,

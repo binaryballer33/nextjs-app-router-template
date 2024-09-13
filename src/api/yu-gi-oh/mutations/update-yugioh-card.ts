@@ -4,8 +4,8 @@
 // import toast from "react-hot-toast"
 //
 // import QUERY_KEYS from "src/api/query-keys"
-// import { deleteOrUpdateCardRequestSchema } from "src/models/cards/card"
-// import { YuGiOhCard } from "src/models/cards/yu-gi-oh"
+// import { deleteOrUpdateCardRequestSchema } from "src/types/cards/card"
+// import { YuGiOhCard } from "src/types/cards/yu-gi-oh"
 // import QUERY_ROUTES from "src/router/api-routes"
 //
 // export async function updateYuGiOhCard(card: YuGiOhCard) {

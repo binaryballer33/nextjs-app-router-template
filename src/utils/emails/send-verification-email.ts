@@ -14,9 +14,9 @@ export default async function sendVerificationEmail(email: string, token: string
         // TODO: figure out why gmail won't deliver this email with this html? Is it because of the link??
         return await resend.emails.send({
             from: "onboarding@resend.dev",
-            to: email,
-            subject: "Confirm Your Email",
             html: `<p>Click <a href="${confirmationLink}">Here</a> To Confirm Your Email.</p>`,
+            subject: "Confirm Your Email",
+            to: email,
         })
 
         // TODO: UPDATE, THIS DOESN"T WORK EITHER

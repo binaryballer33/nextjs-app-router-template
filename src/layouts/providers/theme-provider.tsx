@@ -1,17 +1,19 @@
 "use client"
 
 import type { ReactNode } from "react"
+
 import { useEffect } from "react"
+
+import AOS from "aos"
 
 import { Box, CssBaseline } from "@mui/material"
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles"
-import AOS from "aos"
 
 import Toastr from "src/components/base/toastr"
-import { useSelector } from "src/store"
-import { darkTheme, lightTheme } from "src/theme/theme"
 
-import "src/i18n/i18n" // for multilanguage support
+import "src/i18n/i18n"
+import { useSelector } from "src/store"
+import { darkTheme, lightTheme } from "src/theme/theme" // for multilanguage support
 import "src/global.css" // for global styles
 import "aos/dist/aos.css" // for animations and transitions on scroll
 
@@ -30,10 +32,10 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
 
         // Initialize AOS library for animations and transitions on scroll
         AOS.init({
-            once: true,
             delay: 50,
             duration: 500,
             easing: "ease-in-out",
+            once: true,
         })
     }, [])
 

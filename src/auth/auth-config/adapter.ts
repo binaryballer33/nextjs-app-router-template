@@ -1,4 +1,5 @@
 import type { Adapter, AdapterUser } from "@auth/core/adapters"
+
 import { PrismaAdapter } from "@auth/prisma-adapter"
 
 import prisma from "src/utils/database/prisma"

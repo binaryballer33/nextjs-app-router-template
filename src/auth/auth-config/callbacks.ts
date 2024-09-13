@@ -18,27 +18,7 @@ import getUserById from "src/actions/user/get-user-by-id"
  * session callback happens after the jwt callback and uses the token returned from the jwt callback, returns the session
  */
 const callbacks: NextAuthConfig["callbacks"] = {
-    // TODO: figure out how to make the id from google the same id prisma uses to create the user
-    async signIn({ user, account, profile }) {
-        if (!user || !user.email || !user.id) return false
-
-        if (account?.provider === "google" || account?.provider === "facebook") {
-            user.firstName = profile?.given_name!
-            user.lastName = profile?.family_name!
-            user.imageUrl = user.image!
-        }
-
-        if (account?.provider === "google" || account?.provider === "facebook") return true
-
-        // don't let unverified users sign in
-        const existingUser = await getUserById(user.id)
-        if (!existingUser || !existingUser.emailVerified) return false
-
-        // if you are signing in with credentials that were already authorized in authorize callback then return true
-        return account?.provider === "credentials"
-    },
-
-    async jwt({ token, user, isNewUser }) {
+    async jwt({ isNewUser, token, user }) {
         if (!token.sub) return token
 
         const existingUser = await getUserById(token.sub)
@@ -66,6 +46,26 @@ const callbacks: NextAuthConfig["callbacks"] = {
         }
 
         return session
+    },
+
+    // TODO: figure out how to make the id from google the same id prisma uses to create the user
+    async signIn({ account, profile, user }) {
+        if (!user || !user.email || !user.id) return false
+
+        if (account?.provider === "google" || account?.provider === "facebook") {
+            user.firstName = profile?.given_name!
+            user.lastName = profile?.family_name!
+            user.imageUrl = user.image!
+        }
+
+        if (account?.provider === "google" || account?.provider === "facebook") return true
+
+        // don't let unverified users sign in
+        const existingUser = await getUserById(user.id)
+        if (!existingUser || !existingUser.emailVerified) return false
+
+        // if you are signing in with credentials that were already authorized in authorize callback then return true
+        return account?.provider === "credentials"
     },
 }
 

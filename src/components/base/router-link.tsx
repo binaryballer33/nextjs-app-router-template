@@ -1,11 +1,12 @@
-import { forwardRef } from "react"
-
 import type { LinkProps } from "next/link"
+
 import Link from "next/link"
 
-type RouterLinkProps = Omit<LinkProps, "to"> & {
+import { forwardRef } from "react"
+
+type RouterLinkProps = {
     href: string
-}
+} & Omit<LinkProps, "to">
 
 const RouterLink = forwardRef((props: RouterLinkProps, ref: any) => {
     return <Link ref={ref} {...props} />

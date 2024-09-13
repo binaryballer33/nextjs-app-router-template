@@ -1,10 +1,14 @@
 "use client"
 
 import type { SyntheticEvent } from "react"
+
 import { useState } from "react"
+
+import { useTranslation } from "react-i18next"
 
 import DownloadIcon from "@mui/icons-material/Download"
 import KeyboardArrowRightTwoToneIcon from "@mui/icons-material/KeyboardArrowRightTwoTone"
+
 import {
     AccordionDetails,
     AccordionSummary,
@@ -20,39 +24,38 @@ import {
     Stack,
     Typography,
 } from "@mui/material"
-import { useTranslation } from "react-i18next"
 
 import { AccordionAlternate } from "src/components/base/styles/accordion"
 
 type AccordionItem = {
-    name: string
-    jobTitle: string
     avatarSrc: string
     email: string
-    salary: string
+    jobTitle: string
+    name: string
     resumeFile: string
+    salary: string
 }
 
 function AlternateTabs() {
     const { t } = useTranslation()
-    const [expandedAccordion, setExpandedAccordion] = useState<number | null>(null)
+    const [expandedAccordion, setExpandedAccordion] = useState<null | number>(null)
 
     const accordionData: AccordionItem[] = [
         {
-            name: "Shaquille Mandy",
-            jobTitle: "Software Engineer",
             avatarSrc: "/avatars/4.png",
             email: "binaryballer33@gmail.com",
-            salary: "$250,000",
+            jobTitle: "Software Engineer",
+            name: "Shaquille Mandy",
             resumeFile: "resume_full_stack_developer.pdf",
+            salary: "$250,000",
         },
         {
-            name: "Megan Nicole",
-            jobTitle: "Pediatrician",
             avatarSrc: "/avatars/5.png",
             email: "megan_nichole@gmail.com",
-            salary: "$333,333",
+            jobTitle: "Pediatrician",
+            name: "Megan Nicole",
             resumeFile: "resume_pediatrician.pdf",
+            salary: "$333,333",
         },
     ]
 
@@ -65,53 +68,53 @@ function AlternateTabs() {
             {accordionData.map((item, index) => (
                 <AccordionAlternate
                     expanded={expandedAccordion === index}
-                    onChange={handleAccordionToggle(index)}
                     key={item.email}
+                    onChange={handleAccordionToggle(index)}
                 >
                     <AccordionSummary
-                        expandIcon={<KeyboardArrowRightTwoToneIcon />}
                         aria-controls={`panel${index + 1}a-content`}
+                        expandIcon={<KeyboardArrowRightTwoToneIcon />}
                         id={`panel${index + 1}a-header`}
                     >
-                        <Box display="flex" alignItems="center">
+                        <Box alignItems="center" display="flex">
                             <Avatar
-                                variant="rounded"
                                 alt="..."
-                                sx={{ width: 52, height: 52 }}
                                 src={`/avatars/${index + 3}.png`}
+                                sx={{ height: 52, width: 52 }}
+                                variant="rounded"
                             />
                             <Box ml={1}>
-                                <Typography variant="h6" component="div">
+                                <Typography component="div" variant="h6">
                                     {item.name}
                                 </Typography>
-                                <Typography variant="subtitle2" color="text.secondary" noWrap>
+                                <Typography color="text.secondary" noWrap variant="subtitle2">
                                     {t(item.jobTitle)}
                                 </Typography>
                             </Box>
                         </Box>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <Stack mb={2} spacing={1} direction="row">
-                            <Button size="small" variant="outlined" color="primary">
+                        <Stack direction="row" mb={2} spacing={1}>
+                            <Button color="primary" size="small" variant="outlined">
                                 {t("View profile")}
                             </Button>
-                            <Button size="small" variant="outlined" color="secondary">
+                            <Button color="secondary" size="small" variant="outlined">
                                 {t("Edit details")}
                             </Button>
                         </Stack>
                         <Card elevation={0} variant="outlined">
                             <ListItem>
                                 <ListItemText
-                                    primaryTypographyProps={{ variant: "h6" }}
                                     primary={t("Email address")}
+                                    primaryTypographyProps={{ variant: "h6" }}
                                     secondary={item.email}
                                 />
                             </ListItem>
                             <Divider />
                             <ListItem>
                                 <ListItemText
-                                    primaryTypographyProps={{ variant: "h6" }}
                                     primary={t("Salary expectation")}
+                                    primaryTypographyProps={{ variant: "h6" }}
                                     secondary={item.salary}
                                 />
                             </ListItem>
@@ -122,7 +125,7 @@ function AlternateTabs() {
                                         <DownloadIcon />
                                     </IconButton>
                                 </ListItemIcon>
-                                <ListItemText primaryTypographyProps={{ noWrap: true }} primary={t(item.resumeFile)} />
+                                <ListItemText primary={t(item.resumeFile)} primaryTypographyProps={{ noWrap: true }} />
                             </ListItem>
                         </Card>
                     </AccordionDetails>

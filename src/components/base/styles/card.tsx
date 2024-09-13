@@ -8,18 +8,18 @@ export const DividerLight = styled(Divider)(({ theme }) => ({
 }))
 
 export const CardHeaderLight = styled(CardHeader)(({ theme }) => ({
+    "& .MuiCardHeader-content": {
+        "& .MuiCardHeader-subheader": {
+            color: alpha(theme.palette.common.white, 0.7),
+        },
+
+        color: theme.palette.common.white,
+    },
+
     backgroundColor:
         theme.palette.mode === "dark"
             ? alpha(theme.palette.common.white, 0.04)
             : alpha(theme.palette.common.white, 0.08),
-
-    "& .MuiCardHeader-content": {
-        color: theme.palette.common.white,
-
-        "& .MuiCardHeader-subheader": {
-            color: alpha(theme.palette.common.white, 0.7),
-        },
-    },
 }))
 
 export const CardActionsLight = styled(CardActions)(({ theme }) => ({
@@ -30,9 +30,13 @@ export const CardActionsLight = styled(CardActions)(({ theme }) => ({
 }))
 
 export const CardAddActionDashed = styled(Card)(({ theme }) => ({
-    height: "100%",
-    border: `${alpha(theme.palette.secondary.main, 0.2)} dashed 2px`,
+    ".MuiCardActionArea-root": {
+        "&:hover .MuiCardActionArea-focusHighlight": {
+            opacity: 0.01,
+        },
 
+        height: "100%",
+    },
     "& > .MuiSvgIcon-root": {
         color: theme.palette.neutral[600],
     },
@@ -42,8 +46,6 @@ export const CardAddActionDashed = styled(Card)(({ theme }) => ({
     },
 
     "&:hover": {
-        borderColor: theme.palette.primary.main,
-
         "& > .MuiSvgIcon-root": {
             color: theme.palette.neutral[800],
         },
@@ -51,13 +53,11 @@ export const CardAddActionDashed = styled(Card)(({ theme }) => ({
         "& > .MuiTypography-root": {
             color: theme.palette.neutral[900],
         },
+
+        borderColor: theme.palette.primary.main,
     },
 
-    ".MuiCardActionArea-root": {
-        height: "100%",
+    border: `${alpha(theme.palette.secondary.main, 0.2)} dashed 2px`,
 
-        "&:hover .MuiCardActionArea-focusHighlight": {
-            opacity: 0.01,
-        },
-    },
+    height: "100%",
 }))

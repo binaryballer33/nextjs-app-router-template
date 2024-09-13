@@ -1,29 +1,29 @@
 import type { BoxProps } from "@mui/material/Box"
+
 import Box from "@mui/material/Box"
 import Link from "@mui/material/Link"
 
 // ----------------------------------------------------------------------
 
-type FormResendCodeProps = BoxProps & {
-    value?: number
+type FormResendCodeProps = {
     disabled?: boolean
     onResendCode?: () => void
-}
+    value?: number
+} & BoxProps
 
-export default function FormResendCode({ value, disabled, onResendCode, sx, ...other }: FormResendCodeProps) {
+export default function FormResendCode({ disabled, onResendCode, sx, value, ...other }: FormResendCodeProps) {
     return (
         <Box
             sx={{
+                alignSelf: "center",
                 mt: 3,
                 typography: "body2",
-                alignSelf: "center",
                 ...sx,
             }}
             {...other}
         >
             {`Don’t have a code? `}
             <Link
-                variant="subtitle2"
                 onClick={onResendCode}
                 sx={{
                     cursor: "pointer",
@@ -32,6 +32,7 @@ export default function FormResendCode({ value, disabled, onResendCode, sx, ...o
                         pointerEvents: "none",
                     }),
                 }}
+                variant="subtitle2"
             >
                 Resend {disabled && value && value > 0 && `(${value}s)`}
             </Link>

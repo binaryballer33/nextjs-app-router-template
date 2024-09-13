@@ -3,13 +3,17 @@ node_modules
 
 # Next.js
 .next
-build
+build/*
+dist/*
 
 # Lock files
+yarn.lock
 package-lock.json
+jsconfig.json
 
 # Misc
-dist
 public
+**/out/*
 
 src/mocks/yugioh-cards.json
+

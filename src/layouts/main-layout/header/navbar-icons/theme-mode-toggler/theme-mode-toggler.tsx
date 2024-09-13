@@ -1,5 +1,6 @@
 import DarkModeTwoToneIcon from "@mui/icons-material/DarkModeTwoTone"
 import LightModeTwoToneIcon from "@mui/icons-material/LightModeTwoTone"
+
 import { alpha, Button, Tooltip, useTheme } from "@mui/material"
 
 import { toggleTheme } from "src/slices/theme"
@@ -11,17 +12,17 @@ function ThemeModeToggler() {
     const handleThemeToggle = () => dispatch(toggleTheme())
 
     return (
-        <Tooltip title="Toggle Dark/Light Mode" arrow>
+        <Tooltip arrow title="Toggle Dark/Light Mode">
             <Button
-                variant="outlined"
-                onClick={handleThemeToggle}
                 aria-label="Dark/Light Mode Toggler"
+                onClick={handleThemeToggle}
                 sx={{
+                    borderColor: alpha(theme.palette.divider, 0.2),
                     borderRadius: 2,
                     minWidth: "auto",
                     padding: 0.5,
-                    borderColor: alpha(theme.palette.divider, 0.2),
                 }}
+                variant="outlined"
             >
                 {theme.palette.mode === "light" ? <LightModeTwoToneIcon /> : <DarkModeTwoToneIcon />}
             </Button>
