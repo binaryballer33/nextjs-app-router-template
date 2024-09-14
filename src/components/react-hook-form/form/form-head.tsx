@@ -2,7 +2,7 @@ import type { BoxProps } from "@mui/material/Box"
 import type { ReactNode } from "react"
 
 import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
+import Typography from "@mui/material/Typography" // ----------------------------------------------------------------------
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +16,12 @@ export default function FormHead({ description, icon, sx, title, ...other }: For
     return (
         <>
             {icon && (
-                <Box component="span" display="inline-flex" sx={{ mb: 3, mx: "auto" }}>
+                <Box
+                    component="span"
+                    display="inline-flex"
+                    justifyContent="center"
+                    sx={{ mb: 3, mx: "auto", width: 1 }}
+                >
                     {icon}
                 </Box>
             )}

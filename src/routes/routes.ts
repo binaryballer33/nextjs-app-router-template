@@ -31,6 +31,7 @@ const nextAuth = {
 const auth = {
     login: "/login",
     register: "/register",
+    resetPassword: "reset-password",
     signOut: "/sign-out",
     verifyEmail: "/emails/verify-email",
 }

@@ -37,7 +37,7 @@ import register from "src/actions/auth/register"
 
 import RouterLink from "src/components/base/router-link"
 
-import routes from "src/router/routes"
+import routes from "src/routes/routes"
 
 import RegisterFormInput from "./register-form-input"
 

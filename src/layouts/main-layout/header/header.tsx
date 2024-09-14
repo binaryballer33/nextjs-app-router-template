@@ -29,8 +29,9 @@ import usePopover from "src/hooks/use-popover"
 
 import { DividerLight } from "src/components/base/styles/card"
 
-import useHorizontalNavBarItems from "src/router/horizontal-navbar-routes"
-import routes from "src/router/routes"
+import useHorizontalNavBarItems from "src/routes/horizontal-navbar-routes"
+import routes from "src/routes/routes"
+
 import { neutral } from "src/theme/theme"
 
 import DesktopNavBar from "./desktop-navbar/desktop-navbar"

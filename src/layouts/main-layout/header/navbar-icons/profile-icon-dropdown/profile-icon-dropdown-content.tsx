@@ -15,8 +15,9 @@ import handleAuthResponse from "src/utils/helper-functions/handleServerResponse"
 
 import signOut from "src/actions/auth/sign-out"
 
-import profileIconDropdownNavItems from "src/router/profile-dropdown-icon-routes"
-import routes from "src/router/routes"
+import profileIconDropdownNavItems from "src/routes/profile-dropdown-icon-routes"
+import routes from "src/routes/routes"
+
 import { neutral } from "src/theme/theme"
 
 import AvatarTitleDescriptionAlternate from "./profile-icon-avatar-title-description"

@@ -5,9 +5,10 @@ import Box from "@mui/material/Box"
 
 type FullScreenCenteredContainerProps = {
     children: ReactNode
+    minHeight?: "100dvh" | "25dvh" | "50dvh" | "75dvh" | "80dvh" | "85dvh" | "90dvh" | "95dvh"
 } & BoxProps
 
-function FullScreenCenteredContainer({ children, ...rest }: FullScreenCenteredContainerProps) {
+function FullScreenCenteredContainer({ children, minHeight, ...rest }: FullScreenCenteredContainerProps) {
     return (
         <Box
             alignItems="center"
@@ -15,8 +16,7 @@ function FullScreenCenteredContainer({ children, ...rest }: FullScreenCenteredCo
             flexDirection="column"
             gap={2}
             justifyContent="center"
-            minHeight="100dvh"
-            minWidth="100dvw"
+            minHeight={minHeight || "100dvh"}
             {...rest}
         >
             {children}

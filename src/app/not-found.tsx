@@ -10,7 +10,7 @@ import { Box, Button, Container, Divider, Stack, Typography } from "@mui/materia
 import RouterLink from "src/components/base/router-link"
 import { AvatarState } from "src/components/base/styles/avatar"
 
-import routes from "src/router/routes"
+import routes from "src/routes/routes"
 
 function Page() {
     const { t } = useTranslation()

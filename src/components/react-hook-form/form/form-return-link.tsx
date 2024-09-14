@@ -31,7 +31,7 @@ export default function FormReturnLink({ href, icon, label, sx, ...other }: Form
             {...other}
         >
             {icon || <ArrowBackIosNewIcon width={16} />}
-            {label || "Return to sign in"}
+            {label || "Return To Sign In"}
         </Link>
     )
 }

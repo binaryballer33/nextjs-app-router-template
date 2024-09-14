@@ -6,7 +6,7 @@ import { Box } from "@mui/material"
 
 import useMobileNav from "src/hooks/use-mobile-nav"
 
-import useVerticalNavBarItems from "src/router/vertical-navbar-routes"
+import useVerticalNavBarItems from "src/routes/vertical-navbar-routes"
 
 import Sidebar from "./sidebar"
 

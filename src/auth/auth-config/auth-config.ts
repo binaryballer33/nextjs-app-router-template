@@ -8,7 +8,7 @@ import providers from "src/auth/auth-config/providers"
 
 import { NODE_ENV } from "src/utils/secrets"
 
-import routes from "src/router/routes"
+import routes from "src/routes/routes"
 
 const session: AuthConfig["session"] = { strategy: "jwt" }
 

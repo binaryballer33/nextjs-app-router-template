@@ -39,7 +39,7 @@ import login from "src/actions/auth/login"
 
 import RouterLink from "src/components/base/router-link"
 
-import routes from "src/router/routes"
+import routes from "src/routes/routes"
 
 import LoginFormInput from "./login-form-input"
 
@@ -172,8 +172,8 @@ export default function LoginPage() {
                         {/* Recover Password Link and Clear Form Button */}
                         <Grid xs={12}>
                             <Box alignItems="center" display="flex" justifyContent="space-between">
-                                <Link component={RouterLink} href={routes.index} underline="hover">
-                                    {t("Recover password")}
+                                <Link component={RouterLink} href={routes.auth.resetPassword} underline="hover">
+                                    {t("Recover Password")}
                                 </Link>
 
                                 {/* Reset Form Button */}
