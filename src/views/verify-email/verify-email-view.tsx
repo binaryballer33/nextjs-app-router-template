@@ -13,7 +13,7 @@ import EmailIcon from "@mui/icons-material/Email"
 import LoadingButton from "@mui/lab/LoadingButton"
 import Box from "@mui/material/Box"
 
-import FullScreenCenteredContainer from "src/components/base/full-height-width-centered-container"
+import FullScreenCenteredContainer from "src/components/base/flex-box/full-height-width-centered-container"
 import Field from "src/components/react-hook-form/fields"
 import Form from "src/components/react-hook-form/form-provider"
 import FormHead from "src/components/react-hook-form/form/form-head"

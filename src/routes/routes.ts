@@ -1,4 +1,4 @@
-import { BACKEND_BASE_URL } from "src/utils/secrets"
+import { BACKEND_BASE_URL } from "src/utils/secrets" // API URLs
 
 // API URLs
 const YU_GI_OH_API_BASE_URL = `${BACKEND_BASE_URL}/api/yu-gi-oh`
@@ -31,7 +31,6 @@ const nextAuth = {
 const auth = {
     login: "/login",
     register: "/register",
-    resetPassword: "reset-password",
     signOut: "/sign-out",
     verifyEmail: "/emails/verify-email",
 }
@@ -50,22 +49,28 @@ const publicRoutes = {
     maintenance: "/maintenance",
     payment: "/payment",
     pricing: "/pricing",
+    resetPassword: "/reset-password",
 }
 
 const routes = {
     // routes that the app needs
     ...publicRoutes,
+
     // used for making api calls
     api: {
         email: { ...emailApi },
         yugioh: { ...yugiohApi },
     },
+
+    // routes used for user authentication
     auth,
 
+    // routes that can't be visited if user is already authenticated
     authRoutes: Object.values(auth),
 
     // routes that next auth needs
     nextAuth,
+
     // used for handling access to routes via middleware
     publicRoutes: Object.values(publicRoutes),
 

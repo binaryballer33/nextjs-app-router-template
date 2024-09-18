@@ -1,3 +1,5 @@
+import RHFFilledInput from "src/components/react-hook-form/rhf-filled-input"
+
 import RHFAutocomplete from "./rhf-autocomplete"
 import RHFCheckbox, { RHFMultiCheckbox } from "./rhf-checkbox"
 import RHFCode from "./rhf-code"
@@ -17,6 +19,7 @@ const Field = {
     Code: RHFCode,
     CountrySelect: RHFCountrySelect,
     DatePicker: RHFDatePicker,
+    FilledInput: RHFFilledInput,
     MobileDateTimePicker: RHFMobileDateTimePicker,
     MultiCheckbox: RHFMultiCheckbox,
     MultiSelect: RHFMultiSelect,

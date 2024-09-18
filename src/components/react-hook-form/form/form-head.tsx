@@ -36,7 +36,7 @@ export default function FormHead({ description, icon, sx, title, ...other }: For
                 <Typography variant="h5">{title}</Typography>
 
                 {description && (
-                    <Typography sx={{ color: "text.secondary" }} variant="body2">
+                    <Typography sx={{ color: "text.secondary" }} variant="body1">
                         {description}
                     </Typography>
                 )}

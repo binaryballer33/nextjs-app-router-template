@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 
 import { Button, Typography } from "@mui/material"
 
-import FullScreenCenteredContainer from "src/components/base/full-height-width-centered-container"
+import FullScreenCenteredContainer from "src/components/base/flex-box/full-height-width-centered-container"
 
 function Page() {
     const router = useRouter()

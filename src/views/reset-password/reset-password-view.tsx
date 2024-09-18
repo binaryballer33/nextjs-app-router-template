@@ -7,14 +7,14 @@ import { z as zod } from "zod"
 
 import LockIcon from "@mui/icons-material/Lock"
 
-import LoadingButton from "@mui/lab/LoadingButton"
 import Box from "@mui/material/Box"
 
-import FullScreenCenteredContainer from "src/components/base/full-height-width-centered-container"
+import FullScreenCenteredContainer from "src/components/base/flex-box/full-height-width-centered-container"
 import Field from "src/components/react-hook-form/fields"
 import Form from "src/components/react-hook-form/form-provider"
 import FormHead from "src/components/react-hook-form/form/form-head"
 import FormReturnLink from "src/components/react-hook-form/form/form-return-link"
+import FormSubmitButton from "src/components/react-hook-form/form/form-submit-button"
 
 import routes from "src/routes/routes"
 
@@ -52,33 +52,23 @@ export default function ResetPasswordView() {
     return (
         <FullScreenCenteredContainer minHeight="75dvh">
             <Box width={{ lg: "40%", md: "60%", sm: "75%", xs: "95%" }}>
-                <FormHead
-                    description={`Please Enter The Email Address Associated With Your Account And We'll Email You A Link To Reset Your Password.`}
-                    icon={<LockIcon sx={{ color: "primary.main", fontSize: 80 }} />}
-                    title="Forgot Your Password?"
-                />
                 <Form methods={methods} onSubmit={onSubmit}>
-                    <Box display="flex" flexDirection="column" gap={3}>
-                        <Field.Text
-                            autoFocus
-                            InputLabelProps={{ shrink: true }}
-                            label="Email Address"
-                            name="email"
-                            placeholder="example@gmail.com"
-                            variant="standard"
-                        />
+                    <FormHead
+                        description={`Please Enter The Email Address Associated With Your Account And We'll Email You A Link To Reset Your Password.`}
+                        icon={<LockIcon sx={{ color: "primary.main", fontSize: 80 }} />}
+                        title="Forgot Your Password?"
+                    />
 
-                        <LoadingButton
-                            fullWidth
-                            loading={isSubmitting}
-                            loadingIndicator="Sending..."
-                            size="large"
-                            type="submit"
-                            variant="contained"
-                        >
-                            Send Request
-                        </LoadingButton>
-                    </Box>
+                    <Field.Text
+                        autoFocus
+                        InputLabelProps={{ shrink: true }}
+                        label="Email Address"
+                        name="email"
+                        placeholder="Write Your Email Address"
+                        variant="standard"
+                    />
+
+                    <FormSubmitButton loadingIndicator="Sending..." title="Send Request" />
                 </Form>
                 <FormReturnLink href={routes.auth.login} />
             </Box>

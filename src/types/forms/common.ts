@@ -1,20 +1,26 @@
-type OAuthProvider = {
+import type { SvgIconTypeMap } from "@mui/material"
+import type { OverridableComponent } from "@mui/material/OverridableComponent"
+
+import FacebookIcon from "@mui/icons-material/Facebook"
+import GoogleIcon from "@mui/icons-material/Google"
+
+export type OAuthProvider = {
+    icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>
     id: "facebook" | "google"
-    logo: string
     name: string
 }
 
-const oAuthProviders = [
-    {
-        id: "google",
-        logo: "/placeholders/logo/google-icon.svg",
-        name: "Google",
-    },
-    {
+const oAuthProviders = {
+    facebook: {
+        icon: FacebookIcon,
         id: "facebook",
-        logo: "/placeholders/logo/facebook.svg",
         name: "Facebook",
-    },
-] satisfies OAuthProvider[]
+    } satisfies OAuthProvider,
+    google: {
+        icon: GoogleIcon,
+        id: "google",
+        name: "Google",
+    } satisfies OAuthProvider,
+}
 
 export default oAuthProviders

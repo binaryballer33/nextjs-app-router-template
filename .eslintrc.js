@@ -137,7 +137,7 @@ module.exports = {
                         ["react"]: ["react", "react/**"],
                         ["custom-react"]: "react-*",
                         ["custom-mui-icons"]: "@mui/icons-material/**",
-                        ["custom-mui"]: "@mui/**",
+                        ["custom-mui"]: ["@mui/**", "@mui/lab"],
                         ["custom-auth"]: ["@auth*", "next-auth/react", "src/auth/**"],
                         ["custom-utils"]: "src/utils/**",
                         ["custom-actions"]: "src/actions/**",

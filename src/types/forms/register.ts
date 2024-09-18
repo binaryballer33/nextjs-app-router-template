@@ -1,18 +1,12 @@
 import { z as zod } from "zod"
 
-export type OAuthProvider = {
-    id: "facebook" | "google"
-    logo: string
-    name: string
-}
-
 export const RegisterRequestSchema = zod
     .object({
-        confirmPassword: zod.string().min(6, { message: "Password should be at least 6 characters" }),
-        email: zod.string().min(1, { message: "Email is required" }).email(),
-        firstName: zod.string().min(1, { message: "First name is required" }),
-        lastName: zod.string().min(1, { message: "Last name is required" }),
-        password: zod.string().min(6, { message: "Password should be at least 6 characters" }),
+        confirmPassword: zod.string().min(6, { message: "Password Should Be At Least 6 Characters" }),
+        email: zod.string().min(1, { message: "Email Is Required" }).email(),
+        firstName: zod.string().min(1, { message: "First Name Is Required" }),
+        lastName: zod.string().min(1, { message: "Last Name Is Required" }),
+        password: zod.string().min(6, { message: "Password Should Be At Least 6 Characters" }),
     })
     .refine((data) => data.password === data.confirmPassword, {
         // Add a custom validation rule to ensure the password and confirmPassword fields match

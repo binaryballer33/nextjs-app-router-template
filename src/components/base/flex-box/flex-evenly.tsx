@@ -1,10 +1,24 @@
 import type { BoxProps } from "@mui/material/Box"
+import type { ReactNode } from "react"
 
 import Box from "@mui/material/Box"
 
-export default function FlexEvenly({ children, ...props }: BoxProps) {
+type FlexEvenlyProps = {
+    children: ReactNode
+    stackOnMobile?: boolean
+} & BoxProps
+
+export default function FlexEvenly(props: FlexEvenlyProps) {
+    const { children, stackOnMobile, ...restOfProps } = props
+
     return (
-        <Box alignItems="center" display="flex" justifyContent="space-evenly" {...props}>
+        <Box
+            alignItems="center"
+            display="flex"
+            flexDirection={stackOnMobile ? { sm: "row", xs: "column" } : "row"}
+            justifyContent="space-evenly"
+            {...restOfProps}
+        >
             {children}
         </Box>
     )

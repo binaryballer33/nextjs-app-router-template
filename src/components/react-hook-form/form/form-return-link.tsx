@@ -27,6 +27,7 @@ export default function FormReturnLink({ href, icon, label, sx, ...other }: Form
                 mx: "auto",
                 ...sx,
             }}
+            underline="hover"
             variant="subtitle2"
             {...other}
         >
