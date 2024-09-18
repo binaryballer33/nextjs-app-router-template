@@ -14,6 +14,8 @@ import { useTranslation } from "react-i18next"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 
+import LoginIcon from "@mui/icons-material/Login"
+
 import { Container } from "@mui/material"
 
 import handleAuthResponse from "src/utils/helper-functions/handleServerResponse"
@@ -68,7 +70,11 @@ export default function LoginView() {
     return (
         <Form methods={methods} onSubmit={handleSubmitHookForm(handleSubmit)}>
             <FullScreenCenteredContainer minHeight="80dvh">
-                <FormHead description="Access Your Account And Continue Your Journey" title="Sign In" />
+                <FormHead
+                    description="Access Your Account And Continue Your Journey"
+                    icon={<LoginIcon sx={{ color: "primary.main", fontSize: 80 }} />}
+                    title="Sign In"
+                />
 
                 <Container maxWidth="sm">
                     <FlexBox gap={2} stackOnMobile>

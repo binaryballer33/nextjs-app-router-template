@@ -35,10 +35,7 @@ export default function ResetPasswordView() {
         resolver: zodResolver(ResetPasswordSchema),
     })
 
-    const {
-        formState: { isSubmitting },
-        handleSubmit,
-    } = methods
+    const { handleSubmit } = methods
 
     const onSubmit = handleSubmit(async (data) => {
         try {

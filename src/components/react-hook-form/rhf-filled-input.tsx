@@ -53,7 +53,7 @@ export default function RHFFilledInput(props: Props) {
 
                     <FilledInput
                         {...field}
-                        autoComplete={name}
+                        autoComplete={label}
                         endAdornment={
                             // only show clear icon if text-field is not empty
                             watch(name) !== "" && (
@@ -71,9 +71,6 @@ export default function RHFFilledInput(props: Props) {
                         fullWidth
                         hiddenLabel
                         id={`${name}-input`}
-                        inputProps={{
-                            autoComplete: "off",
-                        }}
                         onChange={(event) => {
                             if (type === "number") {
                                 field.onChange(Number(event.target.value))
