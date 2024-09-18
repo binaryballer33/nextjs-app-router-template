@@ -4,7 +4,6 @@ import RHFAutocomplete from "./rhf-autocomplete"
 import RHFCheckbox, { RHFMultiCheckbox } from "./rhf-checkbox"
 import RHFCode from "./rhf-code"
 import RHFCountrySelect from "./rhf-country-select"
-import RHFDatePicker, { RHFMobileDateTimePicker } from "./rhf-date-picker"
 import RHFPhoneInput from "./rhf-phone-input"
 import RHFRadioGroup from "./rhf-radio-group"
 import RHFRating from "./rhf-rating"
@@ -18,9 +17,7 @@ const Field = {
     Checkbox: RHFCheckbox,
     Code: RHFCode,
     CountrySelect: RHFCountrySelect,
-    DatePicker: RHFDatePicker,
     FilledInput: RHFFilledInput,
-    MobileDateTimePicker: RHFMobileDateTimePicker,
     MultiCheckbox: RHFMultiCheckbox,
     MultiSelect: RHFMultiSelect,
     MultiSwitch: RHFMultiSwitch,
@@ -31,6 +28,8 @@ const Field = {
     Slider: RHFSlider,
     Switch: RHFSwitch,
     Text: RHFTextField,
+    // MobileDateTimePicker: RHFMobileDateTimePicker,
+    // DatePicker: RHFDatePicker,
     // Editor: RHFEditor,
     // Upload: RHFUpload,
     // UploadBox: RHFUploadBox,

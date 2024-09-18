@@ -20,26 +20,26 @@ export const appMetadata: AppMetadata = {
     },
     login: {
         description: "User Login Page For The App",
-        title: `Login Form - ${APP_NAME}`,
+        title: `Login | ${APP_NAME}`,
     },
     register: {
         description: "User Account Registration Page For The App",
-        title: `Register Form - ${APP_NAME}`,
+        title: `Register | ${APP_NAME}`,
     },
     resetPassword: {
-        description: "User Reset Password Page For The App",
-        title: `Reset Password Form - ${APP_NAME}`,
+        description: "User Forgot Password Page For The App",
+        title: `Forgot Password | ${APP_NAME}`,
     },
     signOut: {
         description: "User Sign Out Page For The App",
-        title: `Sign Out - ${APP_NAME}`,
+        title: `Sign Out | ${APP_NAME}`,
     },
     userProfile: {
         description: "User Profile Page For The App",
-        title: `User Profile - ${APP_NAME}`,
+        title: `User Profile | ${APP_NAME}`,
     },
     verifyEmail: {
         description: "User Verify Email Page For The App",
-        title: `Verify Email Form - ${APP_NAME}`,
+        title: `Verify Email | ${APP_NAME}`,
     },
 }

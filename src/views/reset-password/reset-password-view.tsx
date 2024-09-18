@@ -1,37 +1,32 @@
 "use client"
 
+import type { ResetPassword } from "src/types/forms/reset-password"
+
+import { defaultValuesResetPassword, ResetPasswordSchema } from "src/types/forms/reset-password"
+
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z as zod } from "zod"
 
 import LockIcon from "@mui/icons-material/Lock"
 
-import Box from "@mui/material/Box"
+import { Container } from "@mui/material"
 
 import FullScreenCenteredContainer from "src/components/base/flex-box/full-height-width-centered-container"
-import Field from "src/components/react-hook-form/fields"
 import Form from "src/components/react-hook-form/form-provider"
 import FormHead from "src/components/react-hook-form/form/form-head"
 import FormReturnLink from "src/components/react-hook-form/form/form-return-link"
 import FormSubmitButton from "src/components/react-hook-form/form/form-submit-button"
+import AuthFormInput from "src/components/react-hook-form/rhf-filled-input-custom"
 
 import routes from "src/routes/routes"
 
-export type ResetPasswordSchemaType = zod.infer<typeof ResetPasswordSchema>
-
-export const ResetPasswordSchema = zod.object({
-    email: zod
-        .string()
-        .min(1, { message: "Email is required!" })
-        .email({ message: "Email must be a valid email address!" }),
-})
-
 export default function ResetPasswordView() {
-    const defaultValues = { email: "" }
+    const { t } = useTranslation()
 
-    const methods = useForm<ResetPasswordSchemaType>({
-        defaultValues,
+    const methods = useForm<ResetPassword>({
+        defaultValues: defaultValuesResetPassword,
         resolver: zodResolver(ResetPasswordSchema),
     })
 
@@ -48,27 +43,18 @@ export default function ResetPasswordView() {
 
     return (
         <FullScreenCenteredContainer minHeight="75dvh">
-            <Box width={{ lg: "40%", md: "60%", sm: "75%", xs: "95%" }}>
+            <Container maxWidth="sm">
                 <Form methods={methods} onSubmit={onSubmit}>
                     <FormHead
-                        description={`Please Enter The Email Address Associated With Your Account And We'll Email You A Link To Reset Your Password.`}
+                        description={t(`Enter The Email Address Associated With Your Account`)}
                         icon={<LockIcon sx={{ color: "primary.main", fontSize: 80 }} />}
-                        title="Forgot Your Password?"
+                        title={t("Forgot Your Password?")}
                     />
-
-                    <Field.Text
-                        autoFocus
-                        InputLabelProps={{ shrink: true }}
-                        label="Email Address"
-                        name="email"
-                        placeholder="Write Your Email Address"
-                        variant="standard"
-                    />
-
-                    <FormSubmitButton loadingIndicator="Sending..." title="Send Request" />
+                    <AuthFormInput inputName="email" label={t("Email Address")} />
+                    <FormSubmitButton loadingIndicator={t("Sending...")} title={t("Send Request")} />
                 </Form>
-                <FormReturnLink href={routes.auth.login} />
-            </Box>
+                <FormReturnLink href={routes.auth.login} title={t("Return To Sign In")} />
+            </Container>
         </FullScreenCenteredContainer>
     )
 }

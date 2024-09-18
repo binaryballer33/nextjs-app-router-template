@@ -10,13 +10,13 @@ import RouterLink from "src/components/base/router-link"
 type FormReturnLinkProps = {
     href: string
     icon?: ReactNode
-    label?: ReactNode
+    title: string
 } & LinkProps
 
-export default function FormReturnLink({ href, icon, label, sx, ...other }: FormReturnLinkProps) {
+export default function FormReturnLink({ href, icon, sx, title, ...other }: FormReturnLinkProps) {
     return (
         <Link
-            color="inherit"
+            color="primary"
             component={RouterLink}
             href={href}
             sx={{
@@ -31,8 +31,8 @@ export default function FormReturnLink({ href, icon, label, sx, ...other }: Form
             variant="subtitle2"
             {...other}
         >
-            {icon || <ArrowBackIosNewIcon width={16} />}
-            {label || "Return To Sign In"}
+            {icon || <ArrowBackIosNewIcon fontSize="small" />}
+            {title}
         </Link>
     )
 }

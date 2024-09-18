@@ -1,5 +1,6 @@
 "use client"
 
+import type { ReactNode } from "react"
 import type { RegisterRequest } from "src/types/forms/register"
 
 import EditIcon from "@mui/icons-material/Edit"
@@ -14,13 +15,14 @@ type AuthFormInputProps = {
     inputName: keyof RegisterRequest
     label: string
     showVisibilityButtons?: boolean
+    startAdornment?: ReactNode
 }
 
 export default function AuthFormInput(props: AuthFormInputProps) {
-    const { inputName, label, showVisibilityButtons = false } = props
+    const { inputName, label, showVisibilityButtons = false, startAdornment = null } = props
 
-    const startAdornment = getStartAdornment(inputName)
-    const placeholder = getPlaceholder(label)
+    const adornment = startAdornment || getStartAdornment(inputName)
+    const placeholder = getPlaceholder(inputName, label)
 
     return (
         <Field.FilledInput
@@ -28,12 +30,11 @@ export default function AuthFormInput(props: AuthFormInputProps) {
             name={inputName}
             placeholder={placeholder}
             showVisibilityButtons={showVisibilityButtons}
-            startAdornment={startAdornment}
+            startAdornment={adornment}
         />
     )
 }
 
-// show email icon for email, key icon for password fields and edit icon for name fields
 function getStartAdornment(inputName: keyof RegisterRequest) {
     switch (inputName) {
         case "email":
@@ -58,7 +59,7 @@ function getStartAdornment(inputName: keyof RegisterRequest) {
     }
 }
 
-function getPlaceholder(label: string) {
-    if (label === "Confirm Password") return "Write Your Password Again"
+function getPlaceholder(inputName: keyof RegisterRequest, label: string) {
+    if (label === "Confirm Password" || inputName === "confirmPassword") return "Write Your Password Again"
     return `Write Your ${label}`
 }
