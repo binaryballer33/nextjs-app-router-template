@@ -35,6 +35,7 @@ export default function ResetPasswordView() {
 
     const onSubmit = handleSubmit(async (data) => {
         try {
+            console.log("RESET PASSWORD", data)
             // const response = await sendVerificationEmail()
         } catch (error) {
             toast.error(`Error Sending Password Reset Email`)

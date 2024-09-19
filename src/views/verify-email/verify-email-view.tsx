@@ -41,13 +41,15 @@ export default function VerifyEmailView() {
 
     const { handleSubmit } = methods
 
-    const onSubmit = handleSubmit(async () => {
+    const onSubmit = handleSubmit(async (data) => {
+        const { email, sixDigitCode } = data
+
         if (!token) {
             toast.error("No Token Found, Try Clicking The Link Again In Your Email, Don't Change The URL")
             return
         }
 
-        const response = await verifyEmailRequest(token)
+        const response = await verifyEmailRequest({ email, sixDigitCode, token })
 
         if (response.status === 200) toast.success(response.success)
         else toast.error(response.error)
@@ -66,7 +68,7 @@ export default function VerifyEmailView() {
                     />
                     <Stack gap={2}>
                         <AuthFormInput inputName="email" label={t("Email Address")} />
-                        <Field.Code name="code" />
+                        <Field.Code name="sixDigitCode" />
                         <FormSubmitButton loadingIndicator={t("Verifying Code...")} title={t("Verify")} />
                     </Stack>
                     <FormResendCode disabled={false} onResendCode={() => {}} value={0} />
