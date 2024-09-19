@@ -71,7 +71,7 @@ export default function LoginView() {
         <Form methods={methods} onSubmit={handleSubmitHookForm(handleSubmit)}>
             <FullScreenCenteredContainer minHeight="80dvh">
                 <FormHead
-                    description="Access Your Account And Continue Your Journey"
+                    description="Login To Your Account For Full Access"
                     icon={<LoginIcon sx={{ color: "primary.main", fontSize: 80 }} />}
                     title="Sign In"
                 />

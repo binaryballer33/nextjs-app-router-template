@@ -14,12 +14,13 @@ import Field from "src/components/react-hook-form/fields"
 type AuthFormInputProps = {
     inputName: keyof RegisterRequest
     label: string
+    padding?: number
     showVisibilityButtons?: boolean
     startAdornment?: ReactNode
 }
 
 export default function AuthFormInput(props: AuthFormInputProps) {
-    const { inputName, label, showVisibilityButtons = false, startAdornment = null } = props
+    const { inputName, label, padding, showVisibilityButtons = false, startAdornment = null } = props
 
     const adornment = startAdornment || getStartAdornment(inputName)
     const placeholder = getPlaceholder(inputName, label)
@@ -28,6 +29,7 @@ export default function AuthFormInput(props: AuthFormInputProps) {
         <Field.FilledInput
             label={label}
             name={inputName}
+            padding={padding || undefined}
             placeholder={placeholder}
             showVisibilityButtons={showVisibilityButtons}
             startAdornment={adornment}

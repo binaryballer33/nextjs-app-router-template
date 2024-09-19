@@ -5,6 +5,7 @@ import type { ResetPassword } from "src/types/forms/reset-password"
 import { defaultValuesResetPassword, ResetPasswordSchema } from "src/types/forms/reset-password"
 
 import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -34,10 +35,10 @@ export default function ResetPasswordView() {
 
     const onSubmit = handleSubmit(async (data) => {
         try {
-            await new Promise((resolve) => setTimeout(resolve, 500))
-            console.info("DATA", data)
+            // const response = await sendVerificationEmail()
         } catch (error) {
-            console.error(error)
+            toast.error(`Error Sending Password Reset Email`)
+            console.error(`Error Sending Password Reset Email: ${error}`)
         }
     })
 

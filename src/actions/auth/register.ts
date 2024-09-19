@@ -10,8 +10,8 @@ import { revalidatePath } from "next/cache"
 import { hash } from "bcryptjs"
 
 import prisma from "src/utils/database/prisma"
-import sendVerificationEmail from "src/utils/emails/send-verification-email"
 
+import sendVerificationEmail from "src/actions/emails/send-verification-email"
 import getUserByEmail from "src/actions/user/get-user-by-email"
 import createVerificationToken from "src/actions/verification-token/createVerificationToken"
 
