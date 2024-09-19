@@ -22,6 +22,7 @@ import handleAuthResponse from "src/utils/helper-functions/handleServerResponse"
 
 import register from "src/actions/auth/register"
 
+import FlexBetween from "src/components/base/flex-box/flex-between"
 import FlexBox from "src/components/base/flex-box/flex-box"
 import FullScreenCenteredContainer from "src/components/base/flex-box/full-height-width-centered-container"
 import Form from "src/components/react-hook-form/form-provider"
@@ -63,13 +64,12 @@ export default function RegisterView() {
     return (
         <Form methods={methods} onSubmit={rhfHandleSubmit(handleSubmit)}>
             <FullScreenCenteredContainer>
-                <FormHead
-                    description={t("Join Our Platform By Creating A New Account For Exclusive Access")}
-                    icon={<AccountCircleIcon sx={{ color: "primary.main", fontSize: 80 }} />}
-                    title={t("Create A New Account")}
-                />
-
                 <Container maxWidth="sm">
+                    <FormHead
+                        description={t("Join Our Platform By Creating A New Account For Exclusive Access")}
+                        icon={<AccountCircleIcon sx={{ color: "primary.main", fontSize: 80 }} />}
+                        title={t("Create A New Account")}
+                    />
                     <FlexBox gap={2} stackOnMobile>
                         <OAuthButton provider={oAuthProviders.google} t={t} />
                         <OAuthButton provider={oAuthProviders.facebook} t={t} />
@@ -88,9 +88,15 @@ export default function RegisterView() {
                     <AuthFormInput inputName="password" label="Password" showVisibilityButtons />
                     <AuthFormInput inputName="confirmPassword" label="Confirm Password" showVisibilityButtons />
 
-                    <ClearFormButton title={t("Clear Form")} />
+                    <FlexBetween stackOnMobile>
+                        <FormLink
+                            linkTitle={t("Sign In Here")}
+                            linkTo={routes.auth.login}
+                            title={t("Already A Member?")}
+                        />
+                        <ClearFormButton title={t("Clear Form")} />
+                    </FlexBetween>
                     <FormSubmitButton loadingIndicator={t("Creating Account...")} title={t("Create Account")} />
-                    <FormLink linkTitle={t("Sign In Here")} linkTo={routes.auth.login} title={t("Already A Member?")} />
                 </Container>
             </FullScreenCenteredContainer>
         </Form>

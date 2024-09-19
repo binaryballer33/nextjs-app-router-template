@@ -23,6 +23,7 @@ import FormHead from "src/components/react-hook-form/form/form-head"
 import FormResendCode from "src/components/react-hook-form/form/form-resend-code"
 import FormReturnLink from "src/components/react-hook-form/form/form-return-link"
 import FormSubmitButton from "src/components/react-hook-form/form/form-submit-button"
+import AuthFormInput from "src/components/react-hook-form/rhf-filled-input-custom"
 
 import routes from "src/routes/routes"
 
@@ -64,11 +65,7 @@ export default function VerifyEmailView() {
                         title={t("Please Check Your Email!")}
                     />
                     <Stack gap={2}>
-                        <Field.FilledInput
-                            label={t("Email Address")}
-                            name={t("email")}
-                            placeholder={t("Write Your Email Address")}
-                        />
+                        <AuthFormInput inputName="email" label={t("Email Address")} />
                         <Field.Code name="code" />
                         <FormSubmitButton loadingIndicator={t("Verifying Code...")} title={t("Verify")} />
                     </Stack>

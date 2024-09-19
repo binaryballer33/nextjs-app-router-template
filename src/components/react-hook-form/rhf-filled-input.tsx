@@ -16,13 +16,14 @@ import FormFieldVisibilityIcon from "src/components/react-hook-form/form/form-fi
 type Props = {
     label: string
     name: string
+    padding?: number
     placeholder?: string
     showVisibilityButtons?: boolean
     startAdornment?: ReactNode
 } & FilledInputProps
 
 export default function RHFFilledInput(props: Props) {
-    const { label, name, placeholder, showVisibilityButtons, startAdornment, type, ...other } = props
+    const { label, name, padding, placeholder, showVisibilityButtons, startAdornment, type, ...other } = props
 
     const { control, setValue, watch } = useFormContext()
     const { handleToggle: isFieldVisibleToggle, value: isFieldVisible } = useBoolean()
@@ -36,12 +37,13 @@ export default function RHFFilledInput(props: Props) {
             render={({ field, fieldState: { error } }) => (
                 <FormControl component="fieldset" fullWidth>
                     <FlexBetween>
-                        {/* Form Input Label And Visibility Button */}
-                        <FormLabel component="legend" id={`${label}-input-label`} sx={{ typography: "body2" }}>
+                        <FormLabel
+                            id={`${label}-input-label`}
+                            sx={{ "&.MuiFormLabel-root": { fontWeight: "bolder" }, typography: "body2" }}
+                        >
                             {label}
                         </FormLabel>
 
-                        {/* Password Field Visibility Button */}
                         {showVisibilityButtons ? (
                             <FormFieldVisibilityIcon
                                 inputName={name}
@@ -81,6 +83,11 @@ export default function RHFFilledInput(props: Props) {
                         placeholder={placeholder || label}
                         required
                         startAdornment={startAdornment || null}
+                        sx={{
+                            "& .MuiFilledInput-input": {
+                                p: padding || 1.5,
+                            },
+                        }}
                         type={inputType}
                         value={type === "number" && field.value === 0 ? "" : field.value}
                         {...other}
