@@ -9,6 +9,7 @@ import getVerificationTokenByEmail from "src/actions/verification-token/get-veri
 
 export default async function createVerificationToken(email: string) {
     const token = randomUUID()
+    const sixDigitCode = Math.floor(100000 + Math.random() * 900000)
     const expires = new Date(new Date().getTime() + 3600 * 1000) // expires in 1 hour
 
     try {
@@ -20,6 +21,7 @@ export default async function createVerificationToken(email: string) {
             data: {
                 email,
                 expires,
+                sixDigitCode,
                 token,
             },
         })

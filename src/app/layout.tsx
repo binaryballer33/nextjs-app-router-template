@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next/"
+import type { Viewport } from "next/"
 import type { ReactNode } from "react"
 
 import { SessionProvider } from "next-auth/react"
@@ -16,11 +16,6 @@ export const viewport: Viewport = {
     colorScheme: "dark",
     initialScale: 1,
     width: "device-width",
-}
-
-export const metadata: Metadata = {
-    description: "Created By Shaquille Rashad Mandy",
-    title: "Starter Next Template",
 }
 
 type LayoutProps = {

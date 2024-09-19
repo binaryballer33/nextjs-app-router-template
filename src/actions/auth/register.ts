@@ -42,7 +42,7 @@ export default async function register(credentials: RegisterRequest): Promise<Au
         if (!verificationToken) return { error: "Error Creating Verification Token", status: 500 }
 
         // send the verification email to the newly created user
-        const verificationEmail = await sendVerificationEmail(verificationToken.email, verificationToken!.token)
+        const verificationEmail = await sendVerificationEmail(verificationToken)
         if (!verificationEmail) return { error: "Error Sending Verification Email", status: 500 }
 
         // remove hashed password from response

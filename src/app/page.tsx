@@ -1,5 +1,7 @@
 import { HydrationBoundary } from "@tanstack/react-query"
 
+import { appMetadata } from "src/utils/config"
+
 import AvatarAccordion from "src/components/accordions/avatar/avatar"
 import Container from "src/components/base/container"
 import PageHeading from "src/components/base/page-heading"
@@ -8,6 +10,8 @@ import FinancialStatus from "src/components/charts-and-graphs/financial-status"
 import CardTabs from "src/components/tabs/users-listing/card-tabs"
 
 import prefetchHomePageDataDehydrateState from "src/app/prefetch-home-page-data" // TODO: add prisma and basic crud operations to the project
+
+export const metadata = appMetadata.homePage
 
 // TODO: add prisma and basic crud operations to the project
 // TODO: improve performance later with tools like chrome dev tool lighthouse, use unlighthouse and chrome extension webvitals

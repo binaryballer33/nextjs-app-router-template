@@ -26,9 +26,11 @@ export default async function login(credentials: LoginRequest): Promise<AuthResp
     // if user email not verified, generate token for user and send verification email
     if (!existingUser.emailVerified) {
         const verificationToken = await createVerificationToken(existingUser.email)
-        await sendVerificationEmail(verificationToken!.email, verificationToken!.token)
+        if (!verificationToken) return { error: "Error Creating Verification Token", status: 500 }
 
-        return { error: "Please Verify Your Email Before Attempting To Login.", status: 400 }
+        await sendVerificationEmail(verificationToken)
+
+        return { error: "New Email Sent. Please Verify Your Email Before Attempting To Login.", status: 400 }
     }
 
     try {

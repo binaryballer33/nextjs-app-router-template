@@ -16,7 +16,7 @@ const APP_NAME = "nextjs-app-router-mui-template"
 export const appMetadata: AppMetadata = {
     homePage: {
         description: "Home Page For The App",
-        title: `${APP_NAME}`,
+        title: `Home | ${APP_NAME}`,
     },
     login: {
         description: "User Login Page For The App",
