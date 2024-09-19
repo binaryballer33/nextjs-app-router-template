@@ -51,8 +51,13 @@ export default function VerifyEmailView() {
 
         const response = await verifyEmailRequest({ email, sixDigitCode, token })
 
-        if (response.status === 200) toast.success(response.success)
-        else toast.error(response.error)
+        if (response.status === 200) {
+            toast.success(response.success)
+
+            setTimeout(() => {
+                window.close()
+            }, 3000)
+        } else toast.error(response.error)
     })
 
     return (
