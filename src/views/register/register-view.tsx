@@ -1,12 +1,9 @@
 "use client"
 
-import type { SubmitHandler } from "react-hook-form"
 import type { RegisterRequest } from "src/types/forms/register"
 
 import oAuthProviders from "src/types/forms/common"
 import { defaultValuesRegisterRequest, RegisterRequestSchema } from "src/types/forms/register"
-
-import { useCallback } from "react"
 
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
@@ -50,19 +47,16 @@ export default function RegisterView() {
         resolver: zodResolver(RegisterRequestSchema),
     })
 
-    const { handleSubmit: rhfHandleSubmit, reset: resetForm } = methods
+    const { handleSubmit, reset: resetForm } = methods
 
-    const handleSubmit: SubmitHandler<RegisterRequest> = useCallback(
-        async (credentials: RegisterRequest): Promise<void> => {
-            resetForm() // Reset the form to clear the inputs
-            const response = await register(credentials)
-            handleAuthResponse({ redirectTo: routes.auth.login, response, toast })
-        },
-        [resetForm],
-    )
+    const onSubmit = handleSubmit(async (data) => {
+        resetForm()
+        const response = await register(data)
+        handleAuthResponse({ redirectTo: routes.auth.login, response, toast })
+    })
 
     return (
-        <Form methods={methods} onSubmit={rhfHandleSubmit(handleSubmit)}>
+        <Form methods={methods} onSubmit={onSubmit}>
             <FullScreenCenteredContainer>
                 <Container maxWidth="sm">
                     <FormHead

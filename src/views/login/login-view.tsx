@@ -1,12 +1,9 @@
 "use client"
 
-import type { SubmitHandler } from "react-hook-form"
 import type { LoginRequest } from "src/types/forms/login"
 
 import oAuthProviders from "src/types/forms/common"
 import { defaultValuesLoginRequest, LoginRequestSchema } from "src/types/forms/login"
-
-import { useCallback } from "react"
 
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
@@ -44,7 +41,6 @@ import routes from "src/routes/routes" /*
 */
 
 export default function LoginView() {
-    // const [isLoading, setIsLoading] = useState<boolean>(false)
     const { t } = useTranslation()
 
     const methods = useForm<LoginRequest>({
@@ -52,23 +48,16 @@ export default function LoginView() {
         resolver: zodResolver(LoginRequestSchema),
     })
 
-    const { handleSubmit: handleSubmitHookForm, reset: resetFormFields } = methods
+    const { handleSubmit, reset: resetForm } = methods
 
-    const handleSubmit: SubmitHandler<LoginRequest> = useCallback(
-        async (credentials: LoginRequest): Promise<void> => {
-            // setIsLoading(true) // Set loading state to true for disabling buttons and changing UI
-            resetFormFields() // Reset the form to clear the inputs
-
-            const response = await login(credentials) // Call the login action to sign in the user with next auth
-            // setIsLoading(false)
-
-            handleAuthResponse({ redirectTo: routes.user.profile, response, toast })
-        },
-        [resetFormFields],
-    )
+    const onSubmit = handleSubmit(async (data): Promise<void> => {
+        resetForm()
+        const response = await login(data)
+        handleAuthResponse({ redirectTo: routes.user.profile, response, toast })
+    })
 
     return (
-        <Form methods={methods} onSubmit={handleSubmitHookForm(handleSubmit)}>
+        <Form methods={methods} onSubmit={onSubmit}>
             <FullScreenCenteredContainer minHeight="80dvh">
                 <FormHead
                     description="Login To Your Account For Full Access"

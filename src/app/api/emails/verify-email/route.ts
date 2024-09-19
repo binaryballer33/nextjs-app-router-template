@@ -5,7 +5,6 @@ import { VerifyEmailSchema } from "src/types/forms/verify-email"
 import { NextResponse } from "next/server"
 
 import verifyEmail from "src/actions/emails/verify-email"
-// eslint-disable-next-line import/prefer-default-export
 
 // eslint-disable-next-line import/prefer-default-export
 export async function POST(request: NextRequest) {
