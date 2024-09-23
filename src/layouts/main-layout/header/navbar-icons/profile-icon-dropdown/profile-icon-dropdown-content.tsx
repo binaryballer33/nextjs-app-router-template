@@ -46,7 +46,7 @@ export default function ProfileIconDropdown(props: ProfileDropdownProps) {
 
     const handleSignOut = useCallback(async (): Promise<void> => {
         const response = await signOut() // sign out the user with next auth
-        handleAuthResponse({ redirectTo: routes.auth.signOut, response, toast })
+        await handleAuthResponse({ redirectTo: routes.auth.signOut, response, toast })
 
         onClose() // close the profile dropdown
     }, [onClose])

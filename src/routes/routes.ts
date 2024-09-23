@@ -29,8 +29,10 @@ const nextAuth = {
 }
 
 const auth = {
+    forgotPassword: "/emails/forgot-password",
     login: "/login",
     register: "/register",
+    resetPassword: "/emails/reset-password",
     signOut: "/sign-out",
     verifyEmail: "/emails/verify-email",
 }
@@ -49,7 +51,7 @@ const publicRoutes = {
     maintenance: "/maintenance",
     payment: "/payment",
     pricing: "/pricing",
-    resetPassword: "/reset-password",
+    resetPassword: "/forgot-password",
 }
 
 const routes = {

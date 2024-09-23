@@ -1,4 +1,4 @@
-import type { Provider } from "next-auth/providers"
+import type { NextAuthConfig } from "next-auth"
 
 import { LoginRequestSchema } from "src/types/forms/login"
 
@@ -16,7 +16,7 @@ import getUserByEmail from "src/actions/user/get-user-by-email"
  * Array of objects that define the authentication providers
  * that you want to use. e.g. google, facebook, credentials, etc.
  */
-const providers: Provider[] = [
+const providers: NextAuthConfig["providers"] = [
     Google({
         /*
          * allows one email account to be linked to multiple accounts
@@ -41,32 +41,32 @@ const providers: Provider[] = [
 
             if (!validatedCredentials.success) {
                 console.error("Request Body Malformed, Invalid Credentials:", validatedCredentials.error.errors)
-                return null
+                throw new CredentialsSignin("Request Body Malformed, Invalid Credentials")
             }
 
             const { email, password } = validatedCredentials.data
 
             // check if the user exists
-            const existingUser = await getUserByEmail(email)
-            if (!existingUser || !existingUser.encryptedPassword) {
+            const existingUserResponse = await getUserByEmail(email)
+            if (!("user" in existingUserResponse) || !existingUserResponse.user.encryptedPassword) {
                 throw new CredentialsSignin("User Doesn't Exist, Or Account Is OAuth")
             }
 
             // don't tell hackers if the email or password is wrong
-            const passwordMatches = await compare(password, existingUser.encryptedPassword)
+            const passwordMatches = await compare(password, existingUserResponse.user.encryptedPassword)
             if (!passwordMatches) throw new CredentialsSignin("User Password Doesn't Match")
 
             // return user object
             return {
-                email: existingUser.email,
-                emailVerified: existingUser.emailVerified!,
-                firstName: existingUser.firstName,
-                id: existingUser.id,
-                image: existingUser.imageUrl,
-                imageUrl: existingUser.imageUrl!,
-                lastName: existingUser.lastName,
-                name: `${existingUser.firstName} ${existingUser.lastName}`,
-                role: existingUser.role,
+                email: existingUserResponse.user.email,
+                emailVerified: existingUserResponse.user.emailVerified!,
+                firstName: existingUserResponse.user.firstName,
+                id: existingUserResponse.user.id,
+                image: existingUserResponse.user.imageUrl,
+                imageUrl: existingUserResponse.user.imageUrl!,
+                lastName: existingUserResponse.user.lastName,
+                name: `${existingUserResponse.user.firstName} ${existingUserResponse.user.lastName}`,
+                role: existingUserResponse.user.role,
             }
         },
 

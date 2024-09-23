@@ -10,11 +10,15 @@ import { useTranslation } from "react-i18next"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import LockIcon from "@mui/icons-material/Lock"
+import LockResetIcon from "@mui/icons-material/LockReset"
 
 import { Container } from "@mui/material"
 
-import FullScreenCenteredContainer from "src/components/base/flex-box/full-height-width-centered-container"
+import handleAuthResponse from "src/utils/helper-functions/handleServerResponse"
+
+import resetUserPassword from "src/actions/auth/reset-user-password"
+
+import FlexCenteredFullScreenContainer from "src/components/base/flex-box/flex-center-full-screen-container"
 import Form from "src/components/react-hook-form/form-provider"
 import FormHead from "src/components/react-hook-form/form/form-head"
 import FormReturnLink from "src/components/react-hook-form/form/form-return-link"
@@ -34,29 +38,29 @@ export default function ResetPasswordView() {
     const { handleSubmit } = methods
 
     const onSubmit = handleSubmit(async (data) => {
-        try {
-            console.log("RESET PASSWORD", data)
-            // const response = await sendVerificationEmail()
-        } catch (error) {
-            toast.error(`Error Sending Password Reset Email`)
-            console.error(`Error Sending Password Reset Email: ${error}`)
-        }
+        const response = await resetUserPassword("mockedEmail")
+        await handleAuthResponse({ response, toast })
     })
 
     return (
-        <FullScreenCenteredContainer minHeight="75dvh">
+        <FlexCenteredFullScreenContainer minHeight="75dvh">
             <Container maxWidth="sm">
                 <Form methods={methods} onSubmit={onSubmit}>
                     <FormHead
-                        description={t(`Enter The Email Address Associated With Your Account`)}
-                        icon={<LockIcon sx={{ color: "primary.main", fontSize: 80 }} />}
-                        title={t("Forgot Your Password?")}
+                        description={t(`Enter New Password Below`)}
+                        icon={<LockResetIcon sx={{ color: "primary.main", fontSize: 80 }} />}
+                        title={t("Reset Your Password")}
                     />
-                    <AuthFormInput inputName="email" label={t("Email Address")} />
-                    <FormSubmitButton loadingIndicator={t("Sending...")} title={t("Send Request")} />
+                    <AuthFormInput inputName="password" label={t("New Password")} showVisibilityButtons />
+                    <AuthFormInput
+                        inputName="confirmPassword"
+                        label={t("Confirm New Password")}
+                        showVisibilityButtons
+                    />
+                    <FormSubmitButton loadingTitle={t("Resetting Password...")} title={t("Reset Password")} />
                 </Form>
-                <FormReturnLink href={routes.auth.login} title={t("Return To Sign In")} />
+                <FormReturnLink href={routes.auth.forgotPassword} title={t("Return To Forgot Password")} />
             </Container>
-        </FullScreenCenteredContainer>
+        </FlexCenteredFullScreenContainer>
     )
 }

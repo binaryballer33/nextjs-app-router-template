@@ -23,7 +23,7 @@ import {
 
 import getYugiohFrameTypeColor from "src/utils/helper-functions/getYuGiOhFrameTypeColor"
 
-import FlexCenter from "src/components/base/flex-box/flex-center"
+import FlexCenterContainer from "src/components/base/flex-box/flex-center-container"
 
 export const CardWrapper = styled(Card)(
     ({ theme }) => `
@@ -156,7 +156,7 @@ export default function GridCard(props: GridCard2Props) {
                         {t("Card #")} <b>{card.id}</b>
                     </Typography>
 
-                    <FlexCenter>
+                    <FlexCenterContainer>
                         {/* Record Price */}
                         <Typography fontWeight={500} variant="h6">
                             ${card.price}
@@ -167,7 +167,7 @@ export default function GridCard(props: GridCard2Props) {
                             onChange={(event) => handleSelectOneRecord(event, card.id.toString())}
                             value={isRecordSelected}
                         />
-                    </FlexCenter>
+                    </FlexCenterContainer>
                 </Box>
             </Box>
         </CardWrapper>

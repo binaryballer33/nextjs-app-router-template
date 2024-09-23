@@ -1,13 +1,15 @@
 import type { toast as reactHotToast } from "react-hot-toast"
-import type { AuthResponse } from "src/types/auth/auth-response"
+import type { ServerResponse } from "src/types/auth/server-response"
+
+import delay from "src/utils/helper-functions/delay"
 
 type HandleAuthResponseParams = {
     redirectTo?: string
-    response: AuthResponse
+    response: ServerResponse
     toast: typeof reactHotToast
 }
 
-export default function handleAuthResponse(params: HandleAuthResponseParams) {
+export default async function handleAuthResponse(params: HandleAuthResponseParams) {
     const { redirectTo, response, toast } = params
 
     switch (response.status) {
@@ -17,14 +19,18 @@ export default function handleAuthResponse(params: HandleAuthResponseParams) {
         case 500: // internal server error
         case 503: // service unavailable
             toast.error(response.error, { duration: 5000 })
-            return
+            break
         case 200: // success
         case 201: // created successfully
             toast.success(response.success)
 
             // TODO: temporary fix for refreshing session
-            // force all components to recognize the change in auth status
-            if (redirectTo) window.location.href = redirectTo
+            // doing the redirect in order to force all components to recognize the change in auth status
+            if (redirectTo) {
+                // the delay allows time for the toast to display before hard refreshing the page and doing the redirect
+                await delay(1500)
+                window.location.href = redirectTo
+            }
             break
         default:
             console.error("Unknown HTTP Status Code From Login")

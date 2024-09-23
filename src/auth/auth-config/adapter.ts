@@ -1,4 +1,5 @@
-import type { Adapter, AdapterUser } from "@auth/core/adapters"
+import type { AdapterUser } from "@auth/core/adapters"
+import type { NextAuthConfig } from "next-auth"
 
 import { PrismaAdapter } from "@auth/prisma-adapter"
 
@@ -10,7 +11,7 @@ import prisma from "src/utils/database/prisma"
  */
 const prismaAdapter = PrismaAdapter(prisma)
 
-const adapter: Adapter = {
+const adapter: NextAuthConfig["adapter"] = {
     ...prismaAdapter,
 
     /*

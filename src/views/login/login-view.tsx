@@ -19,9 +19,9 @@ import handleAuthResponse from "src/utils/helper-functions/handleServerResponse"
 
 import login from "src/actions/auth/login"
 
-import FlexBetween from "src/components/base/flex-box/flex-between"
-import FlexBox from "src/components/base/flex-box/flex-box"
-import FullScreenCenteredContainer from "src/components/base/flex-box/full-height-width-centered-container"
+import FlexBetweenContainer from "src/components/base/flex-box/flex-between-container"
+import FlexCenteredFullScreenContainer from "src/components/base/flex-box/flex-center-full-screen-container"
+import FlexContainer from "src/components/base/flex-box/flex-container"
 import Form from "src/components/react-hook-form/form-provider"
 import FormDivider from "src/components/react-hook-form/form/form-divider"
 import FormHead from "src/components/react-hook-form/form/form-head"
@@ -50,15 +50,16 @@ export default function LoginView() {
 
     const { handleSubmit, reset: resetForm } = methods
 
-    const onSubmit = handleSubmit(async (data): Promise<void> => {
-        resetForm()
+    const onSubmit = handleSubmit(async (data) => {
         const response = await login(data)
-        handleAuthResponse({ redirectTo: routes.user.profile, response, toast })
+        // causes loading button to not display the loading indicator if called before the response is received
+        resetForm()
+        await handleAuthResponse({ redirectTo: routes.user.profile, response, toast })
     })
 
     return (
         <Form methods={methods} onSubmit={onSubmit}>
-            <FullScreenCenteredContainer minHeight="80dvh">
+            <FlexCenteredFullScreenContainer minHeight="80dvh">
                 <FormHead
                     description="Login To Your Account For Full Access"
                     icon={<LoginIcon sx={{ color: "primary.main", fontSize: 80 }} />}
@@ -66,10 +67,10 @@ export default function LoginView() {
                 />
 
                 <Container maxWidth="sm">
-                    <FlexBox gap={2} stackOnMobile>
+                    <FlexContainer stackOnMobile>
                         <OAuthButton provider={oAuthProviders.google} t={t} />
                         <OAuthButton provider={oAuthProviders.facebook} t={t} />
-                    </FlexBox>
+                    </FlexContainer>
                 </Container>
 
                 <FormDivider title={t("Or Sign In With Email Below")} />
@@ -78,14 +79,14 @@ export default function LoginView() {
                     <AuthFormInput inputName="email" label="Email" />
                     <AuthFormInput inputName="password" label="Password" showVisibilityButtons />
 
-                    <FlexBetween>
-                        <FormLink linkTitle={t("Forgot Password?")} linkTo={routes.resetPassword} />
+                    <FlexBetweenContainer>
+                        <FormLink linkTitle={t("Forgot Password?")} linkTo={routes.auth.forgotPassword} />
                         <ClearFormButton title={t("Clear Form")} />
-                    </FlexBetween>
-                    <FormSubmitButton loadingIndicator={t("Signing In...")} title={t("Sign In")} />
+                    </FlexBetweenContainer>
+                    <FormSubmitButton loadingTitle={t("Signing In...")} title={t("Sign In")} />
                     <FormLink linkTitle={t("Sign Up")} linkTo={routes.auth.register} title={t("Not A Member Yet?")} />
                 </Container>
-            </FullScreenCenteredContainer>
+            </FlexCenteredFullScreenContainer>
         </Form>
     )
 }

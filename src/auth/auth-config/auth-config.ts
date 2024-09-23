@@ -1,5 +1,5 @@
-import type { AuthConfig } from "@auth/core"
 import type { LoggerInstance, PagesOptions } from "@auth/core/types"
+import type { NextAuthConfig } from "next-auth"
 
 import adapter from "src/auth/auth-config/adapter"
 import callbacks from "src/auth/auth-config/callbacks"
@@ -10,9 +10,9 @@ import { NODE_ENV } from "src/utils/secrets"
 
 import routes from "src/routes/routes"
 
-const session: AuthConfig["session"] = { strategy: "jwt" }
+const session: NextAuthConfig["session"] = { strategy: "jwt" }
 
-const debug: AuthConfig["debug"] = NODE_ENV === "development"
+const debug: NextAuthConfig["debug"] = NODE_ENV === "development"
 
 const pages: Partial<PagesOptions> = {
     error: routes.error,
@@ -33,7 +33,7 @@ const logger: Partial<LoggerInstance> = {
     },
 }
 
-const authConfig: AuthConfig = {
+const authConfig: NextAuthConfig = {
     adapter, // next auth uses this to perform crud operations on the user and account tables
     callbacks, // allow you to modify the sign-in process, json web token and session object
     debug,

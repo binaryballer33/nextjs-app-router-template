@@ -2,11 +2,11 @@
 
 import { useFormContext } from "react-hook-form"
 
-import LoadingButton from "@mui/lab/LoadingButton"
+import { LoadingButton } from "@mui/lab"
 
 type FormSubmitButtonProps = {
     color?: "error" | "info" | "inherit" | "primary" | "secondary" | "success" | "warning"
-    loadingIndicator: string
+    loadingTitle: string
     size?: "large" | "medium" | "small"
     title: string
     type?: "button" | "reset" | "submit"
@@ -14,7 +14,7 @@ type FormSubmitButtonProps = {
 }
 
 function FormSubmitButton(props: FormSubmitButtonProps) {
-    const { color, loadingIndicator, size, title, type, variant } = props
+    const { color, loadingTitle, size, title, type, variant } = props
 
     const {
         formState: { isSubmitting },
@@ -25,13 +25,13 @@ function FormSubmitButton(props: FormSubmitButtonProps) {
             color={color || "primary"}
             fullWidth
             loading={isSubmitting}
-            loadingIndicator={loadingIndicator}
+            loadingIndicator={loadingTitle}
             size={size || "large"}
             sx={{ my: 1 }}
             type={type || "submit"}
             variant={variant || "contained"}
         >
-            {title}
+            {isSubmitting ? loadingTitle : title}
         </LoadingButton>
     )
 }

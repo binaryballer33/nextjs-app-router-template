@@ -4,13 +4,13 @@ import { useRouter } from "next/navigation"
 
 import { Button, Typography } from "@mui/material"
 
-import FullScreenCenteredContainer from "src/components/base/flex-box/full-height-width-centered-container"
+import FlexCenteredFullScreenContainer from "src/components/base/flex-box/flex-center-full-screen-container"
 
 function Page() {
     const router = useRouter()
 
     return (
-        <FullScreenCenteredContainer>
+        <FlexCenteredFullScreenContainer>
             <Typography>Sorry, something went wrong</Typography>
             <Button onClick={() => router.push("/")} variant="contained">
                 Go back to the home page
@@ -18,7 +18,7 @@ function Page() {
             <Button onClick={() => router.back()} variant="contained">
                 Go back to the previous page
             </Button>
-        </FullScreenCenteredContainer>
+        </FlexCenteredFullScreenContainer>
     )
 }
 

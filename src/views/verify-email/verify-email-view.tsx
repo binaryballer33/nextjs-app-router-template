@@ -16,7 +16,9 @@ import EmailIcon from "@mui/icons-material/Email"
 
 import { Container, Stack } from "@mui/material"
 
-import FullScreenCenteredContainer from "src/components/base/flex-box/full-height-width-centered-container"
+import delayAndCloseTab from "src/utils/helper-functions/delay-and-close-tab"
+
+import FlexCenteredFullScreenContainer from "src/components/base/flex-box/flex-center-full-screen-container"
 import Field from "src/components/react-hook-form/fields"
 import Form from "src/components/react-hook-form/form-provider"
 import FormHead from "src/components/react-hook-form/form/form-head"
@@ -53,16 +55,13 @@ export default function VerifyEmailView() {
 
         if (response.status === 200) {
             toast.success(response.success)
-
-            setTimeout(() => {
-                window.close()
-            }, 3000)
+            await delayAndCloseTab(3000)
         } else toast.error(response.error)
     })
 
     return (
         <Form methods={methods} onSubmit={onSubmit}>
-            <FullScreenCenteredContainer minHeight="80dvh">
+            <FlexCenteredFullScreenContainer minHeight="80dvh">
                 <Container maxWidth="sm">
                     <FormHead
                         description={t(
@@ -74,12 +73,12 @@ export default function VerifyEmailView() {
                     <Stack gap={2}>
                         <AuthFormInput inputName="email" label={t("Email Address")} />
                         <Field.Code name="sixDigitCode" />
-                        <FormSubmitButton loadingIndicator={t("Verifying Code...")} title={t("Verify")} />
+                        <FormSubmitButton loadingTitle={t("Verifying Code...")} title={t("Verify")} />
                     </Stack>
                     <FormResendCode disabled={false} onResendCode={() => {}} value={0} />
                     <FormReturnLink href={routes.auth.login} title={t("Return To Sign In")} />
                 </Container>
-            </FullScreenCenteredContainer>
+            </FlexCenteredFullScreenContainer>
         </Form>
     )
 }

@@ -6,6 +6,7 @@ import StarTwoToneIcon from "@mui/icons-material/StarTwoTone"
 
 import { Box, Card, CardHeader, Divider, Typography } from "@mui/material"
 
+import FlexBetweenContainer from "src/components/base/flex-box/flex-between-container"
 import { AvatarState } from "src/components/base/styles/avatar"
 
 export default function ActivityTotals() {
@@ -59,7 +60,7 @@ export default function ActivityTotals() {
                         </Box>
 
                         {/* Category Totals */}
-                        <Box display="flex" justifyContent="space-between" minWidth={1} pl={1} pt={1}>
+                        <FlexBetweenContainer minWidth={1} pl={1} pt={1}>
                             <Box pr={3}>
                                 <Typography color="text.secondary" fontSize={16} gutterBottom variant="caption">
                                     {t("Total")}
@@ -72,7 +73,7 @@ export default function ActivityTotals() {
                                 </Typography>
                                 <Typography variant="h4">{activityItem.lists}</Typography>
                             </Box>
-                        </Box>
+                        </FlexBetweenContainer>
 
                         <Divider sx={{ minWidth: 1, py: 1 }} />
                     </Box>

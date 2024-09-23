@@ -62,6 +62,7 @@ function getStartAdornment(inputName: keyof RegisterRequest) {
 }
 
 function getPlaceholder(inputName: keyof RegisterRequest, label: string) {
+    if (label === "Confirm New Password") return "Write Your New Password Again"
     if (label === "Confirm Password" || inputName === "confirmPassword") return "Write Your Password Again"
     return `Write Your ${label}`
 }

@@ -1,8 +1,8 @@
-import type { AuthConfig } from "@auth/core"
+import type { NextAuthConfig } from "next-auth"
 
 import updateUserEmailVerification from "src/actions/user/update-user-email-verification"
 
-const events: AuthConfig["events"] = {
+const events: NextAuthConfig["events"] = {
     async linkAccount({ user }) {
         await updateUserEmailVerification(user.id!)
     },

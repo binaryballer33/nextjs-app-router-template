@@ -21,7 +21,7 @@ import {
 
 import getYugiohFrameTypeColor from "src/utils/helper-functions/getYuGiOhFrameTypeColor"
 
-import FlexCenter from "src/components/base/flex-box/flex-center"
+import FlexCenterContainer from "src/components/base/flex-box/flex-center-container"
 
 const TableCellWrapper = styled(TableCell)(
     () => `
@@ -78,14 +78,14 @@ export default function TableRecord(props: TableRowProps) {
 
             {/* Record Card Frame Type Column */}
             <TableCellWrapper>
-                <FlexCenter justifyContent="start">
+                <FlexCenterContainer justifyContent="start">
                     <Chip
                         // TODO: put these colors into your light and dark theme later
                         // color={getYugiohFrameTypeColor(card.frameType)}
                         label={t(record.frameType)}
                         sx={{ bgcolor: getYugiohFrameTypeColor(record.frameType) }}
                     />
-                </FlexCenter>
+                </FlexCenterContainer>
             </TableCellWrapper>
 
             {/* Record Description Column */}

@@ -1,6 +1,9 @@
 import type { Metadata } from "next"
 
+const APP_NAME = "Next MUI Template"
+
 type AppMetadata = {
+    forgotPassword: Metadata
     homePage: Metadata
     login: Metadata
     register: Metadata
@@ -10,10 +13,12 @@ type AppMetadata = {
     verifyEmail: Metadata
 }
 
-const APP_NAME = "nextjs-app-router-mui-template"
-
 // eslint-disable-next-line import/prefer-default-export
 export const appMetadata: AppMetadata = {
+    forgotPassword: {
+        description: "User Forgot Password Page For The App",
+        title: `Forgot Password | ${APP_NAME}`,
+    },
     homePage: {
         description: "Home Page For The App",
         title: `Home | ${APP_NAME}`,
@@ -27,8 +32,8 @@ export const appMetadata: AppMetadata = {
         title: `Register | ${APP_NAME}`,
     },
     resetPassword: {
-        description: "User Forgot Password Page For The App",
-        title: `Forgot Password | ${APP_NAME}`,
+        description: "User Reset Password Page For The App",
+        title: `Reset Password | ${APP_NAME}`,
     },
     signOut: {
         description: "User Sign Out Page For The App",

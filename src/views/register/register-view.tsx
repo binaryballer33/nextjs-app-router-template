@@ -19,9 +19,9 @@ import handleAuthResponse from "src/utils/helper-functions/handleServerResponse"
 
 import register from "src/actions/auth/register"
 
-import FlexBetween from "src/components/base/flex-box/flex-between"
-import FlexBox from "src/components/base/flex-box/flex-box"
-import FullScreenCenteredContainer from "src/components/base/flex-box/full-height-width-centered-container"
+import FlexBetweenContainer from "src/components/base/flex-box/flex-between-container"
+import FlexCenteredFullScreenContainer from "src/components/base/flex-box/flex-center-full-screen-container"
+import FlexContainer from "src/components/base/flex-box/flex-container"
 import Form from "src/components/react-hook-form/form-provider"
 import FormDivider from "src/components/react-hook-form/form/form-divider"
 import FormHead from "src/components/react-hook-form/form/form-head"
@@ -50,49 +50,50 @@ export default function RegisterView() {
     const { handleSubmit, reset: resetForm } = methods
 
     const onSubmit = handleSubmit(async (data) => {
-        resetForm()
         const response = await register(data)
-        handleAuthResponse({ redirectTo: routes.auth.login, response, toast })
+        // causes loading button to not display the loading indicator if called before the response is received
+        resetForm()
+        await handleAuthResponse({ redirectTo: routes.auth.login, response, toast })
     })
 
     return (
         <Form methods={methods} onSubmit={onSubmit}>
-            <FullScreenCenteredContainer>
+            <FlexCenteredFullScreenContainer>
                 <Container maxWidth="sm">
                     <FormHead
                         description={t("Join Our Platform By Creating A New Account For Exclusive Access")}
                         icon={<AccountCircleIcon sx={{ color: "primary.main", fontSize: 80 }} />}
                         title={t("Create A New Account")}
                     />
-                    <FlexBox gap={2} stackOnMobile>
+                    <FlexContainer stackOnMobile>
                         <OAuthButton provider={oAuthProviders.google} t={t} />
                         <OAuthButton provider={oAuthProviders.facebook} t={t} />
-                    </FlexBox>
+                    </FlexContainer>
                 </Container>
 
                 <FormDivider title="Or Register With Email Below" />
 
                 <Container maxWidth="sm">
-                    <FlexBox gap={2} stackOnMobile>
+                    <FlexContainer stackOnMobile>
                         <AuthFormInput inputName="firstName" label="First Name" />
                         <AuthFormInput inputName="lastName" label="Last Name" />
-                    </FlexBox>
+                    </FlexContainer>
 
                     <AuthFormInput inputName="email" label="Email" />
                     <AuthFormInput inputName="password" label="Password" showVisibilityButtons />
                     <AuthFormInput inputName="confirmPassword" label="Confirm Password" showVisibilityButtons />
 
-                    <FlexBetween stackOnMobile>
+                    <FlexBetweenContainer stackOnMobile>
                         <FormLink
                             linkTitle={t("Sign In Here")}
                             linkTo={routes.auth.login}
                             title={t("Already A Member?")}
                         />
                         <ClearFormButton title={t("Clear Form")} />
-                    </FlexBetween>
-                    <FormSubmitButton loadingIndicator={t("Creating Account...")} title={t("Create Account")} />
+                    </FlexBetweenContainer>
+                    <FormSubmitButton loadingTitle={t("Creating Account...")} title={t("Create Account")} />
                 </Container>
-            </FullScreenCenteredContainer>
+            </FlexCenteredFullScreenContainer>
         </Form>
     )
 }

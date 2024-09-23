@@ -13,13 +13,13 @@ export default function ClearFormButton(props: ClearFormProps) {
 
     const {
         formState: { isSubmitting },
-        reset,
+        reset: resetForm,
     } = useFormContext()
 
     return (
         <Button
             disabled={isSubmitting}
-            onClick={() => reset()}
+            onClick={() => resetForm()}
             size="small"
             sx={{ mt: 1, px: 2, textWrap: "nowrap" }}
             variant="outlined"

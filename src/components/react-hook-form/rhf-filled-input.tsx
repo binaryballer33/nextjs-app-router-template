@@ -10,7 +10,7 @@ import FormLabel from "@mui/material/FormLabel"
 
 import { useBoolean } from "src/hooks/use-boolean"
 
-import FlexBetween from "src/components/base/flex-box/flex-between"
+import FlexBetweenContainer from "src/components/base/flex-box/flex-between-container"
 import FormFieldVisibilityIcon from "src/components/react-hook-form/form/form-field-visibility-icon"
 
 type Props = {
@@ -36,7 +36,7 @@ export default function RHFFilledInput(props: Props) {
             name={name}
             render={({ field, fieldState: { error } }) => (
                 <FormControl component="fieldset" fullWidth>
-                    <FlexBetween>
+                    <FlexBetweenContainer>
                         <FormLabel
                             id={`${label}-input-label`}
                             sx={{ "&.MuiFormLabel-root": { fontWeight: "bolder" }, typography: "body2" }}
@@ -51,7 +51,7 @@ export default function RHFFilledInput(props: Props) {
                                 isFieldVisibleToggle={isFieldVisibleToggle}
                             />
                         ) : null}
-                    </FlexBetween>
+                    </FlexBetweenContainer>
 
                     <FilledInput
                         {...field}
@@ -71,7 +71,6 @@ export default function RHFFilledInput(props: Props) {
                         }
                         error={!!error}
                         fullWidth
-                        hiddenLabel
                         id={`${name}-input`}
                         onChange={(event) => {
                             if (type === "number") {

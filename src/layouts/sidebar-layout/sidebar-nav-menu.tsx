@@ -19,6 +19,7 @@ import {
     useMediaQuery,
 } from "@mui/material"
 
+import FlexCenterContainer from "src/components/base/flex-box/flex-center-container"
 import RouterLink from "src/components/base/router-link"
 
 type NavItemProps = {
@@ -137,17 +138,14 @@ function NavItem({ item }: NavItemProps) {
                 {icon && <ListItemIcon>{icon}</ListItemIcon>}
                 <ListItemText disableTypography primary={title} />
                 {subMenu && (
-                    <Box
+                    <FlexCenterContainer
                         sx={{
-                            alignItems: "center",
-                            display: "flex",
-                            justifyContent: "center",
                             transform: open ? "rotate(90deg)" : "rotate(0deg)",
                             transition: (theme) => theme.transitions.create(["transform"]),
                         }}
                     >
                         <KeyboardArrowRightTwoToneIcon fontSize="small" />
-                    </Box>
+                    </FlexCenterContainer>
                 )}
             </ListItemButtonWrapper>
             {subMenu && (

@@ -6,7 +6,7 @@ import { Typography } from "@mui/material"
 
 import useRedirectIfStale from "src/hooks/use-redirect-if-stale"
 
-import FullScreenCenteredContainer from "src/components/base/flex-box/full-height-width-centered-container"
+import FlexCenteredFullScreenContainer from "src/components/base/flex-box/flex-center-full-screen-container"
 import FormLink from "src/components/react-hook-form/form/form-link"
 
 import routes from "src/routes/routes"
@@ -16,10 +16,10 @@ function SignOutView() {
     useRedirectIfStale(routes.auth.login) // redirect if stale on page
 
     return (
-        <FullScreenCenteredContainer minHeight="75dvh">
+        <FlexCenteredFullScreenContainer minHeight="75dvh">
             <Typography variant="body1">{t("You've Been Successfully Signed Out")}</Typography>
             <FormLink linkTitle={t("Go Back To The Home Page")} linkTo={routes.index} />
-        </FullScreenCenteredContainer>
+        </FlexCenteredFullScreenContainer>
     )
 }
 
