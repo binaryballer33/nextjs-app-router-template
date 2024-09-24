@@ -11,7 +11,7 @@ import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone"
 
 import { alpha, Box, Button, Divider, ListItemText, Menu, MenuItem, useTheme } from "@mui/material"
 
-import handleAuthResponse from "src/utils/helper-functions/handleServerResponse"
+import handleServerResponse from "src/utils/helper-functions/handleServerResponse"
 
 import signOut from "src/actions/auth/sign-out"
 
@@ -45,10 +45,9 @@ export default function ProfileIconDropdown(props: ProfileDropdownProps) {
     const { t } = useTranslation()
 
     const handleSignOut = useCallback(async (): Promise<void> => {
-        const response = await signOut() // sign out the user with next auth
-        await handleAuthResponse({ redirectTo: routes.auth.signOut, response, toast })
-
         onClose() // close the profile dropdown
+        const response = await signOut() // sign out the user with next auth
+        await handleServerResponse({ redirectTo: routes.auth.signOut, response, toast })
     }, [onClose])
 
     const handleNavItemClick = (route: string): void => {

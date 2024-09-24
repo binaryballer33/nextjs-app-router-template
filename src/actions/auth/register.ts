@@ -15,18 +15,20 @@ import sendVerificationEmail from "src/actions/emails/send-verification-email"
 import getUserByEmail from "src/actions/user/get-user-by-email"
 import createVerificationToken from "src/actions/verification-token/createVerificationToken"
 
+// TODO: do a zod parse to verify client side data is as expected
 export default async function register(credentials: RegisterRequest): Promise<ServerResponse> {
-    // validate the users credentials from the form using zod, throw error if data sent from front end is invalid
-    const { email, firstName, lastName, password } = RegisterRequestSchema.parse(credentials)
-    const hashedPassword = await hash(password, 10)
-    const placeholderImage = "https://images.unsplash.com/photo-1569511502671-8c1bbf96fc8d?w=320&ah=320"
-
-    // check if the user already exists with that email, if user exists don't try to create the user
-    const userResponse = await getUserByEmail(email)
-    if ("user" in userResponse) return { error: "User Already Exists", status: 500 }
-
-    // TODO: add terms and conditions later
     try {
+        // validate the users credentials from the form using zod, throw error if data sent from front end is invalid
+        const { email, firstName, lastName, password } = RegisterRequestSchema.parse(credentials)
+
+        const hashedPassword = await hash(password, 10)
+        const placeholderImage = "https://images.unsplash.com/photo-1569511502671-8c1bbf96fc8d?w=320&ah=320"
+
+        // check if the user already exists with that email, if user exists don't try to create the user
+        const userResponse = await getUserByEmail(email)
+        if ("user" in userResponse) return { error: "User Already Exists", status: 500 }
+
+        // TODO: add terms and conditions later
         const registeredUser = await prisma.user.create({
             data: {
                 email,
@@ -58,6 +60,6 @@ export default async function register(credentials: RegisterRequest): Promise<Se
         }
     } catch (error) {
         console.error(`Error Registering User: ${error}`)
-        return { error: "Error Registering User And Sending Verification Email", status: 500 }
+        return { error: "Something Went Wrong While Creating Your Account", status: 500 }
     }
 }

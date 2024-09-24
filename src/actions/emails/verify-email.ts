@@ -2,6 +2,9 @@
 
 import type { ServerResponse } from "src/types/auth/server-response"
 
+import { VerifyEmailSchema } from "src/types/forms/verify-email"
+import VerifyIdSchema from "src/types/forms/verify-id"
+
 import prisma from "src/utils/database/prisma"
 
 import getUserByEmail from "src/actions/user/get-user-by-email"
@@ -17,10 +20,13 @@ type VerifyEmailRequest = {
 export default async function verifyEmail(params: VerifyEmailRequest): Promise<ServerResponse> {
     try {
         const { email, sixDigitCode, token } = params
-        const code = parseInt(sixDigitCode, 10)
+        const { email: validatedEmail, sixDigitCode: validatedCode } = VerifyEmailSchema.parse({ email, sixDigitCode })
+        const { id: validatedToken } = VerifyIdSchema.parse({ id: token })
+
+        const code = parseInt(validatedCode, 10)
 
         // check if token is valid
-        const existingTokenResponse = await getVerificationTokenByToken(token)
+        const existingTokenResponse = await getVerificationTokenByToken(validatedToken)
         if (!("token" in existingTokenResponse)) return existingTokenResponse
 
         // check if token has expired
@@ -39,8 +45,12 @@ export default async function verifyEmail(params: VerifyEmailRequest): Promise<S
         }
 
         // if credentials are incorrect, don't tell hackers which credential is actually invalid
-        if (userResponse.user.email !== email) return { error: "Invalid Email, Code, Or Token", status: 403 }
-        if (existingTokenResponse.token.email !== email) return { error: "Invalid Email, Code, Or Token", status: 403 }
+        if (userResponse.user.email !== validatedEmail) return { error: "Invalid Email, Code, Or Token", status: 403 }
+        if (existingTokenResponse.token.email !== validatedEmail)
+            return {
+                error: "Invalid Email, Code, Or Token",
+                status: 403,
+            }
         if (code !== existingTokenResponse.token.sixDigitCode) {
             return {
                 error: "Invalid Email, Code, Or Token",

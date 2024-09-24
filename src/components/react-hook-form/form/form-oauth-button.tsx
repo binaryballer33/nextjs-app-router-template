@@ -37,7 +37,7 @@ export default function OAuthButton(props: OAuthButtonProps) {
 
     const onAuth = useCallback(
         async (oauthProvider: OAuthProvider["id"]): Promise<void> => {
-            await signIn(oauthProvider, { callbackUrl: routes.nextAuth.defaultLoginRedirect })
+            await signIn(oauthProvider, { redirectTo: routes.nextAuth.defaultLoginRedirect })
             if (loginError) toast.error(oauthLoginError)
         },
         [loginError, oauthLoginError],

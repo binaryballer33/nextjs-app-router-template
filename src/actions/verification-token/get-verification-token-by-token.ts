@@ -2,13 +2,17 @@
 
 import type { ServerResponse } from "src/types/auth/server-response"
 
+import VerifyUUIDSchema from "src/types/forms/verify-id"
+
 import prisma from "src/utils/database/prisma"
 
 export default async function getVerificationTokenByToken(token: string): Promise<ServerResponse> {
     try {
+        const { id: validatedToken } = VerifyUUIDSchema.parse({ id: token })
+
         const verificationToken = await prisma.verificationToken.findUnique({
             where: {
-                token,
+                token: validatedToken,
             },
         })
 

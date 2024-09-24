@@ -12,13 +12,7 @@ export default function FlexCenteredFullScreenContainer(props: FlexCenteredFullS
     const { children, minHeight, ...restOfProps } = props
 
     return (
-        <FlexContainer
-            // alignItems="flex-end"
-            flexDirection="column"
-            // justifyContent="space-around"
-            minHeight={minHeight || "100dvh"}
-            {...restOfProps}
-        >
+        <FlexContainer flexDirection="column" minHeight={minHeight || "100dvh"} {...restOfProps}>
             {children}
         </FlexContainer>
     )

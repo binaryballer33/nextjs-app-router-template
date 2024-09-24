@@ -17,10 +17,6 @@ export default function FlexContainer(props: FlexContainerProps) {
     const localAlignItems = flexDirection === "column" || flexDirection === "column-reverse" ? "center" : "initial"
     const localJustifyContent = flexDirection === "row" || flexDirection === "row-reverse" ? "initial" : "center"
 
-    // console.log(`FLEX DIRECTION IN FLEX CONTAINER IS: ${flexDirection}`)
-    // console.log(`JUSTIFY CONTENT IN FLEX CONTAINER IS: ${localJustifyContent}`)
-    // console.log(`ALIGN ITEMS IN FLEX CONTAINER IS: ${localAlignItems}`)
-
     return (
         <Box
             alignItems={alignItems || localAlignItems}

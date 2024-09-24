@@ -2,7 +2,7 @@
 
 import type { ResetPassword } from "src/types/forms/reset-password"
 
-import { defaultValuesResetPassword, ResetPasswordSchema } from "src/types/forms/reset-password"
+import { defaultValuesResetPassword as defaultValues, ResetPasswordSchema } from "src/types/forms/reset-password"
 
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
@@ -30,11 +30,7 @@ import routes from "src/routes/routes"
 export default function ResetPasswordView() {
     const { t } = useTranslation()
 
-    const methods = useForm<ResetPassword>({
-        defaultValues: defaultValuesResetPassword,
-        resolver: zodResolver(ResetPasswordSchema),
-    })
-
+    const methods = useForm<ResetPassword>({ defaultValues, resolver: zodResolver(ResetPasswordSchema) })
     const { handleSubmit } = methods
 
     const onSubmit = handleSubmit(async (data) => {

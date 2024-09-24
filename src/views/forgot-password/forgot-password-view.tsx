@@ -2,7 +2,7 @@
 
 import type { ForgotPassword } from "src/types/forms/forgot-password"
 
-import { defaultValuesForgotPassword, ForgotPasswordSchema } from "src/types/forms/forgot-password"
+import { defaultValuesForgotPassword as defaultValues, ForgotPasswordSchema } from "src/types/forms/forgot-password"
 
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
@@ -14,7 +14,7 @@ import LockIcon from "@mui/icons-material/Lock"
 
 import { Container } from "@mui/material"
 
-import handleAuthResponse from "src/utils/helper-functions/handleServerResponse"
+import handleServerResponse from "src/utils/helper-functions/handleServerResponse"
 
 import forgotPasswordEmail from "src/actions/emails/forgot-password-email"
 
@@ -30,16 +30,12 @@ import routes from "src/routes/routes"
 export default function ForgotPasswordView() {
     const { t } = useTranslation()
 
-    const methods = useForm<ForgotPassword>({
-        defaultValues: defaultValuesForgotPassword,
-        resolver: zodResolver(ForgotPasswordSchema),
-    })
-
+    const methods = useForm<ForgotPassword>({ defaultValues, resolver: zodResolver(ForgotPasswordSchema) })
     const { handleSubmit } = methods
 
     const onSubmit = handleSubmit(async (formData) => {
         const response = await forgotPasswordEmail(formData.email)
-        await handleAuthResponse({ redirectTo: routes.auth.login, response, toast })
+        await handleServerResponse({ redirectTo: routes.auth.login, response, toast })
     })
 
     return (

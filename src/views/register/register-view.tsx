@@ -3,7 +3,7 @@
 import type { RegisterRequest } from "src/types/forms/register"
 
 import oAuthProviders from "src/types/forms/common"
-import { defaultValuesRegisterRequest, RegisterRequestSchema } from "src/types/forms/register"
+import { defaultValuesRegisterRequest as defaultValues, RegisterRequestSchema } from "src/types/forms/register"
 
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
@@ -15,7 +15,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 
 import { Container } from "@mui/material"
 
-import handleAuthResponse from "src/utils/helper-functions/handleServerResponse"
+import handleServerResponse from "src/utils/helper-functions/handleServerResponse"
 
 import register from "src/actions/auth/register"
 
@@ -42,18 +42,14 @@ import routes from "src/routes/routes"
 export default function RegisterView() {
     const { t } = useTranslation()
 
-    const methods = useForm<RegisterRequest>({
-        defaultValues: defaultValuesRegisterRequest,
-        resolver: zodResolver(RegisterRequestSchema),
-    })
-
+    const methods = useForm<RegisterRequest>({ defaultValues, resolver: zodResolver(RegisterRequestSchema) })
     const { handleSubmit, reset: resetForm } = methods
 
-    const onSubmit = handleSubmit(async (data) => {
-        const response = await register(data)
+    const onSubmit = handleSubmit(async (formData) => {
+        const response = await register(formData)
         // causes loading button to not display the loading indicator if called before the response is received
         resetForm()
-        await handleAuthResponse({ redirectTo: routes.auth.login, response, toast })
+        await handleServerResponse({ redirectTo: routes.auth.login, response, toast })
     })
 
     return (

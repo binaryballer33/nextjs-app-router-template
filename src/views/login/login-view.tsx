@@ -3,7 +3,7 @@
 import type { LoginRequest } from "src/types/forms/login"
 
 import oAuthProviders from "src/types/forms/common"
-import { defaultValuesLoginRequest, LoginRequestSchema } from "src/types/forms/login"
+import { defaultValuesLoginRequest as defaultValues, LoginRequestSchema } from "src/types/forms/login"
 
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
@@ -15,7 +15,7 @@ import LoginIcon from "@mui/icons-material/Login"
 
 import { Container } from "@mui/material"
 
-import handleAuthResponse from "src/utils/helper-functions/handleServerResponse"
+import handleServerResponse from "src/utils/helper-functions/handleServerResponse"
 
 import login from "src/actions/auth/login"
 
@@ -43,18 +43,14 @@ import routes from "src/routes/routes" /*
 export default function LoginView() {
     const { t } = useTranslation()
 
-    const methods = useForm<LoginRequest>({
-        defaultValues: defaultValuesLoginRequest,
-        resolver: zodResolver(LoginRequestSchema),
-    })
-
+    const methods = useForm<LoginRequest>({ defaultValues, resolver: zodResolver(LoginRequestSchema) })
     const { handleSubmit, reset: resetForm } = methods
 
-    const onSubmit = handleSubmit(async (data) => {
-        const response = await login(data)
+    const onSubmit = handleSubmit(async (formData) => {
+        const response = await login(formData)
         // causes loading button to not display the loading indicator if called before the response is received
         resetForm()
-        await handleAuthResponse({ redirectTo: routes.user.profile, response, toast })
+        await handleServerResponse({ redirectTo: routes.user.profile, response, toast })
     })
 
     return (

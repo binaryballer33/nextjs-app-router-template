@@ -13,7 +13,7 @@ import routes from "src/routes/routes"
 
 function SignOutView() {
     const { t } = useTranslation()
-    useRedirectIfStale(routes.auth.login) // redirect if stale on page
+    useRedirectIfStale(routes.auth.login, 2000) // redirect if stale on page
 
     return (
         <FlexCenteredFullScreenContainer minHeight="75dvh">
