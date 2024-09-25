@@ -46,27 +46,47 @@ model PasswordResetToken {
   @@unique([email, token])
 }
 
+model TwoFactorToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorConfirmation {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+}
+
 enum Role {
   USER
   ADMIN
 }
 
 model User {
-  id                String       @id @default(uuid())
-  email             String       @unique
-  emailVerified     DateTime?    @map("email_verified")
-  encryptedPassword String? // if you are using oauth to create the user, you will not have a password
-  firstName         String
-  lastName          String
-  name              String?
-  imageUrl          String?
-  image             String
-  createdAt         DateTime     @default(now())
-  updatedAt         DateTime     @updatedAt
-  role              Role         @default(USER)
-  accounts          Account[]
-  savedCards        SavedCards[] // 1:M relation to Card
-  cartItems         CartItem[] // 1:M relation to CartItem
+  id                      String                 @id @default(uuid())
+  email                   String                 @unique
+  emailVerified           DateTime?              @map("email_verified")
+  encryptedPassword       String? // if you are using oauth to create the user, you will not have a password
+  firstName               String
+  lastName                String
+  name                    String?
+  imageUrl                String?
+  image                   String
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+  role                    Role                   @default(USER)
+  accounts                Account[]
+  savedCards              SavedCards[] // 1:M relation to Card
+  cartItems               CartItem[] // 1:M relation to CartItem
+  isTwoFactorEnabled      Boolean                @default(false)
+  twoFactorConfirmation   TwoFactorConfirmation?
+  twoFactorConfirmationId String?
 
   // put these indexes in later to measure the performance and database size difference
   // @@index([id, email, firstName, lastName, createdAt, updatedAt])
