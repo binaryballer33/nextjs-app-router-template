@@ -7,7 +7,7 @@ import { LoginRequestSchema } from "src/types/forms/login"
 
 import { signIn } from "src/auth/auth"
 
-import sendVerificationEmail from "src/actions/emails/send-verification-email"
+import sendAccountVerificationEmail from "src/actions/emails/send-account-verification-email"
 import getUserByEmail from "src/actions/user/get-user-by-email"
 import createVerificationToken from "src/actions/verification-token/create-verification-token"
 
@@ -35,7 +35,7 @@ export default async function login(credentials: LoginRequest): Promise<ServerRe
             if (!("token" in responseVerificationToken)) return responseVerificationToken
 
             // if token was created successfully, send verification email
-            return await sendVerificationEmail(responseVerificationToken.token)
+            return await sendAccountVerificationEmail(responseVerificationToken.token)
         }
 
         // if user exists and email of the user is already verified, log the user in

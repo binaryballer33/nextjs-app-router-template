@@ -11,7 +11,7 @@ import { BACKEND_BASE_URL, RESEND_API_KEY } from "src/utils/secrets"
 
 const resend = new Resend(RESEND_API_KEY)
 
-export default async function resetPasswordEmail(passwordResetToken: PasswordResetToken): Promise<ServerResponse> {
+export default async function sendResetPasswordEmail(passwordResetToken: PasswordResetToken): Promise<ServerResponse> {
     try {
         const { email, sixDigitCode, token } = VerifyTokenSchema.parse(passwordResetToken)
 

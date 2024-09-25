@@ -11,7 +11,7 @@ import { hash } from "bcryptjs"
 
 import prisma from "src/utils/database/prisma"
 
-import sendVerificationEmail from "src/actions/emails/send-verification-email"
+import sendAccountVerificationEmail from "src/actions/emails/send-account-verification-email"
 import getUserByEmail from "src/actions/user/get-user-by-email"
 import createVerificationToken from "src/actions/verification-token/create-verification-token"
 
@@ -46,7 +46,7 @@ export default async function register(credentials: RegisterRequest): Promise<Se
         if (!("token" in tokenResponse)) return tokenResponse
 
         // send the verification email to the newly created user and make sure it was sent
-        const emailResponse = await sendVerificationEmail(tokenResponse.token)
+        const emailResponse = await sendAccountVerificationEmail(tokenResponse.token)
         if (!("success" in emailResponse)) return emailResponse
 
         // remove hashed password from response

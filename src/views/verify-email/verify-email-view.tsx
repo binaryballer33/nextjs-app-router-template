@@ -18,7 +18,7 @@ import { Container, Stack } from "@mui/material"
 
 import handleServerResponse from "src/utils/helper-functions/handleServerResponse"
 
-import verifyEmail from "src/actions/emails/verify-email"
+import verifyAccountEmail from "src/actions/auth/verify-account-email"
 
 import FlexCenteredFullScreenContainer from "src/components/base/flex-box/flex-center-full-screen-container"
 import Field from "src/components/react-hook-form/fields"
@@ -40,7 +40,7 @@ export default function VerifyEmailView() {
     const { handleSubmit } = methods
 
     const onSubmit = handleSubmit(async (formData) => {
-        const response = await verifyEmail({ ...formData, token: token! })
+        const response = await verifyAccountEmail({ ...formData, token: token! })
         await handleServerResponse({ closeTab: true, response, toast })
     })
 

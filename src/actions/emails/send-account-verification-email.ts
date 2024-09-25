@@ -11,7 +11,9 @@ import { BACKEND_BASE_URL, RESEND_API_KEY } from "src/utils/secrets"
 
 const resend = new Resend(RESEND_API_KEY)
 
-export default async function sendVerificationEmail(verificationToken: VerificationToken): Promise<ServerResponse> {
+export default async function sendAccountVerificationEmail(
+    verificationToken: VerificationToken,
+): Promise<ServerResponse> {
     try {
         const { email, sixDigitCode, token } = VerifyTokenSchema.parse(verificationToken)
 

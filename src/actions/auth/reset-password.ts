@@ -66,7 +66,7 @@ export default async function resetPassword(params: ResetPasswordParams): Promis
 
         return {
             status: 200,
-            success: `Successfully Reset Password For User ${userResponse.user.email}`,
+            success: `Successfully Reset Password For ${userResponse.user.email}`,
             token: tokenResponse.token,
         }
     } catch (error) {

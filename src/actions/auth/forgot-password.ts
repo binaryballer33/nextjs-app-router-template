@@ -4,7 +4,7 @@ import type { ServerResponse } from "src/types/auth/server-response"
 
 import VerifyEmailRequestSchema from "src/types/forms/verify-email-request"
 
-import resetPasswordEmail from "src/actions/emails/reset-password-email"
+import sendResetPasswordEmail from "src/actions/emails/send-reset-password-email"
 import createPasswordResetToken from "src/actions/password-reset-token/create-password-reset-token"
 import getUserByEmail from "src/actions/user/get-user-by-email"
 
@@ -20,7 +20,7 @@ export default async function forgotPassword(email: string): Promise<ServerRespo
         const passwordResetTokenResponse = await createPasswordResetToken(userResponse.user.email)
         if (!("token" in passwordResetTokenResponse)) return passwordResetTokenResponse
 
-        return await resetPasswordEmail(passwordResetTokenResponse.token)
+        return await sendResetPasswordEmail(passwordResetTokenResponse.token)
     } catch (error) {
         console.error(`Error Resetting Password For User With Email ${email}:\n${error}`)
         return { error: `Error Resetting Password For User With Email ${email}`, status: 500 }

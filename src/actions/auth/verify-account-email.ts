@@ -16,7 +16,7 @@ type VerifyEmailParams = {
     token: string
 } & VerifyEmail
 
-export default async function verifyEmail(params: VerifyEmailParams): Promise<ServerResponse> {
+export default async function verifyAccountEmail(params: VerifyEmailParams): Promise<ServerResponse> {
     try {
         const { email, sixDigitCode: validatedCode } = VerifyEmailSchema.parse(params)
         const { id: token } = VerifyIdSchema.parse({ id: params.token })
