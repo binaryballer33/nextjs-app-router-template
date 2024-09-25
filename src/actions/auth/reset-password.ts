@@ -10,6 +10,7 @@ import { hash } from "bcryptjs"
 
 import prisma from "src/utils/database/prisma"
 
+import sendResetPasswordConfirmationEmail from "src/actions/emails/send-reset-password-confirmation-email"
 import deletePasswordResetTokenById from "src/actions/password-reset-token/delete-password-reset-token-by-id"
 import getPasswordResetTokenByToken from "src/actions/password-reset-token/get-password-reset-token-by-token"
 import getUserByEmail from "src/actions/user/get-user-by-email"
@@ -63,6 +64,10 @@ export default async function resetPassword(params: ResetPasswordParams): Promis
         // remove the password reset token after resetting the password
         const tokenResponse = await deletePasswordResetTokenById(existingTokenResponse.token.id)
         if (!("token" in tokenResponse)) return tokenResponse
+
+        // email the user stating that their password has been reset
+        const emailResponse = await sendResetPasswordConfirmationEmail(updatedUser.email)
+        if (!("email" in emailResponse)) return emailResponse
 
         return {
             status: 200,

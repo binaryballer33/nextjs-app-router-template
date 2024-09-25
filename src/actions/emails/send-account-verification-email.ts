@@ -7,7 +7,9 @@ import VerifyTokenSchema from "src/types/forms/verify-token"
 
 import { Resend } from "resend"
 
-import { BACKEND_BASE_URL, RESEND_API_KEY } from "src/utils/secrets"
+import { RESEND_API_KEY } from "src/utils/secrets"
+
+import routes, { getFullRoute } from "src/routes/routes"
 
 const resend = new Resend(RESEND_API_KEY)
 
@@ -17,7 +19,7 @@ export default async function sendAccountVerificationEmail(
     try {
         const { email, sixDigitCode, token } = VerifyTokenSchema.parse(verificationToken)
 
-        const confirmationLink = `${BACKEND_BASE_URL}/emails/verify-email?token=${token}`
+        const confirmationLink = getFullRoute(routes.auth.verifyEmail, `token=${token}`)
 
         // TODO: can only send to your email unless you add domain ( implement this later )
         const emailResponse = await resend.emails.send({

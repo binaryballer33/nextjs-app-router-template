@@ -2,7 +2,6 @@ import { BACKEND_BASE_URL } from "src/utils/secrets" // API URLs
 
 // API URLs
 const YU_GI_OH_API_BASE_URL = `${BACKEND_BASE_URL}/api/yu-gi-oh`
-const EMAIL_API_BASE_URL = `${BACKEND_BASE_URL}/api/emails`
 
 const yugiohApi = {
     create: `${YU_GI_OH_API_BASE_URL}/post`,
@@ -11,10 +10,6 @@ const yugiohApi = {
     read: `${YU_GI_OH_API_BASE_URL}/get`, // get all cards
     root: YU_GI_OH_API_BASE_URL,
     update: (cardId: number) => `${YU_GI_OH_API_BASE_URL}/patch/${cardId}`,
-}
-
-const emailApi = {
-    verifyEmail: (tokenId: string) => `${EMAIL_API_BASE_URL}/verify-email?token=${tokenId}`,
 }
 
 const user = {
@@ -60,7 +55,6 @@ const routes = {
 
     // used for making api calls
     api: {
-        email: { ...emailApi },
         yugioh: { ...yugiohApi },
     },
 
@@ -80,3 +74,16 @@ const routes = {
 }
 
 export default routes
+
+/*
+ * Combines backend url with any route you want and can append query params to this full url
+ *
+ * getFullRoute("/emails/reset-password", "token=12345", "code=12345")
+ *
+ * https://example.com/emails/reset-password?token=12345&code=12345
+ */
+export function getFullRoute(route: string, ...queryParams: string[]) {
+    const queryString = queryParams.join("&")
+    const queryParamsNotEmpty = queryParams.length > 0
+    return `${BACKEND_BASE_URL}${route}${queryParamsNotEmpty ? `?${queryString}` : ""}`
+}
