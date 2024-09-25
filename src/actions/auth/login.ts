@@ -9,7 +9,7 @@ import { signIn } from "src/auth/auth"
 
 import sendVerificationEmail from "src/actions/emails/send-verification-email"
 import getUserByEmail from "src/actions/user/get-user-by-email"
-import createVerificationToken from "src/actions/verification-token/createVerificationToken"
+import createVerificationToken from "src/actions/verification-token/create-verification-token"
 
 export default async function login(credentials: LoginRequest): Promise<ServerResponse> {
     try {
@@ -42,7 +42,7 @@ export default async function login(credentials: LoginRequest): Promise<ServerRe
         await signIn("credentials", { email, password, redirect: false })
 
         userResponse.user.encryptedPassword = null
-        return { status: 200, success: "Successfully Logged In", user: userResponse.user }
+        return { status: 200, success: "Login Successful", user: userResponse.user }
     } catch (error) {
         console.error("Next Auth Error Logging In With SignIn Credentials Provider:\n", error)
         return { error: "Invalid Credentials", status: 500 }

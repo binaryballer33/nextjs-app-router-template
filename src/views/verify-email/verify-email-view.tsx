@@ -2,7 +2,7 @@
 
 import type { VerifyEmail } from "src/types/forms/verify-email"
 
-import { defaultValuesVerifyEmail, VerifyEmailSchema } from "src/types/forms/verify-email"
+import { defaultValuesVerifyEmail as defaultValues, VerifyEmailSchema } from "src/types/forms/verify-email"
 
 import { useSearchParams } from "next/navigation"
 
@@ -16,7 +16,9 @@ import EmailIcon from "@mui/icons-material/Email"
 
 import { Container, Stack } from "@mui/material"
 
-import delayAndCloseTab from "src/utils/helper-functions/delay-and-close-tab"
+import handleServerResponse from "src/utils/helper-functions/handleServerResponse"
+
+import verifyEmail from "src/actions/emails/verify-email"
 
 import FlexCenteredFullScreenContainer from "src/components/base/flex-box/flex-center-full-screen-container"
 import Field from "src/components/react-hook-form/fields"
@@ -29,34 +31,17 @@ import AuthFormInput from "src/components/react-hook-form/rhf-filled-input-custo
 
 import routes from "src/routes/routes"
 
-import verifyEmailRequest from "src/api/emails/mutations/verify-email"
-
 export default function VerifyEmailView() {
     const { t } = useTranslation()
     const searchParams = useSearchParams()
     const token = searchParams.get("token")
 
-    const methods = useForm<VerifyEmail>({
-        defaultValues: defaultValuesVerifyEmail,
-        resolver: zodResolver(VerifyEmailSchema),
-    })
-
+    const methods = useForm<VerifyEmail>({ defaultValues, resolver: zodResolver(VerifyEmailSchema) })
     const { handleSubmit } = methods
 
-    const onSubmit = handleSubmit(async (data) => {
-        const { email, sixDigitCode } = data
-
-        if (!token) {
-            toast.error("No Token Found, Try Clicking The Link Again In Your Email, Don't Change The URL")
-            return
-        }
-
-        const response = await verifyEmailRequest({ email, sixDigitCode, token })
-
-        if (response.status === 200) {
-            toast.success(response.success)
-            await delayAndCloseTab(3000)
-        } else toast.error(response.error)
+    const onSubmit = handleSubmit(async (formData) => {
+        const response = await verifyEmail({ ...formData, token: token! })
+        await handleServerResponse({ closeTab: true, response, toast })
     })
 
     return (

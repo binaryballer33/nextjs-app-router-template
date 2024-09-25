@@ -49,7 +49,7 @@ export default function RegisterView() {
         const response = await register(formData)
         // causes loading button to not display the loading indicator if called before the response is received
         resetForm()
-        await handleServerResponse({ redirectTo: routes.auth.login, response, toast })
+        await handleServerResponse({ delay: 3500, redirectTo: routes.auth.login, response, toast })
     })
 
     return (

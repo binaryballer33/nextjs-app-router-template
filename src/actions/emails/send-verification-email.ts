@@ -3,7 +3,7 @@
 import type { VerificationToken } from "@prisma/client"
 import type { ServerResponse } from "src/types/auth/server-response"
 
-import VerificationTokenSchema from "src/types/forms/verify-token"
+import VerifyTokenSchema from "src/types/forms/verify-token"
 
 import { Resend } from "resend"
 
@@ -13,7 +13,7 @@ const resend = new Resend(RESEND_API_KEY)
 
 export default async function sendVerificationEmail(verificationToken: VerificationToken): Promise<ServerResponse> {
     try {
-        const { email, sixDigitCode, token } = VerificationTokenSchema.parse(verificationToken)
+        const { email, sixDigitCode, token } = VerifyTokenSchema.parse(verificationToken)
 
         const confirmationLink = `${BACKEND_BASE_URL}/emails/verify-email?token=${token}`
 
@@ -28,7 +28,7 @@ export default async function sendVerificationEmail(verificationToken: Verificat
 
         return {
             status: 200,
-            success: `Account Not Yet Verified, Successfully Sent Account Verification Email To: ${email}`,
+            success: `Account Not Yet Verified\nSuccessfully Sent Account Verification Email To: ${email}`,
         }
     } catch (error) {
         console.error(`Error Sending Account Verification Email To: ${verificationToken.email}: ${error}`)

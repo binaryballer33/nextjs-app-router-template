@@ -13,7 +13,7 @@ import prisma from "src/utils/database/prisma"
 
 import sendVerificationEmail from "src/actions/emails/send-verification-email"
 import getUserByEmail from "src/actions/user/get-user-by-email"
-import createVerificationToken from "src/actions/verification-token/createVerificationToken"
+import createVerificationToken from "src/actions/verification-token/create-verification-token"
 
 // TODO: do a zod parse to verify client side data is as expected
 export default async function register(credentials: RegisterRequest): Promise<ServerResponse> {
@@ -55,7 +55,7 @@ export default async function register(credentials: RegisterRequest): Promise<Se
 
         return {
             status: 200,
-            success: `Successfully Created Account For User: ${registeredUser.firstName} ${registeredUser.lastName}`,
+            success: `Successfully Created Account\n\nSent Account Verification Email To ${email}`,
             user: registeredUser,
         }
     } catch (error) {

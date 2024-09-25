@@ -16,7 +16,7 @@ import { Container } from "@mui/material"
 
 import handleServerResponse from "src/utils/helper-functions/handleServerResponse"
 
-import forgotPasswordEmail from "src/actions/emails/forgot-password-email"
+import forgotPassword from "src/actions/auth/forgot-password"
 
 import FlexCenteredFullScreenContainer from "src/components/base/flex-box/flex-center-full-screen-container"
 import Form from "src/components/react-hook-form/form-provider"
@@ -34,7 +34,7 @@ export default function ForgotPasswordView() {
     const { handleSubmit } = methods
 
     const onSubmit = handleSubmit(async (formData) => {
-        const response = await forgotPasswordEmail(formData.email)
+        const response = await forgotPassword(formData.email)
         await handleServerResponse({ redirectTo: routes.auth.login, response, toast })
     })
 

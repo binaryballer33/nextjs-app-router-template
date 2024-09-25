@@ -2,7 +2,9 @@ import type { User, VerificationToken } from "@prisma/client"
 
 type StatusSuccess = 200 | 201
 
-type StatusError = 400 | 403 | 404 | 500 | 503
+type StatusClientError = 400 | 403 | 404
+
+type StatusServerError = 500 | 503
 
 type ServerSuccessResponse = {
     status: StatusSuccess
@@ -14,6 +16,13 @@ type ServerUserSuccessResponse = {
     success: string
     user: User
 }
+
+type ServerEmailSuccessResponse = {
+    email: string
+    status: StatusSuccess
+    success: string
+}
+
 type ServerTokenSuccessResponse = {
     status: StatusSuccess
     success: string
@@ -22,10 +31,11 @@ type ServerTokenSuccessResponse = {
 
 type ServerErrorResponse = {
     error: string
-    status: StatusError
+    status: StatusClientError | StatusServerError
 }
 
 export type ServerResponse =
+    | ServerEmailSuccessResponse
     | ServerErrorResponse
     | ServerSuccessResponse
     | ServerTokenSuccessResponse

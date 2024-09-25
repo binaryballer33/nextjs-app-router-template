@@ -180,5 +180,5 @@ async function seedDatabase() {
 }
 
 seedDatabase()
-    .then((_) => console.log("Database Seeded Successfully"))
+    .then((_) => console.log("Successfully Seeded Database"))
     .catch((e) => console.error("Error Seeding Database", e))

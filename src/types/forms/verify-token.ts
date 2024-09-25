@@ -1,6 +1,6 @@
 import { z as zod } from "zod"
 
-const VerificationTokenSchema = zod.object({
+const VerifyTokenSchema = zod.object({
     email: zod
         .string()
         .min(5, { message: "Email Must Be At Least 5 Characters!" })
@@ -14,4 +14,4 @@ const VerificationTokenSchema = zod.object({
     token: zod.string().min(6, { message: "Token Must Be At Least 6 Characters" }),
 })
 
-export default VerificationTokenSchema
+export default VerifyTokenSchema

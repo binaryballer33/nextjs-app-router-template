@@ -63,7 +63,7 @@ export default function MyCardsSelect() {
     }
 
     const handleDelete = () => {
-        toast.success("The card has been removed successfully!")
+        toast.success("Card Has Been Removed Successfully")
     }
 
     return (

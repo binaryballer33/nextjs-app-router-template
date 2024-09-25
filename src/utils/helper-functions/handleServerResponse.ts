@@ -6,13 +6,15 @@ import delayAndCloseTab from "src/utils/helper-functions/delay-and-close-tab"
 
 type HandleServerResponseParams = {
     closeTab?: boolean
+    delay?: number
     redirectTo?: string
     response: ServerResponse
     toast: typeof reactHotToast
 }
 
 export default async function handleServerResponse(params: HandleServerResponseParams) {
-    const { closeTab, redirectTo, response, toast } = params
+    const { closeTab, delay: propsDelay, redirectTo, response, toast } = params
+    const delayInMilliseconds = propsDelay || 2000
 
     switch (response.status) {
         case 400: // error
@@ -30,13 +32,11 @@ export default async function handleServerResponse(params: HandleServerResponseP
             // doing the redirect in order to force all components to recognize the change in auth status
             if (redirectTo) {
                 // the delay allows time for the toast to display before hard refreshing the page and doing the redirect
-                await delay(2000)
+                await delay(delayInMilliseconds)
                 window.location.href = redirectTo
             }
 
-            if (closeTab) {
-                delayAndCloseTab(2000)
-            }
+            if (closeTab) delayAndCloseTab(delayInMilliseconds)
 
             break
         default:

@@ -1,6 +1,7 @@
 "use server"
 
 import type { ServerResponse } from "src/types/auth/server-response"
+import type { VerifyEmail } from "src/types/forms/verify-email"
 
 import { VerifyEmailSchema } from "src/types/forms/verify-email"
 import VerifyIdSchema from "src/types/forms/verify-id"
@@ -11,29 +12,24 @@ import getUserByEmail from "src/actions/user/get-user-by-email"
 import deleteVerificationTokenById from "src/actions/verification-token/delete-verification-token-by-id"
 import getVerificationTokenByToken from "src/actions/verification-token/get-verification-token-by-token"
 
-type VerifyEmailRequest = {
-    email: string
-    sixDigitCode: string
+type VerifyEmailParams = {
     token: string
-}
+} & VerifyEmail
 
-export default async function verifyEmail(params: VerifyEmailRequest): Promise<ServerResponse> {
+export default async function verifyEmail(params: VerifyEmailParams): Promise<ServerResponse> {
     try {
-        const { email, sixDigitCode, token } = params
-        const { email: validatedEmail, sixDigitCode: validatedCode } = VerifyEmailSchema.parse({ email, sixDigitCode })
-        const { id: validatedToken } = VerifyIdSchema.parse({ id: token })
+        const { email, sixDigitCode: validatedCode } = VerifyEmailSchema.parse(params)
+        const { id: token } = VerifyIdSchema.parse({ id: params.token })
 
-        const code = parseInt(validatedCode, 10)
-
-        // check if token is valid
-        const existingTokenResponse = await getVerificationTokenByToken(validatedToken)
+        // check if the token is valid
+        const existingTokenResponse = await getVerificationTokenByToken(token)
         if (!("token" in existingTokenResponse)) return existingTokenResponse
 
-        // check if token has expired
+        // check if the token has expired
         const hasExpired = new Date(existingTokenResponse.token.expires) < new Date()
-        if (hasExpired) return { error: "Token Has Expired, Create A New Token", status: 403 }
+        if (hasExpired) return { error: "Account Verification Token Has Expired, Create A New Token", status: 403 }
 
-        // check if user exists and that the user is not already verified and that the token is for the correct user
+        // check if the user exists and that the user is not already verified and that the token is for the correct user
         const userResponse = await getUserByEmail(existingTokenResponse.token.email)
         if (!("user" in userResponse)) return userResponse
         if (userResponse.user.emailVerified) return { error: "Email Already Verified", status: 400 }
@@ -45,15 +41,17 @@ export default async function verifyEmail(params: VerifyEmailRequest): Promise<S
         }
 
         // if credentials are incorrect, don't tell hackers which credential is actually invalid
-        if (userResponse.user.email !== validatedEmail) return { error: "Invalid Email, Code, Or Token", status: 403 }
-        if (existingTokenResponse.token.email !== validatedEmail)
+        if (userResponse.user.email !== email) return { error: "Invalid Email, Code, And/Or Token", status: 403 }
+        if (existingTokenResponse.token.email !== email)
             return {
-                error: "Invalid Email, Code, Or Token",
+                error: "Invalid Email, Code, And/Or Token",
                 status: 403,
             }
-        if (code !== existingTokenResponse.token.sixDigitCode) {
+
+        const sixDigitCode = parseInt(validatedCode, 10)
+        if (sixDigitCode !== existingTokenResponse.token.sixDigitCode) {
             return {
-                error: "Invalid Email, Code, Or Token",
+                error: "Invalid Email, Code, And/Or Token",
                 status: 403,
             }
         }
@@ -72,7 +70,7 @@ export default async function verifyEmail(params: VerifyEmailRequest): Promise<S
         const tokenResponse = await deleteVerificationTokenById(existingTokenResponse.token.id)
         if (!("token" in tokenResponse)) return tokenResponse
 
-        return { status: 200, success: "Email Verified Successfully", token: tokenResponse.token }
+        return { status: 200, success: "Successfully Verified Email", token: tokenResponse.token }
     } catch (error) {
         console.error(`Something Went Wrong While Verifying Email: ${error}`)
         return { error: "Something Went Wrong While Verifying Email", status: 500 }
