@@ -1,4 +1,4 @@
-import type { User, VerificationToken } from "@prisma/client"
+import type { TwoFactorConfirmation, User, VerificationToken } from "@prisma/client"
 
 type StatusSuccess = 200 | 201
 
@@ -11,32 +11,31 @@ type ServerSuccessResponse = {
     success: string
 }
 
-type ServerUserSuccessResponse = {
-    status: StatusSuccess
-    success: string
-    user: User
-}
-
-type ServerEmailSuccessResponse = {
-    email: string
-    status: StatusSuccess
-    success: string
-}
-
-type ServerTokenSuccessResponse = {
-    status: StatusSuccess
-    success: string
-    token: VerificationToken
-}
-
 type ServerErrorResponse = {
     error: string
     status: StatusClientError | StatusServerError
 }
+
+type ServerUserSuccessResponse = {
+    user: User
+} & ServerSuccessResponse
+
+type ServerEmailSuccessResponse = {
+    email: string
+} & ServerSuccessResponse
+
+type ServerTokenSuccessResponse = {
+    token: VerificationToken
+} & ServerSuccessResponse
+
+type ServerTwoFactorConfirmationSuccessResponse = {
+    confirmation: TwoFactorConfirmation
+} & ServerSuccessResponse
 
 export type ServerResponse =
     | ServerEmailSuccessResponse
     | ServerErrorResponse
     | ServerSuccessResponse
     | ServerTokenSuccessResponse
+    | ServerTwoFactorConfirmationSuccessResponse
     | ServerUserSuccessResponse

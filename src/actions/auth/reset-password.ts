@@ -10,9 +10,9 @@ import { hash } from "bcryptjs"
 
 import prisma from "src/utils/database/prisma"
 
+import deletePasswordResetTokenById from "src/actions/auth/tokens/password-reset-token/delete-password-reset-token-by-id"
+import getPasswordResetTokenByToken from "src/actions/auth/tokens/password-reset-token/get-password-reset-token-by-token"
 import sendResetPasswordConfirmationEmail from "src/actions/emails/send-reset-password-confirmation-email"
-import deletePasswordResetTokenById from "src/actions/password-reset-token/delete-password-reset-token-by-id"
-import getPasswordResetTokenByToken from "src/actions/password-reset-token/get-password-reset-token-by-token"
 import getUserByEmail from "src/actions/user/get-user-by-email"
 
 type ResetPasswordParams = {

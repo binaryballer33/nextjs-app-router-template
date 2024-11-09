@@ -1,7 +1,7 @@
 import type { SavedItemWithoutId } from "src/types/saved-item"
 import type { YuGiOhCard } from "src/types/yu-gi-oh/yu-gi-oh"
 
-import { randomUUID } from "crypto"
+import { randomInt, randomUUID } from "crypto"
 import fs from "fs"
 
 import { Prisma } from "@prisma/client"
@@ -104,7 +104,7 @@ async function createRandomSavedCards(userId: string, amountOfRandomSavedCards =
     const randomCards: SavedItemWithoutId[] = Array(amountOfRandomSavedCards)
         .fill({})
         .map(() => {
-            const randomCard = cards[Math.floor(Math.random() * cards.length)]
+            const randomCard = cards[randomInt(cards.length)]
 
             return {
                 userId,
@@ -129,9 +129,9 @@ async function createRandomCartItems(userId: string, amountOfRandomCartItems: nu
     const randomCards: CartItemUncheckedCreateInput[] = Array(amountOfRandomCartItems)
         .fill({})
         .map(() => {
-            const randomCard = cards[Math.floor(Math.random() * cards.length)]
+            const randomCard = cards[randomInt(cards.length)]
             const { frameType, id, name, price } = randomCard
-            const randomQuantity = Math.floor(Math.random() * 10.0)
+            const randomQuantity = randomInt(1, 10) / 10.0
 
             return {
                 desc: frameType,

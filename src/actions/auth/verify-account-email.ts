@@ -8,9 +8,9 @@ import VerifyIdSchema from "src/types/forms/verify-id"
 
 import prisma from "src/utils/database/prisma"
 
+import deleteVerificationTokenById from "src/actions/auth/tokens/verification-token/delete-verification-token-by-id"
+import getVerificationTokenByToken from "src/actions/auth/tokens/verification-token/get-verification-token-by-token"
 import getUserByEmail from "src/actions/user/get-user-by-email"
-import deleteVerificationTokenById from "src/actions/verification-token/delete-verification-token-by-id"
-import getVerificationTokenByToken from "src/actions/verification-token/get-verification-token-by-token"
 
 type VerifyEmailParams = {
     token: string

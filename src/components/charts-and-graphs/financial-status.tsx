@@ -301,8 +301,8 @@ function FinancialStatus() {
                             }}
                             xAxis={[
                                 {
-                                    barGapRatio: 0.3,
                                     // @ts-ignore
+                                    barGapRatio: 0.3,
                                     categoryGapRatio: 0.4,
                                     data: xLabels,
                                     scaleType: "band",

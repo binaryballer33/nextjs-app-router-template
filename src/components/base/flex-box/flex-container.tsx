@@ -6,22 +6,24 @@ import Box from "@mui/material/Box"
 export type FlexContainerProps = {
     children: ReactNode
     flexDirection?: BoxProps["flexDirection"]
-    stackOnMobile?: boolean
+    stackOn?: "desktop" | "mobile" | "tablet"
 } & BoxProps
 
-// TODO: make this replace all the functionality from container, like margin and padding and width
 export default function FlexContainer(props: FlexContainerProps) {
-    const { alignItems, children, flexDirection = "row", justifyContent, stackOnMobile, ...restOfProps } = props
+    const { alignItems, children, flexDirection = "row", justifyContent, stackOn, ...restOfProps } = props
 
     // Y-Axis should be centered by default, but X-Axis should be modified manually
     const localAlignItems = flexDirection === "column" || flexDirection === "column-reverse" ? "center" : "initial"
     const localJustifyContent = flexDirection === "row" || flexDirection === "row-reverse" ? "initial" : "center"
 
+    // allow you to customize when the elements should be stacked
+    const responsiveFlexDirection = stackOn ? getStackPreference(stackOn) : flexDirection
+
     return (
         <Box
             alignItems={alignItems || localAlignItems}
             display="flex"
-            flexDirection={stackOnMobile ? { sm: "row", xs: "column" } : flexDirection}
+            flexDirection={responsiveFlexDirection as BoxProps["flexDirection"]}
             gap={2}
             justifyContent={justifyContent || localJustifyContent}
             my={1}
@@ -30,4 +32,16 @@ export default function FlexContainer(props: FlexContainerProps) {
             {children}
         </Box>
     )
+}
+
+const getStackPreference = (stackOn: FlexContainerProps["stackOn"]) => {
+    const stackPreferences = {
+        desktop: { lg: "row", xs: "column" },
+        mobile: { sm: "row", xs: "column" },
+        tablet: { md: "row", xs: "column" },
+    }
+
+    // if the stackOn prop is not provided, return the default stack preference
+    if (!stackOn) return null
+    return stackPreferences[stackOn]
 }

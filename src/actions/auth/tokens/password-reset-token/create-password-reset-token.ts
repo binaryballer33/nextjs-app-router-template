@@ -2,17 +2,17 @@
 
 import type { ServerResponse } from "src/types/auth/server-response"
 
-import { randomUUID } from "crypto"
+import { randomInt, randomUUID } from "crypto"
 
 import prisma from "src/utils/database/prisma"
 
-import deletePasswordResetTokenById from "src/actions/password-reset-token/delete-password-reset-token-by-id"
-import getPasswordResetTokenByEmail from "src/actions/password-reset-token/get-password-reset-token-by-email"
+import deletePasswordResetTokenById from "src/actions/auth/tokens/password-reset-token/delete-password-reset-token-by-id"
+import getPasswordResetTokenByEmail from "src/actions/auth/tokens/password-reset-token/get-password-reset-token-by-email"
 
 export default async function createPasswordResetToken(email: string): Promise<ServerResponse> {
     const token = randomUUID()
-    const sixDigitCode = Math.floor(100000 + Math.random() * 900000)
-    const expires = new Date(new Date().getTime() + 3600 * 1000) // expires in 1 hour
+    const sixDigitCode = randomInt(100_000, 1_000_000)
+    const expires = new Date(new Date().getTime() + 15 * 60 * 1000) // expires in 1 hour
 
     try {
         // if a token exists for the email, delete it so we can create a new one

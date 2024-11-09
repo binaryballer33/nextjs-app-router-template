@@ -35,7 +35,6 @@ import routes from "src/routes/routes"
 
 /*
   TODO: there's a mui warning in the chrome dev tools, figure out how to fix it later,
-  TODO: figure out why isSubmitting doesn't work for me
   it doesn't affect the functionality of the app
   You can duplicate the error by toggling the password visibility icon in the register or login form
 */
@@ -61,7 +60,7 @@ export default function RegisterView() {
                         icon={<AccountCircleIcon sx={{ color: "primary.main", fontSize: 80 }} />}
                         title={t("Create A New Account")}
                     />
-                    <FlexContainer stackOnMobile>
+                    <FlexContainer stackOn="mobile">
                         <OAuthButton provider={oAuthProviders.google} t={t} />
                         <OAuthButton provider={oAuthProviders.facebook} t={t} />
                     </FlexContainer>
@@ -70,7 +69,7 @@ export default function RegisterView() {
                 <FormDivider title="Or Register With Email Below" />
 
                 <Container maxWidth="sm">
-                    <FlexContainer stackOnMobile>
+                    <FlexContainer stackOn="mobile">
                         <AuthFormInput inputName="firstName" label="First Name" />
                         <AuthFormInput inputName="lastName" label="Last Name" />
                     </FlexContainer>
@@ -79,7 +78,7 @@ export default function RegisterView() {
                     <AuthFormInput inputName="password" label="Password" showVisibilityButtons />
                     <AuthFormInput inputName="confirmPassword" label="Confirm Password" showVisibilityButtons />
 
-                    <FlexBetweenContainer stackOnMobile>
+                    <FlexBetweenContainer stackOn="mobile">
                         <FormLink
                             linkTitle={t("Sign In Here")}
                             linkTo={routes.auth.login}

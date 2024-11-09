@@ -3,10 +3,10 @@ import type { FlexContainerProps } from "src/components/base/flex-box/flex-conta
 import FlexContainer from "src/components/base/flex-box/flex-container"
 
 export default function FlexAroundContainer(props: FlexContainerProps) {
-    const { children, stackOnMobile, ...restOfProps } = props
+    const { children, stackOn, ...restOfProps } = props
 
     return (
-        <FlexContainer justifyContent="space-around" stackOnMobile={stackOnMobile} {...restOfProps}>
+        <FlexContainer justifyContent="space-around" stackOn={stackOn} {...restOfProps}>
             {children}
         </FlexContainer>
     )

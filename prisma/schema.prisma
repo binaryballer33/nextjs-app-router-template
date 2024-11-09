@@ -47,10 +47,11 @@ model PasswordResetToken {
 }
 
 model TwoFactorToken {
-  id      String   @id @default(cuid())
-  email   String
-  token   String   @unique
-  expires DateTime
+  id           String   @id @default(cuid())
+  email        String
+  token        String   @unique
+  expires      DateTime
+  sixDigitCode Int
 
   @@unique([email, token])
 }
@@ -85,7 +86,7 @@ model User {
   savedCards              SavedCards[] // 1:M relation to Card
   cartItems               CartItem[] // 1:M relation to CartItem
   isTwoFactorEnabled      Boolean                @default(false)
-  twoFactorConfirmation   TwoFactorConfirmation?
+  twoFactorConfirmation   TwoFactorConfirmation? // 1:1 relation to TwoFactorConfirmation
   twoFactorConfirmationId String?
 
   // put these indexes in later to measure the performance and database size difference

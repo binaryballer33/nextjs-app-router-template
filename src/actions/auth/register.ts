@@ -11,9 +11,9 @@ import { hash } from "bcryptjs"
 
 import prisma from "src/utils/database/prisma"
 
+import createVerificationToken from "src/actions/auth/tokens/verification-token/create-verification-token"
 import sendAccountVerificationEmail from "src/actions/emails/send-account-verification-email"
 import getUserByEmail from "src/actions/user/get-user-by-email"
-import createVerificationToken from "src/actions/verification-token/create-verification-token"
 
 // TODO: do a zod parse to verify client side data is as expected
 export default async function register(credentials: RegisterRequest): Promise<ServerResponse> {

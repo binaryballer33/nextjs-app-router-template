@@ -19,7 +19,7 @@ export default async function sendAccountVerificationEmail(
     try {
         const { email, sixDigitCode, token } = VerifyTokenSchema.parse(verificationToken)
 
-        const confirmationLink = getFullRoute(routes.auth.verifyEmail, `token=${token}`)
+        const confirmationLink = getFullRoute(routes.auth.verifyEmail, `token=${token}`, `email=${email}`)
 
         // TODO: can only send to your email unless you add domain ( implement this later )
         const emailResponse = await resend.emails.send({
@@ -31,6 +31,7 @@ export default async function sendAccountVerificationEmail(
         if (!emailResponse?.data) return { error: `Error Sending Account Verification Email To: ${email}`, status: 500 }
 
         return {
+            email: emailResponse.data.id,
             status: 200,
             success: `Account Not Yet Verified\nSuccessfully Sent Account Verification Email To: ${email}`,
         }

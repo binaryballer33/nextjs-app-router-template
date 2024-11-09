@@ -18,7 +18,9 @@ import { Container, Stack } from "@mui/material"
 
 import handleServerResponse from "src/utils/helper-functions/handleServerResponse"
 
+import createVerificationToken from "src/actions/auth/tokens/verification-token/create-verification-token"
 import verifyAccountEmail from "src/actions/auth/verify-account-email"
+import sendAccountVerificationEmail from "src/actions/emails/send-account-verification-email"
 
 import FlexCenteredFullScreenContainer from "src/components/base/flex-box/flex-center-full-screen-container"
 import Field from "src/components/react-hook-form/fields"
@@ -35,6 +37,7 @@ export default function VerifyEmailView() {
     const { t } = useTranslation()
     const searchParams = useSearchParams()
     const token = searchParams.get("token")
+    const email = searchParams.get("email")
 
     const methods = useForm<VerifyEmail>({ defaultValues, resolver: zodResolver(VerifyEmailSchema) })
     const { handleSubmit } = methods
@@ -43,6 +46,18 @@ export default function VerifyEmailView() {
         const response = await verifyAccountEmail({ ...formData, token: token! })
         await handleServerResponse({ closeTab: true, response, toast })
     })
+
+    const onResendCode = async () => {
+        // create verification token and make sure it was created
+        const tokenResponse = await createVerificationToken(email!)
+        if (!("token" in tokenResponse)) return tokenResponse
+
+        // send the verification email to the newly created user and make sure it was sent
+        const emailResponse = await sendAccountVerificationEmail(tokenResponse.token)
+        if (!("email" in emailResponse)) return emailResponse
+
+        return handleServerResponse({ response: emailResponse, toast })
+    }
 
     return (
         <Form methods={methods} onSubmit={onSubmit}>
@@ -60,7 +75,7 @@ export default function VerifyEmailView() {
                         <Field.Code name="sixDigitCode" />
                         <FormSubmitButton loadingTitle={t("Verifying Code...")} title={t("Verify")} />
                     </Stack>
-                    <FormResendCode disabled={false} onResendCode={() => {}} value={0} />
+                    <FormResendCode disabled={false} onResendCode={onResendCode} value={0} />
                     <FormReturnLink href={routes.auth.login} title={t("Return To Sign In")} />
                 </Container>
             </FlexCenteredFullScreenContainer>

@@ -3,10 +3,10 @@ import type { FlexContainerProps } from "src/components/base/flex-box/flex-conta
 import FlexContainer from "src/components/base/flex-box/flex-container"
 
 export default function FlexEvenlyContainer(props: FlexContainerProps) {
-    const { children, stackOnMobile, ...restOfProps } = props
+    const { children, stackOn, ...restOfProps } = props
 
     return (
-        <FlexContainer justifyContent="space-evenly" stackOnMobile={stackOnMobile} {...restOfProps}>
+        <FlexContainer justifyContent="space-evenly" stackOn={stackOn} {...restOfProps}>
             {children}
         </FlexContainer>
     )

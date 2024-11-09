@@ -4,8 +4,10 @@ import type { ServerResponse } from "src/types/auth/server-response"
 
 import VerifyEmailRequestSchema from "src/types/forms/verify-email-request"
 
+import createPasswordResetToken from "src/actions/auth/tokens/password-reset-token/create-password-reset-token"
+import deletePasswordResetTokenById from "src/actions/auth/tokens/password-reset-token/delete-password-reset-token-by-id"
+import getPasswordResetTokenByEmail from "src/actions/auth/tokens/password-reset-token/get-password-reset-token-by-email"
 import sendResetPasswordEmail from "src/actions/emails/send-reset-password-email"
-import createPasswordResetToken from "src/actions/password-reset-token/create-password-reset-token"
 import getUserByEmail from "src/actions/user/get-user-by-email"
 
 export default async function forgotPassword(email: string): Promise<ServerResponse> {
@@ -15,6 +17,12 @@ export default async function forgotPassword(email: string): Promise<ServerRespo
         // see if there is a user in the database that has this email
         const userResponse = await getUserByEmail(validatedEmail)
         if (!("user" in userResponse)) return userResponse
+
+        // delete any existing password reset tokens before creating a new one
+        const existingPasswordResetTokenResponse = await getPasswordResetTokenByEmail(userResponse.user.email)
+        if ("token" in existingPasswordResetTokenResponse) {
+            await deletePasswordResetTokenById(existingPasswordResetTokenResponse.token.id)
+        }
 
         // create a reset token for the user
         const passwordResetTokenResponse = await createPasswordResetToken(userResponse.user.email)

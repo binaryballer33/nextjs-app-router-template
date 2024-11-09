@@ -1,14 +1,10 @@
 import type { Viewport } from "next/"
 import type { ReactNode } from "react"
 
-import { SessionProvider } from "next-auth/react"
-import { auth } from "src/auth/auth"
-
 import NProgress from "src/components/base/nprogress"
 
 import MainLayout from "src/layouts/main-layout"
-
-import ProvidersLayout from "../layouts/providers/providers-layout"
+import ProvidersLayout from "src/layouts/providers/providers-layout"
 
 export const dynamic = "force-dynamic"
 
@@ -22,23 +18,17 @@ type LayoutProps = {
     children: ReactNode
 }
 
-async function Layout({ children }: LayoutProps) {
-    const session = await auth()
-
+export default async function Layout({ children }: LayoutProps) {
     return (
         <html lang="en">
             <body>
                 <ProvidersLayout>
-                    <SessionProvider session={session}>
-                        <MainLayout>
-                            {children}
-                            <NProgress />
-                        </MainLayout>
-                    </SessionProvider>
+                    <MainLayout>
+                        {children}
+                        <NProgress />
+                    </MainLayout>
                 </ProvidersLayout>
             </body>
         </html>
     )
 }
-
-export default Layout
