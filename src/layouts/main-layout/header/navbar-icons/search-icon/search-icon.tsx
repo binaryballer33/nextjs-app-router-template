@@ -1,13 +1,22 @@
+import type { SvgIconTypeMap } from "@mui/material"
+import type { OverridableComponent } from "@mui/material/OverridableComponent"
 import type { ChangeEvent } from "react"
+import type { Category, Item } from "src/mocks/search-icon-mock-search-data"
+import type { PaletteColorKey } from "src/theme/theme"
+
 import { useState } from "react"
+
+import { useTranslation } from "react-i18next"
+
+import PropTypes from "prop-types"
 
 import ChevronRightTwoToneIcon from "@mui/icons-material/ChevronRightTwoTone"
 import CloseIcon from "@mui/icons-material/Close"
 import QueryStatsTwoToneIcon from "@mui/icons-material/QueryStatsTwoTone"
 import SearchOffTwoToneIcon from "@mui/icons-material/SearchOffTwoTone"
 import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone"
+
 import Masonry from "@mui/lab/Masonry"
-import type { SvgIconTypeMap } from "@mui/material"
 import {
     Box,
     Card,
@@ -32,14 +41,10 @@ import {
     useMediaQuery,
     useTheme,
 } from "@mui/material"
-import type { OverridableComponent } from "@mui/material/OverridableComponent"
-import PropTypes from "prop-types"
-import { useTranslation } from "react-i18next"
 
 import { AvatarState } from "src/components/base/styles/avatar"
-import type { Category, Item } from "src/mocks/search-icon-mock-search-data"
+
 import { dummyData, iconMapping } from "src/mocks/search-icon-mock-search-data"
-import type { PaletteColorKey } from "src/theme/theme"
 import { neutral } from "src/theme/theme"
 
 type BasicSpotlightSearchProps = {
@@ -100,7 +105,7 @@ export default function BasicSpotlightSearch(props: BasicSpotlightSearchProps) {
 
     const getAvatarContent = (item: Item) => {
         let IconComponent:
-            | (OverridableComponent<SvgIconTypeMap<{}, "svg">> & { muiName: string })
+            | ({ muiName: string } & OverridableComponent<SvgIconTypeMap<{}, "svg">>)
             | React.JSX.IntrinsicAttributes
         switch (item.category) {
             case "folders":
@@ -110,7 +115,7 @@ export default function BasicSpotlightSearch(props: BasicSpotlightSearchProps) {
 
                 let state: PaletteColorKey | undefined
                 let isSoft: boolean | undefined
-                let variant: "rounded" | "circular" | "square" | undefined
+                let variant: "circular" | "rounded" | "square" | undefined
 
                 if (item.category === "folders") {
                     state = "warning"
@@ -129,12 +134,12 @@ export default function BasicSpotlightSearch(props: BasicSpotlightSearchProps) {
                 return (
                     <AvatarState
                         isSoft={isSoft}
+                        state={state}
                         sx={{
-                            width: 48,
                             height: 48,
+                            width: 48,
                         }}
                         variant={variant!}
-                        state={state}
                     >
                         <IconComponent fontSize="small" />
                     </AvatarState>
@@ -142,13 +147,13 @@ export default function BasicSpotlightSearch(props: BasicSpotlightSearchProps) {
             case "users":
                 return (
                     <AvatarState
-                        useShadow
-                        sx={{
-                            width: 48,
-                            height: 48,
-                        }}
-                        state="secondary"
                         src={item.avatar}
+                        state="secondary"
+                        sx={{
+                            height: 48,
+                            width: 48,
+                        }}
+                        useShadow
                     />
                 )
             default:
@@ -163,16 +168,16 @@ export default function BasicSpotlightSearch(props: BasicSpotlightSearchProps) {
                 <Divider />
                 <ListItemButton
                     sx={{
-                        py: 1.5,
                         "&:hover": {
-                            ".MuiTypography-subtitle2": {
-                                color: "text.primary",
-                            },
-
                             ".MuiSvgIcon-root": {
                                 opacity: 1,
                             },
+
+                            ".MuiTypography-subtitle2": {
+                                color: "text.primary",
+                            },
                         },
+                        py: 1.5,
                     }}
                 >
                     <ListItemAvatar
@@ -185,9 +190,9 @@ export default function BasicSpotlightSearch(props: BasicSpotlightSearchProps) {
                     </ListItemAvatar>
                     <ListItemText
                         primary={item.title}
+                        primaryTypographyProps={{ noWrap: true, variant: "h6" }}
                         secondary={item.description}
-                        primaryTypographyProps={{ variant: "h6", noWrap: true }}
-                        secondaryTypographyProps={{ variant: "subtitle2", noWrap: true }}
+                        secondaryTypographyProps={{ noWrap: true, variant: "subtitle2" }}
                     />
                     <ChevronRightTwoToneIcon
                         sx={{
@@ -203,26 +208,26 @@ export default function BasicSpotlightSearch(props: BasicSpotlightSearchProps) {
 
     const renderImages = (items: Item[]) => (
         <Box display="flex" justifyContent="center" px={0.5}>
-            <Masonry columns={{ xs: 1, sm: 3 }} spacing={{ xs: 1, sm: 2 }}>
+            <Masonry columns={{ sm: 3, xs: 1 }} spacing={{ sm: 2, xs: 1 }}>
                 {items.map((item, index) => (
                     <Card
+                        key={item.id}
                         sx={{
                             height: heights[index % heights.length],
                         }}
-                        key={item.id}
                     >
                         <CardActionArea
                             sx={{
-                                width: "100%",
-                                height: "100%",
-                                filter: "grayscale(60%)",
-                                backgroundPosition: "center",
-                                backgroundSize: "cover",
-                                backgroundImage: `url("${item.avatar}")`,
-
                                 "&:hover": {
                                     filter: "grayscale(0%)",
                                 },
+                                backgroundImage: `url("${item.avatar}")`,
+                                backgroundPosition: "center",
+                                backgroundSize: "cover",
+                                filter: "grayscale(60%)",
+                                height: "100%",
+
+                                width: "100%",
                             }}
                         />
                     </Card>
@@ -240,10 +245,10 @@ export default function BasicSpotlightSearch(props: BasicSpotlightSearchProps) {
             return (
                 <Box pt={2} textAlign="center">
                     <Chip
-                        onClick={() => handleToggleCategory(category)}
-                        variant="outlined"
                         color={isExpanded ? "secondary" : "primary"}
                         label={isExpanded ? `Show less` : `Show ${remainingItemsCount} more`}
+                        onClick={() => handleToggleCategory(category)}
+                        variant="outlined"
                     />
                 </Box>
             )
@@ -253,100 +258,100 @@ export default function BasicSpotlightSearch(props: BasicSpotlightSearchProps) {
 
     return (
         <Dialog
-            open={open}
-            onClose={onClose}
-            fullWidth
             fullScreen={fullScreen}
-            scroll="paper"
+            fullWidth
             maxWidth="sm"
+            onClose={onClose}
+            open={open}
+            scroll="paper"
             sx={{
                 ".MuiDialog-container": {
                     alignItems: "flex-start",
-                    pt: { xs: 0, md: 4, lg: 6 },
-                    maxHeight: { xs: "unset", md: 736 },
-                    height: { xs: "100%", md: "80%" },
+                    height: { md: "80%", xs: "100%" },
+                    maxHeight: { md: 736, xs: "unset" },
+                    pt: { lg: 6, md: 4, xs: 0 },
                 },
             }}
             {...other}
         >
             <DialogTitle sx={{ p: 0 }}>
                 <OutlinedInput
-                    sx={{
-                        fontSize: 16,
-                        ".MuiOutlinedInput-input": {
-                            height: "40px",
-                        },
-                        ".MuiOutlinedInput-notchedOutline": {
-                            border: "none",
-                        },
-                    }}
-                    autoFocus
-                    margin="none"
-                    id="search"
-                    type="text"
                     autoComplete="off"
-                    fullWidth
-                    placeholder={t("Search")}
-                    value={searchTerm}
-                    onChange={handleSearch}
-                    startAdornment={
-                        <InputAdornment position="start">
-                            <SearchTwoToneIcon fontSize="small" />
-                        </InputAdornment>
-                    }
+                    autoFocus
                     endAdornment={
                         <InputAdornment position="end">
                             {searchTerm ? (
                                 <IconButton
-                                    size="small"
-                                    sx={{ mr: 0.5 }}
                                     aria-label="clear search"
                                     onClick={() => {
                                         setSearchTerm("")
                                         setFilteredItems([])
                                         setSearchInitiated(false)
                                     }}
+                                    size="small"
+                                    sx={{ mr: 0.5 }}
                                 >
                                     <CloseIcon fontSize="small" />
                                 </IconButton>
                             ) : (
                                 <IconButton
-                                    size="small"
-                                    color="primary"
-                                    sx={{ mr: 0.5 }}
-                                    onClick={onClose}
                                     aria-label="close search dialog"
+                                    color="primary"
+                                    onClick={onClose}
+                                    size="small"
+                                    sx={{ mr: 0.5 }}
                                 >
                                     <CloseIcon fontSize="small" />
                                 </IconButton>
                             )}
                         </InputAdornment>
                     }
+                    fullWidth
+                    id="search"
+                    margin="none"
+                    onChange={handleSearch}
+                    placeholder={t("Search")}
+                    startAdornment={
+                        <InputAdornment position="start">
+                            <SearchTwoToneIcon fontSize="small" />
+                        </InputAdornment>
+                    }
+                    sx={{
+                        ".MuiOutlinedInput-input": {
+                            height: "40px",
+                        },
+                        ".MuiOutlinedInput-notchedOutline": {
+                            border: "none",
+                        },
+                        fontSize: 16,
+                    }}
+                    type="text"
+                    value={searchTerm}
                 />
             </DialogTitle>
             {!searchInitiated && filteredItems.length === 0 && fullScreen && (
                 <>
                     <Divider />
                     <Stack
-                        minHeight={164}
-                        justifyContent="center"
-                        direction="column"
                         alignItems="center"
-                        spacing={2}
+                        direction="column"
+                        justifyContent="center"
+                        minHeight={164}
                         pt={3}
+                        spacing={2}
                     >
-                        <QueryStatsTwoToneIcon sx={{ fontSize: 42, color: neutral[500] }} />
+                        <QueryStatsTwoToneIcon sx={{ color: neutral[500], fontSize: 42 }} />
                         <Box textAlign="center">
                             <Typography
-                                variant="h5"
                                 sx={{
-                                    px: 6,
                                     pb: 2,
+                                    px: 6,
                                 }}
+                                variant="h5"
                             >
                                 Explore Your Digital Workspace
                             </Typography>
-                            <Typography variant="subtitle1" color="text.secondary">
+                            <Typography color="text.secondary" variant="subtitle1">
                                 Instantly navigate to any folder, user profile, document, or app with ease.
                             </Typography>
                         </Box>
@@ -356,7 +361,7 @@ export default function BasicSpotlightSearch(props: BasicSpotlightSearchProps) {
             {loading ? (
                 <>
                     <Divider />
-                    <Box height={164} display="flex" alignItems="center" justifyContent="center">
+                    <Box alignItems="center" display="flex" height={164} justifyContent="center">
                         <CircularProgress size={36} />
                     </Box>
                 </>
@@ -365,11 +370,11 @@ export default function BasicSpotlightSearch(props: BasicSpotlightSearchProps) {
                     {searchInitiated && filteredItems.length === 0 && (
                         <>
                             <Divider />
-                            <Stack minHeight={164} justifyContent="center" direction="column" alignItems="center">
-                                <SearchOffTwoToneIcon sx={{ fontSize: 42, color: neutral[500] }} />
+                            <Stack alignItems="center" direction="column" justifyContent="center" minHeight={164}>
+                                <SearchOffTwoToneIcon sx={{ color: neutral[500], fontSize: 42 }} />
                                 <Box textAlign="center">
                                     <Typography variant="h5">No search results</Typography>
-                                    <Typography variant="subtitle1" color="text.secondary">
+                                    <Typography color="text.secondary" variant="subtitle1">
                                         Try a different search term
                                     </Typography>
                                 </Box>

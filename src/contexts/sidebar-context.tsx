@@ -1,7 +1,10 @@
+"use client"
+
 import type { ReactNode } from "react"
-import { createContext, useContext, useEffect, useState } from "react"
 
 import { usePathname } from "next/navigation"
+
+import { createContext, useContext, useEffect, useState } from "react"
 
 // Context structure
 type SidebarContextType = {

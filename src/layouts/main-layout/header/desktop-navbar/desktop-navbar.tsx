@@ -1,6 +1,6 @@
-import { Box, Stack } from "@mui/material"
+import type { NavBarItem } from "src/types/navbar-item"
 
-import type { NavBarItem } from "src/models/navbar-item"
+import { Box, Stack } from "@mui/material"
 
 import DesktopNavBarItem from "./desktop-navbar-item"
 
@@ -13,7 +13,7 @@ export default function DesktopNavBar({ navbarItems }: DesktopNavBarProps) {
 
     return (
         <Box position="relative">
-            <Stack spacing={0} alignItems="center" flexDirection="row" position="sticky" top={0}>
+            <Stack alignItems="center" flexDirection="row" position="sticky" spacing={0} top={0}>
                 {navbarItems.map((item) => (
                     <DesktopNavBarItem key={item.title} navbarItem={item} />
                 ))}

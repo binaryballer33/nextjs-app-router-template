@@ -1,5 +1,6 @@
-import { Avatar, Badge, Box, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
+
+import { Avatar, Badge, Box, Typography } from "@mui/material"
 
 const user = {
     name: "Shaquille Mandy",
@@ -9,29 +10,29 @@ const user = {
 export default function ProfileIconDropdownAvatar() {
     const { t } = useTranslation()
     return (
-        <Box display="flex" alignItems="center">
+        <Box alignItems="center" display="flex">
             <Badge
-                color="secondary"
-                anchorOrigin={{ vertical: "top", horizontal: "left" }}
+                anchorOrigin={{ horizontal: "left", vertical: "top" }}
                 badgeContent="12"
+                color="secondary"
                 overlap="circular"
             >
                 <Avatar
                     sx={{
                         backgroundColor: "primary.main",
                         color: "text.primary",
-                        width: 48,
                         height: 48,
+                        width: 48,
                     }}
                 >
                     SM
                 </Avatar>
             </Badge>
             <Box mx={1} overflow="hidden">
-                <Typography variant="h5" component="div">
+                <Typography component="div" variant="h5">
                     Shaquille Mandy
                 </Typography>
-                <Typography variant="subtitle1" color="text.secondary" noWrap>
+                <Typography color="text.secondary" noWrap variant="subtitle1">
                     {t(user.role)}
                 </Typography>
             </Box>

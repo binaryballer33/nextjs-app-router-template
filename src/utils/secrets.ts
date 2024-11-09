@@ -1,11 +1,7 @@
-export const RAPID_API_KEY = process.env.NEXT_PUBLIC_RAPID_API_KEY!
+export const NODE_ENV = process.env.NODE_ENV!
 export const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL!
-export const SUPABASE_REF_ID = process.env.NEXT_PUBLIC_SUPABASE_REF_ID!
-export const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
-export const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-export const GOOGLE_TAG_MANAGER_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID!
-
-export const AWS_ACCESS_KEY_ID = process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID!
-export const AWS_SECRET_ACCESS_KEY = process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY!
-export const AWS_REGION = process.env.NEXT_PUBLIC_AWS_REGION!
-export const AWS_DYNAMO_DB_TABLE_NAME = process.env.NEXT_PUBLIC_AWS_DYNAMO_DB_TABLE_NAME!
+export const GOOGLE_CLIENT_ID = process.env.AUTH_GOOGLE_ID!
+export const GOOGLE_CLIENT_SECRET = process.env.AUTH_GOOGLE_SECRET!
+export const FACEBOOK_CLIENT_ID = process.env.AUTH_FACEBOOK_ID!
+export const FACEBOOK_CLIENT_SECRET = process.env.AUTH_FACEBOOK_SECRET!
+export const RESEND_API_KEY = process.env.RESEND_API_KEY!

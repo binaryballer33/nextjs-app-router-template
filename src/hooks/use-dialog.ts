@@ -8,16 +8,16 @@ type DialogController<T> = {
 }
 
 export default function useDialog<T = unknown>(): DialogController<T> {
-    const [state, setState] = useState<{ open: boolean; data?: T }>({
-        open: false,
+    const [state, setState] = useState<{ data?: T; open: boolean }>({
         data: undefined,
+        open: false,
     })
 
     const handleOpen = useCallback((data?: T): void => {
         setState((prevState) => ({
             ...prevState,
-            open: true,
             data,
+            open: true,
         }))
     }, [])
 

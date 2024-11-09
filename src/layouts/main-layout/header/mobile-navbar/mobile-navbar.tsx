@@ -1,21 +1,22 @@
 import type { ListProps, Theme } from "@mui/material"
+import type { NavBarItem } from "src/types/navbar-item"
+
 import { Box, List, ListSubheader, styled, useMediaQuery } from "@mui/material"
-import PropTypes from "prop-types"
 
 import Scrollbar from "src/components/base/scrollbar"
+
 import Logo from "src/layouts/main-layout/header/navbar-icons/logo/logo"
-import type { NavBarItem } from "src/models/navbar-item"
 import { neutral } from "src/theme/theme"
 import { SIDEBAR_WIDTH } from "src/theme/utils"
 
 import MobileNavBarNavItem from "./mobile-navbar-nav-item"
 
 const MobileSidebarWrapper = styled(Box)(({ theme }) => ({
-    height: "100vh",
+    background: theme.palette.mode === "dark" ? neutral[900] : neutral[100],
+    color: theme.palette.mode === "dark" ? neutral[100] : neutral[900],
     display: "flex",
     flexDirection: "column",
-    color: theme.palette.mode === "dark" ? neutral[100] : neutral[900],
-    background: theme.palette.mode === "dark" ? neutral[900] : neutral[100],
+    height: "100vh",
     overflow: "auto",
 }))
 
@@ -25,12 +26,12 @@ type MobileNavBarProps = {
 
 const ListSubheaderWrapper = styled(ListSubheader)<ListProps<"div", { component: "div" }>>(({ theme }) => ({
     background: theme.palette.mode === "dark" ? neutral[900] : neutral[100],
-    textTransform: "uppercase",
-    fontWeight: 500,
-    fontSize: 13,
     color: theme.palette.mode === "dark" ? neutral[100] : neutral[900],
+    fontSize: 13,
+    fontWeight: 500,
     lineHeight: theme.spacing(5),
     padding: theme.spacing(0, 2),
+    textTransform: "uppercase",
 }))
 
 export default function MobileNavBar({ navbarItems }: MobileNavBarProps) {
@@ -45,7 +46,7 @@ export default function MobileNavBar({ navbarItems }: MobileNavBarProps) {
                 width: SIDEBAR_WIDTH,
             }}
         >
-            <Box p={2} display="flex" justifyContent={{ xs: "flex-start", lg: "space-between" }} alignItems="center">
+            <Box alignItems="center" display="flex" justifyContent={{ lg: "space-between", xs: "flex-start" }} p={2}>
                 <Logo />
             </Box>
 
@@ -63,7 +64,7 @@ export default function MobileNavBar({ navbarItems }: MobileNavBarProps) {
                                     }
                                 >
                                     {navbarItem.subMenu?.map((subItem) => (
-                                        <MobileNavBarNavItem key={subItem.title} item={subItem} />
+                                        <MobileNavBarNavItem item={subItem} key={subItem.title} />
                                     ))}
                                 </List>
                             </Box>
@@ -73,8 +74,4 @@ export default function MobileNavBar({ navbarItems }: MobileNavBarProps) {
             </Box>
         </MobileSidebarWrapper>
     )
-}
-
-MobileNavBar.propTypes = {
-    navbarItems: PropTypes.array,
 }

@@ -1,29 +1,24 @@
+import type { Viewport } from "next/"
 import type { ReactNode } from "react"
 
-import type { Metadata, Viewport } from "next/"
-
 import NProgress from "src/components/base/nprogress"
-import ProvidersLayout from "src/layouts/document"
+
 import MainLayout from "src/layouts/main-layout"
+import ProvidersLayout from "src/layouts/providers/providers-layout"
 
 export const dynamic = "force-dynamic"
 
 export const viewport: Viewport = {
-    width: "device-width",
-    initialScale: 1,
     colorScheme: "dark",
-}
-
-export const metadata: Metadata = {
-    title: "Starter Next Template",
-    description: "Created By Shaquille Rashad Mandy",
+    initialScale: 1,
+    width: "device-width",
 }
 
 type LayoutProps = {
     children: ReactNode
 }
 
-function Layout({ children }: LayoutProps) {
+export default async function Layout({ children }: LayoutProps) {
     return (
         <html lang="en">
             <body>
@@ -37,5 +32,3 @@ function Layout({ children }: LayoutProps) {
         </html>
     )
 }
-
-export default Layout

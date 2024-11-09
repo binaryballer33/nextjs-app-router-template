@@ -1,25 +1,39 @@
-import { type NextRequest } from "next/server"
+import NextAuth from "next-auth"
 
-import updateSession from "src/utils/supabase/middleware"
+import providers from "src/auth/auth-config/providers"
+
+import routes from "src/routes/routes"
 
 /*
-  Docs: https://supabase.com/docs/guides/auth/server-side/nextjs
-  Since Server Components can't write cookies, you need middleware to refresh expired Auth tokens and store them.
+ * Due to prisma not working on the edge, you need to instantiate the auth client without the adapter here
+ * More Information in the docs: https://authjs.dev/guides/edge-compatibility
+ */
+const { auth: middleware } = NextAuth({
+    providers,
+})
 
-  The middleware is responsible for:
-    Refreshing the Auth token (by calling supabase.auth.getUser).
+export default middleware((req) => {
+    const { nextUrl } = req
+    const isAuthenticated = !!req.auth
+    const isNextAuthApiRoute = nextUrl.pathname.startsWith(routes.nextAuth.nextAuthApiRoute) // DON'T PROTECT THIS ROUTE
+    const isAuthRoute = routes.authRoutes.includes(nextUrl.pathname)
+    const isPublicRoute = routes.publicRoutes.includes(nextUrl.pathname)
 
-    Passing the refreshed Auth token to Server Components, so they don't attempt to refresh the same token themselves. This is accomplished with request.cookies.set.
+    if (isNextAuthApiRoute) return undefined // DON'T DO ANY ACTIONS ON THIS ROUTE
 
-    Passing the refreshed Auth token to the browser, so it replaces the old token. This is accomplished with response.cookies.set
-*/
+    // if the user is visiting a login/register/etc page and is already authenticated redirect them
+    if (isAuthRoute) {
+        if (isAuthenticated) return Response.redirect(new URL(routes.user.profile, nextUrl))
+        return undefined // auth route and not authenticated, allow access to auth route
+    }
 
-// just a wrapper around the updateSession middleware and a config matcher to filter out the paths where the middleware shouldn't run
-export async function middleware(request: NextRequest) {
-    return updateSession(request)
-}
+    // if the user is visiting a private page and is not authenticated redirect them to the login page
+    if (!isAuthenticated && !isPublicRoute) return Response.redirect(new URL(routes.auth.login, nextUrl))
 
-// run the middleware on the pages in the matcher
+    // user on a public route, let them access it
+    return undefined
+})
+
 export const config = {
-    matcher: ["/profile"],
+    matcher: ["/((?!api|_next|.*\\..*).*)"],
 }

@@ -1,17 +1,15 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
+import type { ServerResponse } from "src/types/auth/server-response"
 
-import createServerClient from "src/utils/supabase/server"
+import { signOut as nextAuthSignOut } from "src/auth/auth"
 
-export default async function signOut() {
-    const supabase = createServerClient()
-
-    const { error } = await supabase.auth.signOut()
-
-    if (error) console.debug("Error signing out", error)
-
-    revalidatePath("/")
-    redirect("/sign-out")
+export default async function signOut(): Promise<ServerResponse> {
+    try {
+        await nextAuthSignOut({ redirect: false })
+        return { status: 200, success: "Sign Out Successful" }
+    } catch (error) {
+        console.error(`Error While Signing Out: ${error}`)
+        return { error: "An Error Occurred While Signing Out", status: 500 }
+    }
 }

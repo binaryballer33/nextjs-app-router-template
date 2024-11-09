@@ -1,8 +1,9 @@
 import type { ReactNode } from "react"
 
-import { alpha, styled, useTheme } from "@mui/material"
 import PropTypes from "prop-types"
 import SimpleBar from "simplebar-react"
+
+import { alpha, styled, useTheme } from "@mui/material"
 
 const ScrollbarWrapper = styled(SimpleBar)(() => ({}))
 
@@ -11,7 +12,7 @@ type ScrollbarProps = {
     dark?: boolean
 }
 
-export default function Scrollbar({ dark, children, ...rest }: ScrollbarProps) {
+export default function Scrollbar({ children, dark, ...rest }: ScrollbarProps) {
     const theme = useTheme()
 
     const getBackgroundColorSimpleScrollbar = () => {
@@ -38,8 +39,6 @@ export default function Scrollbar({ dark, children, ...rest }: ScrollbarProps) {
         <ScrollbarWrapper
             autoHide
             sx={{
-                height: "100%",
-
                 ".simplebar-scrollbar": {
                     "&::before": {
                         background: getBackgroundColorSimpleScrollbar(),
@@ -51,6 +50,8 @@ export default function Scrollbar({ dark, children, ...rest }: ScrollbarProps) {
                         },
                     },
                 },
+
+                height: "100%",
             }}
             {...rest}
         >

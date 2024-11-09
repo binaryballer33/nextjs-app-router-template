@@ -5,10 +5,10 @@ import LanguageDropdown from "./language-icon-dropdown"
 export default function LanguageIcon() {
     return (
         <Stack
-            justifyContent="space-around"
-            spacing={{ xs: 3, sm: 0, md: 3 }}
             alignItems="center"
-            direction={{ xs: "column", sm: "row" }}
+            direction={{ sm: "row", xs: "column" }}
+            justifyContent="space-around"
+            spacing={{ md: 3, sm: 0, xs: 3 }}
         >
             <LanguageDropdown />
         </Stack>

@@ -9,11 +9,11 @@ type ContainerProps = {
 function Container({ children, ...rest }: ContainerProps) {
     return (
         <Box
-            maxWidth={{ sm: 720, md: 1236, lg: 1500 }}
-            width={1}
             margin="0 auto"
+            maxWidth={{ lg: 1500, md: 1236, sm: 720 }}
             paddingX={2}
-            paddingY={{ xs: 4, sm: 6, md: 8 }}
+            paddingY={{ md: 8, sm: 6, xs: 4 }}
+            width={1}
             {...rest}
         >
             {children}

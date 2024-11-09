@@ -2,33 +2,33 @@ import type { ReactNode } from "react"
 
 import { Card, styled } from "@mui/material"
 
-type indicatorColor = "primary" | "error" | "success" | "secondary" | "warning" | "info"
+type indicatorColor = "error" | "info" | "primary" | "secondary" | "success" | "warning"
 
 type CardIndicatorColorProps = {
-    indicatorColor?: indicatorColor
     children?: ReactNode
+    indicatorColor?: indicatorColor
 }
 
 const CardIndicatorColor = styled(Card, {
     shouldForwardProp: (prop) => prop !== "indicatorColor" && prop !== "borderPosition",
-})<CardIndicatorColorProps>(({ theme, indicatorColor }) => {
+})<CardIndicatorColorProps>(({ indicatorColor, theme }) => {
     const computedColor = indicatorColor ? theme.palette[indicatorColor].main : theme.palette.primary.main
 
     const styles: any = {
-        position: "relative",
-        overflow: "visible",
-
         "&::before": {
+            backgroundColor: computedColor,
             borderRadius: "inherit",
-            position: "absolute",
             content: '""',
             height: "60%",
-            top: "20%",
-
             left: -4,
+
+            position: "absolute",
+            top: "20%",
             width: 7,
-            backgroundColor: computedColor,
         },
+        overflow: "visible",
+
+        position: "relative",
     }
 
     return styles

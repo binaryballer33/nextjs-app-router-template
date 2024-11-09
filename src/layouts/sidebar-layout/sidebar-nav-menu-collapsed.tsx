@@ -1,11 +1,12 @@
-import { useState } from "react"
+import type { NavBarItem } from "src/types/navbar-item"
 
 import { usePathname } from "next/navigation"
+
+import { useState } from "react"
 
 import { Box, List, ListItemIcon } from "@mui/material"
 
 import RouterLink from "src/components/base/router-link"
-import type { NavBarItem } from "src/models/navbar-item"
 
 import { ListItemButtonWrapper } from "./sidebar-nav-menu"
 
@@ -28,15 +29,15 @@ function NavItem({ item }: NavItemProps) {
     return (
         <Box px={2}>
             <ListItemButtonWrapper
-                sx={{
-                    pl: 1.7,
-                    mb: 0.5,
-                }}
-                selected={isActive || isSubMenuActive}
-                onClick={handleToggle}
                 // @ts-ignore
                 component={route ? RouterLink : "a"}
                 href={route || undefined}
+                onClick={handleToggle}
+                selected={isActive || isSubMenuActive}
+                sx={{
+                    mb: 0.5,
+                    pl: 1.7,
+                }}
             >
                 {icon && <ListItemIcon>{icon}</ListItemIcon>}
             </ListItemButtonWrapper>
@@ -54,7 +55,7 @@ export default function SidebarNavMenuCollapsed({ navbarItems = [] }: SidebarNav
             {navbarItems.map((navbarItem) => (
                 <div key={navbarItem.title}>
                     <List component="nav">
-                        {navbarItem.subMenu?.map((subItem) => <NavItem key={subItem.title} item={subItem} />)}
+                        {navbarItem.subMenu?.map((subItem) => <NavItem item={subItem} key={subItem.title} />)}
                     </List>
                 </div>
             ))}

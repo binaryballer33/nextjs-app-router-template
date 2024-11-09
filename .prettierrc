@@ -5,18 +5,5 @@
     "tabWidth": 4,
     "trailingComma": "all",
     "printWidth": 120,
-    "importOrder": [
-        "<BUILTIN_MODULES>",
-        "",
-        "^(react/(.*)$)|^(react$)",
-        "",
-        "^(next/(.*)$)|^(next$)",
-        "",
-        "<THIRD_PARTY_MODULES>",
-        "",
-        "^src/",
-        "",
-        "^[.]"
-    ],
-    "plugins": ["@ianvs/prettier-plugin-sort-imports"]
+    "bracketSpacing": true
 }

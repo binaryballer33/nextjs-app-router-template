@@ -4,8 +4,8 @@
 // import toast from "react-hot-toast"
 //
 // import QUERY_KEYS from "src/api/query-keys"
-// import { createCardRequestSchema } from "src/models/cards/card"
-// import { YuGiOhCardWithoutId } from "src/models/cards/yu-gi-oh"
+// import { createCardRequestSchema } from "src/types/cards/card"
+// import { YuGiOhCardWithoutId } from "src/types/cards/yu-gi-oh"
 // import QUERY_ROUTES from "src/router/api-routes"
 //
 // export async function createYuGiOhCard(card: YuGiOhCardWithoutId) {

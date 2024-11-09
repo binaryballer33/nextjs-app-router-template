@@ -1,15 +1,20 @@
-/* eslint-disable */
+import type { SavedItemWithoutId } from "src/types/saved-item"
+import type { YuGiOhCard } from "src/types/yu-gi-oh/yu-gi-oh"
+
+import { randomInt, randomUUID } from "crypto"
 import fs from "fs"
 
-import { CartItemWithoutId } from "src/models/cart-item"
-import { SavedItemWithoutId } from "src/models/saved-item"
-import { YuGiOhCard } from "src/models/yu-gi-oh/yu-gi-oh"
+import { Prisma } from "@prisma/client"
+import { hash } from "bcryptjs"
+
 import prisma from "src/utils/database/prisma"
+
+import CartItemUncheckedCreateInput = Prisma.CartItemUncheckedCreateInput
 
 const cardDataFilePath = "src/mocks/yugioh-cards.json"
 const cards = JSON.parse(fs.readFileSync(cardDataFilePath, "utf-8"))
-const outlookUserIdFromSupabase = "38ee85d7-a6ef-4851-937a-0dc4a989c736"
-const gmailUserIdFromSupabase = "662bf319-1ef7-496a-ac33-be5299cd5f51"
+const outlookUserId = randomUUID()
+const gmailUserId = randomUUID()
 
 async function dropTables() {
     // delete in proper order
@@ -19,14 +24,16 @@ async function dropTables() {
     await prisma.cartItem.deleteMany({})
     await prisma.user.deleteMany({})
     await prisma.yugiohCard.deleteMany({})
+    await prisma.account.deleteMany({})
+    await prisma.verificationToken.deleteMany({})
 
     console.log("Dropped Tables Successfully\n")
 }
 
-async function batchCreateYuGiOhCards(cards: YuGiOhCard[]) {
+async function batchCreateYuGiOhCards(yugiohCards: YuGiOhCard[]) {
     console.log("Attempting To Create Yugioh Cards")
 
-    cards.forEach((card) => {
+    yugiohCards.forEach((card) => {
         // delete the data that is not needed for the yugiohCard table, these related tables have inconsistent data in my yu-gi-oh-cards.json file and I don't have time to fix and put into a relational database
         delete card?.card_sets
         delete card?.card_images
@@ -37,8 +44,8 @@ async function batchCreateYuGiOhCards(cards: YuGiOhCard[]) {
         delete card?.misc_info
     })
 
-    const cardsBatch1 = cards.slice(0, 9999) // 9999 is the max number of records that can be inserted at once with Prisma
-    const cardsBatch2 = cards.slice(9999, 14000)
+    const cardsBatch1 = yugiohCards.slice(0, 9999) // 9999 is the max number of records that can be inserted at once with Prisma
+    const cardsBatch2 = yugiohCards.slice(9999, 14000)
     const batches = [cardsBatch1, cardsBatch2]
 
     batches.map(async (batch, index) => {
@@ -54,37 +61,40 @@ async function batchCreateYuGiOhCards(cards: YuGiOhCard[]) {
     })
 }
 
-async function createUsersWithSupabaseUserId() {
+async function createUsers() {
     console.log("Attempting To Create Users")
+    const hashedPasswordForGmailUser = await hash("password", 10)
+    const hashedPasswordForOutlookUser = await hash("password", 10)
+    const placeholderImage = "https://images.unsplash.com/photo-1569511502671-8c1bbf96fc8d?w=320&ah=320"
 
     try {
         await prisma.user.create({
             data: {
-                id: gmailUserIdFromSupabase,
-                email: "shaqmandy@gmail.com",
-                firstName: "Shaquille",
+                email: "rashadmandy@gmail.com",
+                emailVerified: new Date(), // can only log in with email verification
+                encryptedPassword: hashedPasswordForGmailUser, // password to login will be password
+                firstName: "Rashad",
+                id: gmailUserId,
+                image: placeholderImage,
+                imageUrl: placeholderImage,
                 lastName: "Mandy",
-                encryptedPassword: "puttingFakeEncryptedPasswordHereForNowGmail",
             },
         })
-        console.log("Successfully Created User with Gmail ID: ", gmailUserIdFromSupabase)
-    } catch (error) {
-        console.error(`Error Creating Gmail User With  ID:  ${gmailUserIdFromSupabase}`, error)
-    }
 
-    try {
         await prisma.user.create({
             data: {
-                id: outlookUserIdFromSupabase,
-                email: "shaqmandy@outlook.com",
-                firstName: "Shaquille",
+                email: "rashadmandy@outlook.com",
+                encryptedPassword: hashedPasswordForOutlookUser, // password to login will be password
+                firstName: "Rashad",
+                id: outlookUserId,
+                image: placeholderImage,
+                imageUrl: placeholderImage,
                 lastName: "Mandy",
-                encryptedPassword: "puttingFakeEncryptedPasswordHereForNowOutlook",
             },
         })
-        console.log(`Created User with Outlook ID: ${outlookUserIdFromSupabase}\n`)
+        console.log("Successfully Created User with Gmail ID: ", gmailUserId)
     } catch (error) {
-        console.error(`Error Creating Outlook User With  ID:  ${outlookUserIdFromSupabase}`, error)
+        console.error(`Error Creating Gmail User With ID: ${gmailUserId}`, error)
     }
 }
 
@@ -94,7 +104,7 @@ async function createRandomSavedCards(userId: string, amountOfRandomSavedCards =
     const randomCards: SavedItemWithoutId[] = Array(amountOfRandomSavedCards)
         .fill({})
         .map(() => {
-            const randomCard = cards[Math.floor(Math.random() * cards.length)]
+            const randomCard = cards[randomInt(cards.length)]
 
             return {
                 userId,
@@ -116,20 +126,20 @@ async function createRandomSavedCards(userId: string, amountOfRandomSavedCards =
 async function createRandomCartItems(userId: string, amountOfRandomCartItems: number = 10) {
     console.log("Attempting To Create Random Cart Items")
 
-    const randomCards: CartItemWithoutId[] = Array(amountOfRandomCartItems)
+    const randomCards: CartItemUncheckedCreateInput[] = Array(amountOfRandomCartItems)
         .fill({})
         .map(() => {
-            const randomCard = cards[Math.floor(Math.random() * cards.length)]
-            const { name, frameType, price, id } = randomCard
-            const randomQuantity = Math.floor(Math.random() * 10.0)
+            const randomCard = cards[randomInt(cards.length)]
+            const { frameType, id, name, price } = randomCard
+            const randomQuantity = randomInt(1, 10) / 10.0
 
             return {
+                desc: frameType,
+                name,
+                price,
+                quantity: randomQuantity,
                 userId,
                 yugiohCardId: id,
-                name: name,
-                price: price,
-                quantity: randomQuantity,
-                desc: frameType,
             }
         })
 
@@ -149,19 +159,19 @@ async function seedDatabase() {
         // delete all records in the tables so you can start fresh and avoid any unique constraint violations when inserting records
         await dropTables()
 
-        //wait for tables to be dropped
+        // wait for tables to be dropped
         await new Promise((resolve) => setTimeout(resolve, 3000))
 
         await batchCreateYuGiOhCards(cards)
-        await createUsersWithSupabaseUserId()
+        await createUsers()
 
         // sometime the seed will not fully work because all the yugioh cards or users are not created yet
         await new Promise((resolve) => setTimeout(resolve, 3000))
 
-        await createRandomSavedCards(gmailUserIdFromSupabase, 15)
-        await createRandomSavedCards(outlookUserIdFromSupabase, 10)
-        await createRandomCartItems(gmailUserIdFromSupabase, 15)
-        await createRandomCartItems(outlookUserIdFromSupabase, 10)
+        await createRandomSavedCards(gmailUserId, 15)
+        await createRandomSavedCards(outlookUserId, 10)
+        await createRandomCartItems(gmailUserId, 15)
+        await createRandomCartItems(outlookUserId, 10)
     } catch (error) {
         console.error("Error Seeding Database: ", error)
     } finally {
@@ -170,5 +180,5 @@ async function seedDatabase() {
 }
 
 seedDatabase()
-    .then((_) => console.log("Database Seeded Successfully"))
+    .then((_) => console.log("Successfully Seeded Database"))
     .catch((e) => console.error("Error Seeding Database", e))

@@ -1,4 +1,5 @@
 import type { ChangeEvent } from "react"
+
 import { useState } from "react"
 
 export default function usePagination(initialPage = 0, initialLimit = 10) {
@@ -21,10 +22,10 @@ export default function usePagination(initialPage = 0, initialLimit = 10) {
     }
 
     return {
-        page,
-        limit,
-        handlePageChange,
         handleLimitChange,
+        handlePageChange,
+        limit,
+        page,
         paginate,
     }
 }

@@ -1,29 +1,31 @@
 "use client"
 
 import type { BoxProps } from "@mui/material/Box"
+
+import clsx from "clsx"
+
 import Box from "@mui/material/Box"
 import styled from "@mui/material/styles/styled"
-import clsx from "clsx"
 
 type Ellipsis = { ellipsis: number }
 
-type HeaderProps = BoxProps & {
+type HeaderProps = {
     ellipsis?: boolean
-}
+} & BoxProps
 
 const StyledBox = styled(Box, { shouldForwardProp: (prop) => prop !== "ellipsis" })<Ellipsis>(({ ellipsis }) => ({
-    ...(ellipsis && { overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }),
+    ...(ellipsis && { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }),
 }))
 
 export function H1(props: HeaderProps) {
-    const { ellipsis, children, className, ...others } = props
+    const { children, className, ellipsis, ...others } = props
 
     return (
         <StyledBox
-            fontSize={30}
             component="h1"
-            fontWeight={700}
             ellipsis={ellipsis ? 1 : 0}
+            fontSize={30}
+            fontWeight={700}
             {...(className && { className: clsx({ [className]: true }) })}
             {...others}
         >
@@ -33,14 +35,14 @@ export function H1(props: HeaderProps) {
 }
 
 export function H2(props: HeaderProps) {
-    const { ellipsis, children, className, ...others } = props
+    const { children, className, ellipsis, ...others } = props
 
     return (
         <StyledBox
-            fontSize={25}
             component="h2"
-            fontWeight={700}
             ellipsis={ellipsis ? 1 : 0}
+            fontSize={25}
+            fontWeight={700}
             {...(className && { className: clsx({ [className]: true }) })}
             {...others}
         >
@@ -50,14 +52,14 @@ export function H2(props: HeaderProps) {
 }
 
 export function H3(props: HeaderProps) {
-    const { ellipsis, children, className, ...others } = props
+    const { children, className, ellipsis, ...others } = props
 
     return (
         <StyledBox
-            fontSize={20}
             component="h3"
-            fontWeight={700}
             ellipsis={ellipsis ? 1 : 0}
+            fontSize={20}
+            fontWeight={700}
             {...(className && { className: clsx({ [className]: true }) })}
             {...others}
         >
@@ -67,14 +69,14 @@ export function H3(props: HeaderProps) {
 }
 
 export function H4(props: HeaderProps) {
-    const { ellipsis, children, className, ...others } = props
+    const { children, className, ellipsis, ...others } = props
 
     return (
         <StyledBox
-            fontSize={17}
             component="h4"
-            fontWeight={600}
             ellipsis={ellipsis ? 1 : 0}
+            fontSize={17}
+            fontWeight={600}
             {...(className && { className: clsx({ [className]: true }) })}
             {...others}
         >
@@ -84,15 +86,15 @@ export function H4(props: HeaderProps) {
 }
 
 export function H5(props: HeaderProps) {
-    const { ellipsis, children, className, ...others } = props
+    const { children, className, ellipsis, ...others } = props
 
     return (
         <StyledBox
-            fontSize={16}
             component="h5"
-            lineHeight={1}
-            fontWeight={600}
             ellipsis={ellipsis ? 1 : 0}
+            fontSize={16}
+            fontWeight={600}
+            lineHeight={1}
             {...(className && { className: clsx({ [className]: true }) })}
             {...others}
         >
@@ -102,14 +104,14 @@ export function H5(props: HeaderProps) {
 }
 
 export function H6(props: HeaderProps) {
-    const { ellipsis, children, className, ...others } = props
+    const { children, className, ellipsis, ...others } = props
 
     return (
         <StyledBox
-            fontSize={14}
             component="h6"
-            fontWeight={600}
             ellipsis={ellipsis ? 1 : 0}
+            fontSize={14}
+            fontWeight={600}
             {...(className && { className: clsx({ [className]: true }) })}
             {...others}
         >
@@ -119,14 +121,14 @@ export function H6(props: HeaderProps) {
 }
 
 export function Paragraph(props: HeaderProps) {
-    const { ellipsis, children, className, ...others } = props
+    const { children, className, ellipsis, ...others } = props
 
     return (
         <StyledBox
-            fontSize={14}
             component="p"
-            fontWeight={400}
             ellipsis={ellipsis ? 1 : 0}
+            fontSize={14}
+            fontWeight={400}
             {...(className && { className: clsx({ [className]: true }) })}
             {...others}
         >
@@ -136,14 +138,14 @@ export function Paragraph(props: HeaderProps) {
 }
 
 export function Small(props: HeaderProps) {
-    const { ellipsis = false, children, className, ...others } = props
+    const { children, className, ellipsis = false, ...others } = props
 
     return (
         <StyledBox
-            fontSize={12}
-            fontWeight={400}
             component="small"
             ellipsis={ellipsis ? 1 : 0}
+            fontSize={12}
+            fontWeight={400}
             {...(className && { className: clsx({ [className]: true }) })}
             {...others}
         >
@@ -153,7 +155,7 @@ export function Small(props: HeaderProps) {
 }
 
 export function Span(props: HeaderProps) {
-    const { ellipsis = false, children, className, ...others } = props
+    const { children, className, ellipsis = false, ...others } = props
 
     return (
         <StyledBox
@@ -168,14 +170,14 @@ export function Span(props: HeaderProps) {
 }
 
 export function Tiny(props: HeaderProps) {
-    const { ellipsis = false, children, className, ...others } = props
+    const { children, className, ellipsis = false, ...others } = props
 
     return (
         <StyledBox
             component="small"
+            ellipsis={ellipsis ? 1 : 0}
             fontSize={10}
             fontWeight={400}
-            ellipsis={ellipsis ? 1 : 0}
             {...(className && { className: clsx({ [className]: true }) })}
             {...others}
         >
