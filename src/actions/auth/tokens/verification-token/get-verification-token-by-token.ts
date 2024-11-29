@@ -2,9 +2,8 @@
 
 import type { ServerResponse } from "@/types/auth/server-response"
 
+import prisma from "@/lib/utils/database/prisma"
 import VerifyUUIDSchema from "@/types/forms/verify-id"
-
-import prisma from "@/ils/database/prisma"
 
 export default async function getVerificationTokenByToken(token: string): Promise<ServerResponse> {
     try {

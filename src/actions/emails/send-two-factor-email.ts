@@ -6,7 +6,7 @@ import VerifyEmailRequestSchema from "@/types/forms/verify-email-request"
 
 import { Resend } from "resend"
 
-import { RESEND_API_KEY } from "@/utils/secrets"
+import { RESEND_API_KEY } from "@/lib/utils/secrets"
 
 const resend = new Resend(RESEND_API_KEY)
 

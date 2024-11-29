@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Lock } from "lucide-react"
 import toast from "sonner"
 
-import handleServerResponse from "@/utils/helper-functions/handleServerResponse"
+import handleServerResponse from "@/lib/utils/helper-functions/handleServerResponse"
 
 import forgotPassword from "@/actions/auth/forgot-password"
 

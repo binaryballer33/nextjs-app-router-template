@@ -6,7 +6,7 @@ import callbacks from "@/auth/auth-config/callbacks"
 import events from "@/auth/auth-config/events"
 import providers from "@/auth/auth-config/providers"
 
-import { NODE_ENV } from "@/utils/secrets"
+import { NODE_ENV } from "@/lib/utils/secrets"
 
 import routes from "@/routes/routes"
 

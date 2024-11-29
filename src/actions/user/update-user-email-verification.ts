@@ -1,8 +1,7 @@
 import type { ServerResponse } from "@/types/auth/server-response"
 
-import VerifyUUIDSchema from "@/types/forms/verify-id"
-
-import prisma from "@/ils/database/prisma" // TODO: figure out where you are using linkAccount event and if this function is necessary
+import prisma from "@/lib/utils/database/prisma"
+import VerifyUUIDSchema from "@/types/forms/verify-id" // TODO: figure out where you are using linkAccount event and if this function is necessary
 
 export default async function updateUserEmailVerification(userId: string): Promise<ServerResponse> {
     try {

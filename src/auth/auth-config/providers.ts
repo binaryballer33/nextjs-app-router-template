@@ -8,7 +8,7 @@ import { compare } from "bcryptjs"
 import Facebook from "next-auth/providers/facebook"
 import Google from "next-auth/providers/google"
 
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "@/utils/secrets"
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "@/lib/utils/secrets"
 
 import getUserByEmail from "@/actions/user/get-user-by-email"
 

@@ -2,7 +2,7 @@
 
 import { PrismaClient } from "@prisma/client"
 
-import { NODE_ENV } from "@/utils/secrets"
+import { NODE_ENV } from "@/lib/utils/secrets"
 
 declare global {
     // eslint-disable-next-line no-var,vars-on-top

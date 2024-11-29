@@ -12,16 +12,14 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Lock, Menu, Search } from "lucide-react"
-
-import { useSession } from "next-auth/react"
-
 import useDialog from "@/hooks/use-dialog"
 import useMobileNav from "@/hooks/use-mobile-nav"
 import usePopover from "@/hooks/use-popover"
-
 import useHorizontalNavBarItems from "@/routes/horizontal-navbar-routes"
 import routes from "@/routes/routes"
+import { Lock, Menu, Search } from "lucide-react"
+
+import { useSession } from "next-auth/react"
 
 import DesktopNavBar from "./desktop-navbar/desktop-navbar"
 import MobileNavBar from "./mobile-navbar/mobile-navbar"

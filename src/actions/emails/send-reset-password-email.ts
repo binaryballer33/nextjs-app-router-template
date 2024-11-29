@@ -1,15 +1,12 @@
 "use server"
 
-import type { PasswordResetToken } from "@prisma/client"
 import type { ServerResponse } from "@/types/auth/server-response"
+import type { PasswordResetToken } from "@prisma/client"
 
+import { RESEND_API_KEY } from "@/lib/utils/secrets"
+import routes, { getFullRoute } from "@/routes/routes"
 import VerifyTokenSchema from "@/types/forms/verify-token"
-
 import { Resend } from "resend"
-
-import { RESEND_API_KEY } from "@/utils/secrets"
-
-import routes, { getFullRoute } from "@/utes/routes"
 
 const resend = new Resend(RESEND_API_KEY)
 

@@ -1,4 +1,4 @@
-import { BACKEND_BASE_URL } from "@/utils/secrets" // API URLs
+import { BACKEND_BASE_URL } from "@/lib/utils/secrets" // API URLs
 
 // API URLs
 const YU_GI_OH_API_BASE_URL = `${BACKEND_BASE_URL}/api/yu-gi-oh`

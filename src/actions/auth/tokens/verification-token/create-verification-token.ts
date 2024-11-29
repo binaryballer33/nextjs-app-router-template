@@ -4,10 +4,9 @@ import type { ServerResponse } from "@/types/auth/server-response"
 
 import { randomInt, randomUUID } from "crypto"
 
-import prisma from "@/lib/utils/database/prisma"
-
 import deleteVerificationTokenById from "@/actions/auth/tokens/verification-token/delete-verification-token-by-id"
-import getVerificationTokenByEmail from "@/tions/auth/tokens/verification-token/get-verification-token-by-email"
+import getVerificationTokenByEmail from "@/actions/auth/tokens/verification-token/get-verification-token-by-email"
+import prisma from "@/lib/utils/database/prisma"
 
 export default async function createVerificationToken(email: string): Promise<ServerResponse> {
     const token = randomUUID()

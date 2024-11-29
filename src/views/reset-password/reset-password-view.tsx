@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { LockKeyhole } from "lucide-react"
 import toast from "sonner"
 
-import handleServerResponse from "@/utils/helper-functions/handleServerResponse"
+import handleServerResponse from "@/lib/utils/helper-functions/handleServerResponse"
 
 import resetPassword from "@/actions/auth/reset-password"
 

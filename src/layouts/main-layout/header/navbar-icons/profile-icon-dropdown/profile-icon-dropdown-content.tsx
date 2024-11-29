@@ -6,22 +6,19 @@ import { useCallback } from "react"
 
 import { useTranslation } from "react-i18next"
 
+import signOut from "@/actions/auth/sign-out"
+import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
-import { LockOpen } from "lucide-react"
-import toast from "sonner"
-
-import handleServerResponse from "@/utils/helper-functions/handleServerResponse"
-
-import signOut from "@/actions/auth/sign-out"
-
+import handleServerResponse from "@/lib/utils/helper-functions/handleServerResponse"
 import profileIconDropdownNavItems from "@/routes/profile-dropdown-icon-routes"
 import routes from "@/routes/routes"
-import { Button } from "@/components/ui/button"
+import { LockOpen } from "lucide-react"
+import toast from "sonner"
 
 import AvatarTitleDescriptionAlternate from "./profile-icon-avatar-title-description"
 

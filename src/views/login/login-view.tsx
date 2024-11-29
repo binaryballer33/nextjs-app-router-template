@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { parseAsBoolean, useQueryState } from "nuqs"
 
-import handleServerResponse from "@/utils/helper-functions/handleServerResponse"
+import handleServerResponse from "@/lib/utils/helper-functions/handleServerResponse"
 
 import login from "@/actions/auth/login"
 
