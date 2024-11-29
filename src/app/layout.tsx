@@ -1,10 +1,10 @@
 import type { Viewport } from "next/"
 import type { ReactNode } from "react"
 
-import NProgress from "src/components/base/nprogress"
+import NProgress from "@/components/base/nprogress"
 
-import MainLayout from "src/layouts/main-layout"
-import ProvidersLayout from "src/layouts/providers/providers-layout"
+import MainLayout from "@/layouts/main-layout"
+import ProvidersLayout from "@/layouts/providers/providers-layout"
 
 export const dynamic = "force-dynamic"
 

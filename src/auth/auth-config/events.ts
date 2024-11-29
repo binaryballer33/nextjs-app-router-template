@@ -1,6 +1,6 @@
 import type { NextAuthConfig } from "next-auth"
 
-import updateUserEmailVerification from "src/actions/user/update-user-email-verification"
+import updateUserEmailVerification from "@/actions/user/update-user-email-verification"
 
 const events: NextAuthConfig["events"] = {
     async linkAccount({ user }) {

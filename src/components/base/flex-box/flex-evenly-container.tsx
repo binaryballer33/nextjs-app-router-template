@@ -1,12 +1,16 @@
-import type { FlexContainerProps } from "src/components/base/flex-box/flex-container"
+import type { FlexContainerProps } from "@/components/base/flex-box/flex-container"
 
-import FlexContainer from "src/components/base/flex-box/flex-container"
+import FlexContainer from "@/components/base/flex-box/flex-container"
 
-export default function FlexEvenlyContainer(props: FlexContainerProps) {
-    const { children, stackOn, ...restOfProps } = props
+import { cn } from "@/lib/utils"
 
+export default function FlexEvenlyContainer({ children, className, stackOn, ...props }: FlexContainerProps) {
     return (
-        <FlexContainer justifyContent="space-evenly" stackOn={stackOn} {...restOfProps}>
+        <FlexContainer
+            className={cn("justify-evenly", className)}
+            stackOn={stackOn}
+            {...props}
+        >
             {children}
         </FlexContainer>
     )

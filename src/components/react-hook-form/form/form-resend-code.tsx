@@ -1,39 +1,36 @@
-import type { BoxProps } from "@mui/material/Box"
-
-import Box from "@mui/material/Box"
-import Link from "@mui/material/Link"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 type FormResendCodeProps = {
+    className?: string
     disabled?: boolean
     onResendCode?: () => void
     value?: number
-} & BoxProps
+}
 
-export default function FormResendCode({ disabled, onResendCode, sx, value, ...other }: FormResendCodeProps) {
+export default function FormResendCode({
+    className,
+    disabled,
+    onResendCode,
+    value
+}: FormResendCodeProps) {
     return (
-        <Box
-            sx={{
-                alignSelf: "center",
-                mt: 3,
-                typography: "body2",
-                ...sx,
-            }}
-            {...other}
-        >
-            {`Don’t have a code? `}
-            <Link
+        <div className={cn(
+            "mt-3 text-center text-sm",
+            className
+        )}>
+            Don't have a code?{" "}
+            <Button
+                className={cn(
+                    "px-1 font-semibold",
+                    disabled && "text-muted-foreground pointer-events-none"
+                )}
+                disabled={disabled}
                 onClick={onResendCode}
-                sx={{
-                    cursor: "pointer",
-                    ...(disabled && {
-                        color: "text.disabled",
-                        pointerEvents: "none",
-                    }),
-                }}
-                variant="subtitle2"
+                variant="link"
             >
-                Resend {disabled && value && value > 0 && `(${value}s)`}
-            </Link>
-        </Box>
+                Resend{disabled && value && value > 0 ? ` (${value}s)` : ""}
+            </Button>
+        </div>
     )
 }

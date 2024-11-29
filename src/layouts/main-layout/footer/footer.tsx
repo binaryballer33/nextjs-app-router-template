@@ -1,195 +1,166 @@
 import Image from "next/image"
 
+import { type FC } from "react"
+
 import { useTranslation } from "react-i18next"
 
-import FacebookIcon from "@mui/icons-material/Facebook"
-import GitHubIcon from "@mui/icons-material/GitHub"
-import InstagramIcon from "@mui/icons-material/Instagram"
-import TwitterIcon from "@mui/icons-material/Twitter"
-import YouTubeIcon from "@mui/icons-material/YouTube"
+import { Facebook, Github, Instagram, Twitter, Youtube } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Separator } from "@/components/ui/separator"
 
-import { Box, Button, Divider, Grid, IconButton, Link, TextField, Typography, useTheme } from "@mui/material"
+const navigation = {
+    company: [
+        { href: "#", name: "About" },
+        { href: "#", name: "Blog" },
+        { href: "#", name: "Jobs" },
+        { href: "#", name: "Press" },
+        { href: "#", name: "Partners" },
+    ],
+    legal: [
+        { href: "#", name: "Claim" },
+        { href: "#", name: "Privacy" },
+        { href: "#", name: "Terms" },
+    ],
+    social: [
+        { href: "#", icon: Facebook, name: "Facebook" },
+        { href: "#", icon: Instagram, name: "Instagram" },
+        { href: "#", icon: Twitter, name: "Twitter" },
+        { href: "#", icon: Github, name: "GitHub" },
+        { href: "#", icon: Youtube, name: "YouTube" },
+    ],
+    solutions: [
+        { href: "#", name: "Marketing" },
+        { href: "#", name: "Analytics" },
+        { href: "#", name: "Commerce" },
+        { href: "#", name: "Insights" },
+    ],
+    support: [
+        { href: "#", name: "Pricing" },
+        { href: "#", name: "Documentation" },
+        { href: "#", name: "Guides" },
+        { href: "#", name: "API Status" },
+    ],
+}
 
-import { neutral } from "src/theme/theme"
-
-export default function Footer() {
-    const theme = useTheme()
+const Footer: FC = () => {
     const { t } = useTranslation()
-
-    const navigation = {
-        company: [
-            { href: "#", name: t("About") },
-            { href: "#", name: t("Blog") },
-            { href: "#", name: t("Jobs") },
-            { href: "#", name: t("Press") },
-            { href: "#", name: t("Partners") },
-        ],
-        legal: [
-            { href: "#", name: t("Claim") },
-            { href: "#", name: t("Privacy") },
-            { href: "#", name: t("Terms") },
-        ],
-        social: [
-            { href: "#", icon: FacebookIcon, name: t("Facebook") },
-            { href: "#", icon: InstagramIcon, name: t("Instagram") },
-            { href: "#", icon: TwitterIcon, name: t("Twitter") },
-            { href: "#", icon: GitHubIcon, name: t("GitHub") },
-            { href: "#", icon: YouTubeIcon, name: t("YouTube") },
-        ],
-        solutions: [
-            { href: "#", name: t("Marketing") },
-            { href: "#", name: t("Analytics") },
-            { href: "#", name: t("Commerce") },
-            { href: "#", name: t("Insights") },
-        ],
-        support: [
-            { href: "#", name: t("Pricing") },
-            { href: "#", name: t("Documentation") },
-            { href: "#", name: t("Guides") },
-            { href: "#", name: t("API Status") },
-        ],
-    }
 
     return (
         <footer>
-            <Box py={4}>
-                <Box m="auto" width="95%">
-                    <Divider sx={{ border: "1", mb: 6 }} />
-                    <Grid alignItems="center" container justifyContent="space-between" sx={{ mb: 10, mt: 2, pt: 4 }}>
-                        <Grid item md={6} xs={12}>
-                            <Typography variant="subtitle1">{t("Subscribe to our newsletter")}</Typography>
-                            <Typography sx={{ mt: 1 }} variant="body2">
+            <div className="py-4">
+                <div className="mx-auto w-[95%]">
+                    <Separator className="mb-6" />
+                    <div className="mb-10 mt-2 flex flex-col items-center justify-between pt-4 md:flex-row">
+                        <div className="w-full md:w-1/2">
+                            <h3 className="text-lg font-medium">{t("Subscribe to our newsletter")}</h3>
+                            <p className="mt-1 text-sm text-muted-foreground">
                                 {t("The latest news, articles, and resources, sent to your inbox weekly.")}
-                            </Typography>
-                            <Box component="form" sx={{ alignItems: "center", display: "flex", mt: 2 }}>
-                                <TextField
+                            </p>
+                            <form className="mt-2 flex items-center">
+                                <Input
+                                    className="mr-2 flex-grow"
                                     placeholder={t("Enter your email")}
                                     required
-                                    sx={{
-                                        ".MuiInputBase-input": {
-                                            paddingTop: 1,
-                                        },
-                                        flexGrow: 1,
-                                        mr: 1,
-                                    }}
                                     type="email"
-                                    variant="filled"
                                 />
-                                <Button sx={{ flexShrink: 0 }} type="submit" variant="contained">
-                                    {t("Subscribe")}
-                                </Button>
-                            </Box>
-                        </Grid>
-                        <Grid item md={6} sx={{ textAlign: { md: "right", xs: "center" } }} xs={12}>
-                            <Box>
+                                <Button type="submit">{t("Subscribe")}</Button>
+                            </form>
+                        </div>
+                        <div className="mt-4 text-center md:mt-0 md:w-1/2 md:text-right">
+                            <div className="space-x-2">
                                 {navigation.social.map((item) => (
-                                    <IconButton
+                                    <a
+                                        className="inline-block rounded-full p-2 text-primary hover:text-primary/80"
                                         href={item.href}
                                         key={item.name}
-                                        sx={{ "&:hover": { color: "primary.dark" }, color: "primary.main" }}
                                     >
-                                        <item.icon />
-                                    </IconButton>
+                                        <item.icon className="h-5 w-5" />
+                                    </a>
                                 ))}
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Grid container justifyContent="space-between" spacing={4}>
-                        <Grid item sm={3} xs={12}>
-                            <Typography mb={1} variant="h5">
-                                {t("MANDYTEC LLC")}
-                            </Typography>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-12">
+                        <div className="sm:col-span-3">
+                            <h2 className="mb-1 text-xl font-semibold">{t("MANDYTEC LLC")}</h2>
                             <Image
                                 alt={t("Company name")}
                                 height={28}
                                 src="/placeholders/logo/react-logo.svg"
                                 width={28}
                             />
-                        </Grid>
-                        <Grid container item sm={9} spacing={4} xs={12}>
-                            <Grid item sm={3} sx={{ paddingLeft: `${theme.spacing(7)} !important` }} xs={6}>
-                                <Typography gutterBottom variant="subtitle1">
-                                    {t("Solutions")}
-                                </Typography>
-                                <ul style={{ listStyle: "none", padding: 0 }}>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4 sm:col-span-9 md:grid-cols-4">
+                            <div className="pl-7">
+                                <h3 className="mb-2 text-sm font-semibold">{t("Solutions")}</h3>
+                                <ul className="space-y-2">
                                     {navigation.solutions.map((item) => (
                                         <li key={item.name}>
-                                            <Link
-                                                color={theme.palette.mode === "dark" ? neutral[400] : neutral[900]}
+                                            <a
+                                                className="text-sm text-muted-foreground hover:text-foreground"
                                                 href={item.href}
-                                                underline="hover"
-                                                variant="body2"
                                             >
                                                 {item.name}
-                                            </Link>
+                                            </a>
                                         </li>
                                     ))}
                                 </ul>
-                            </Grid>
-                            <Grid item sm={3} sx={{ paddingLeft: `${theme.spacing(7)} !important` }} xs={6}>
-                                <Typography gutterBottom variant="body2">
-                                    {t("Support")}
-                                </Typography>
-                                <ul style={{ listStyle: "none", padding: 0 }}>
+                            </div>
+                            <div className="pl-7">
+                                <h3 className="mb-2 text-sm font-semibold">{t("Support")}</h3>
+                                <ul className="space-y-2">
                                     {navigation.support.map((item) => (
                                         <li key={item.name}>
-                                            <Link
-                                                color={theme.palette.mode === "dark" ? neutral[400] : neutral[900]}
+                                            <a
+                                                className="text-sm text-muted-foreground hover:text-foreground"
                                                 href={item.href}
-                                                underline="hover"
-                                                variant="body2"
                                             >
                                                 {item.name}
-                                            </Link>
+                                            </a>
                                         </li>
                                     ))}
                                 </ul>
-                            </Grid>
-                            <Grid item sm={3} sx={{ paddingLeft: `${theme.spacing(7)} !important` }} xs={6}>
-                                <Typography gutterBottom variant="subtitle1">
-                                    {t("Company")}
-                                </Typography>
-                                <ul style={{ listStyle: "none", padding: 0 }}>
+                            </div>
+                            <div className="pl-7">
+                                <h3 className="mb-2 text-sm font-semibold">{t("Company")}</h3>
+                                <ul className="space-y-2">
                                     {navigation.company.map((item) => (
                                         <li key={item.name}>
-                                            <Link
-                                                color={theme.palette.mode === "dark" ? neutral[400] : neutral[900]}
+                                            <a
+                                                className="text-sm text-muted-foreground hover:text-foreground"
                                                 href={item.href}
-                                                underline="hover"
-                                                variant="body2"
                                             >
                                                 {item.name}
-                                            </Link>
+                                            </a>
                                         </li>
                                     ))}
                                 </ul>
-                            </Grid>
-                            <Grid item sm={3} sx={{ paddingLeft: `${theme.spacing(7)} !important` }} xs={6}>
-                                <Typography gutterBottom variant="subtitle1">
-                                    {t("Legal")}
-                                </Typography>
-                                <ul style={{ listStyle: "none", padding: 0 }}>
+                            </div>
+                            <div className="pl-7">
+                                <h3 className="mb-2 text-sm font-semibold">{t("Legal")}</h3>
+                                <ul className="space-y-2">
                                     {navigation.legal.map((item) => (
                                         <li key={item.name}>
-                                            <Link
-                                                color={theme.palette.mode === "dark" ? neutral[400] : neutral[900]}
+                                            <a
+                                                className="text-sm text-muted-foreground hover:text-foreground"
                                                 href={item.href}
-                                                underline="hover"
-                                                variant="body2"
                                             >
                                                 {item.name}
-                                            </Link>
+                                            </a>
                                         </li>
                                     ))}
                                 </ul>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Typography align="center" sx={{ mt: 4 }} variant="body2">
+                            </div>
+                        </div>
+                    </div>
+                    <p className="mt-4 text-center text-sm text-muted-foreground">
                         &copy; {t("2023 MANDYTEC LLC, Inc. All rights reserved.")}
-                    </Typography>
-                </Box>
-            </Box>
+                    </p>
+                </div>
+            </div>
         </footer>
     )
 }
+
+export default Footer

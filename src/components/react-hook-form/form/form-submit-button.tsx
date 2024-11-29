@@ -2,37 +2,42 @@
 
 import { useFormContext } from "react-hook-form"
 
-import { LoadingButton } from "@mui/lab"
+import { Loader2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 type FormSubmitButtonProps = {
-    color?: "error" | "info" | "inherit" | "primary" | "secondary" | "success" | "warning"
-    loadingTitle: string
-    size?: "large" | "medium" | "small"
+    className?: string
+    loadingText: string
+    size?: "default" | "icon" | "lg" | "sm"
     title: string
-    type?: "button" | "reset" | "submit"
-    variant?: "contained" | "outlined" | "text"
+    variant?: "default" | "destructive" | "ghost" | "link" | "outline" | "secondary"
 }
 
 function FormSubmitButton(props: FormSubmitButtonProps) {
-    const { color, loadingTitle, size, title, type, variant } = props
+    const { className, loadingText, size = "default", title, variant = "default" } = props
 
     const {
         formState: { isSubmitting },
     } = useFormContext()
 
     return (
-        <LoadingButton
-            color={color || "primary"}
-            fullWidth
-            loading={isSubmitting}
-            loadingIndicator={loadingTitle}
-            size={size || "large"}
-            sx={{ my: 1 }}
-            type={type || "submit"}
-            variant={variant || "contained"}
+        <Button
+            className={cn("w-full my-1", className)}
+            disabled={isSubmitting}
+            size={size}
+            type="submit"
+            variant={variant}
         >
-            {isSubmitting ? loadingTitle : title}
-        </LoadingButton>
+            {isSubmitting ? (
+                <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    {loadingText}
+                </>
+            ) : (
+                title
+            )}
+        </Button>
     )
 }
 

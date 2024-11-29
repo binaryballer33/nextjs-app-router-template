@@ -2,14 +2,12 @@
 
 import { useTranslation } from "react-i18next"
 
-import { Typography } from "@mui/material"
+import useRedirectIfStale from "@/hooks/use-redirect-if-stale"
 
-import useRedirectIfStale from "src/hooks/use-redirect-if-stale"
+import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
+import FormLink from "@/components/react-hook-form/form/form-link"
 
-import FlexCenteredFullScreenContainer from "src/components/base/flex-box/flex-center-full-screen-container"
-import FormLink from "src/components/react-hook-form/form/form-link"
-
-import routes from "src/routes/routes"
+import routes from "@/routes/routes"
 
 function SignOutView() {
     const { t } = useTranslation()
@@ -17,7 +15,9 @@ function SignOutView() {
 
     return (
         <FlexCenteredFullScreenContainer minHeight="75dvh">
-            <Typography variant="body1">{t("You've Been Signed Out Successfully")}</Typography>
+            <p className="text-base">
+                {t("You've Been Signed Out Successfully")}
+            </p>
             <FormLink linkTitle={t("Go Back To The Home Page")} linkTo={routes.index} />
         </FlexCenteredFullScreenContainer>
     )

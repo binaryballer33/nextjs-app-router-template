@@ -1,69 +1,54 @@
 "use client"
 
-import type { SxProps, Theme } from "@mui/material"
-import type { ReactNode } from "react"
+import { type ReactNode } from "react"
 
 import { useTranslation } from "react-i18next"
 
-import { Box, Divider, Stack, Typography, useMediaQuery } from "@mui/material"
+import { cn } from "@/lib/utils"
 
 type PageHeadingProps = {
     actions?: ReactNode
     background?: string
     bottomText?: string
+    className?: string
     description?: string
     iconBox?: ReactNode
-    sx?: SxProps<Theme>
     title: string
     topSection?: ReactNode
 }
 
 export default function PageHeading(props: PageHeadingProps) {
-    const { actions, background, bottomText, description, iconBox, sx, title, topSection } = props
-    const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
+    const { actions, background, bottomText, className, description, iconBox, title, topSection } = props
     const { t } = useTranslation()
 
     return (
-        <Stack sx={{ backgroundColor: background, ...sx }}>
-            <Stack
-                alignItems="center"
-                direction={{ md: "row", xs: "column" }}
-                display="flex"
-                justifyContent="space-between"
-                spacing={0}
-                width="100%"
-            >
-                <Stack
-                    alignItems="center"
-                    className="PageTitleContent"
-                    direction={{ md: "row", xs: "column" }}
-                    display="flex"
-                    overflow="hidden"
-                    spacing={2}
-                >
+        <div className={cn("flex flex-col", background && `bg-[${background}]`, className)}>
+            <div className="flex w-full flex-col items-center justify-between md:flex-row">
+                <div className="PageTitleContent flex flex-col items-center overflow-hidden md:flex-row md:space-x-4">
                     {iconBox}
-                    <Stack overflow="hidden" spacing={0.3} textAlign={{ md: "left", xs: "center" }}>
+                    <div className="flex flex-col overflow-hidden space-y-1 text-center md:text-left">
                         {topSection}
-                        <Typography noWrap variant="h3">
+                        <h3 className="truncate text-2xl font-semibold tracking-tight">
                             {t(title)}
-                        </Typography>
+                        </h3>
                         {description && (
-                            <Typography color="text.secondary" fontWeight={400} noWrap={mdUp && true} variant="h5">
+                            <h5 className="truncate text-lg font-normal text-muted-foreground md:whitespace-normal">
                                 {t(description)}
-                            </Typography>
+                            </h5>
                         )}
-                    </Stack>
-                </Stack>
+                    </div>
+                </div>
                 {actions}
-            </Stack>
+            </div>
+
             {bottomText && (
-                <Box my={2}>
-                    <Divider sx={{ mb: 2, width: { md: "75%", xs: 1 } }} />
-                    <Typography color="textSecondary" sx={{ textAlign: { md: "left", xs: "center" } }} variant="body1">
+                <div className="my-4">
+                    <div className="mb-4 w-full border-b md:w-3/4" />
+                    <p className="text-base text-muted-foreground text-center md:text-left">
                         {t(bottomText)}
-                    </Typography>
-                </Box>
+                    </p>
+                </div>
             )}
-        </Stack>
+        </div>
     )
 }

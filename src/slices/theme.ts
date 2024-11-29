@@ -1,4 +1,5 @@
-import type { ThemeState } from "src/types/redux/theme-state"
+// TODO: remove this code later, i think next-themes handles this
+import type { ThemeState } from "@/types/redux/theme-state"
 
 import { createSlice } from "@reduxjs/toolkit"
 

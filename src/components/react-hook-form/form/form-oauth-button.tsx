@@ -1,28 +1,33 @@
 "use client"
 
 import type { TFunction } from "i18next"
-import type { OAuthProvider } from "src/types/forms/common"
+import type { OAuthProvider } from "@/types/forms/common"
 
 import { useSearchParams } from "next/navigation"
 
 import { useCallback } from "react"
 
 import { useFormContext } from "react-hook-form"
-import toast from "react-hot-toast"
 
-import { Button } from "@mui/material"
+import { cn } from "@/lib/utils"
+import { toast } from "sonner"
 
 import { signIn } from "next-auth/react"
 
-import routes from "src/routes/routes"
+import routes from "@/routes/routes"
+import { Button } from "@/components/ui/button"
 
 type OAuthButtonProps = {
+    className?: string
     provider: OAuthProvider
     t: TFunction<"translation", undefined>
 }
 
-export default function OAuthButton(props: OAuthButtonProps) {
-    const { provider, t } = props
+export default function OAuthButton({
+    className,
+    provider,
+    t
+}: OAuthButtonProps) {
     const { icon: Icon } = provider
 
     const {
@@ -33,11 +38,15 @@ export default function OAuthButton(props: OAuthButtonProps) {
 
     const loginError = searchParams.get("error")
     const oauthLoginError =
-        loginError === "OAuthAccountNotLinked" ? "Email Already In Use With A Different Provider" : null
+        loginError === "OAuthAccountNotLinked"
+            ? "Email Already In Use With A Different Provider"
+            : null
 
     const onAuth = useCallback(
         async (oauthProvider: OAuthProvider["id"]): Promise<void> => {
-            await signIn(oauthProvider, { redirectTo: routes.nextAuth.defaultLoginRedirect })
+            await signIn(oauthProvider, {
+                redirectTo: routes.nextAuth.defaultLoginRedirect
+            })
             if (loginError) toast.error(oauthLoginError)
         },
         [loginError, oauthLoginError],
@@ -45,15 +54,15 @@ export default function OAuthButton(props: OAuthButtonProps) {
 
     return (
         <Button
-            color="primary"
+            className={cn(
+                "w-full text-base font-normal",
+                className
+            )}
             disabled={isSubmitting}
-            fullWidth
-            key={provider.id}
             onClick={() => onAuth(provider.id).catch(() => {})}
-            startIcon={<Icon />}
-            sx={{ fontSize: 16, whiteSpace: "nowrap" }}
-            variant="outlined"
+            variant="outline"
         >
+            <Icon className="mr-2 h-5 w-5" />
             {t(`Access With ${provider.name}`)}
         </Button>
     )

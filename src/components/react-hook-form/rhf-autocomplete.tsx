@@ -1,54 +1,101 @@
-import type { AutocompleteProps } from "@mui/material/Autocomplete"
-import type { TextFieldProps } from "@mui/material/TextField"
-import type { ReactNode } from "react"
-
 import { Controller, useFormContext } from "react-hook-form"
 
-import Autocomplete from "@mui/material/Autocomplete"
-import TextField from "@mui/material/TextField"
+import { Check, ChevronsUpDown } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+} from "@/components/ui/command"
+import { FormControl, FormDescription, FormField, FormItem, FormLabel } from "@/components/ui/form"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
 
-export type AutocompleteBaseProps = Omit<AutocompleteProps<any, boolean, boolean, boolean>, "renderInput">
+import { cn } from "@/lib/utils"
 
 export type RHFAutocompleteProps = {
-    helperText?: ReactNode
+    className?: string
+    emptyMessage?: string
+    helperText?: React.ReactNode
     label?: string
     name: string
+    options: {
+        label: string
+        value: string
+    }[]
     placeholder?: string
-    variant?: TextFieldProps["variant"]
-} & AutocompleteBaseProps
+}
 
-export default function RHFAutocomplete({
-    helperText,
-    label,
-    name,
-    placeholder,
-    variant,
-    ...other
-}: RHFAutocompleteProps) {
-    const { control, setValue } = useFormContext()
+export default function RHFAutocomplete(props: RHFAutocompleteProps) {
+    const { className, emptyMessage, helperText, label, name, options, placeholder } = props
+    const { control } = useFormContext()
 
     return (
         <Controller
             control={control}
             name={name}
             render={({ field, fieldState: { error } }) => (
-                <Autocomplete
-                    {...field}
-                    id={`rhf-autocomplete-${name}`}
-                    onChange={(_event, newValue) => setValue(name, newValue, { shouldValidate: true })}
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            error={!!error}
-                            helperText={error ? error?.message : helperText}
-                            inputProps={{ ...params.inputProps, autoComplete: "new-password" }}
-                            label={label}
-                            placeholder={placeholder}
-                            variant={variant}
-                        />
+                <FormItem className={className}>
+                    {label && <FormLabel>{label}</FormLabel>}
+                    <Popover>
+                        <PopoverTrigger asChild>
+                            <FormControl>
+                                <Button
+                                    className={cn(
+                                        "w-full justify-between",
+                                        !field.value && "text-muted-foreground",
+                                        error && "border-destructive"
+                                    )}
+                                    role="combobox"
+                                    variant="outline"
+                                >
+                                    {field.value
+                                        ? options.find((option) => option.value === field.value)?.label
+                                        : placeholder}
+                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                            </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-full min-w-[200px] p-0">
+                            <Command>
+                                <CommandInput placeholder={placeholder} />
+                                <CommandEmpty>{emptyMessage}</CommandEmpty>
+                                <CommandGroup>
+                                    {options.map((option) => (
+                                        <CommandItem
+                                            key={option.value}
+                                            onSelect={() => {
+                                                field.onChange(option.value)
+                                            }}
+                                            value={option.value}
+                                        >
+                                            <Check
+                                                className={cn(
+                                                    "mr-2 h-4 w-4",
+                                                    option.value === field.value
+                                                        ? "opacity-100"
+                                                        : "opacity-0"
+                                                )}
+                                            />
+                                            {option.label}
+                                        </CommandItem>
+                                    ))}
+                                </CommandGroup>
+                            </Command>
+                        </PopoverContent>
+                    </Popover>
+
+                    {(error || helperText) && (
+                        <FormDescription className={cn(error && "text-destructive")}>
+                            {error ? error.message : helperText}
+                        </FormDescription>
                     )}
-                    {...other}
-                />
+                </FormItem>
             )}
         />
     )

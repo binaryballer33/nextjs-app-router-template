@@ -1,8 +1,8 @@
-import type { ServerResponse } from "src/types/auth/server-response"
+import type { ServerResponse } from "@/types/auth/server-response"
 
-import VerifyUUIDSchema from "src/types/forms/verify-id"
+import VerifyUUIDSchema from "@/types/forms/verify-id"
 
-import prisma from "src/utils/database/prisma"
+import prisma from "@/lib/utils/database/prisma"
 
 export default async function getUserById(userId: string): Promise<ServerResponse> {
     try {

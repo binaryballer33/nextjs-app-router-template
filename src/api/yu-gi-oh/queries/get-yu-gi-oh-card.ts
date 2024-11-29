@@ -1,11 +1,11 @@
-import type { YuGiOhCard } from "src/types/yu-gi-oh/yu-gi-oh"
+import type { YuGiOhCard } from "@/types/yu-gi-oh/yu-gi-oh"
 
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
-import routes from "src/routes/routes"
+import routes from "@/routes/routes"
 
-import QUERY_KEYS from "src/api/query-keys"
+import QUERY_KEYS from "@/api/query-keys"
 
 export async function getYugiohCardById(cardId: number) {
     return (await axios.get(routes.api.yugioh.details(cardId))).data

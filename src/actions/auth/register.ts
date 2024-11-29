@@ -1,19 +1,19 @@
 "use server"
 
-import type { ServerResponse } from "src/types/auth/server-response"
-import type { RegisterRequest } from "src/types/forms/register"
+import type { ServerResponse } from "@/types/auth/server-response"
+import type { RegisterRequest } from "@/types/forms/register"
 
-import { RegisterRequestSchema } from "src/types/forms/register"
+import { RegisterRequestSchema } from "@/types/forms/register"
 
 import { revalidatePath } from "next/cache"
 
 import { hash } from "bcryptjs"
 
-import prisma from "src/utils/database/prisma"
+import prisma from "@/lib/utils/database/prisma"
 
-import createVerificationToken from "src/actions/auth/tokens/verification-token/create-verification-token"
-import sendAccountVerificationEmail from "src/actions/emails/send-account-verification-email"
-import getUserByEmail from "src/actions/user/get-user-by-email"
+import createVerificationToken from "@/actions/auth/tokens/verification-token/create-verification-token"
+import sendAccountVerificationEmail from "@/actions/emails/send-account-verification-email"
+import getUserByEmail from "@/actions/user/get-user-by-email"
 
 // TODO: do a zod parse to verify client side data is as expected
 export default async function register(credentials: RegisterRequest): Promise<ServerResponse> {

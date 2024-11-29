@@ -1,5 +1,5 @@
-import type { SavedItemWithoutId } from "src/types/saved-item"
-import type { YuGiOhCard } from "src/types/yu-gi-oh/yu-gi-oh"
+import type { SavedItemWithoutId } from "@/types/saved-item"
+import type { YuGiOhCard } from "@/types/yu-gi-oh/yu-gi-oh"
 
 import { randomInt, randomUUID } from "crypto"
 import fs from "fs"
@@ -7,11 +7,11 @@ import fs from "fs"
 import { Prisma } from "@prisma/client"
 import { hash } from "bcryptjs"
 
-import prisma from "src/utils/database/prisma"
+import prisma from "@/lib/utils/database/prisma"
 
 import CartItemUncheckedCreateInput = Prisma.CartItemUncheckedCreateInput
 
-const cardDataFilePath = "src/mocks/yugioh-cards.json"
+const cardDataFilePath = "@/mocks/yugioh-cards.json"
 const cards = JSON.parse(fs.readFileSync(cardDataFilePath, "utf-8"))
 const outlookUserId = randomUUID()
 const gmailUserId = randomUUID()

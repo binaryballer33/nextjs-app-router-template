@@ -1,106 +1,24 @@
-import type { ListProps } from "@mui/material"
-import type { NavBarItem } from "src/types/navbar-item"
+"use client"
+
+import type { NavBarItem } from "@/types/navbar-item"
 
 import { usePathname } from "next/navigation"
 
 import { useState } from "react"
 
-import KeyboardArrowRightTwoToneIcon from "@mui/icons-material/KeyboardArrowRightTwoTone"
+import { ChevronRight } from "lucide-react"
 
-import { alpha, Box, Collapse, List, ListItemButton, ListItemIcon, ListItemText, styled } from "@mui/material"
-
-import RouterLink from "src/components/base/router-link"
-
-import { neutral } from "src/theme/theme"
+import RouterLink from "@/components/base/router-link"
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+import { cn } from "@/lib/utils"
 
 type NavBarItemProps = {
     item: NavBarItem
 }
-
-const SubMenu = styled(List)<ListProps<"div", { component: "div" }>>(({ theme }) => ({
-    "& .MuiListItemButton-root": {
-        "& .MuiListItemText-root": {
-            margin: 0,
-        },
-        "&::before": {
-            background: neutral[100],
-            borderRadius: 4,
-            content: '" "',
-            height: "6px",
-            left: theme.spacing(2.8),
-            marginTop: "-3px",
-            opacity: 0,
-            position: "absolute",
-            top: "50%",
-            transform: "scale(0)",
-            transition: theme.transitions.create(["transform", "opacity"]),
-            width: "6px",
-        },
-
-        "&.Mui-selected, &:hover": {
-            "&::before": {
-                opacity: 1,
-                transform: "scale(1)",
-            },
-        },
-
-        fontWeight: 500,
-
-        padding: theme.spacing(0.8, 1, 0.8, 6.5),
-    },
-
-    paddingTop: theme.spacing(0.5),
-}))
-
-export const ListItemButtonWrapper = styled(ListItemButton)(({ theme }) => ({
-    "& .MuiListItemIcon-root": {
-        color: theme.palette.mode === "dark" ? neutral[100] : neutral[900],
-        minWidth: 44,
-    },
-    "& .MuiListItemText-root": {
-        color: theme.palette.mode === "dark" ? neutral[100] : neutral[900],
-    },
-    "&:hover": {
-        "& .MuiListItemIcon-root": {
-            color: theme.palette.mode === "dark" ? neutral[100] : neutral[900],
-        },
-        "& .MuiListItemText-root": {
-            color: theme.palette.mode === "dark" ? neutral[100] : neutral[900],
-        },
-        background: alpha(neutral[700], 0.08),
-
-        borderColor: alpha(neutral[600], 0.08),
-
-        color: theme.palette.mode === "dark" ? neutral[100] : neutral[900],
-    },
-    "&.Mui-selected, &.Mui-selected:hover": {
-        "& .MuiListItemIcon-root": {
-            color: neutral[50],
-        },
-        "& .MuiListItemText-root": {
-            color: neutral[50],
-        },
-        background: alpha(neutral[500], 0.1),
-
-        borderColor: alpha(neutral[700], 0.15),
-
-        color: neutral[50],
-    },
-    borderColor: "transparent",
-    borderRadius: theme.shape.borderRadius,
-    borderStyle: "solid",
-    borderWidth: 1,
-    color: theme.palette.mode === "dark" ? neutral[100] : neutral[900],
-    fontSize: 14,
-
-    fontWeight: 600,
-
-    marginBottom: "2px",
-
-    padding: theme.spacing(0.8, 1, 0.8, 2),
-
-    transition: "none",
-}))
 
 export default function MobileNavBarNavItem({ item }: NavBarItemProps) {
     const { icon, route, subMenu, title } = item
@@ -109,44 +27,90 @@ export default function MobileNavBarNavItem({ item }: NavBarItemProps) {
     const isSubMenuActive = subMenu?.some((sub) => sub.route && pathname.includes(sub.route))
     const [open, setOpen] = useState(isSubMenuActive)
 
-    const handleToggle = () => {
-        if (subMenu) setOpen(!open)
-    }
-
     return (
-        <Box px={2}>
-            <ListItemButtonWrapper
-                // @ts-ignore
-                component={route ? RouterLink : "a"}
-                href={route || undefined}
-                onClick={handleToggle}
-                selected={isActive || isSubMenuActive}
-            >
-                {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                <ListItemText disableTypography primary={title} />
-                {subMenu && (
-                    <Box
-                        sx={{
-                            alignItems: "center",
-                            display: "flex",
-                            justifyContent: "center",
-                            transform: open ? "rotate(90deg)" : "rotate(0deg)",
-                            transition: (theme) => theme.transitions.create(["transform"]),
-                        }}
-                    >
-                        <KeyboardArrowRightTwoToneIcon fontSize="small" />
-                    </Box>
-                )}
-            </ListItemButtonWrapper>
-            {subMenu && (
-                <Collapse in={open}>
-                    <SubMenu component="div" disablePadding sx={{ mx: -2 }}>
-                        {subMenu.map((subItem) => (
-                            <MobileNavBarNavItem item={subItem} key={subItem.title} />
-                        ))}
-                    </SubMenu>
-                </Collapse>
+        <div className="px-2">
+            {subMenu ? (
+                <Collapsible onOpenChange={setOpen} open={open}>
+                    <CollapsibleTrigger asChild>
+                        <button
+                            className={cn(
+                                // Base styles
+                                "flex w-full items-center rounded-md border px-2 py-2 text-sm font-semibold",
+                                "transition-none border-transparent",
+                                "mb-0.5",
+                                // Icon styles
+                                "[&_.icon]:min-w-11 [&_.icon]:text-neutral-900 dark:[&_.icon]:text-neutral-100",
+                                // Hover styles
+                                "hover:bg-neutral-700/8 hover:border-neutral-600/8",
+                                "hover:text-neutral-900 dark:hover:text-neutral-100",
+                                // Selected styles
+                                (isActive || isSubMenuActive) && [
+                                    "bg-neutral-500/10 text-neutral-50",
+                                    "hover:bg-neutral-500/10 hover:text-neutral-50",
+                                    "border-neutral-700/15"
+                                ]
+                            )}
+                        >
+                            {icon && <span className="icon">{icon}</span>}
+                            <span className="m-0">{title}</span>
+                            <div
+                                className={cn(
+                                    "flex items-center justify-center transition-transform",
+                                    open ? "rotate-90" : "rotate-0"
+                                )}
+                            >
+                                <ChevronRight className="h-4 w-4" />
+                            </div>
+                        </button>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                        <div className="-mx-2">
+                            <div className="space-y-0.5 pt-0.5">
+                                {subMenu.map((subItem) => (
+                                    <div
+                                        className={cn(
+                                            "relative pl-[26px]",
+                                            "before:absolute before:left-11 before:top-1/2 before:-mt-[3px]",
+                                            "before:h-1.5 before:w-1.5 before:rounded",
+                                            "before:bg-neutral-100 before:opacity-0 before:scale-0",
+                                            "before:transition-all",
+                                            "hover:before:opacity-100 hover:before:scale-100"
+                                        )}
+                                        key={subItem.title}
+                                    >
+                                        <MobileNavBarNavItem item={subItem} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </CollapsibleContent>
+                </Collapsible>
+            ) : (
+                <button
+                    className={cn(
+                        // Base styles
+                        "flex w-full items-center rounded-md border px-2 py-2 text-sm font-semibold",
+                        "transition-none border-transparent",
+                        "mb-0.5",
+                        // Icon styles
+                        "[&_.icon]:min-w-11 [&_.icon]:text-neutral-900 dark:[&_.icon]:text-neutral-100",
+                        // Hover styles
+                        "hover:bg-neutral-700/8 hover:border-neutral-600/8",
+                        "hover:text-neutral-900 dark:hover:text-neutral-100",
+                        // Selected styles
+                        isActive && [
+                            "bg-neutral-500/10 text-neutral-50",
+                            "hover:bg-neutral-500/10 hover:text-neutral-50",
+                            "border-neutral-700/15"
+                        ]
+                    )}
+                    component={route ? RouterLink : "button"}
+                    href={route || undefined}
+                >
+                    {icon && <span className="icon">{icon}</span>}
+                    <span className="m-0">{title}</span>
+                </button>
             )}
-        </Box>
+        </div>
     )
 }

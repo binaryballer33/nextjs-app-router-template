@@ -1,17 +1,17 @@
-"use client"
+import type { RegisterRequest } from "@/types/forms/register"
 
-import type { ReactNode } from "react"
-import type { RegisterRequest } from "src/types/forms/register"
+import { type ReactNode } from "react"
 
-import EditIcon from "@mui/icons-material/Edit"
-import KeyIcon from "@mui/icons-material/Key"
-import MailOutlineRoundedIcon from "@mui/icons-material/MailOutlineRounded"
+import { useFormContext } from "react-hook-form"
 
-import { InputAdornment } from "@mui/material"
+import { Mail, Key, Edit } from "lucide-react"
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
-import Field from "src/components/react-hook-form/fields"
+import { cn } from "@/lib/utils"
 
 type AuthFormInputProps = {
+    className?: string
     inputName: keyof RegisterRequest
     label: string
     padding?: number
@@ -19,45 +19,65 @@ type AuthFormInputProps = {
     startAdornment?: ReactNode
 }
 
-export default function AuthFormInput(props: AuthFormInputProps) {
-    const { inputName, label, padding, showVisibilityButtons = false, startAdornment = null } = props
+export default function AuthFormInput({
+    className,
+    inputName,
+    label,
+    padding,
+    showVisibilityButtons = false,
+    startAdornment = null
+}: AuthFormInputProps) {
+    const { control } = useFormContext()
 
     const adornment = startAdornment || getStartAdornment(inputName)
     const placeholder = getPlaceholder(inputName, label)
 
     return (
-        <Field.FilledInput
-            label={label}
+        <FormField
+            control={control}
             name={inputName}
-            padding={padding || undefined}
-            placeholder={placeholder}
-            showVisibilityButtons={showVisibilityButtons}
-            startAdornment={adornment}
+            render={({ field }) => (
+                <FormItem>
+                    {label && (
+                        <FormLabel className="font-medium">
+                            {label}
+                        </FormLabel>
+                    )}
+                    <FormControl>
+                        <div className="relative">
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                                {adornment}
+                            </div>
+                            <Input
+                                {...field}
+                                className={cn(
+                                    "bg-muted/50 pl-10",
+                                    padding && `p-${padding}`,
+                                    className
+                                )}
+                                placeholder={placeholder}
+                                type={showVisibilityButtons ? "password" : "text"}
+                            />
+                        </div>
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+            )}
         />
     )
 }
 
 function getStartAdornment(inputName: keyof RegisterRequest) {
+    const iconProps = { className: "h-4 w-4" }
+
     switch (inputName) {
         case "email":
-            return (
-                <InputAdornment position="start">
-                    <MailOutlineRoundedIcon fontSize="small" />
-                </InputAdornment>
-            )
+            return <Mail {...iconProps} />
         case "password":
         case "confirmPassword":
-            return (
-                <InputAdornment position="start">
-                    <KeyIcon fontSize="small" />
-                </InputAdornment>
-            )
+            return <Key {...iconProps} />
         default:
-            return (
-                <InputAdornment position="start">
-                    <EditIcon fontSize="small" />
-                </InputAdornment>
-            )
+            return <Edit {...iconProps} />
     }
 }
 

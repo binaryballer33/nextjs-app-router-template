@@ -1,117 +1,135 @@
-import type { FilledInputProps } from "@mui/material"
-import type { ReactNode } from "react"
+import { type ReactNode } from "react"
+import { useState } from "react"
 
-import { Controller, useFormContext } from "react-hook-form"
+import { useFormContext } from "react-hook-form"
 
-import ClearIcon from "@mui/icons-material/Clear"
+import { Eye, EyeOff, X } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
-import { FilledInput, FormControl, FormHelperText, IconButton, InputAdornment, Tooltip } from "@mui/material"
-import FormLabel from "@mui/material/FormLabel"
-
-import { useBoolean } from "src/hooks/use-boolean"
-
-import FlexBetweenContainer from "src/components/base/flex-box/flex-between-container"
-import FormFieldVisibilityIcon from "src/components/react-hook-form/form/form-field-visibility-icon"
+import { cn } from "@/lib/utils"
 
 type Props = {
-    label: string
+    className?: string
+    label?: string
     name: string
-    padding?: number
-    placeholder?: string
-    showVisibilityButtons?: boolean
+    showVisibilityToggle?: boolean
     startAdornment?: ReactNode
-} & FilledInputProps
+} & React.InputHTMLAttributes<HTMLInputElement>
 
-export default function RHFFilledInput(props: Props) {
-    const { label, name, padding, placeholder, showVisibilityButtons, startAdornment, type, ...other } = props
-
+export default function RHFInput(props: Props) {
+    const { className, label, name, showVisibilityToggle, startAdornment, type, ...other } = props
     const { control, setValue, watch } = useFormContext()
-    const { handleToggle: isFieldVisibleToggle, value: isFieldVisible } = useBoolean()
+    const [showPassword, setShowPassword] = useState(false)
 
-    const inputType = getInputType(name, label, showVisibilityButtons, isFieldVisible)
+    // Determine input type based on visibility toggle and password state
+    const getInputType = () => {
+        if (type === "email") return "email"
+        if (type === "number") return "number"
+        if (showVisibilityToggle) {
+            return showPassword ? "text" : "password"
+        }
+        return type
+    }
+
+    const inputValue = watch(name)
+    const hasValue = inputValue !== "" && inputValue !== undefined
 
     return (
-        <Controller
+        <FormField
             control={control}
             name={name}
-            render={({ field, fieldState: { error } }) => (
-                <FormControl component="fieldset" fullWidth>
-                    <FlexBetweenContainer>
-                        <FormLabel
-                            id={`${label}-input-label`}
-                            sx={{ "&.MuiFormLabel-root": { fontWeight: "bolder" }, typography: "body2" }}
-                        >
+            render={({ field }) => (
+                <FormItem className={className}>
+                    {label && (
+                        <FormLabel className="font-medium">
                             {label}
                         </FormLabel>
+                    )}
+                    <FormControl>
+                        <div className="relative">
+                            {startAdornment && (
+                                <div className="absolute left-3 top-1/2 -translate-y-1/2">
+                                    {startAdornment}
+                                </div>
+                            )}
 
-                        {showVisibilityButtons ? (
-                            <FormFieldVisibilityIcon
-                                inputName={name}
-                                isFieldVisible={isFieldVisible}
-                                isFieldVisibleToggle={isFieldVisibleToggle}
+                            <Input
+                                {...field}
+                                className={cn(
+                                    "bg-muted/50",
+                                    startAdornment && "pl-10",
+                                    (showVisibilityToggle || hasValue) && "pr-20"
+                                )}
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                    if (type === "number") {
+                                        field.onChange(Number(event.target.value))
+                                    } else {
+                                        field.onChange(event.target.value)
+                                    }
+                                }}
+                                type={getInputType()}
+                                value={type === "number" && field.value === 0 ? "" : field.value}
+                                {...other}
                             />
-                        ) : null}
-                    </FlexBetweenContainer>
 
-                    <FilledInput
-                        {...field}
-                        autoComplete={label}
-                        endAdornment={
-                            // only show clear icon if text-field is not empty
-                            watch(name) !== "" && (
-                                <InputAdornment position="end">
-                                    <Tooltip title={`clear ${name}`}>
-                                        {/* reset the input field */}
-                                        <IconButton onClick={() => setValue(name, "")}>
-                                            <ClearIcon color="secondary" />
-                                        </IconButton>
-                                    </Tooltip>
-                                </InputAdornment>
-                            )
-                        }
-                        error={!!error}
-                        fullWidth
-                        id={`${name}-input`}
-                        onChange={(event) => {
-                            if (type === "number") {
-                                field.onChange(Number(event.target.value))
-                            } else {
-                                field.onChange(event.target.value)
-                            }
-                        }}
-                        placeholder={placeholder || label}
-                        required
-                        startAdornment={startAdornment || null}
-                        sx={{
-                            "& .MuiFilledInput-input": {
-                                p: padding || 1.5,
-                            },
-                        }}
-                        type={inputType}
-                        value={type === "number" && field.value === 0 ? "" : field.value}
-                        {...other}
-                    />
-                    {error && <FormHelperText error={!!error}>{error?.message}</FormHelperText>}
-                </FormControl>
+                            {/* Right side buttons */}
+                            {(showVisibilityToggle || hasValue) && (
+                                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1">
+                                    {hasValue && (
+                                        <TooltipProvider>
+                                            <Tooltip>
+                                                <TooltipTrigger asChild>
+                                                    <Button
+                                                        className="h-6 w-6"
+                                                        onClick={() => setValue(name, "")}
+                                                        size="icon"
+                                                        type="button"
+                                                        variant="ghost"
+                                                    >
+                                                        <X className="h-4 w-4" />
+                                                    </Button>
+                                                </TooltipTrigger>
+                                                <TooltipContent>
+                                                    <p>Clear {name}</p>
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        </TooltipProvider>
+                                    )}
+
+                                    {showVisibilityToggle && (
+                                        <TooltipProvider>
+                                            <Tooltip>
+                                                <TooltipTrigger asChild>
+                                                    <Button
+                                                        className="h-6 w-6"
+                                                        onClick={() => setShowPassword(!showPassword)}
+                                                        size="icon"
+                                                        type="button"
+                                                        variant="ghost"
+                                                    >
+                                                        {showPassword ? (
+                                                            <EyeOff className="h-4 w-4" />
+                                                        ) : (
+                                                            <Eye className="h-4 w-4" />
+                                                        )}
+                                                    </Button>
+                                                </TooltipTrigger>
+                                                <TooltipContent>
+                                                    <p>{showPassword ? "Hide" : "Show"} password</p>
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        </TooltipProvider>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
             )}
         />
     )
-}
-
-/*
- * sets the input type based on whether the visibility icons are shown or not
- * whether the field is currently visible
- * and whether the label and name is email or not
- */
-function getInputType(name: string, label: string, showButtons: boolean | undefined, isFieldVisible: boolean) {
-    let inputType: string
-
-    if (name.toLowerCase() === "email" || label.toLowerCase() === "email") {
-        inputType = "email"
-    } else if (showButtons && !isFieldVisible) {
-        inputType = "password"
-    } else {
-        inputType = "text"
-    }
-    return inputType
 }

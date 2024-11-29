@@ -1,14 +1,14 @@
 import type { LoggerInstance, PagesOptions } from "@auth/core/types"
 import type { NextAuthConfig } from "next-auth"
 
-import adapter from "src/auth/auth-config/adapter"
-import callbacks from "src/auth/auth-config/callbacks"
-import events from "src/auth/auth-config/events"
-import providers from "src/auth/auth-config/providers"
+import adapter from "@/auth/auth-config/adapter"
+import callbacks from "@/auth/auth-config/callbacks"
+import events from "@/auth/auth-config/events"
+import providers from "@/auth/auth-config/providers"
 
-import { NODE_ENV } from "src/utils/secrets"
+import { NODE_ENV } from "@/utils/secrets"
 
-import routes from "src/routes/routes"
+import routes from "@/routes/routes"
 
 const session: NextAuthConfig["session"] = { strategy: "jwt" }
 

@@ -1,7 +1,7 @@
 import { type ReactNode } from "react"
 
-import ClientProvidersLayout from "src/layouts/providers/client-providers-layout"
-import ServerProvidersLayout from "src/layouts/providers/server-providers-layout"
+import ClientProvidersLayout from "@/layouts/providers/client-providers-layout"
+import ServerProvidersLayout from "@/layouts/providers/server-providers-layout"
 
 type LayoutProps = {
     children: ReactNode

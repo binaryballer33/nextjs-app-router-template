@@ -1,13 +1,13 @@
 "use server"
 
-import type { ServerResponse } from "src/types/auth/server-response"
+import type { ServerResponse } from "@/types/auth/server-response"
 
 import { randomInt, randomUUID } from "crypto"
 
-import prisma from "src/utils/database/prisma"
+import prisma from "@/lib/utils/database/prisma"
 
-import deletePasswordResetTokenById from "src/actions/auth/tokens/password-reset-token/delete-password-reset-token-by-id"
-import getPasswordResetTokenByEmail from "src/actions/auth/tokens/password-reset-token/get-password-reset-token-by-email"
+import deletePasswordResetTokenById from "@/actions/auth/tokens/password-reset-token/delete-password-reset-token-by-id"
+import getPasswordResetTokenByEmail from "@/actions/auth/tokens/password-reset-token/get-password-reset-token-by-email"
 
 export default async function createPasswordResetToken(email: string): Promise<ServerResponse> {
     const token = randomUUID()

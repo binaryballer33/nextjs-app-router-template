@@ -1,12 +1,12 @@
 "use server"
 
-import type { YuGiOhCard } from "src/types/yu-gi-oh/yu-gi-oh"
+import type { YuGiOhCard } from "@/types/yu-gi-oh/yu-gi-oh"
 
 import { dehydrate } from "@tanstack/react-query"
 
-import createQueryClient from "src/api/query-client-server-component"
-import QUERY_KEYS from "src/api/query-keys"
-import { getYuGiOhCards } from "src/api/yu-gi-oh/queries/get-all-yu-gi-oh-cards"
+import createQueryClient from "@/api/query-client-server-component"
+import QUERY_KEYS from "@/api/query-keys"
+import { getYuGiOhCards } from "@/api/yu-gi-oh/queries/get-all-yu-gi-oh-cards"
 
 /*
  * Prefetch data for all tabs on server component, so that the data is available immediately no hydration required

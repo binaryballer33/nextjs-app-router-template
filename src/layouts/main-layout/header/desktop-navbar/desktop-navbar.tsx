@@ -1,6 +1,6 @@
-import type { NavBarItem } from "src/types/navbar-item"
+import { type NavBarItem } from "@/types/navbar-item"
 
-import { Box, Stack } from "@mui/material"
+import { type FC } from "react"
 
 import DesktopNavBarItem from "./desktop-navbar-item"
 
@@ -8,16 +8,18 @@ type DesktopNavBarProps = {
     navbarItems?: NavBarItem[]
 }
 
-export default function DesktopNavBar({ navbarItems }: DesktopNavBarProps) {
+const DesktopNavBar: FC<DesktopNavBarProps> = ({ navbarItems }) => {
     if (!navbarItems) return null
 
     return (
-        <Box position="relative">
-            <Stack alignItems="center" flexDirection="row" position="sticky" spacing={0} top={0}>
+        <div className="relative">
+            <div className="sticky top-0 flex items-center">
                 {navbarItems.map((item) => (
                     <DesktopNavBarItem key={item.title} navbarItem={item} />
                 ))}
-            </Stack>
-        </Box>
+            </div>
+        </div>
     )
 }
+
+export default DesktopNavBar

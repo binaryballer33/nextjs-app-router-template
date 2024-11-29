@@ -1,16 +1,25 @@
-import { Divider, Typography } from "@mui/material"
+import { Separator } from "@/components/ui/separator"
+import { cn } from "@/lib/utils"
 
 type FormDividerProps = {
+    className?: string
     title: string
-    width?: string
 }
 
-export default function FormDivider(props: FormDividerProps) {
-    const { title, width } = props
-
+export default function FormDivider({
+    className,
+    title
+}: FormDividerProps) {
     return (
-        <Divider sx={{ width: width || "75%" }}>
-            <Typography variant="subtitle1">{title}</Typography>
-        </Divider>
+        <div className={cn("relative w-full", className)}>
+            <div className="absolute inset-0 flex items-center">
+                <Separator className="w-full" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                    {title}
+                </span>
+            </div>
+        </div>
     )
 }

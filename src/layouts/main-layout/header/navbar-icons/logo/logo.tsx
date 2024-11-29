@@ -1,98 +1,48 @@
-import { alpha, Badge, Box, Link, Typography, useTheme } from "@mui/material"
+import { useState } from "react"
 
-import RouterLink from "src/components/base/router-link"
+import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
 
-export default function Logo() {
-    const theme = useTheme()
+const Logo = () => {
+    const [isHovered, setIsHovered] = useState(false)
 
     return (
-        <Box
-            sx={{
-                "&:hover": {
-                    transform: "scale(1.05)",
-                },
-
-                alignItems: "center",
-                display: "flex",
-                position: "relative",
-                transform: "scale(1)",
-                transition: (transitionTheme) => transitionTheme.transitions.create(["transform"]),
-            }}
+        <div
+            className="relative flex items-center transform scale-100 transition-transform hover:scale-105"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
         >
             <Link
-                component={RouterLink}
+                className="flex items-center justify-center text-primary"
                 href="/"
-                sx={{
-                    "&:hover .MuiBadge-badge": {
-                        opacity: 1,
-                        visibility: "initial",
-                    },
-                    alignItems: "center",
-                    color: "primary",
-                    display: "flex",
-
-                    justifyContent: "center",
-                }}
             >
-                <Badge
-                    badgeContent="1.0"
-                    color="secondary"
-                    overlap="circular"
-                    sx={{
-                        ".MuiBadge-badge": {
-                            fontSize: theme.typography.pxToRem(10),
-                            fontWeight: 700,
-                            letterSpacing: "-.45px",
-                            opacity: 0,
-                            p: "3px 5px 5px",
-                            right: -5,
-                            top: -5,
-                            transform: "scale(.9)",
-                            transition: (transitionTheme) =>
-                                transitionTheme.transitions.create(["opacity", "visibility"]),
-                            visibility: "hidden",
-                        },
-                    }}
-                >
-                    <Box
-                        sx={{
-                            background: `linear-gradient(198deg, ${alpha(theme.palette.primary.main, 0.32)} 18%, transparent 100%)`,
-                            border: `2px solid ${theme.palette.primary.main}`,
-                            borderRadius: `${theme.shape.borderRadius * 2}px`,
-                            height: 32,
-                            width: 32,
+                <div className="relative">
+                    <Badge
+                        className={`
+                            absolute -right-1 -top-1 px-[5px] py-[3px] text-[10px] font-bold tracking-tighter
+                            transition-opacity duration-200 scale-90
+                            ${isHovered ? 'opacity-100 visible' : 'opacity-0 invisible'}
+                        `}
+                        variant="secondary"
+                    >
+                        1.0
+                    </Badge>
+                    <div
+                        className="w-8 h-8 rounded-lg border-2 border-primary"
+                        style={{
+                            background: 'linear-gradient(198deg, rgba(var(--primary) / 0.32) 18%, transparent 100%)'
                         }}
                     />
-                </Badge>
-                <Typography
-                    color="text.primary"
-                    component="span"
-                    fontWeight={700}
-                    sx={{
-                        fontSize: "18px",
-                        lineHeight: "18px",
-                        ml: "-24px",
-                        mr: "34px",
-                        mt: "-1px",
-                    }}
-                >
+                </div>
+                <span className="text-[18px] leading-[18px] font-bold text-foreground -ml-6 mr-[34px] -mt-[1px]">
                     M
-                </Typography>
-                <Typography
-                    color="text.primary"
-                    component="span"
-                    fontWeight={500}
-                    sx={{
-                        fontSize: "18px",
-                        letterSpacing: "-.45px",
-                        lineHeight: "18px",
-                        ml: "-23px",
-                        mt: "-1px",
-                    }}
-                >
+                </span>
+                <span className="text-[18px] leading-[18px] font-medium text-foreground -ml-[23px] -mt-[1px] tracking-tighter">
                     TEC
-                </Typography>
+                </span>
             </Link>
-        </Box>
+        </div>
     )
 }
+
+export default Logo

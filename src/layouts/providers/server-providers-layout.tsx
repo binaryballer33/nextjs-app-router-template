@@ -1,7 +1,7 @@
 import { type ReactNode } from "react"
 
 import { SessionProvider } from "next-auth/react"
-import { auth } from "src/auth/auth"
+import { auth } from "@/auth/auth"
 
 type LayoutProps = {
     children: ReactNode

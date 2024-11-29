@@ -1,33 +1,46 @@
-import DarkModeTwoToneIcon from "@mui/icons-material/DarkModeTwoTone"
-import LightModeTwoToneIcon from "@mui/icons-material/LightModeTwoTone"
+"use client"
 
-import { alpha, Button, Tooltip, useTheme } from "@mui/material"
+import { Button } from "@/components/ui/button"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
 
-import { toggleTheme } from "src/slices/theme"
-import { useDispatch } from "src/store"
+import { toggleTheme } from "@/slices/theme"
+import { useDispatch } from "@/store"
 
-function ThemeModeToggler() {
-    const theme = useTheme()
+export default function ThemeModeToggler() {
+    const { theme } = useTheme()
     const dispatch = useDispatch()
+
     const handleThemeToggle = () => dispatch(toggleTheme())
 
     return (
-        <Tooltip arrow title="Toggle Dark/Light Mode">
-            <Button
-                aria-label="Dark/Light Mode Toggler"
-                onClick={handleThemeToggle}
-                sx={{
-                    borderColor: alpha(theme.palette.divider, 0.2),
-                    borderRadius: 2,
-                    minWidth: "auto",
-                    padding: 0.5,
-                }}
-                variant="outlined"
-            >
-                {theme.palette.mode === "light" ? <LightModeTwoToneIcon /> : <DarkModeTwoToneIcon />}
-            </Button>
-        </Tooltip>
+        <TooltipProvider>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button
+                        aria-label="Dark/Light Mode Toggler"
+                        className="h-9 w-9 rounded-md border-divider/20 p-2"
+                        onClick={handleThemeToggle}
+                        size="icon"
+                        variant="outline"
+                    >
+                        {theme === "light" ? (
+                            <Sun className="h-5 w-5" />
+                        ) : (
+                            <Moon className="h-5 w-5" />
+                        )}
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>Toggle Dark/Light Mode</p>
+                </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
     )
 }
-
-export default ThemeModeToggler

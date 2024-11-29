@@ -1,21 +1,23 @@
-import type { NavBarItem } from "src/types/navbar-item"
+import type { NavBarItem } from "@/types/navbar-item"
 
 import { useTranslation } from "react-i18next"
 
-import AppsTwoToneIcon from "@mui/icons-material/AppsTwoTone"
-import BusinessCenterTwoToneIcon from "@mui/icons-material/BusinessCenterTwoTone"
-import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone"
-import SettingsIcon from "@mui/icons-material/Settings"
+import {
+    AppWindow,
+    Briefcase,
+    LayoutDashboard,
+    Settings
+} from "lucide-react"
 
-import routes from "src/routes/routes"
+import routes from "@/routes/routes"
 
-// manage the navbar items, their title, icons and routes from here. This is for both desktop and mobile navbars
-const useHorizontalNavBarItems = (): NavBarItem[] => {
+
+export default function useHorizontalNavBarItems(): NavBarItem[] {
     const { t } = useTranslation()
 
     return [
         {
-            icon: <DashboardTwoToneIcon />,
+            icon: <LayoutDashboard className="h-5 w-5" />,
             route: routes.dummy,
             subMenu: [
                 {
@@ -54,7 +56,7 @@ const useHorizontalNavBarItems = (): NavBarItem[] => {
             title: t("Dashboards"),
         },
         {
-            icon: <AppsTwoToneIcon />,
+            icon: <AppWindow className="h-5 w-5" />,
             route: routes.dummy,
             subMenu: [
                 {
@@ -89,7 +91,7 @@ const useHorizontalNavBarItems = (): NavBarItem[] => {
             title: t("Applications"),
         },
         {
-            icon: <BusinessCenterTwoToneIcon />,
+            icon: <Briefcase className="h-5 w-5" />,
             route: routes.dummy,
             subMenu: [
                 {
@@ -150,11 +152,9 @@ const useHorizontalNavBarItems = (): NavBarItem[] => {
             title: t("Management"),
         },
         {
-            icon: <SettingsIcon />,
+            icon: <Settings className="h-5 w-5" />,
             route: routes.dummy,
             title: t("Settings"),
         },
     ]
 }
-
-export default useHorizontalNavBarItems

@@ -4,6 +4,7 @@
  * Open the command palette (Ctrl + Shift + P) and execute the command > Reload Window.
  */
 const config = {
+    plugins: [require("prettier-plugin-tailwindcss")],
     endOfLine: "lf",
     semi: false,
     singleQuote: false,

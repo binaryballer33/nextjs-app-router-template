@@ -3,10 +3,10 @@
 // import axios from "axios"
 // import toast from "react-hot-toast"
 //
-// import QUERY_KEYS from "src/api/query-keys"
-// import { createCardRequestSchema } from "src/types/cards/card"
-// import { YuGiOhCardWithoutId } from "src/types/cards/yu-gi-oh"
-// import QUERY_ROUTES from "src/router/api-routes"
+// import QUERY_KEYS from "@/api/query-keys"
+// import { createCardRequestSchema } from "@/types/cards/card"
+// import { YuGiOhCardWithoutId } from "@/types/cards/yu-gi-oh"
+// import QUERY_ROUTES from "@/router/api-routes"
 //
 // export async function createYuGiOhCard(card: YuGiOhCardWithoutId) {
 //     return (await axios.post(QUERY_ROUTES.CREATE_YUGIOH_CARD, card)).data

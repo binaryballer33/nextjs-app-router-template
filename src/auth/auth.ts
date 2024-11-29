@@ -1,6 +1,6 @@
 import NextAuth from "next-auth"
 
-import authConfig from "src/auth/auth-config/auth-config"
+import authConfig from "@/auth/auth-config/auth-config"
 
 /*
  * TODO: My Next Auth TODOS

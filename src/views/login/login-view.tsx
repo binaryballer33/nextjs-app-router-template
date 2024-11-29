@@ -1,26 +1,26 @@
 "use client"
 
-import type { LoginRequest } from "src/types/forms/login"
+import type { LoginRequest } from "@/types/forms/login"
 
-import { defaultValuesLoginRequest as defaultValues, LoginRequestSchema } from "src/types/forms/login"
+import { defaultValuesLoginRequest as defaultValues, LoginRequestSchema } from "@/types/forms/login"
 
 import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
+import {toast} from "sonner"
 import { useTranslation } from "react-i18next"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { parseAsBoolean, useQueryState } from "nuqs"
 
-import handleServerResponse from "src/utils/helper-functions/handleServerResponse"
+import handleServerResponse from "@/utils/helper-functions/handleServerResponse"
 
-import login from "src/actions/auth/login"
+import login from "@/actions/auth/login"
 
-import Form from "src/components/react-hook-form/form-provider"
+import Form from "@/components/react-hook-form/form-provider"
 
-import routes from "src/routes/routes"
+import routes from "@/routes/routes"
 
-import LoginForm from "src/views/login/blocks/login-form"
-import TwoFactorCode from "src/views/login/blocks/two-factor-code"
+import LoginForm from "@/views/login/blocks/login-form"
+import TwoFactorCode from "@/views/login/blocks/two-factor-code"
 
 /*
   TODO: maybe I need this, maybe I don't import { useSession } from "next-auth/react"

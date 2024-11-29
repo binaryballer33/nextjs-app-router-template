@@ -1,10 +1,6 @@
 "use client"
 
-import type { ReactNode } from "react"
-
-import PropTypes from "prop-types"
-
-import { Box } from "@mui/material"
+import { type ReactNode } from "react"
 
 import Footer from "./footer/footer"
 import Header from "./header/header"
@@ -15,14 +11,12 @@ type MainLayoutProps = {
 
 export default function MainLayout({ children }: MainLayoutProps) {
     return (
-        <Box m="auto" width="95%">
+        <div className="mx-auto w-[95%]">
             <Header />
-            <Box my={2}>{children}</Box>
+            <main className="my-4">
+                {children}
+            </main>
             <Footer />
-        </Box>
+        </div>
     )
-}
-
-MainLayout.propTypes = {
-    children: PropTypes.node,
 }

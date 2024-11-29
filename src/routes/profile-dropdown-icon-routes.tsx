@@ -1,17 +1,30 @@
-import type { NavBarItem } from "src/types/navbar-item"
+import type { NavBarItem } from "@/types/navbar-item"
 
-import AccountBoxIcon from "@mui/icons-material/AccountBox"
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts"
-import ReceiptIcon from "@mui/icons-material/Receipt"
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
+import { Receipt, ShoppingCart, User, UserCog } from "lucide-react"
 
 import routes from "./routes"
 
 const profileIconDropdownNavItems: NavBarItem[] = [
-    { icon: <AccountBoxIcon />, route: routes.user.profile, title: "My Profile" },
-    { icon: <ManageAccountsIcon />, route: routes.dummy, title: "Profile settings" },
-    { icon: <ShoppingCartIcon />, route: routes.dummy, title: "Cart" },
-    { icon: <ReceiptIcon />, route: routes.dummy, title: "Orders" },
+    {
+        icon: <User className="h-5 w-5" />,
+        route: routes.user.profile,
+        title: "My Profile"
+    },
+    {
+        icon: <UserCog className="h-5 w-5" />,
+        route: routes.dummy,
+        title: "Profile settings"
+    },
+    {
+        icon: <ShoppingCart className="h-5 w-5" />,
+        route: routes.dummy,
+        title: "Cart"
+    },
+    {
+        icon: <Receipt className="h-5 w-5" />,
+        route: routes.dummy,
+        title: "Orders"
+    },
 ]
 
 export default profileIconDropdownNavItems

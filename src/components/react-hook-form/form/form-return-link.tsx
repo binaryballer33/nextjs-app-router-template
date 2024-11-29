@@ -1,38 +1,39 @@
-import type { LinkProps } from "@mui/material/Link"
+import type { LucideIcon } from "lucide-react"
 import type { ReactNode } from "react"
 
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
+import Link from "next/link"
 
-import Link from "@mui/material/Link"
-
-import RouterLink from "src/components/base/router-link"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import { ArrowLeft } from "lucide-react"
+import type { ButtonProps } from "@/components/ui/button"
 
 type FormReturnLinkProps = {
+    className?: string
     href: string
-    icon?: ReactNode
+    icon?: LucideIcon | ReactNode
+    size?: ButtonProps["size"]
     title: string
-} & LinkProps
+    variant?: ButtonProps["variant"]
+}
 
-export default function FormReturnLink({ href, icon, sx, title, ...other }: FormReturnLinkProps) {
+export default function FormReturnLink(props: FormReturnLinkProps) {
+    const { className,href,icon,size = "sm",title,variant = "ghost" } = props
+
     return (
-        <Link
-            color="primary"
-            component={RouterLink}
-            href={href}
-            sx={{
-                alignItems: "center",
-                display: "inline-flex",
-                gap: 0.5,
-                mt: 3,
-                mx: "auto",
-                ...sx,
-            }}
-            underline="hover"
-            variant="subtitle2"
-            {...other}
+        <Button
+            asChild
+            className={cn(
+                "mt-6 gap-2",
+                className
+            )}
+            size={size}
+            variant={variant}
         >
-            {icon || <ArrowBackIosNewIcon fontSize="small" />}
-            {title}
-        </Link>
+            <Link href={href}>
+                {icon || <ArrowLeft className="h-4 w-4" />}
+                {title}
+            </Link>
+        </Button>
     )
 }

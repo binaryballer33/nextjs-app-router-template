@@ -1,20 +1,18 @@
-import type { FormHelperTextProps } from "@mui/material/FormHelperText"
-import type { FormLabelProps } from "@mui/material/FormLabel"
-import type { RadioProps } from "@mui/material/Radio"
-import type { RadioGroupProps } from "@mui/material/RadioGroup"
-import type { SxProps, Theme } from "@mui/material/styles"
-import type { ReactNode } from "react"
+import { type ReactNode } from "react"
 
-import { Controller, useFormContext } from "react-hook-form"
+import { useFormContext } from "react-hook-form"
 
-import FormControl from "@mui/material/FormControl"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import FormHelperText from "@mui/material/FormHelperText"
-import FormLabel from "@mui/material/FormLabel"
-import Radio from "@mui/material/Radio"
-import RadioGroup from "@mui/material/RadioGroup"
+import { cn } from "@/lib/utils"
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+
+
+
+
+
 
 type Props = {
+    className?: string
     helperText?: ReactNode
     label?: string
     name: string
@@ -22,62 +20,55 @@ type Props = {
         label: string
         value: string
     }[]
-    slotProps?: {
-        formHelperText: FormHelperTextProps
-        formLabel: FormLabelProps
-        radio: RadioProps
-        wrap?: SxProps<Theme>
-    }
-} & RadioGroupProps
+    orientation?: "horizontal" | "vertical"
+}
 
-export default function RHFRadioGroup({ helperText, label, name, options, slotProps, ...other }: Props) {
+export default function RHFRadioGroup(props: Props) {
+    const { className, helperText, label, name, options, orientation } = props
     const { control } = useFormContext()
 
-    const labelledby = `${name}-radio-buttons-group-label`
-    const ariaLabel = (val: string) => `Radio ${val}`
-
     return (
-        <Controller
+        <FormField
             control={control}
             name={name}
-            render={({ field, fieldState: { error } }) => (
-                <FormControl component="fieldset" sx={slotProps?.wrap}>
-                    {label && (
-                        <FormLabel
-                            component="legend"
-                            id={labelledby}
-                            {...slotProps?.formLabel}
-                            sx={{ mb: 1, typography: "body2", ...slotProps?.formLabel.sx }}
+            render={({ field }) => (
+                <FormItem className={className}>
+                    {label && <FormLabel>{label}</FormLabel>}
+                    <FormControl>
+                        <RadioGroup
+                            className={cn(
+                                "gap-3",
+                                orientation === "horizontal" ? "flex flex-row" : "flex flex-col"
+                            )}
+                            defaultValue={field.value}
+                            onValueChange={field.onChange}
                         >
-                            {label}
-                        </FormLabel>
-                    )}
-
-                    <RadioGroup {...field} aria-labelledby={labelledby} {...other}>
-                        {options.map((option) => (
-                            <FormControlLabel
-                                control={
-                                    <Radio
-                                        {...slotProps?.radio}
-                                        inputProps={{
-                                            ...(!option.label && { "aria-label": ariaLabel(option.label) }),
-                                            ...slotProps?.radio?.inputProps,
-                                        }}
+                            {options.map((option) => (
+                                <div
+                                    className="flex items-center space-x-2"
+                                    key={option.value}
+                                >
+                                    <RadioGroupItem
+                                        id={`${name}-${option.value}`}
+                                        value={option.value}
                                     />
-                                }
-                                key={option.value}
-                                label={option.label}
-                                value={option.value}
-                            />
-                        ))}
-                    </RadioGroup>
-
-                    {(!!error || helperText) && (
-                        <FormHelperText error={!!error} sx={{ mx: 0 }} {...slotProps?.formHelperText}>
-                            {error ? error?.message : helperText}
-                        </FormHelperText>
+                                    <FormLabel
+                                        className="text-sm font-normal"
+                                        htmlFor={`${name}-${option.value}`}
+                                    >
+                                        {option.label}
+                                    </FormLabel>
+                                </div>
+                            ))}
+                        </RadioGroup>
+                    </FormControl>
+                    {helperText && (
+                        <div className="text-sm text-muted-foreground">
+                            {helperText}
+                        </div>
                     )}
-                </FormControl>
+                    <FormMessage />
+                </FormItem>
             )}
         />
     )

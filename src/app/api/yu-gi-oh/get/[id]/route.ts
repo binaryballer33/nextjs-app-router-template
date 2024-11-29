@@ -1,9 +1,9 @@
 import type { NextRequest } from "next/server"
-import type { ServerResponse } from "src/types/server-response"
+import type { ServerResponse } from "@/types/server-response"
 
 import { NextResponse } from "next/server"
 
-import getYuGiOhCardByIdQuery from "src/actions/yu-gi-oh/queries/get-yu-gi-oh-card-by-id-query"
+import getYuGiOhCardByIdQuery from "@/actions/yu-gi-oh/queries/get-yu-gi-oh-card-by-id-query"
 
 type ContextProps = {
     params: {

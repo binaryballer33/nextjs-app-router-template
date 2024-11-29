@@ -1,15 +1,19 @@
 "use client"
 
-import type { NavBarItem } from "src/types/navbar-item"
+import { type NavBarItem } from "@/types/navbar-item"
 
 import { usePathname, useRouter } from "next/navigation"
 
-import { useRef, useState } from "react"
+import { type FC, useRef, useState } from "react"
 
-import ChevronRightTwoToneIcon from "@mui/icons-material/ChevronRightTwoTone"
-import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone"
-
-import { alpha, Box, Button, Paper, Popper } from "@mui/material"
+import { ChevronRight, ChevronDown } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
+import { cn } from "@/lib/utils"
 
 const isRouteActive = (route?: string, currentPath?: string, subMenu?: NavBarItem[]): boolean | undefined => {
     if (route && route === currentPath) return true
@@ -21,144 +25,110 @@ type DesktopNavBarItemProps = {
     navbarItem: NavBarItem
 }
 
-export default function DesktopNavBarItem({ isSub, navbarItem }: DesktopNavBarItemProps) {
+const DesktopNavBarItem: FC<DesktopNavBarItemProps> = ({ isSub, navbarItem }) => {
     const router = useRouter()
     const pathname = usePathname()
-    const [menuOpen, setMenuOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
     const [isHovered, setIsHovered] = useState(false)
     const anchorRef = useRef(null)
     const isActive = navbarItem.route ? isRouteActive(navbarItem.route, pathname, navbarItem.subMenu) : false
-    const placement = isSub && navbarItem.subMenu ? "right-start" : "bottom-start"
 
-    const commonProps = {
-        onMouseEnter: () => {
-            setMenuOpen(true)
-            setIsHovered(true)
-        },
-
-        onMouseLeave: () => {
-            setMenuOpen(false)
-            setIsHovered(false)
-        },
+    const handleMouseEnter = () => {
+        setIsOpen(true)
+        setIsHovered(true)
     }
 
-    const getBorderRadius = () => {
-        if (isSub && navbarItem.subMenu) return 6
-        if (navbarItem.subMenu) return 0
-        return 6
+    const handleMouseLeave = () => {
+        setIsOpen(false)
+        setIsHovered(false)
+    }
+
+    const handleClick = () => {
+        if (navbarItem.route) {
+            router.push(navbarItem.route)
+        }
+    }
+
+    const SubButton = () => (
+        <Button
+            className={cn(
+                "w-full justify-between text-sm font-semibold",
+                "hover:bg-primary/10 hover:text-primary active:bg-primary/10 active:text-primary",
+                "text-muted-foreground dark:text-neutral-300",
+                "my-[1px]"
+            )}
+            onClick={handleClick}
+            variant="ghost"
+        >
+            <span className="flex items-center gap-2">
+                {navbarItem.icon}
+                {navbarItem.title}
+            </span>
+            {navbarItem.subMenu && <ChevronRight className="h-4 w-4" />}
+        </Button>
+    )
+
+    const MainButton = () => (
+        <Button
+            className={cn(
+                "text-sm font-medium mr-6 px-6 py-3.5",
+                "hover:bg-neutral-300/50 dark:hover:bg-neutral-900 hover:text-primary",
+                {
+                    "bg-background": isHovered,
+                    "bg-background dark:bg-background": isActive,
+                    "text-neutral-900 dark:text-neutral-400": !isHovered && !isActive,
+                    "text-secondary-dark": isHovered || isActive,
+                }
+            )}
+            onClick={handleClick}
+            variant="ghost"
+        >
+            <span className="flex items-center gap-2">
+                {navbarItem.icon}
+                {navbarItem.title}
+            </span>
+            {navbarItem.subMenu && <ChevronDown className="h-4 w-4 ml-1" />}
+        </Button>
+    )
+
+    if (!navbarItem.subMenu) {
+        return isSub ? <SubButton /> : <MainButton />
     }
 
     return (
-        <Box
-            position="relative"
-            sx={{
-                "&:hover": {
-                    "& > .MuiButton-root": {
-                        borderBottomLeftRadius: getBorderRadius(),
-                        borderBottomRightRadius: getBorderRadius(),
-                        zIndex: 13,
-                    },
-
-                    zIndex: 3,
-                },
-            }}
-            zIndex={2}
-            {...commonProps}
+        <div
+            className={cn("relative z-10")}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             ref={anchorRef}
         >
-            {isSub ? (
-                <Button
-                    endIcon={navbarItem.subMenu ? <ChevronRightTwoToneIcon fontSize="small" /> : null}
-                    fullWidth
-                    onClick={() => navbarItem.route && router.push(navbarItem.route)}
-                    startIcon={navbarItem.icon ? navbarItem.icon : null}
-                    sx={{
-                        ":active": {
-                            backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.08),
-                            color: (theme) => theme.palette.primary.main,
-                        },
-                        ":hover": {
-                            backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.08),
-                            color: (theme) => theme.palette.primary.main,
-                        },
-                        backgroundColor: "transparent",
-                        color: (theme) =>
-                            theme.palette.mode === "dark" ? theme.palette.neutral[300] : theme.palette.neutral[800],
-                        fontSize: 14,
-                        fontWeight: 600,
-
-                        justifyContent: "space-between",
-                        my: "1px",
-                    }}
+            <Popover open={isOpen}>
+                <PopoverTrigger asChild>
+                    {isSub ? <SubButton /> : <MainButton />}
+                </PopoverTrigger>
+                <PopoverContent
+                    align={isSub ? "start" : "start"}
+                    className={cn(
+                        "w-max min-w-[200px] p-2",
+                        "bg-background rounded-md shadow-lg",
+                        isSub ? "ml-1" : "mt-[-1px]",
+                        {
+                            "rounded-tl-none": !isSub && navbarItem.subMenu,
+                        }
+                    )}
+                    side={isSub ? "right" : "bottom"}
                 >
-                    {navbarItem.title}
-                </Button>
-            ) : (
-                <Button
-                    endIcon={navbarItem.subMenu ? <ExpandMoreTwoToneIcon fontSize="small" /> : null}
-                    onClick={() => navbarItem.route && router.push(navbarItem.route)}
-                    startIcon={navbarItem.icon ? navbarItem.icon : null}
-                    {...commonProps}
-                    sx={{
-                        "&:hover": {
-                            backgroundColor: (theme) =>
-                                theme.palette.mode === "dark" ? theme.palette.neutral[900] : theme.palette.neutral[300],
-                            color: (theme) => theme.palette.primary.main,
-                        },
-                        backgroundColor: (theme) => {
-                            if (isHovered) return theme.palette.background.paper
-                            if (isActive) return theme.palette.mode === "dark" ? "background.default" : "transparent"
-                            return "transparent"
-                        },
-                        borderRadius: "6px",
-                        color: (theme) => {
-                            // Determine if the item is either hovered or active
-                            if (isHovered || isActive)
-                                // Since both conditions for dark and light mode return the same value,
-                                // you can directly return without checking the theme.palette.mode
-                                return theme.palette.secondary.dark
-
-                            // For non-hovered and non-active items, choose color based on the theme mode
-                            return theme.palette.mode === "dark"
-                                ? theme.palette.neutral[400] // Dark mode text color
-                                : theme.palette.neutral[900] // Light mode text color
-                        },
-                        fontSize: 14,
-                        fontWeight: 500,
-                        mr: 1.5,
-                        p: (theme) => theme.spacing(0.9, 1.5, 0.9, 1.8),
-                    }}
-                >
-                    {navbarItem.title ? navbarItem.title : null}
-                </Button>
-            )}
-            {navbarItem.subMenu && (
-                <Popper
-                    anchorEl={anchorRef.current}
-                    disablePortal
-                    open={menuOpen}
-                    placement={placement}
-                    sx={{ borderRadius: 6, zIndex: 12 }}
-                >
-                    <Paper
-                        {...commonProps}
-                        elevation={23}
-                        sx={{
-                            backgroundColor: "background.paper",
-                            borderRadius: "6px",
-                            borderTopLeftRadius: getBorderRadius(),
-                            maxWidth: 400,
-                            minWidth: "max-content",
-                            mt: "-1px",
-                            p: 2,
-                        }}
-                    >
-                        {navbarItem.subMenu.map((subItem) => (
-                            <DesktopNavBarItem isSub key={subItem.title} navbarItem={subItem} />
-                        ))}
-                    </Paper>
-                </Popper>
-            )}
-        </Box>
+                    {navbarItem.subMenu.map((subItem) => (
+                        <DesktopNavBarItem
+                            isSub
+                            key={subItem.title}
+                            navbarItem={subItem}
+                        />
+                    ))}
+                </PopoverContent>
+            </Popover>
+        </div>
     )
 }
+
+export default DesktopNavBarItem

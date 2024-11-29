@@ -1,80 +1,31 @@
-import type { CheckboxProps } from "@mui/material/Checkbox"
-import type { ChipProps } from "@mui/material/Chip"
-import type { FormControlProps } from "@mui/material/FormControl"
-import type { FormHelperTextProps } from "@mui/material/FormHelperText"
-import type { InputLabelProps } from "@mui/material/InputLabel"
-import type { SelectProps } from "@mui/material/Select"
-import type { SxProps, Theme } from "@mui/material/styles"
-import type { TextFieldProps } from "@mui/material/TextField"
-import type { ReactNode } from "react"
+import { type ReactNode, useState } from "react"
 
-import { Controller, useFormContext } from "react-hook-form"
+import { useFormContext } from "react-hook-form"
 
-import Box from "@mui/material/Box"
-import Checkbox from "@mui/material/Checkbox"
-import Chip from "@mui/material/Chip"
-import FormControl from "@mui/material/FormControl"
-import FormHelperText from "@mui/material/FormHelperText"
-import InputLabel from "@mui/material/InputLabel"
-import MenuItem from "@mui/material/MenuItem"
-import Select from "@mui/material/Select"
-import TextField from "@mui/material/TextField"
+import { Check } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+} from "@/components/ui/command"
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import { cn } from "@/lib/utils"
 
+// Single Select
 type RHFSelectProps = {
-    children: ReactNode
-    name: string
-    native?: boolean
-    slotProps?: {
-        paper?: SxProps<Theme>
-    }
-} & TextFieldProps
-
-export default function RHFSelect({
-    children,
-    helperText,
-    InputLabelProps,
-    inputProps,
-    name,
-    native,
-    slotProps,
-    ...other
-}: RHFSelectProps) {
-    const { control } = useFormContext()
-
-    const labelId = `${name}-select-label`
-
-    return (
-        <Controller
-            control={control}
-            name={name}
-            render={({ field, fieldState: { error } }) => (
-                <TextField
-                    {...field}
-                    error={!!error}
-                    fullWidth
-                    helperText={error ? error?.message : helperText}
-                    InputLabelProps={{ htmlFor: labelId, ...InputLabelProps }}
-                    inputProps={{ id: labelId, ...inputProps }}
-                    select
-                    SelectProps={{
-                        MenuProps: { PaperProps: { sx: { maxHeight: 220, ...slotProps?.paper } } },
-                        native,
-                        sx: { textTransform: "capitalize" },
-                    }}
-                    {...other}
-                >
-                    {children}
-                </TextField>
-            )}
-        />
-    )
-}
-
-// ----------------------------------------------------------------------
-
-type RHFMultiSelectProps = {
-    checkbox?: boolean
-    chip?: boolean
+    className?: string
     helperText?: ReactNode
     label?: string
     name: string
@@ -83,98 +34,143 @@ type RHFMultiSelectProps = {
         value: string
     }[]
     placeholder?: string
-    slotProps?: {
-        checkbox?: CheckboxProps
-        chip?: ChipProps
-        formHelperText?: FormHelperTextProps
-        inputLabel?: InputLabelProps
-        select: SelectProps
-    }
-} & FormControlProps
+}
+
+export default function RHFSelect(props: RHFSelectProps) {
+    const { className, helperText, label, name, options, placeholder } = props
+    const { control } = useFormContext()
+
+    return (
+        <FormField
+            control={control}
+            name={name}
+            render={({ field }) => (
+                <FormItem className={className}>
+                    {label && <FormLabel>{label}</FormLabel>}
+                    <Select defaultValue={field.value} onValueChange={field.onChange}>
+                        <FormControl>
+                            <SelectTrigger>
+                                <SelectValue placeholder={placeholder} />
+                            </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                            {options.map((option) => (
+                                <SelectItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                    {helperText && (
+                        <div className="text-sm text-muted-foreground">
+                            {helperText}
+                        </div>
+                    )}
+                    <FormMessage />
+                </FormItem>
+            )}
+        />
+    )
+}
+
+// Multi Select
+type RHFMultiSelectProps = {
+    className?: string
+    helperText?: React.ReactNode
+    label?: string
+    name: string
+    options: {
+        label: string
+        value: string
+    }[]
+    placeholder?: string
+}
 
 export function RHFMultiSelect({
-    checkbox,
-    chip,
+    className,
     helperText,
     label,
     name,
     options,
     placeholder,
-    slotProps,
-    ...other
 }: RHFMultiSelectProps) {
     const { control } = useFormContext()
-
-    const labelId = `${name}-select-label`
+    const [open, setOpen] = useState(false)
 
     return (
-        <Controller
+        <FormField
             control={control}
             name={name}
-            render={({ field, fieldState: { error } }) => (
-                <FormControl error={!!error} {...other}>
-                    {label && (
-                        <InputLabel htmlFor={labelId} {...slotProps?.inputLabel}>
-                            {label}
-                        </InputLabel>
+            render={({ field }) => (
+                <FormItem className={cn("flex flex-col", className)}>
+                    {label && <FormLabel>{label}</FormLabel>}
+                    <Popover onOpenChange={setOpen} open={open}>
+                        <PopoverTrigger asChild>
+                            <FormControl>
+                                <Button
+                                    className={cn(
+                                        "w-full justify-between",
+                                        !field.value?.length && "text-muted-foreground"
+                                    )}
+                                    role="combobox"
+                                    variant="outline"
+                                >
+                                    {field.value?.length > 0 ? (
+                                        <div className="flex gap-1 flex-wrap">
+                                            {field.value.map((value: string) => (
+                                                <Badge
+                                                    className="mr-1"
+                                                    key={value}
+                                                    variant="secondary"
+                                                >
+                                                    {options.find((opt) => opt.value === value)?.label}
+                                                </Badge>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        placeholder
+                                    )}
+                                </Button>
+                            </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-full p-0">
+                            <Command>
+                                <CommandInput placeholder="Search..." />
+                                <CommandEmpty>No option found.</CommandEmpty>
+                                <CommandGroup>
+                                    {options.map((option) => {
+                                        const isSelected = field.value?.includes(option.value)
+                                        return (
+                                            <CommandItem
+                                                key={option.value}
+                                                onSelect={() => {
+                                                    const newValue = isSelected
+                                                        ? field.value.filter((value: string) => value !== option.value)
+                                                        : [...(field.value || []), option.value]
+                                                    field.onChange(newValue)
+                                                }}
+                                            >
+                                                <Check
+                                                    className={cn(
+                                                        "mr-2 h-4 w-4",
+                                                        isSelected ? "opacity-100" : "opacity-0"
+                                                    )}
+                                                />
+                                                {option.label}
+                                            </CommandItem>
+                                        )
+                                    })}
+                                </CommandGroup>
+                            </Command>
+                        </PopoverContent>
+                    </Popover>
+                    {helperText && (
+                        <div className="text-sm text-muted-foreground">
+                            {helperText}
+                        </div>
                     )}
-
-                    <Select
-                        {...field}
-                        displayEmpty={!!placeholder}
-                        label={label}
-                        multiple
-                        renderValue={(selected) => {
-                            const selectedItems = options.filter((item) => (selected as string[]).includes(item.value))
-
-                            if (!selectedItems.length && placeholder) {
-                                return <Box sx={{ color: "text.disabled" }}>{placeholder}</Box>
-                            }
-
-                            if (chip) {
-                                return (
-                                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                                        {selectedItems.map((item) => (
-                                            <Chip
-                                                key={item.value}
-                                                label={item.label}
-                                                size="small"
-                                                // @ts-ignore
-                                                variant="soft"
-                                                {...slotProps?.chip}
-                                            />
-                                        ))}
-                                    </Box>
-                                )
-                            }
-
-                            return selectedItems.map((item) => item.label).join(", ")
-                        }}
-                        {...slotProps?.select}
-                        inputProps={{ id: labelId, ...slotProps?.select?.inputProps }}
-                    >
-                        {options.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {checkbox && (
-                                    <Checkbox
-                                        checked={field.value.includes(option.value)}
-                                        disableRipple
-                                        size="small"
-                                        {...slotProps?.checkbox}
-                                    />
-                                )}
-
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </Select>
-
-                    {(!!error || helperText) && (
-                        <FormHelperText error={!!error} {...slotProps?.formHelperText}>
-                            {error ? error?.message : helperText}
-                        </FormHelperText>
-                    )}
-                </FormControl>
+                    <FormMessage />
+                </FormItem>
             )}
         />
     )

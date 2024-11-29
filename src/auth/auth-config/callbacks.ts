@@ -1,6 +1,6 @@
 import type { NextAuthConfig } from "next-auth"
 
-import getUserById from "src/actions/user/get-user-by-id" /*
+import getUserById from "@/actions/user/get-user-by-id" /*
  * the user object that is returned from the Credentials authorize callback is passed to the sign-in callback
  *
  * the user object that is returned from the OAuth Provider is passed to the sign-in callback, shape of user object depends on the oauth provider

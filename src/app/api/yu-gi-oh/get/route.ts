@@ -1,9 +1,9 @@
 import type { NextRequest } from "next/server"
-import type { ServerResponse } from "src/types/server-response"
+import type { ServerResponse } from "@/types/server-response"
 
 import { NextResponse } from "next/server"
 
-import getYuGiOhCardsQuery from "src/actions/yu-gi-oh/queries/get-yu-gi-oh-cards-query"
+import getYuGiOhCardsQuery from "@/actions/yu-gi-oh/queries/get-yu-gi-oh-cards-query"
 
 // eslint-disable-next-line import/prefer-default-export
 export async function GET(request: NextRequest) {

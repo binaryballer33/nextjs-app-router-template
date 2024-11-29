@@ -1,40 +1,43 @@
-import type { TextFieldProps } from "@mui/material/TextField"
+import { useFormContext } from "react-hook-form"
 
-import { Controller, useFormContext } from "react-hook-form"
+import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
-import TextField from "@mui/material/TextField"
 
 type Props = {
+    className?: string
     name: string
-} & TextFieldProps
+    type?: string
+} & React.InputHTMLAttributes<HTMLInputElement>
 
-export default function RHFTextField({ helperText, name, type, ...other }: Props) {
+export default function RHFInput({ className, name, type = "text", ...other }: Props) {
     const { control } = useFormContext()
 
     return (
-        <Controller
+        <FormField
             control={control}
             name={name}
-            render={({ field, fieldState: { error } }) => (
-                <TextField
-                    {...field}
-                    error={!!error}
-                    fullWidth
-                    helperText={error?.message ?? helperText}
-                    inputProps={{
-                        autoComplete: "off",
-                    }}
-                    onChange={(event) => {
-                        if (type === "number") {
-                            field.onChange(Number(event.target.value))
-                        } else {
-                            field.onChange(event.target.value)
-                        }
-                    }}
-                    type={type}
-                    value={type === "number" && field.value === 0 ? "" : field.value}
-                    {...other}
-                />
+            render={({ field }) => (
+                <FormItem>
+                    <FormControl>
+                        <Input
+                            {...field}
+                            autoComplete="off"
+                            className={className}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                if (type === "number") {
+                                    field.onChange(Number(event.target.value))
+                                } else {
+                                    field.onChange(event.target.value)
+                                }
+                            }}
+                            type={type}
+                            value={type === "number" && field.value === 0 ? "" : field.value}
+                            {...other}
+                        />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
             )}
         />
     )

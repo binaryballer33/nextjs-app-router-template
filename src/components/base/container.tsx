@@ -1,24 +1,38 @@
-import type { ReactNode } from "react"
+import { type HTMLAttributes } from "react"
 
-import Box from "@mui/material/Box"
+import { cn } from "@/lib/utils"
 
-type ContainerProps = {
-    children: ReactNode
+interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
+  disableGutters?: boolean
+  maxWidth?: "2xl" | "full" | "lg" | "md" | "sm" | "xl" | "xs"
 }
 
-function Container({ children, ...rest }: ContainerProps) {
-    return (
-        <Box
-            margin="0 auto"
-            maxWidth={{ lg: 1500, md: 1236, sm: 720 }}
-            paddingX={2}
-            paddingY={{ md: 8, sm: 6, xs: 4 }}
-            width={1}
-            {...rest}
-        >
-            {children}
-        </Box>
-    )
+export default function Container({
+  children,
+  className,
+  disableGutters = false,
+  maxWidth = "lg",
+  ...props
+}: ContainerProps) {
+  return (
+    <div
+      className={cn(
+        "mx-auto w-full",
+        // Padding/gutters
+        !disableGutters && "px-4 sm:px-6 lg:px-8",
+        // Max-width variants
+        maxWidth === "xs" && "max-w-screen-xs",
+        maxWidth === "sm" && "max-w-screen-sm",
+        maxWidth === "md" && "max-w-screen-md",
+        maxWidth === "lg" && "max-w-screen-lg",
+        maxWidth === "xl" && "max-w-screen-xl",
+        maxWidth === "2xl" && "max-w-screen-2xl",
+        maxWidth === "full" && "max-w-full",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  )
 }
-
-export default Container

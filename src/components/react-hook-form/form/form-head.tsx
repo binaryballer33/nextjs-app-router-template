@@ -1,46 +1,48 @@
-import type { BoxProps } from "@mui/material/Box"
 import type { ReactNode } from "react"
 
-import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography" // ----------------------------------------------------------------------
-
-// ----------------------------------------------------------------------
+import { cn } from "@/lib/utils"
 
 type FormHeadProps = {
+    className?: string
     description?: ReactNode
     icon?: ReactNode
     title: ReactNode
-} & BoxProps
+}
 
-export default function FormHead({ description, icon, sx, title, ...other }: FormHeadProps) {
+export default function FormHead({
+    className,
+    description,
+    icon,
+    title
+}: FormHeadProps) {
     return (
         <>
             {icon && (
-                <Box
-                    component="span"
-                    display="inline-flex"
-                    justifyContent="center"
-                    sx={{ mb: 3, mx: "auto", width: 1 }}
+                <div
+                    className={cn(
+                        "mb-3 flex w-full justify-center"
+                    )}
                 >
                     {icon}
-                </Box>
+                </div>
             )}
 
-            <Box
-                display="flex"
-                flexDirection="column"
-                gap={1.5}
-                sx={{ mb: 5, textAlign: "center", whiteSpace: "pre-line", ...sx }}
-                {...other}
+            <div
+                className={cn(
+                    "mb-5 flex flex-col gap-1.5 text-center whitespace-pre-line",
+                    className
+                )}
             >
-                <Typography variant="h5">{title}</Typography>
+                <h2 className="text-xl font-semibold">
+                    {title}
+                </h2>
 
                 {description && (
-                    <Typography sx={{ color: "text.secondary" }} variant="body1">
+                    <p className="text-muted-foreground">
                         {description}
-                    </Typography>
+                    </p>
                 )}
-            </Box>
+            </div>
         </>
     )
 }

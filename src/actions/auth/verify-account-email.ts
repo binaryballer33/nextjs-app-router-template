@@ -1,16 +1,16 @@
 "use server"
 
-import type { ServerResponse } from "src/types/auth/server-response"
-import type { VerifyEmail } from "src/types/forms/verify-email"
+import type { ServerResponse } from "@/types/auth/server-response"
+import type { VerifyEmail } from "@/types/forms/verify-email"
 
-import { VerifyEmailSchema } from "src/types/forms/verify-email"
-import VerifyIdSchema from "src/types/forms/verify-id"
+import { VerifyEmailSchema } from "@/types/forms/verify-email"
+import VerifyIdSchema from "@/types/forms/verify-id"
 
-import prisma from "src/utils/database/prisma"
+import prisma from "@/lib/utils/database/prisma"
 
-import deleteVerificationTokenById from "src/actions/auth/tokens/verification-token/delete-verification-token-by-id"
-import getVerificationTokenByToken from "src/actions/auth/tokens/verification-token/get-verification-token-by-token"
-import getUserByEmail from "src/actions/user/get-user-by-email"
+import deleteVerificationTokenById from "@/actions/auth/tokens/verification-token/delete-verification-token-by-id"
+import getVerificationTokenByToken from "@/actions/auth/tokens/verification-token/get-verification-token-by-token"
+import getUserByEmail from "@/actions/user/get-user-by-email"
 
 type VerifyEmailParams = {
     token: string

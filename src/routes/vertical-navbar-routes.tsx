@@ -1,25 +1,28 @@
-import type { NavBarItem } from "src/types/navbar-item"
+import type { NavBarItem } from "@/types/navbar-item"
 
 import { useTranslation } from "react-i18next"
 
-import AppsRoundedIcon from "@mui/icons-material/AppsRounded"
-import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded"
-import FavoriteIcon from "@mui/icons-material/Favorite"
-import LayersRoundedIcon from "@mui/icons-material/LayersRounded"
-import PeopleRoundedIcon from "@mui/icons-material/PeopleRounded"
-import ReceiptRoundedIcon from "@mui/icons-material/ReceiptRounded"
-import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded"
+import {
+    AppWindow,
+    Heart,
+    Layers,
+    LayoutDashboard,
+    Receipt,
+    ShoppingCart,
+    Users
+} from "lucide-react"
 
-import routes from "src/routes/routes"
+import routes from "./routes"
 
-const useVerticalNavBarItems = (): NavBarItem[] => {
+
+export default function useVerticalNavBarItems(): NavBarItem[] {
     const { t } = useTranslation()
 
     return [
         {
             subMenu: [
                 {
-                    icon: <DashboardRoundedIcon />,
+                    icon: <LayoutDashboard className="h-5 w-5" />,
                     subMenu: [
                         {
                             route: routes.dummy,
@@ -57,7 +60,7 @@ const useVerticalNavBarItems = (): NavBarItem[] => {
                     title: t("Dashboards"),
                 },
                 {
-                    icon: <AppsRoundedIcon />,
+                    icon: <AppWindow className="h-5 w-5" />,
                     subMenu: [
                         {
                             route: routes.dummy,
@@ -96,7 +99,7 @@ const useVerticalNavBarItems = (): NavBarItem[] => {
         {
             subMenu: [
                 {
-                    icon: <PeopleRoundedIcon />,
+                    icon: <Users className="h-5 w-5" />,
                     subMenu: [
                         {
                             route: routes.dummy,
@@ -110,16 +113,16 @@ const useVerticalNavBarItems = (): NavBarItem[] => {
                     title: t("Users"),
                 },
                 {
-                    icon: <FavoriteIcon />,
+                    icon: <Heart className="h-5 w-5" />,
                     route: routes.dummy,
                     title: t("Favorites"),
                 },
                 {
-                    icon: <ShoppingCartRoundedIcon />,
+                    icon: <ShoppingCart className="h-5 w-5" />,
                     title: t("Cart"),
                 },
                 {
-                    icon: <ReceiptRoundedIcon />,
+                    icon: <Receipt className="h-5 w-5" />,
                     title: t("Orders"),
                 },
             ],
@@ -128,7 +131,7 @@ const useVerticalNavBarItems = (): NavBarItem[] => {
         {
             subMenu: [
                 {
-                    icon: <LayersRoundedIcon />,
+                    icon: <Layers className="h-5 w-5" />,
                     route: routes.dummy,
                     title: t("UI Components"),
                 },
@@ -137,5 +140,3 @@ const useVerticalNavBarItems = (): NavBarItem[] => {
         },
     ]
 }
-
-export default useVerticalNavBarItems

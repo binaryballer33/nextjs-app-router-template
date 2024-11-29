@@ -1,55 +1,41 @@
 "use client"
 
-import { Avatar, IconButton, Stack, useTheme } from "@mui/material"
+import { useCallback, useRef, useState } from "react"
 
-import usePopover from "src/hooks/use-popover"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 
 import ProfileIconDropdown from "./profile-icon-dropdown-content"
 
-// TODO: make icon button hoverable so that you don't have to click it to see the dropdown
 export default function Profile() {
-    const popover = usePopover<HTMLButtonElement>()
-    const theme = useTheme()
+    const [open, setOpen] = useState(false)
+    const buttonRef = useRef<HTMLButtonElement>(null)
+
+    const handleClose = useCallback(() => {
+        setOpen(false)
+    }, [])
 
     return (
-        <Stack
-            alignItems="center"
-            direction={{ sm: "row", xs: "column" }}
-            justifyContent="space-around"
-            spacing={{ sm: 3, xs: 2 }}
-        >
-            <IconButton
-                aria-controls={popover.open ? "profile-menu" : undefined}
-                aria-expanded={popover.open ? "true" : undefined}
+        <div className="flex flex-col items-center sm:flex-row sm:justify-around gap-2 sm:gap-3">
+            <Button
+                aria-controls={open ? "profile-menu" : undefined}
+                aria-expanded={open}
                 aria-haspopup="true"
-                color="primary"
-                id="profile-button"
-                onClick={popover.handleOpen}
-                ref={popover.anchorRef}
-                sx={{
-                    "&:hover": {
-                        boxShadow: `0 0 0 3px ${theme.palette.primary.main}`,
-                    },
-                    p: 0,
-                }}
+                className="relative h-9 w-9 rounded-full p-0 hover:ring-3 hover:ring-primary"
+                onClick={() => setOpen(true)}
+                ref={buttonRef}
+                size="icon"
+                variant="ghost"
             >
-                <Avatar
-                    alt="Shaquille Mandy"
-                    src=""
-                    sx={{
-                        borderRadius: "inherit",
-                        height: 36,
-                        width: 36,
-                    }}
-                />
-            </IconButton>
+                <Avatar className="h-9 w-9">
+                    <AvatarFallback>SM</AvatarFallback>
+                </Avatar>
+            </Button>
+
             <ProfileIconDropdown
-                anchorEl={popover.anchorRef.current}
-                anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
-                onClose={popover.handleClose}
-                open={popover.open}
-                transformOrigin={{ horizontal: "center", vertical: "top" }}
+                onClose={handleClose}
+                open={open}
             />
-        </Stack>
+        </div>
     )
 }

@@ -1,10 +1,10 @@
 "use server"
 
-import type { ServerResponse } from "src/types/auth/server-response"
+import type { ServerResponse } from "@/types/auth/server-response"
 
-import VerifyIdSchema from "src/types/forms/verify-id"
+import VerifyIdSchema from "@/types/forms/verify-id"
 
-import prisma from "src/utils/database/prisma"
+import prisma from "@/lib/utils/database/prisma"
 
 export default async function deleteTwoFactorTokenById(id: string): Promise<ServerResponse> {
     try {
