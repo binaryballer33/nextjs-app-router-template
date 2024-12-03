@@ -2,20 +2,20 @@
 
 import { useFormContext } from "react-hook-form"
 
-import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { Loader2 } from "lucide-react"
 
 type FormSubmitButtonProps = {
     className?: string
-    loadingText: string
+    loadingTitle: string
     size?: "default" | "icon" | "lg" | "sm"
     title: string
     variant?: "default" | "destructive" | "ghost" | "link" | "outline" | "secondary"
 }
 
 function FormSubmitButton(props: FormSubmitButtonProps) {
-    const { className, loadingText, size = "default", title, variant = "default" } = props
+    const { className, loadingTitle, size = "default", title, variant = "default" } = props
 
     const {
         formState: { isSubmitting },
@@ -32,7 +32,7 @@ function FormSubmitButton(props: FormSubmitButtonProps) {
             {isSubmitting ? (
                 <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {loadingText}
+                    {loadingTitle}
                 </>
             ) : (
                 title

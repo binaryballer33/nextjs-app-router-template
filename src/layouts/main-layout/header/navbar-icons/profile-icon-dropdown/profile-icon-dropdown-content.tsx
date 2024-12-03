@@ -18,7 +18,7 @@ import handleServerResponse from "@/lib/utils/helper-functions/handleServerRespo
 import profileIconDropdownNavItems from "@/routes/profile-dropdown-icon-routes"
 import routes from "@/routes/routes"
 import { LockOpen } from "lucide-react"
-import toast from "sonner"
+import { toast } from "sonner"
 
 import AvatarTitleDescriptionAlternate from "./profile-icon-avatar-title-description"
 

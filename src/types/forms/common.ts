@@ -1,22 +1,23 @@
-import type { LucideProps } from "lucide-react"
+import type { IconType } from "react-icons"
 
-import { Facebook } from "lucide-react"
+import { FaFacebookSquare } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 
 export type OAuthProvider = {
-    icon: LucideProps | string
+    icon:  IconType
     id: "facebook" | "google"
     name: string
 }
 
 const oAuthProviders = {
     facebook: {
-        icon: Facebook,
+        icon: FaFacebookSquare,
         id: "facebook",
         name: "Facebook",
     } satisfies OAuthProvider,
     google: {
-        icon: "G",
+        icon: FcGoogle,
         id: "google",
         name: "Google",
     } satisfies OAuthProvider,

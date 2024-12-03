@@ -1,12 +1,11 @@
 import type { TFunction } from "i18next"
 
-import { LogIn } from "lucide-react"
-
 import Container  from "@/components/base/container"
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
 import Field from "@/components/react-hook-form/fields"
 import FormHead from "@/components/react-hook-form/form/form-head"
 import FormSubmitButton from "@/components/react-hook-form/form/form-submit-button"
+import { LogIn } from "lucide-react"
 
 type TwoFactorCodeProps = {
     t: TFunction<"translation", undefined>

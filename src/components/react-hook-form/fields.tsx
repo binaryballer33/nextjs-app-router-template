@@ -1,20 +1,19 @@
-import RHFFilledInput from "@/components/react-hook-form/rhf-filled-input"
 
 import RHFAutocomplete from "./rhf-autocomplete"
 import RHFCheckbox, { RHFMultiCheckbox } from "./rhf-checkbox"
 import RHFCode from "./rhf-code"
+import RHFInput from "./rhf-input"
 import RHFRadioGroup from "./rhf-radio-group"
 import RHFRating from "./rhf-rating"
 import RHFSelect, { RHFMultiSelect } from "./rhf-select"
 import RHFSlider from "./rhf-slider"
 import RHFSwitch, { RHFMultiSwitch } from "./rhf-switch"
-import RHFTextField from "./rhf-text-field"
 
 const Field = {
     Autocomplete: RHFAutocomplete,
     Checkbox: RHFCheckbox,
     Code: RHFCode,
-    FilledInput: RHFFilledInput,
+    Input: RHFInput,
     MultiCheckbox: RHFMultiCheckbox,
     MultiSelect: RHFMultiSelect,
     MultiSwitch: RHFMultiSwitch,
@@ -22,8 +21,7 @@ const Field = {
     Rating: RHFRating,
     Select: RHFSelect,
     Slider: RHFSlider,
-    Switch: RHFSwitch,
-    Text: RHFTextField,
+    Switch: RHFSwitch
     // CountrySelect: RHFCountrySelect,
     // MobileDateTimePicker: RHFMobileDateTimePicker,
     // DatePicker: RHFDatePicker,

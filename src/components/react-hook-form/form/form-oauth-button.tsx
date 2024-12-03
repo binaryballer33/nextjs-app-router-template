@@ -1,7 +1,7 @@
 "use client"
 
-import type { TFunction } from "i18next"
 import type { OAuthProvider } from "@/types/forms/common"
+import type { TFunction } from "i18next"
 
 import { useSearchParams } from "next/navigation"
 
@@ -9,13 +9,12 @@ import { useCallback } from "react"
 
 import { useFormContext } from "react-hook-form"
 
+import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import routes from "@/routes/routes"
 import { toast } from "sonner"
 
 import { signIn } from "next-auth/react"
-
-import routes from "@/routes/routes"
-import { Button } from "@/components/ui/button"
 
 type OAuthButtonProps = {
     className?: string
@@ -23,11 +22,8 @@ type OAuthButtonProps = {
     t: TFunction<"translation", undefined>
 }
 
-export default function OAuthButton({
-    className,
-    provider,
-    t
-}: OAuthButtonProps) {
+export default function OAuthButton(props: OAuthButtonProps) {
+    const { className, provider, t } = props
     const { icon: Icon } = provider
 
     const {

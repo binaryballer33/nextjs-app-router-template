@@ -1,18 +1,19 @@
-import type { ReactNode } from "react"
+import type { BaseSyntheticEvent, ReactNode } from "react"
 import type { UseFormReturn } from "react-hook-form"
 
-import { FormProvider as RHFProvider } from "react-hook-form"
+import { Form as RHFProvider } from "@/components/ui/form"
+
 
 export type FormProps = {
     children: ReactNode
-    methods: UseFormReturn<any>
-    onSubmit?: () => void
+    form: UseFormReturn<any>
+    onSubmit: (e?: BaseSyntheticEvent) => Promise<void>
 }
 
-export default function Form({ children, methods, onSubmit }: FormProps) {
+export default function Form({ children, form, onSubmit }: FormProps) {
     return (
-        <RHFProvider {...methods}>
-            <form autoComplete="off" noValidate onSubmit={onSubmit}>
+        <RHFProvider {...form}>
+            <form autoComplete="off" noValidate onSubmit={form.handleSubmit(onSubmit)}>
                 {children}
             </form>
         </RHFProvider>

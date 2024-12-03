@@ -2,20 +2,10 @@
 
 import type { RegisterRequest } from "@/types/forms/register"
 
-import oAuthProviders from "@/types/forms/common"
-import { defaultValuesRegisterRequest as defaultValues, RegisterRequestSchema } from "@/types/forms/register"
-
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { UserCircle } from "lucide-react"
-import toast from "sonner"
-
-import handleServerResponse from "@/lib/utils/helper-functions/handleServerResponse"
-
 import register from "@/actions/auth/register"
-
 import Container  from "@/components/base/container"
 import FlexBetweenContainer from "@/components/base/flex-box/flex-between-container"
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
@@ -27,9 +17,14 @@ import FormLink from "@/components/react-hook-form/form/form-link"
 import OAuthButton from "@/components/react-hook-form/form/form-oauth-button"
 import ClearFormButton from "@/components/react-hook-form/form/form-reset-button"
 import FormSubmitButton from "@/components/react-hook-form/form/form-submit-button"
-import AuthFormInput from "@/components/react-hook-form/rhf-filled-input-custom"
-
+import AuthFormInput from "@/components/react-hook-form/rhf-custom-input"
+import handleServerResponse from "@/lib/utils/helper-functions/handleServerResponse"
 import routes from "@/routes/routes"
+import oAuthProviders from "@/types/forms/common"
+import { defaultValuesRegisterRequest as defaultValues, RegisterRequestSchema } from "@/types/forms/register"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { UserCircle } from "lucide-react"
+import { toast } from "sonner"
 
 /*
   TODO: there's a mui warning in the chrome dev tools, figure out how to fix it later,
@@ -50,7 +45,7 @@ export default function RegisterView() {
     })
 
     return (
-        <Form methods={methods} onSubmit={onSubmit}>
+        <Form form={methods} onSubmit={onSubmit}>
             <FlexCenteredFullScreenContainer>
                 <Container maxWidth="sm">
                     <FormHead
@@ -73,8 +68,8 @@ export default function RegisterView() {
                     </FlexContainer>
 
                     <AuthFormInput inputName="email" label="Email" />
-                    <AuthFormInput inputName="password" label="Password" showVisibilityButtons />
-                    <AuthFormInput inputName="confirmPassword" label="Confirm Password" showVisibilityButtons />
+                    <AuthFormInput inputName="password" label="Password" showVisibilityToggle />
+                    <AuthFormInput inputName="confirmPassword" label="Confirm Password" showVisibilityToggle />
 
                     <FlexBetweenContainer stackOn="mobile">
                         <FormLink

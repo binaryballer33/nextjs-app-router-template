@@ -2,23 +2,14 @@
 
 import type { VerifyEmail } from "@/types/forms/verify-email"
 
-import { defaultValuesVerifyEmail as defaultValues, VerifyEmailSchema } from "@/types/forms/verify-email"
-
 import { useSearchParams } from "next/navigation"
 
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Mail } from "lucide-react"
-import toast from "sonner"
-
-import handleServerResponse from "@/lib/utils/helper-functions/handleServerResponse"
-
 import createVerificationToken from "@/actions/auth/tokens/verification-token/create-verification-token"
 import verifyAccountEmail from "@/actions/auth/verify-account-email"
 import sendAccountVerificationEmail from "@/actions/emails/send-account-verification-email"
-
 import Container  from "@/components/base/container"
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
 import Field from "@/components/react-hook-form/fields"
@@ -27,9 +18,13 @@ import FormHead from "@/components/react-hook-form/form/form-head"
 import FormResendCode from "@/components/react-hook-form/form/form-resend-code"
 import FormReturnLink from "@/components/react-hook-form/form/form-return-link"
 import FormSubmitButton from "@/components/react-hook-form/form/form-submit-button"
-import AuthFormInput from "@/components/react-hook-form/rhf-filled-input-custom"
-
+import AuthFormInput from "@/components/react-hook-form/rhf-custom-input"
+import handleServerResponse from "@/lib/utils/helper-functions/handleServerResponse"
 import routes from "@/routes/routes"
+import { defaultValuesVerifyEmail as defaultValues, VerifyEmailSchema } from "@/types/forms/verify-email"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Mail } from "lucide-react"
+import { toast } from "sonner"
 
 export default function VerifyEmailView() {
     const { t } = useTranslation()
@@ -58,7 +53,7 @@ export default function VerifyEmailView() {
     }
 
     return (
-        <Form methods={methods} onSubmit={onSubmit}>
+        <Form form={methods} onSubmit={onSubmit}>
             <FlexCenteredFullScreenContainer minHeight="80dvh">
                 <Container maxWidth="sm">
                     <FormHead
@@ -69,7 +64,7 @@ export default function VerifyEmailView() {
                         title={t("Please Check Your Email!")}
                     />
                     <div className="flex flex-col gap-2">
-                        <AuthFormInput inputName="email" label={t("Email Address")} />
+                        <AuthFormInput inputName="email" label={t("Email Address")}  />
                         <Field.Code name="sixDigitCode" />
                         <FormSubmitButton loadingTitle={t("Verifying Code...")} title={t("Verify")} />
                     </div>

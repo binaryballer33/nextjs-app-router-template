@@ -1,17 +1,16 @@
-import { type NavBarItem } from "@/types/navbar-item"
-
-import useMediaQuery  from "@/hooks/use-media-query"
 import {
   NavigationMenu,
   NavigationMenuContent,
+  NavigationMenuItem,
   NavigationMenuList
 } from "@/components/ui/navigation-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import useMediaQuery  from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
+import { type NavBarItem } from "@/types/navbar-item"
 
-
-import MobileNavBarNavItem from "./mobile-navbar-nav-item"
 import Logo from "../navbar-icons/logo/logo"
+import MobileNavBarNavItem from "./mobile-navbar-nav-item"
 
 const SIDEBAR_WIDTH = "280px" // Moved from theme/utils
 
@@ -42,7 +41,7 @@ export default function MobileNavBar({ navbarItems }: MobileNavBarProps) {
                 <NavigationMenu className="w-full" orientation="vertical">
                     <NavigationMenuList className="flex-col items-start">
                         {navbarItems.map((navbarItem) => (
-                            <div className="w-full" key={navbarItem.title}>
+                            <NavigationMenuItem className="w-full" key={navbarItem.title}>
                                 <NavigationMenuContent>
                                     <div
                                         className={cn(
@@ -64,7 +63,7 @@ export default function MobileNavBar({ navbarItems }: MobileNavBarProps) {
                                         ))}
                                     </div>
                                 </NavigationMenuContent>
-                            </div>
+                            </NavigationMenuItem>
                         ))}
                     </NavigationMenuList>
                 </NavigationMenu>

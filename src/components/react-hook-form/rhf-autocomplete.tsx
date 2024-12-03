@@ -1,6 +1,5 @@
 import { Controller, useFormContext } from "react-hook-form"
 
-import { Check, ChevronsUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
     Command,
@@ -9,14 +8,14 @@ import {
     CommandInput,
     CommandItem,
 } from "@/components/ui/command"
-import { FormControl, FormDescription, FormField, FormItem, FormLabel } from "@/components/ui/form"
+import { FormControl, FormDescription, FormItem, FormLabel } from "@/components/ui/form"
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-
 import { cn } from "@/lib/utils"
+import { Check, ChevronsUpDown } from "lucide-react"
 
 export type RHFAutocompleteProps = {
     className?: string

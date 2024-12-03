@@ -6,8 +6,6 @@ import { usePathname } from "next/navigation"
 
 import { useState } from "react"
 
-import { ChevronRight } from "lucide-react"
-
 import RouterLink from "@/components/base/router-link"
 import {
     Collapsible,
@@ -15,6 +13,7 @@ import {
     CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 import { cn } from "@/lib/utils"
+import { ChevronRight } from "lucide-react"
 
 type NavBarItemProps = {
     item: NavBarItem
