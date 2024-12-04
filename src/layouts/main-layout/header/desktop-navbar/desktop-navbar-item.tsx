@@ -25,12 +25,14 @@ type DesktopNavBarItemProps = {
     navbarItem: NavBarItem
 }
 
-const DesktopNavBarItem: FC<DesktopNavBarItemProps> = ({ isSub, navbarItem }) => {
+function DesktopNavBarItem(props: DesktopNavBarItemProps) {
+    const { isSub, navbarItem } = props
+    
     const router = useRouter()
     const pathname = usePathname()
     const [isOpen, setIsOpen] = useState(false)
     const [isHovered, setIsHovered] = useState(false)
-    const anchorRef = useRef(null)
+    const anchorRef = useRef<HTMLButtonElement>(null)
     const isActive = navbarItem.route ? isRouteActive(navbarItem.route, pathname, navbarItem.subMenu) : false
 
     const handleMouseEnter = () => {
@@ -49,85 +51,64 @@ const DesktopNavBarItem: FC<DesktopNavBarItemProps> = ({ isSub, navbarItem }) =>
         }
     }
 
-    const SubButton = () => (
-        <Button
-            className={cn(
-                "w-full justify-between text-sm font-semibold",
-                "hover:bg-primary/10 hover:text-primary active:bg-primary/10 active:text-primary",
-                "text-muted-foreground dark:text-neutral-300",
-                "my-[1px]"
-            )}
-            onClick={handleClick}
-            variant="ghost"
-        >
-            <span className="flex items-center gap-2">
-                {navbarItem.icon}
-                {navbarItem.title}
-            </span>
-            {navbarItem.subMenu && <ChevronRight className="h-4 w-4" />}
-        </Button>
-    )
-
-    const MainButton = () => (
-        <Button
-            className={cn(
-                "text-sm font-medium mr-6 px-6 py-3.5",
-                "hover:bg-neutral-300/50 dark:hover:bg-neutral-900 hover:text-primary",
-                {
-                    "bg-background": isHovered,
-                    "bg-background dark:bg-background": isActive,
-                    "text-neutral-900 dark:text-neutral-400": !isHovered && !isActive,
-                    "text-secondary-dark": isHovered || isActive,
-                }
-            )}
-            onClick={handleClick}
-            variant="ghost"
-        >
-            <span className="flex items-center gap-2">
-                {navbarItem.icon}
-                {navbarItem.title}
-            </span>
-            {navbarItem.subMenu && <ChevronDown className="h-4 w-4 ml-1" />}
-        </Button>
-    )
-
-    if (!navbarItem.subMenu) {
-        return isSub ? <SubButton /> : <MainButton />
-    }
-
-    return (
-        <div
-            className={cn("relative z-10")}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            ref={anchorRef}
-        >
+    if (navbarItem.subMenu && navbarItem.subMenu.length > 0) {
+        return (
             <Popover open={isOpen}>
                 <PopoverTrigger asChild>
-                    {isSub ? <SubButton /> : <MainButton />}
+                    <Button
+                        ref={anchorRef}
+                        variant="ghost"
+                        className={cn(
+                            "group flex w-max items-center gap-1",
+                            isActive && "text-primary",
+                            isSub ? "h-8 justify-between" : "h-10"
+                        )}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        {navbarItem.title}
+                        {isSub ? (
+                            <ChevronRight className="size-4" />
+                        ) : (
+                            <ChevronDown className="size-4" />
+                        )}
+                    </Button>
                 </PopoverTrigger>
                 <PopoverContent
-                    align={isSub ? "start" : "start"}
                     className={cn(
-                        "w-max min-w-[200px] p-2",
-                        "bg-background rounded-md shadow-lg",
-                        isSub ? "ml-1" : "mt-[-1px]",
-                        {
-                            "rounded-tl-none": !isSub && navbarItem.subMenu,
-                        }
+                        "w-48 p-2",
+                        !isSub && "mt-2"
                     )}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    align={isSub ? "start" : "center"}
                     side={isSub ? "right" : "bottom"}
                 >
-                    {navbarItem.subMenu.map((subItem) => (
+                    {navbarItem.subMenu.map((item) => (
                         <DesktopNavBarItem
+                            key={item.title}
                             isSub
-                            key={subItem.title}
-                            navbarItem={subItem}
+                            navbarItem={item}
                         />
                     ))}
                 </PopoverContent>
             </Popover>
-        </div>
+        )
+    }
+
+    return (
+        <Button
+            ref={anchorRef}
+            variant="ghost"
+            className={cn(
+                "w-full",
+                isActive && "text-primary",
+                isSub ? "h-8 justify-start" : "h-10"
+            )}
+            onClick={handleClick}
+        >
+            {navbarItem.title}
+        </Button>
     )
 }
 

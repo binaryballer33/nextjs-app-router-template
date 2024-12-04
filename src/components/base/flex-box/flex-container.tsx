@@ -12,14 +12,9 @@ export type FlexContainerProps = {
     stackOn?: StackOn
 } & HTMLAttributes<HTMLDivElement>
 
-export default function FlexContainer({
-    children,
-    className,
-    flexDirection = "row",
-    stackOn,
-    ...props
-}: FlexContainerProps) {
-    // Convert stack preferences to Tailwind responsive classes
+export default function FlexContainer(props: FlexContainerProps) {
+    const { children, className, flexDirection = "row", stackOn, ...restOfProps } = props
+
     const stackClasses = {
         desktop: "flex-col lg:flex-row",
         mobile: "flex-col sm:flex-row",
@@ -44,7 +39,7 @@ export default function FlexContainer({
                 !stackOn && (flexDirection.includes("row") ? "items-start" : "justify-center"),
                 className
             )}
-            {...props}
+            {...restOfProps}
         >
             {children}
         </div>

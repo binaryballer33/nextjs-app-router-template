@@ -2,14 +2,10 @@ import type {  ElementType , ReactNode } from "react"
 
 import { cn } from "@/lib/utils"
 
-
-/*
- * Hides the element is the screen size is smaller than the prop size
- * Doing it this way helps up with the responsive layout and bypass using useTheme useMediaQuery
- * Therefore not being the reason the component has to be converted to a client component
- */
 type ScreenSize = "lg" | "md" | "sm" | "xl" | "xs"
+
 type DisplayType = "block" | "inline"
+
 type HiddenOnScreenProps = {
     children?: ReactNode
     className?: string
@@ -31,6 +27,12 @@ const breakpointClasses: Record<ScreenSize, string> = {
     xs: "xs",
 }
 
+
+/*
+ * Hides the element is the screen size is smaller than the prop size
+ * Doing it this way helps up with the responsive layout and bypass using useTheme useMediaQuery
+ * Therefore not being the reason the component has to be converted to a client component
+ */
 export default function HiddenOnScreen(props: HiddenOnScreenProps) {
     const { children, className, component: Component = "span", size, sizeToShow, sizeToShowDisplayType = "inline", title } = props
 
@@ -38,10 +40,13 @@ export default function HiddenOnScreen(props: HiddenOnScreenProps) {
     const displayClasses = cn(
         // Hide at specified size and below
         `${breakpointClasses[size]}:hidden`,
+
         // Show at specified size
         `${breakpointClasses[sizeToShow]}:${sizeToShowDisplayType === "block" ? "block" : "inline"}`,
+
         // Hidden by default (below the show breakpoint)
         "hidden",
+
         className
     )
 

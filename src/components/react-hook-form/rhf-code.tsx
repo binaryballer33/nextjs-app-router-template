@@ -1,12 +1,9 @@
+"use client"
+
 import { Controller, useFormContext } from "react-hook-form"
 
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
-
-
-
-
-
 
 type RHFCodesProps = {
     className?: string
@@ -23,11 +20,11 @@ export default function RHFCode({ className, length = 6, name }: RHFCodesProps) 
             name={name}
             render={({ field, fieldState: { error } }) => (
                 <div className="w-full">
-                    <div className={cn("flex gap-2", className)}>
+                    <div className={cn("flex gap-2 justify-around py-4", className)}>
                         {[...Array(length)].map((_, index) => (
                             <Input
                                 className={cn(
-                                    "h-12 w-12 text-center text-lg",
+                                    "h-12 w-10 md:w-16 text-center text-lg",
                                     error && "border-destructive"
                                 )}
                                 inputMode="numeric"

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import forgotPassword from "@/actions/auth/forgot-password"
-import Container  from "@/components/base/container"
+import Container from "@/components/base/container"
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
 import Form from "@/components/react-hook-form/form-provider"
 import FormHead from "@/components/react-hook-form/form/form-head"
@@ -40,7 +40,7 @@ export default function ForgotPasswordView() {
                         icon={<Lock className="h-20 w-20 text-primary" />}
                         title={t("Forgot Your Password?")}
                     />
-                    <AuthFormInput inputName="email" label={t("Email Address")} />
+                    <AuthFormInput inputName="email" label={t("Email Address")} className="my-2" />
                     <FormSubmitButton loadingTitle={t("Sending Email...")} title={t("Send Email")} />
                 </Form>
                 <FormReturnLink href={routes.auth.login} title={t("Return To Sign In")} />

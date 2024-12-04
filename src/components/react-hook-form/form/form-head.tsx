@@ -9,12 +9,9 @@ type FormHeadProps = {
     title: ReactNode
 }
 
-export default function FormHead({
-    className,
-    description,
-    icon,
-    title
-}: FormHeadProps) {
+export default function FormHead(props: FormHeadProps) {
+    const { className, description, icon, title } = props
+
     return (
         <>
             {icon && (

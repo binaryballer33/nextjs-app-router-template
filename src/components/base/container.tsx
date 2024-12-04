@@ -7,13 +7,9 @@ interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
   maxWidth?: "2xl" | "full" | "lg" | "md" | "sm" | "xl" | "xs"
 }
 
-export default function Container({
-  children,
-  className,
-  disableGutters = false,
-  maxWidth = "lg",
-  ...props
-}: ContainerProps) {
+export default function Container(props: ContainerProps) {
+  const { children, className, disableGutters = false, maxWidth = "lg", ...restOfProps } = props
+
   return (
     <div
       className={cn(
@@ -30,7 +26,7 @@ export default function Container({
         maxWidth === "full" && "max-w-full",
         className
       )}
-      {...props}
+      {...restOfProps}
     >
       {children}
     </div>

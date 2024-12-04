@@ -26,16 +26,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { UserCircle } from "lucide-react"
 import { toast } from "sonner"
 
-/*
-  TODO: there's a mui warning in the chrome dev tools, figure out how to fix it later,
-  it doesn't affect the functionality of the app
-  You can duplicate the error by toggling the password visibility icon in the register or login form
-*/
 export default function RegisterView() {
     const { t } = useTranslation()
 
-    const methods = useForm<RegisterRequest>({ defaultValues, resolver: zodResolver(RegisterRequestSchema) })
-    const { handleSubmit, reset: resetForm } = methods
+    const form = useForm<RegisterRequest>({ defaultValues, resolver: zodResolver(RegisterRequestSchema) })
+    const { handleSubmit, reset: resetForm } = form
 
     const onSubmit = handleSubmit(async (formData) => {
         const response = await register(formData)
@@ -45,7 +40,7 @@ export default function RegisterView() {
     })
 
     return (
-        <Form form={methods} onSubmit={onSubmit}>
+        <Form form={form} onSubmit={onSubmit}>
             <FlexCenteredFullScreenContainer>
                 <Container maxWidth="sm">
                     <FormHead

@@ -25,17 +25,13 @@ const minHeightClasses: Record<MinHeight, string> = {
     "95dvh": "min-h-[95dvh]",
 }
 
-export default function FlexCenteredFullScreenContainer({
-    children,
-    className,
-    minHeight = "100dvh",
-    ...props
-}: FlexCenteredFullScreenContainerProps) {
+export default function FlexCenteredFullScreenContainer(props: FlexCenteredFullScreenContainerProps) {
+    const {children, className, minHeight = "100dvh", ...restOfProps } = props
     return (
         <FlexContainer
             className={cn(minHeightClasses[minHeight], className)}
             flexDirection="column"
-            {...props}
+            {...restOfProps}
         >
             {children}
         </FlexContainer>

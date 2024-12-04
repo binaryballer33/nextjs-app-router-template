@@ -1,6 +1,6 @@
 import type { TFunction } from "i18next"
 
-import Container  from "@/components/base/container"
+import Container from "@/components/base/container"
 import FlexBetweenContainer from "@/components/base/flex-box/flex-between-container"
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
 import FlexContainer from "@/components/base/flex-box/flex-container"
@@ -23,7 +23,7 @@ export default function LoginForm(props: LoginFormProps) {
     const { t } = props
 
     return (
-        <FlexCenteredFullScreenContainer minHeight="80dvh">
+        <FlexCenteredFullScreenContainer minHeight="85dvh">
             <FormHead
                 description="Login To Your Account For Full Access"
                 icon={<LogIn className="h-20 w-20 text-primary" />}

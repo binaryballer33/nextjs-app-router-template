@@ -4,7 +4,8 @@ import type {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
-  VisibilityState } from "@tanstack/react-table";
+  VisibilityState 
+} from "@tanstack/react-table";
 
 import  { useState } from 'react';
 
@@ -38,18 +39,11 @@ import { ArrowUpDown } from "lucide-react";
 
 import ColumnDropdownMenu from "./column-dropdown-menu";
 
-
-export default function FilterSortTable() {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
-
   // Define columns with sorting and filtering capabilities
   const columns: ColumnDef<typeof randomStockTrades[0]>[] = [
     {
       accessorKey: "datePurchased",
-      cell: ({ row }) => row.getValue("datePurchased"),
+      cell: ({ row}) => row.getValue("datePurchased"),
       header: ({ column }) => (
         <div className="flex gap-2">
         <Button
@@ -292,6 +286,15 @@ export default function FilterSortTable() {
     },
   ];
 
+
+export default function FilterSortTable() {
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+  const recordsPerPage = [10, 20, 30, 40, 50]
+
+
   const table = useReactTable({
     columns,
     data: randomStockTrades,
@@ -313,26 +316,41 @@ export default function FilterSortTable() {
 
   return (
     <div className="w-full p-4">
+
+      {/* filter box and perPage setter */}
       <div className="flex items-center py-4">
+
+        {/* ticker filter box */}
         <Input
           className="max-w-sm"
-          onChange={(event) =>
-            table.getColumn("ticker")?.setFilterValue(event.target.value)
-          }
+          onChange={(event) =>table.getColumn("ticker")?.setFilterValue(event.target.value)}
           placeholder="Filter tickers..."
           value={(table.getColumn("ticker")?.getFilterValue() as string) ?? ""}
         />
+
+        {/* buy price filter box */}
+        <Input
+          className="max-w-sm"
+          onChange={(event) =>table.getColumn("buyPrice")?.setFilterValue(event.target.value)}
+          placeholder="Filter Buy Price..."
+          value={(table.getColumn("buyPrice")?.getFilterValue() as number) ?? ""}
+        />
+
+        {/* records per page selector */}
         <Select
           onValueChange={(value) => {
             table.setPageSize(Number(value));
           }}
           value={table.getState().pagination.pageSize.toString()}
         >
+          {/* trigger */}
           <SelectTrigger className="w-[180px] ml-4">
             <SelectValue placeholder="Rows per page" />
           </SelectTrigger>
+
+          {/* content */}
           <SelectContent>
-            {[10, 20, 30, 40, 50].map((pageSize) => (
+            {recordsPerPage.map((pageSize) => (
               <SelectItem key={pageSize} value={pageSize.toString()}>
                 {pageSize} Rows
               </SelectItem>
@@ -340,6 +358,8 @@ export default function FilterSortTable() {
           </SelectContent>
         </Select>
       </div>
+
+      {/* table */}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -360,6 +380,7 @@ export default function FilterSortTable() {
               </TableRow>
             ))}
           </TableHeader>
+          
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
@@ -390,6 +411,8 @@ export default function FilterSortTable() {
           </TableBody>
         </Table>
       </div>
+
+      {/* paginaton actions */}
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}

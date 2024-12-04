@@ -1,3 +1,5 @@
+"use client"
+
 import type { RegisterRequest } from "@/types/forms/register"
 
 import { type ReactNode } from "react"
@@ -22,7 +24,7 @@ type AuthInputProps = {
     showVisibilityToggle?: boolean
 }
 
-export default function AuthInput(props: AuthInputProps) {
+export default function AuthFormInput(props: AuthInputProps) {
     const { className, inputName, label, showVisibilityToggle = false } = props
 
     const placeholder = getPlaceholder(inputName, label)
@@ -45,7 +47,7 @@ export default function AuthInput(props: AuthInputProps) {
             control={control}
             name={inputName}
             render={({ field }) => (
-                <FormItem>
+                <FormItem className="flex-grow">
                     <FlexBetweenContainer>
                         <FormLabel className="font-medium flex items-center justify-center h-8">
                             {label}

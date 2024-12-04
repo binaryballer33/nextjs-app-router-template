@@ -25,8 +25,8 @@ import { toast } from "sonner"
 export default function LoginView() {
     const { t } = useTranslation()
 
-    const methods = useForm<LoginRequest>({ defaultValues, resolver: zodResolver(LoginRequestSchema) })
-    const { handleSubmit } = methods
+    const form = useForm<LoginRequest>({ defaultValues, resolver: zodResolver(LoginRequestSchema) })
+    const { handleSubmit } = form
     const [showTwoFactorInput, setShowTwoFactorInput] = useQueryState(
         "showTwoFactorInput",
         parseAsBoolean.withDefault(false),
@@ -46,7 +46,7 @@ export default function LoginView() {
     })
 
     return (
-        <Form form={methods} onSubmit={onSubmit}>
+        <Form form={form} onSubmit={onSubmit}>
             {showTwoFactorInput ? <TwoFactorCode t={t} /> : <LoginForm t={t} />}
         </Form>
     )

@@ -1,6 +1,3 @@
-import type { LucideIcon } from "lucide-react"
-import type { ReactNode } from "react"
-
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
@@ -11,14 +8,13 @@ import type { ButtonProps } from "@/components/ui/button"
 type FormReturnLinkProps = {
     className?: string
     href: string
-    icon?: LucideIcon | ReactNode
     size?: ButtonProps["size"]
     title: string
     variant?: ButtonProps["variant"]
 }
 
 export default function FormReturnLink(props: FormReturnLinkProps) {
-    const { className,href,icon,size = "sm",title,variant = "ghost" } = props
+    const { className,href,size = "sm",title,variant = "ghost" } = props
 
     return (
         <Button
@@ -31,7 +27,7 @@ export default function FormReturnLink(props: FormReturnLinkProps) {
             variant={variant}
         >
             <Link href={href}>
-                {icon || <ArrowLeft className="h-4 w-4" />}
+                <ArrowLeft className="h-4 w-4" />
                 {title}
             </Link>
         </Button>
