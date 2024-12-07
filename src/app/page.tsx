@@ -3,7 +3,6 @@ import AvatarAccordion from "@/components/accordions/basic-accordion"
 import Container from "@/components/base/container"
 import PageHeading from "@/components/base/page-heading"
 import CardsBenefits from "@/components/card-features/cards-benefits"
-import FilterSortTable from "@/components/tables/filter-sort-table"
 import { appMetadata } from "@/lib/utils/config"
 import { HydrationBoundary } from "@tanstack/react-query"
 
@@ -21,10 +20,6 @@ export default async function HomePage() {
 
     return (
         <HydrationBoundary state={dehydratedState}>
-            <Container>
-                <FilterSortTable />
-            </Container>
-
             <Container>
                 <PageHeading bottomText="This is a sample page" title="Home Page" />
             </Container>

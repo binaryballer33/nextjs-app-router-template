@@ -76,6 +76,7 @@ module.exports = {
 
         // react
         "react/no-children-prop": 0,
+        "react/no-unescaped-entities": 0,
         "react/react-in-jsx-scope": 0,
         "react/no-array-index-key": 0,
         "react/require-default-props": 0,

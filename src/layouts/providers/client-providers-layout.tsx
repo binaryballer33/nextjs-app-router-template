@@ -2,13 +2,9 @@
 
 import { type ReactNode } from "react"
 
-import { Provider as ReduxProvider } from "react-redux"
-
-import { NuqsAdapter } from "nuqs/adapters/next/app"
-
 import ReactQueryClientProvider from "@/layouts/providers/query-client-provider"
 import ThemeProvider from "@/layouts/providers/theme-provider"
-import { store } from "@/store"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 type LayoutProps = {
     children: ReactNode
@@ -16,12 +12,10 @@ type LayoutProps = {
 
 export default function Layout({ children }: LayoutProps) {
     return (
-        <ReduxProvider store={store}>
-            <ThemeProvider>
-                <NuqsAdapter>
-                    <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
-                </NuqsAdapter>
-            </ThemeProvider>
-        </ReduxProvider>
+        <ThemeProvider>
+            <NuqsAdapter>
+                <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+            </NuqsAdapter>
+        </ThemeProvider>
     )
 }

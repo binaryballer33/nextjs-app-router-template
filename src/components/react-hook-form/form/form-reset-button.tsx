@@ -13,12 +13,12 @@ type ResetFormProps = {
 }
 
 export default function ResetFormButton(props: ResetFormProps) {
-    const {className, size = "sm", title, variant = "outline" } = props
+    const { className, size = "sm", title, variant = "outline" } = props
 
     const {
+        clearErrors,
         formState: { isSubmitting },
-        reset: resetForm,
-        clearErrors
+        reset: resetForm
     } = useFormContext()
 
     return (
