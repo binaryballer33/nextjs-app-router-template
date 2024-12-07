@@ -3,9 +3,9 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-import { motion } from 'framer-motion'
-import { FileQuestion, Home, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { motion } from 'framer-motion'
+import { ArrowLeft, FileQuestion, Home } from 'lucide-react'
 
 const container = {
   hidden: { opacity: 0 },

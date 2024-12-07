@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation'
 
 import { useEffect } from 'react'
 
-import { motion } from 'framer-motion'
-import { AlertCircle, Home, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { motion } from 'framer-motion'
+import { AlertCircle, ArrowLeft, Home } from 'lucide-react'
 
 export default function Error({
   error,

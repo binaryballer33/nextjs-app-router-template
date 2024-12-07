@@ -2,17 +2,18 @@
 
 import { type ReactNode } from "react"
 
-import { ThemeProvider as NextThemesProvider } from "next-themes"
-
 import "@/i18n/i18n"
+import { ThemeProvider as NextThemesProvider } from "next-themes"
+import { type ThemeProviderProps as NextThemesProviderProps } from "next-themes/dist/types"
 
 import "@/global.css"
 
 type ThemeProviderProps = {
     children: ReactNode
+    props?: NextThemesProviderProps
 }
 
-export default function ThemeProvider({ children }: ThemeProviderProps) {
+export default function ThemeProvider({ children, props }: ThemeProviderProps) {
 
     return (
         <NextThemesProvider
@@ -24,6 +25,7 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
                 light: "light",
                 system: "system",
             }}
+            {...props}
         >
             <div className="flex min-h-screen">
                 {children}
@@ -31,3 +33,4 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
         </NextThemesProvider>
     )
 }
+

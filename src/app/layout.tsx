@@ -2,7 +2,6 @@ import type { Viewport } from "next/"
 import type { ReactNode } from "react"
 
 import NProgress from "@/components/base/nprogress"
-
 import MainLayout from "@/layouts/main-layout"
 import ProvidersLayout from "@/layouts/providers/providers-layout"
 
