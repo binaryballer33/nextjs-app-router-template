@@ -6,8 +6,9 @@ import { HydrationBoundary } from "@tanstack/react-query"
 
 import { appMetadata } from "@/lib/config"
 
+import Container from "@/components/base/container"
+import PageHeading from "@/components/base/page-heading"
 // import CardsBenefits from "@/components/card-features/cards-benefits"
-import ThemeToggle from "@/components/theme/theme-toggle"
 
 export const metadata = appMetadata.homePage
 
@@ -23,21 +24,9 @@ export default async function HomePage() {
 
     return (
         <HydrationBoundary state={dehydratedState}>
-            <ThemeToggle />
-            {/* <Container>
-                <PageHeading bottomText="This is a sample page" title="Home Page" />
-            </Container>
-
-
             <Container>
-                <CardsBenefits />
+                <PageHeading bottomText="This Is A Sample Page" title="Home Page" />
             </Container>
-
-            <Container>Put Charts And Graphs Here</Container>
-
-            <Container>
-                <AvatarAccordion />
-            </Container> */}
         </HydrationBoundary>
     )
 }
