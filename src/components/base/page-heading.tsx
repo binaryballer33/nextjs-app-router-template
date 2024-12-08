@@ -26,11 +26,9 @@ export default function PageHeading(props: PageHeadingProps) {
             <div className="flex w-full flex-col items-center justify-between md:flex-row">
                 <div className="PageTitleContent flex flex-col items-center overflow-hidden md:flex-row md:space-x-4">
                     {iconBox}
-                    <div className="flex flex-col overflow-hidden space-y-1 text-center md:text-left">
+                    <div className="flex flex-col space-y-1 overflow-hidden text-center md:text-left">
                         {topSection}
-                        <h3 className="truncate text-2xl font-semibold tracking-tight">
-                            {t(title)}
-                        </h3>
+                        <h3 className="truncate text-2xl font-semibold tracking-tight">{t(title)}</h3>
                         {description && (
                             <h5 className="truncate text-lg font-normal text-muted-foreground md:whitespace-normal">
                                 {t(description)}
@@ -44,9 +42,7 @@ export default function PageHeading(props: PageHeadingProps) {
             {bottomText && (
                 <div className="my-4">
                     <div className="mb-4 w-full border-b md:w-3/4" />
-                    <p className="text-base text-muted-foreground text-center md:text-left">
-                        {t(bottomText)}
-                    </p>
+                    <p className="text-center text-base text-muted-foreground md:text-left">{t(bottomText)}</p>
                 </div>
             )}
         </div>

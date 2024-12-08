@@ -1,19 +1,9 @@
 import { Controller, useFormContext } from "react-hook-form"
 
 import { Button } from "@/components/ui/button"
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-} from "@/components/ui/command"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command"
 import { FormControl, FormDescription, FormItem, FormLabel } from "@/components/ui/form"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { Check, ChevronsUpDown } from "lucide-react"
 
@@ -48,7 +38,7 @@ export default function RHFAutocomplete(props: RHFAutocompleteProps) {
                                     className={cn(
                                         "w-full justify-between",
                                         !field.value && "text-muted-foreground",
-                                        error && "border-destructive"
+                                        error && "border-destructive",
                                     )}
                                     role="combobox"
                                     variant="outline"
@@ -76,9 +66,7 @@ export default function RHFAutocomplete(props: RHFAutocompleteProps) {
                                             <Check
                                                 className={cn(
                                                     "mr-2 h-4 w-4",
-                                                    option.value === field.value
-                                                        ? "opacity-100"
-                                                        : "opacity-0"
+                                                    option.value === field.value ? "opacity-100" : "opacity-0",
                                                 )}
                                             />
                                             {option.label}

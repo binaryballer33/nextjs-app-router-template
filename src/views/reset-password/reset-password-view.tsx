@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import resetPassword from "@/actions/auth/reset-password"
-import Container  from "@/components/base/container"
+import Container from "@/components/base/container"
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
 import Field from "@/components/react-hook-form/fields"
 import Form from "@/components/react-hook-form/form-provider"

@@ -1,8 +1,7 @@
 // noinspection ES6ConvertVarToLetConst
 
-import { PrismaClient } from "@prisma/client"
-
 import { NODE_ENV } from "@/lib/utils/secrets"
+import { PrismaClient } from "@prisma/client"
 
 declare global {
     // eslint-disable-next-line no-var,vars-on-top

@@ -9,23 +9,11 @@ type FormLinkProps = {
     title?: string
 }
 
-export default function FormLink({
-    className,
-    linkTitle,
-    linkTo,
-    title
-}: FormLinkProps) {
+export default function FormLink({ className, linkTitle, linkTo, title }: FormLinkProps) {
     return (
         <div className={cn("mt-1", className)}>
-            {title && (
-                <span className="text-muted-foreground">
-                    {title}{" "}
-                </span>
-            )}
-            <Link
-                className="font-medium hover:underline text-primary"
-                href={linkTo}
-            >
+            {title && <span className="text-muted-foreground">{title} </span>}
+            <Link className="font-medium text-primary hover:underline" href={linkTo}>
                 {linkTitle}
             </Link>
         </div>

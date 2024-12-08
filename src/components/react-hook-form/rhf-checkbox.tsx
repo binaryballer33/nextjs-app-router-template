@@ -5,10 +5,6 @@ import { FormControl, FormDescription, FormItem, FormLabel } from "@/components/
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 
-
-
-
-
 type RHFCheckboxProps = {
     className?: string
     helperText?: React.ReactNode
@@ -33,11 +29,7 @@ export default function RHFCheckbox({ className, helperText, label, name }: RHFC
                         />
                     </FormControl>
 
-                    {label && (
-                        <Label className="text-sm font-normal">
-                            {label}
-                        </Label>
-                    )}
+                    {label && <Label className="text-sm font-normal">{label}</Label>}
 
                     {(error || helperText) && (
                         <FormDescription className={cn("mt-1", error && "text-destructive")}>
@@ -67,9 +59,7 @@ export function RHFMultiCheckbox({ className, helperText, label, name, options }
     const { control } = useFormContext()
 
     const getSelected = (selectedItems: string[], item: string) =>
-        selectedItems.includes(item)
-            ? selectedItems.filter((value) => value !== item)
-            : [...selectedItems, item]
+        selectedItems.includes(item) ? selectedItems.filter((value) => value !== item) : [...selectedItems, item]
 
     return (
         <Controller
@@ -77,11 +67,7 @@ export function RHFMultiCheckbox({ className, helperText, label, name, options }
             name={name}
             render={({ field, fieldState: { error } }) => (
                 <FormItem className={className}>
-                    {label && (
-                        <FormLabel className="text-base">
-                            {label}
-                        </FormLabel>
-                    )}
+                    {label && <FormLabel className="text-base">{label}</FormLabel>}
 
                     <div className="space-y-2">
                         {options.map((option) => (
@@ -90,15 +76,11 @@ export function RHFMultiCheckbox({ className, helperText, label, name, options }
                                     <Checkbox
                                         aria-label={!option.label ? `Checkbox ${option.label}` : undefined}
                                         checked={field.value.includes(option.value)}
-                                        onCheckedChange={() =>
-                                            field.onChange(getSelected(field.value, option.value))
-                                        }
+                                        onCheckedChange={() => field.onChange(getSelected(field.value, option.value))}
                                     />
                                 </FormControl>
 
-                                <Label className="text-sm font-normal">
-                                    {option.label}
-                                </Label>
+                                <Label className="text-sm font-normal">{option.label}</Label>
                             </div>
                         ))}
                     </div>

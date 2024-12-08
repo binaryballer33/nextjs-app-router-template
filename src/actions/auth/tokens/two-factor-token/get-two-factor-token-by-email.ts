@@ -2,9 +2,8 @@
 
 import type { ServerResponse } from "@/types/auth/server-response"
 
-import VerifyEmailRequestSchema from "@/types/forms/verify-email-request"
-
 import prisma from "@/lib/utils/database/prisma"
+import VerifyEmailRequestSchema from "@/types/forms/verify-email-request"
 
 export default async function getTwoFactorTokenByEmail(email: string): Promise<ServerResponse> {
     try {

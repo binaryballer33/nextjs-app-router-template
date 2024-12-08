@@ -13,9 +13,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
     return (
         <div className="mx-auto w-[95%]">
             {/* <Header /> */}
-            <main className="my-4">
-                {children}
-            </main>
+            <main className="my-4">{children}</main>
             <Footer />
         </div>
     )

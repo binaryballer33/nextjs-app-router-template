@@ -10,11 +10,10 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/comp
 import { Input } from "@/components/ui/input"
 import { useBoolean } from "@/hooks/use-boolean"
 import { cn } from "@/lib/utils"
-import { Edit , Key, Mail, X } from "lucide-react"
+import { Edit, Key, Mail, X } from "lucide-react"
 
 import FlexBetweenContainer from "../base/flex-box/flex-between-container"
 import FormFieldVisibilityIcon from "./form/form-field-visibility-icon"
-
 
 type AuthInputProps = {
     className?: string
@@ -32,7 +31,6 @@ export default function AuthFormInput(props: AuthInputProps) {
     /* access the state of the parent form using react hook form */
     const { control, setValue } = useFormContext()
 
-
     /* used to toggle the password visibility */
     const { handleToggle: isFieldVisibleToggle, value: isFieldVisible } = useBoolean()
 
@@ -49,9 +47,7 @@ export default function AuthFormInput(props: AuthInputProps) {
             render={({ field }) => (
                 <FormItem className="flex-grow">
                     <FlexBetweenContainer>
-                        <FormLabel className="font-medium flex items-center justify-center h-8">
-                            {label}
-                        </FormLabel>
+                        <FormLabel className="flex h-8 items-center justify-center font-medium">{label}</FormLabel>
 
                         {showVisibilityToggle ? (
                             <FormFieldVisibilityIcon
@@ -72,10 +68,7 @@ export default function AuthFormInput(props: AuthInputProps) {
 
                             <Input
                                 {...field}
-                                className={cn(
-                                    "bg-muted/50 pl-10",
-                                    className
-                                )}
+                                className={cn("bg-muted/50 pl-10", className)}
                                 placeholder={placeholder}
                                 type={inputType}
                             />
@@ -83,11 +76,11 @@ export default function AuthFormInput(props: AuthInputProps) {
                             {/* Icon on the far right of the input field, used to clear the text in the field */}
                             {field.value && (
                                 <button
-                                className="absolute inset-y-0 right-3 flex items-center"
-                                onClick={() => setValue(inputName, "")}
-                                type="button"
+                                    className="absolute inset-y-0 right-3 flex items-center"
+                                    onClick={() => setValue(inputName, "")}
+                                    type="button"
                                 >
-                                <X className="h-5 w-5 text-gray-400" />
+                                    <X className="h-5 w-5 text-gray-400" />
                                 </button>
                             )}
                         </div>
@@ -138,4 +131,3 @@ function getStartAdornment(inputName: keyof RegisterRequest) {
             return <Edit {...iconProps} />
     }
 }
-

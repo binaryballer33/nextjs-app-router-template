@@ -3,7 +3,6 @@ import type { UseFormReturn } from "react-hook-form"
 
 import { Form as RHFProvider } from "@/components/ui/form"
 
-
 export type FormProps = {
     children: ReactNode
     form: UseFormReturn<any>

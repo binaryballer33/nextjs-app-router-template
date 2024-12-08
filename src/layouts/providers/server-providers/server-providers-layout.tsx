@@ -12,6 +12,3 @@ export default async function ServerProviders({ children }: LayoutProps) {
     const session = await auth()
     return <SessionProvider session={session}>{children}</SessionProvider>
 }
-
-
-

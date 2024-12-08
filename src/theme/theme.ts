@@ -4,14 +4,7 @@
 // my primary dark color
 // #009688
 
-
 export type PaletteColorKey = "error" | "info" | "primary" | "secondary" | "success" | "warning"
-
-const common = {
-    black: "#151821",
-    neutral: "#14191e",
-    white: "#ffffff",
-}
 
 export const neutral = {
     100: "#ebeced", // lighten(#14191e, 0.93)

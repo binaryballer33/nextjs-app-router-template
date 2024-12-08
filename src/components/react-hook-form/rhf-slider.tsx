@@ -2,20 +2,9 @@ import type { ReactNode } from "react"
 
 import { useFormContext } from "react-hook-form"
 
-import { cn } from "@/lib/utils"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Slider } from "@/components/ui/slider"
-
-
-
-
-
-
-
-
-
-
-
+import { cn } from "@/lib/utils"
 
 type Props = {
     className?: string
@@ -50,11 +39,7 @@ export default function RHFSlider(props: Props) {
                             {...other}
                         />
                     </FormControl>
-                    {helperText && (
-                        <div className="text-sm text-muted-foreground">
-                            {helperText}
-                        </div>
-                    )}
+                    {helperText && <div className="text-sm text-muted-foreground">{helperText}</div>}
                     <FormMessage />
                 </FormItem>
             )}

@@ -4,10 +4,9 @@ import type { ServerResponse } from "@/types/auth/server-response"
 
 import { randomInt, randomUUID } from "crypto"
 
-import prisma from "@/lib/utils/database/prisma"
-
 import deleteTwoFactorTokenById from "@/actions/auth/tokens/two-factor-token/delete-two-factor-token-by-id"
 import getTwoFactorTokenByEmail from "@/actions/auth/tokens/two-factor-token/get-two-factor-token-by-email"
+import prisma from "@/lib/utils/database/prisma"
 
 export default async function createTwoFactorToken(email: string): Promise<ServerResponse> {
     const token = randomUUID()

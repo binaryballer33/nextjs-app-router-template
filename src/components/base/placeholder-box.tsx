@@ -39,7 +39,7 @@ export default function PlaceholderBox(props: PlaceholderBoxProps) {
                 dark ? "border-neutral-400" : "border-neutral-300",
                 !disableHover && "hover:border-primary hover:shadow-lg",
                 flex && "flex-1",
-                className
+                className,
             )}
             style={{
                 background: dark ? darkBackground : lightBackground,
@@ -48,11 +48,7 @@ export default function PlaceholderBox(props: PlaceholderBoxProps) {
             }}
             {...other}
         >
-            {title && (
-                <h3 className="font-semibold text-xl">
-                    {t(title)}
-                </h3>
-            )}
+            {title && <h3 className="text-xl font-semibold">{t(title)}</h3>}
         </div>
     )
 }

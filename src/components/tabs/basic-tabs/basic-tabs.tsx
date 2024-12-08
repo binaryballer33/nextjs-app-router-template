@@ -1,5 +1,3 @@
 export default function BasicTabs() {
-    return (
-        <p>Implement BasicTabs</p>
-    )
+    return <p>Implement BasicTabs</p>
 }

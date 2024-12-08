@@ -2,10 +2,9 @@ import { type ReactNode } from "react"
 
 import { useFormContext } from "react-hook-form"
 
-import { Star, StarHalf } from "lucide-react"
-
-import { cn } from "@/lib/utils"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { cn } from "@/lib/utils"
+import { Star, StarHalf } from "lucide-react"
 
 type Props = {
     className?: string
@@ -17,21 +16,13 @@ type Props = {
     size?: "lg" | "md" | "sm"
 }
 
-export default function RHFRating({
-    className,
-    helperText,
-    label,
-    max = 5,
-    name,
-    precision = 1,
-    size = "md"
-}: Props) {
+export default function RHFRating({ className, helperText, label, max = 5, name, precision = 1, size = "md" }: Props) {
     const { control } = useFormContext()
 
     const sizeStyles = {
         lg: "w-8 h-8",
         md: "w-6 h-6",
-        sm: "w-4 h-4"
+        sm: "w-4 h-4",
     }
 
     return (
@@ -52,13 +43,13 @@ export default function RHFRating({
                                     <button
                                         className={cn(
                                             "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                                            "hover:scale-110 transition-transform",
-                                            isFilled ? "text-yellow-400" : "text-muted-foreground"
+                                            "transition-transform hover:scale-110",
+                                            isFilled ? "text-yellow-400" : "text-muted-foreground",
                                         )}
                                         key={value}
                                         onClick={() => field.onChange(value)}
                                         onKeyDown={(e) => {
-                                            if (e.key === ' ' || e.key === 'Enter') {
+                                            if (e.key === " " || e.key === "Enter") {
                                                 e.preventDefault()
                                                 field.onChange(value)
                                             }
@@ -78,11 +69,7 @@ export default function RHFRating({
                             })}
                         </div>
                     </FormControl>
-                    {helperText && (
-                        <div className="text-sm text-muted-foreground">
-                            {helperText}
-                        </div>
-                    )}
+                    {helperText && <div className="text-sm text-muted-foreground">{helperText}</div>}
                     <FormMessage />
                 </FormItem>
             )}

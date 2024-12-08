@@ -1,4 +1,3 @@
-
 import RHFAutocomplete from "./rhf-autocomplete"
 import RHFCheckbox, { RHFMultiCheckbox } from "./rhf-checkbox"
 import RHFCode from "./rhf-code"
@@ -21,7 +20,7 @@ const Field = {
     Rating: RHFRating,
     Select: RHFSelect,
     Slider: RHFSlider,
-    Switch: RHFSwitch
+    Switch: RHFSwitch,
     // CountrySelect: RHFCountrySelect,
     // MobileDateTimePicker: RHFMobileDateTimePicker,
     // DatePicker: RHFDatePicker,

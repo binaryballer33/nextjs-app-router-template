@@ -2,11 +2,9 @@
 
 import { useTranslation } from "react-i18next"
 
-import useRedirectIfStale from "@/hooks/use-redirect-if-stale"
-
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
 import FormLink from "@/components/react-hook-form/form/form-link"
-
+import useRedirectIfStale from "@/hooks/use-redirect-if-stale"
 import routes from "@/routes/routes"
 
 function SignOutView() {
@@ -15,9 +13,7 @@ function SignOutView() {
 
     return (
         <FlexCenteredFullScreenContainer minHeight="75dvh">
-            <p className="text-base">
-                {t("You've Been Signed Out Successfully")}
-            </p>
+            <p className="text-base">{t("You've Been Signed Out Successfully")}</p>
             <FormLink linkTitle={t("Go Back To The Home Page")} linkTo={routes.index} />
         </FlexCenteredFullScreenContainer>
     )

@@ -34,14 +34,12 @@ export default function OAuthButton(props: OAuthButtonProps) {
 
     const loginError = searchParams.get("error")
     const oauthLoginError =
-        loginError === "OAuthAccountNotLinked"
-            ? "Email Already In Use With A Different Provider"
-            : null
+        loginError === "OAuthAccountNotLinked" ? "Email Already In Use With A Different Provider" : null
 
     const onAuth = useCallback(
         async (oauthProvider: OAuthProvider["id"]): Promise<void> => {
             await signIn(oauthProvider, {
-                redirectTo: routes.nextAuth.defaultLoginRedirect
+                redirectTo: routes.nextAuth.defaultLoginRedirect,
             })
             if (loginError) toast.error(oauthLoginError)
         },
@@ -50,10 +48,7 @@ export default function OAuthButton(props: OAuthButtonProps) {
 
     return (
         <Button
-            className={cn(
-                "w-full text-base font-normal",
-                className
-            )}
+            className={cn("w-full text-base font-normal", className)}
             disabled={isSubmitting}
             onClick={() => onAuth(provider.id).catch(() => {})}
             variant="outline"

@@ -2,9 +2,8 @@
 
 import type { ServerResponse } from "@/types/auth/server-response"
 
-import VerifyIdSchema from "@/types/forms/verify-id"
-
 import prisma from "@/lib/utils/database/prisma"
+import VerifyIdSchema from "@/types/forms/verify-id"
 
 export default async function getPasswordResetTokenByToken(token: string): Promise<ServerResponse> {
     try {

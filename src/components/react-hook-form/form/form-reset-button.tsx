@@ -18,19 +18,16 @@ export default function ResetFormButton(props: ResetFormProps) {
     const {
         clearErrors,
         formState: { isSubmitting },
-        reset: resetForm
+        reset: resetForm,
     } = useFormContext()
 
     return (
         <Button
-            className={cn(
-                "mt-1 whitespace-nowrap px-4",
-                className
-            )}
+            className={cn("mt-1 whitespace-nowrap px-4", className)}
             disabled={isSubmitting}
             onClick={() => {
-                resetForm();
-                clearErrors();
+                resetForm()
+                clearErrors()
             }}
             size={size}
             variant={variant}

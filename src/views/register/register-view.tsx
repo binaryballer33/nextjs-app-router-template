@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import register from "@/actions/auth/register"
-import Container  from "@/components/base/container"
+import Container from "@/components/base/container"
 import FlexBetweenContainer from "@/components/base/flex-box/flex-between-container"
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
 import FlexContainer from "@/components/base/flex-box/flex-container"

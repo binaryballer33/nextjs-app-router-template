@@ -4,12 +4,7 @@ import ReactCountryFlag from "react-country-flag"
 import { useTranslation } from "react-i18next"
 
 import { Button } from "@/components/ui/button"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import { toast } from "sonner"
@@ -103,7 +98,7 @@ export default function LanguageDropdown(props: LanguageDropdownProps) {
                                     color === "success" && "text-success",
                                     color === "error" && "text-destructive",
                                     color === "warning" && "text-warning",
-                                    color === "info" && "text-info"
+                                    color === "info" && "text-info",
                                 )}
                                 size="icon"
                                 variant="ghost"
@@ -112,26 +107,20 @@ export default function LanguageDropdown(props: LanguageDropdownProps) {
                             </Button>
                         </DropdownMenuTrigger>
                     </TooltipTrigger>
-                    <TooltipContent>
-                        {t("Switch Language")}
-                    </TooltipContent>
+                    <TooltipContent>{t("Switch Language")}</TooltipContent>
                     <DropdownMenuContent align="end">
                         {(Object.keys(languageOptions) as Language[]).map((language) => {
                             const option = languageOptions[language]
                             return (
                                 <DropdownMenuItem
                                     className={cn(
-                                        "flex items-center gap-2 cursor-pointer",
-                                        i18n.language === language && "bg-accent"
+                                        "flex cursor-pointer items-center gap-2",
+                                        i18n.language === language && "bg-accent",
                                     )}
                                     key={language}
                                     onClick={() => handleChange(language)}
                                 >
-                                    <ReactCountryFlag
-                                        className="h-4 w-4"
-                                        countryCode={option.icon}
-                                        svg
-                                    />
+                                    <ReactCountryFlag className="h-4 w-4" countryCode={option.icon} svg />
                                     <span>{option.label}</span>
                                 </DropdownMenuItem>
                             )
@@ -142,4 +131,3 @@ export default function LanguageDropdown(props: LanguageDropdownProps) {
         </TooltipProvider>
     )
 }
-

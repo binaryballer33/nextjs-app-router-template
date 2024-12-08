@@ -34,3 +34,9 @@ public/*
 
 # misc
 **/jsconfig.json
+
+# Add the ui components folder
+src/components/ui
+src/components/ui/**/*
+src/hooks/use-toast.ts
+src/lib/utils.ts

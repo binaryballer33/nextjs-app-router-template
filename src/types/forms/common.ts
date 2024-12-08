@@ -1,11 +1,10 @@
 import type { IconType } from "react-icons"
 
-import { FaFacebookSquare } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-
+import { FaFacebookSquare } from "react-icons/fa"
+import { FcGoogle } from "react-icons/fc"
 
 export type OAuthProvider = {
-    icon:  IconType
+    icon: IconType
     id: "facebook" | "google"
     name: string
 }
@@ -24,4 +23,3 @@ const oAuthProviders = {
 }
 
 export default oAuthProviders
-

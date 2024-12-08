@@ -1,8 +1,7 @@
-import type { ReactNode } from "react"
 import type { FlexContainerProps } from "@/components/base/flex-box/flex-container"
+import type { ReactNode } from "react"
 
 import FlexContainer from "@/components/base/flex-box/flex-container"
-
 import { cn } from "@/lib/utils"
 
 type MinHeight = "100dvh" | "25dvh" | "33dvh" | "50dvh" | "66dvh" | "75dvh" | "80dvh" | "85dvh" | "90dvh" | "95dvh"
@@ -26,13 +25,9 @@ const minHeightClasses: Record<MinHeight, string> = {
 }
 
 export default function FlexCenteredFullScreenContainer(props: FlexCenteredFullScreenContainerProps) {
-    const {children, className, minHeight = "100dvh", ...restOfProps } = props
+    const { children, className, minHeight = "100dvh", ...restOfProps } = props
     return (
-        <FlexContainer
-            className={cn(minHeightClasses[minHeight], className)}
-            flexDirection="column"
-            {...restOfProps}
-        >
+        <FlexContainer className={cn(minHeightClasses[minHeight], className)} flexDirection="column" {...restOfProps}>
             {children}
         </FlexContainer>
     )

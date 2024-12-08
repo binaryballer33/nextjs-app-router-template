@@ -2,18 +2,9 @@ import type { NavBarItem } from "@/types/navbar-item"
 
 import { useTranslation } from "react-i18next"
 
-import {
-    AppWindow,
-    Heart,
-    Layers,
-    LayoutDashboard,
-    Receipt,
-    ShoppingCart,
-    Users
-} from "lucide-react"
+import { AppWindow, Heart, Layers, LayoutDashboard, Receipt, ShoppingCart, Users } from "lucide-react"
 
 import routes from "./routes"
-
 
 export default function useVerticalNavBarItems(): NavBarItem[] {
     const { t } = useTranslation()

@@ -2,15 +2,8 @@ import type { NavBarItem } from "@/types/navbar-item"
 
 import { useTranslation } from "react-i18next"
 
-import {
-    AppWindow,
-    Briefcase,
-    LayoutDashboard,
-    Settings
-} from "lucide-react"
-
 import routes from "@/routes/routes"
-
+import { AppWindow, Briefcase, LayoutDashboard, Settings } from "lucide-react"
 
 export default function useHorizontalNavBarItems(): NavBarItem[] {
     const { t } = useTranslation()

@@ -57,9 +57,7 @@ export function RHFMultiSwitch({ className, helperText, label, name, options }: 
     const { control } = useFormContext()
 
     const getSelected = (selectedItems: string[], item: string) =>
-        selectedItems.includes(item)
-            ? selectedItems.filter((value) => value !== item)
-            : [...selectedItems, item]
+        selectedItems.includes(item) ? selectedItems.filter((value) => value !== item) : [...selectedItems, item]
 
     return (
         <FormField
@@ -80,18 +78,14 @@ export function RHFMultiSwitch({ className, helperText, label, name, options }: 
                                     <Switch
                                         aria-label={option.label}
                                         checked={field.value.includes(option.value)}
-                                        onCheckedChange={() =>
-                                            field.onChange(getSelected(field.value, option.value))
-                                        }
+                                        onCheckedChange={() => field.onChange(getSelected(field.value, option.value))}
                                     />
                                 </FormControl>
                             </div>
                         ))}
                     </div>
 
-                    {helperText && (
-                        <div className="text-sm text-muted-foreground">{helperText}</div>
-                    )}
+                    {helperText && <div className="text-sm text-muted-foreground">{helperText}</div>}
                     <FormMessage />
                 </FormItem>
             )}

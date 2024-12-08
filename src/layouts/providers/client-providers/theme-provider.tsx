@@ -14,7 +14,6 @@ type ThemeProviderProps = {
 }
 
 export default function ThemeProvider({ children, props }: ThemeProviderProps) {
-
     return (
         <NextThemesProvider
             attribute="class"
@@ -27,10 +26,7 @@ export default function ThemeProvider({ children, props }: ThemeProviderProps) {
             }}
             {...props}
         >
-            <div className="flex min-h-screen">
-                {children}
-            </div>
+            <div className="flex min-h-screen">{children}</div>
         </NextThemesProvider>
     )
 }
-

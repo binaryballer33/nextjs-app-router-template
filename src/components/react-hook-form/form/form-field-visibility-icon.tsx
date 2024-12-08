@@ -21,10 +21,7 @@ export default function FormFieldVisibilityIcon(props: FormFieldVisibilityIconPr
             <Tooltip>
                 <TooltipTrigger asChild>
                     <Button
-                        className={cn(
-                            "h-8 w-8",
-                            className
-                        )}
+                        className={cn("h-8 w-8", className)}
                         onClick={isFieldVisibleToggle}
                         size="icon"
                         type="button"
@@ -33,25 +30,17 @@ export default function FormFieldVisibilityIcon(props: FormFieldVisibilityIconPr
                         {isFieldVisible ? (
                             <EyeOff
                                 aria-label={`hide ${inputName}`}
-                                className={cn(
-                                    "h-4 w-4",
-                                    iconSize && `h-[${iconSize}px] w-[${iconSize}px]`
-                                )}
+                                className={cn("h-4 w-4", iconSize && `h-[${iconSize}px] w-[${iconSize}px]`)}
                             />
                         ) : (
                             <Eye
                                 aria-label={`show ${inputName}`}
-                                className={cn(
-                                    "h-4 w-4",
-                                    iconSize && `h-[${iconSize}px] w-[${iconSize}px]`
-                                )}
+                                className={cn("h-4 w-4", iconSize && `h-[${iconSize}px] w-[${iconSize}px]`)}
                             />
                         )}
                     </Button>
                 </TooltipTrigger>
-                <TooltipContent>
-                    {isFieldVisible ? `hide ${inputName}` : `show ${inputName}`}
-                </TooltipContent>
+                <TooltipContent>{isFieldVisible ? `hide ${inputName}` : `show ${inputName}`}</TooltipContent>
             </Tooltip>
         </TooltipProvider>
     )

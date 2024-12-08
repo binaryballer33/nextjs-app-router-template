@@ -32,12 +32,12 @@ export default function FlexContainer(props: FlexContainerProps) {
     return (
         <div
             className={cn(
-                "flex gap-2 my-1",
+                "my-1 flex gap-2",
                 // If stackOn is provided, use responsive classes, otherwise use fixed direction
                 stackOn ? stackClasses[stackOn] : directionClasses[flexDirection],
                 // Row variants get initial alignment, columns get centered
                 !stackOn && (flexDirection.includes("row") ? "items-start" : "justify-center"),
-                className
+                className,
             )}
             {...restOfProps}
         >

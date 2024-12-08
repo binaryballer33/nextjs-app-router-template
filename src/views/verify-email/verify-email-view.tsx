@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next"
 import createVerificationToken from "@/actions/auth/tokens/verification-token/create-verification-token"
 import verifyAccountEmail from "@/actions/auth/verify-account-email"
 import sendAccountVerificationEmail from "@/actions/emails/send-account-verification-email"
-import Container  from "@/components/base/container"
+import Container from "@/components/base/container"
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
 import Field from "@/components/react-hook-form/fields"
 import Form from "@/components/react-hook-form/form-provider"
@@ -64,7 +64,7 @@ export default function VerifyEmailView() {
                         title={t("Please Check Your Email!")}
                     />
                     <div className="flex flex-col gap-2">
-                        <AuthFormInput inputName="email" label={t("Email Address")}  />
+                        <AuthFormInput inputName="email" label={t("Email Address")} />
                         <Field.Code name="sixDigitCode" />
                         <FormSubmitButton loadingTitle={t("Verifying Code...")} title={t("Verify")} />
                     </div>

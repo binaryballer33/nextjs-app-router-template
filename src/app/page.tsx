@@ -21,7 +21,6 @@ export default async function HomePage() {
 
     return (
         <HydrationBoundary state={dehydratedState}>
-
             <ThemeToggle />
             {/* <Container>
                 <PageHeading bottomText="This is a sample page" title="Home Page" />

@@ -5,9 +5,7 @@ import adapter from "@/auth/auth-config/adapter"
 import callbacks from "@/auth/auth-config/callbacks"
 import events from "@/auth/auth-config/events"
 import providers from "@/auth/auth-config/providers"
-
 import { NODE_ENV } from "@/lib/utils/secrets"
-
 import routes from "@/routes/routes"
 
 const session: NextAuthConfig["session"] = { strategy: "jwt" }

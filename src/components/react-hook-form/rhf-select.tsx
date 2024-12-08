@@ -2,26 +2,14 @@ import { type ReactNode, useState } from "react"
 
 import { useFormContext } from "react-hook-form"
 
-import { Check } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-} from "@/components/ui/command"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
+import { Check } from "lucide-react"
 
 // Single Select
 type RHFSelectProps = {
@@ -61,11 +49,7 @@ export default function RHFSelect(props: RHFSelectProps) {
                             ))}
                         </SelectContent>
                     </Select>
-                    {helperText && (
-                        <div className="text-sm text-muted-foreground">
-                            {helperText}
-                        </div>
-                    )}
+                    {helperText && <div className="text-sm text-muted-foreground">{helperText}</div>}
                     <FormMessage />
                 </FormItem>
             )}
@@ -86,14 +70,7 @@ type RHFMultiSelectProps = {
     placeholder?: string
 }
 
-export function RHFMultiSelect({
-    className,
-    helperText,
-    label,
-    name,
-    options,
-    placeholder,
-}: RHFMultiSelectProps) {
+export function RHFMultiSelect({ className, helperText, label, name, options, placeholder }: RHFMultiSelectProps) {
     const { control } = useFormContext()
     const [open, setOpen] = useState(false)
 
@@ -110,19 +87,15 @@ export function RHFMultiSelect({
                                 <Button
                                     className={cn(
                                         "w-full justify-between",
-                                        !field.value?.length && "text-muted-foreground"
+                                        !field.value?.length && "text-muted-foreground",
                                     )}
                                     role="combobox"
                                     variant="outline"
                                 >
                                     {field.value?.length > 0 ? (
-                                        <div className="flex gap-1 flex-wrap">
+                                        <div className="flex flex-wrap gap-1">
                                             {field.value.map((value: string) => (
-                                                <Badge
-                                                    className="mr-1"
-                                                    key={value}
-                                                    variant="secondary"
-                                                >
+                                                <Badge className="mr-1" key={value} variant="secondary">
                                                     {options.find((opt) => opt.value === value)?.label}
                                                 </Badge>
                                             ))}
@@ -153,7 +126,7 @@ export function RHFMultiSelect({
                                                 <Check
                                                     className={cn(
                                                         "mr-2 h-4 w-4",
-                                                        isSelected ? "opacity-100" : "opacity-0"
+                                                        isSelected ? "opacity-100" : "opacity-0",
                                                     )}
                                                 />
                                                 {option.label}
@@ -164,11 +137,7 @@ export function RHFMultiSelect({
                             </Command>
                         </PopoverContent>
                     </Popover>
-                    {helperText && (
-                        <div className="text-sm text-muted-foreground">
-                            {helperText}
-                        </div>
-                    )}
+                    {helperText && <div className="text-sm text-muted-foreground">{helperText}</div>}
                     <FormMessage />
                 </FormItem>
             )}

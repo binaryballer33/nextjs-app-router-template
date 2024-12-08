@@ -23,7 +23,7 @@ function FormSubmitButton(props: FormSubmitButtonProps) {
 
     return (
         <Button
-            className={cn("w-full my-1", className)}
+            className={cn("my-1 w-full", className)}
             disabled={isSubmitting}
             size={size}
             type="submit"
