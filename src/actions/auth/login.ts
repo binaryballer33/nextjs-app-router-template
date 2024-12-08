@@ -3,6 +3,10 @@
 import type { ServerResponse } from "@/types/auth/server-response"
 import type { LoginRequest } from "@/types/forms/login"
 
+import { LoginRequestSchema } from "@/types/forms/login"
+
+import { signIn } from "@/auth/auth"
+
 import createTwoFactorConfirmation from "@/actions/auth/tokens/two-factor-confirmation/create-two-factor-confirmation"
 import deleteTwoFactorConfirmationById from "@/actions/auth/tokens/two-factor-confirmation/delete-two-factor-confirmation-by-id"
 import deleteTwoFactorConfirmationByUserId from "@/actions/auth/tokens/two-factor-confirmation/delete-two-factor-confirmation-by-userId"
@@ -14,8 +18,6 @@ import createVerificationToken from "@/actions/auth/tokens/verification-token/cr
 import sendAccountVerificationEmail from "@/actions/emails/send-account-verification-email"
 import sendTwoFactorEmail from "@/actions/emails/send-two-factor-email"
 import getUserByEmail from "@/actions/user/get-user-by-email"
-import { signIn } from "@/auth/auth"
-import { LoginRequestSchema } from "@/types/forms/login"
 
 export default async function login(credentials: LoginRequest): Promise<ServerResponse> {
     try {

@@ -1,7 +1,6 @@
 import { type ReactNode } from "react"
 
 import { auth } from "@/auth/auth"
-
 import { SessionProvider } from "next-auth/react"
 
 type LayoutProps = {

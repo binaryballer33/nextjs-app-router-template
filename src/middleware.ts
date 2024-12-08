@@ -1,6 +1,8 @@
-import providers from "@/auth/auth-config/providers"
-import routes from "@/routes/routes"
 import NextAuth from "next-auth"
+
+import providers from "@/auth/auth-config/providers"
+
+import routes from "@/routes/routes"
 
 /*
  * Due to prisma not working on the edge, you need to instantiate the auth client without the adapter here

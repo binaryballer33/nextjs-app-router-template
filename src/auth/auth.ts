@@ -1,5 +1,6 @@
-import authConfig from "@/auth/auth-config/auth-config"
 import NextAuth from "next-auth"
+
+import authConfig from "@/auth/auth-config/auth-config"
 
 /*
  * TODO: My Next Auth TODOS

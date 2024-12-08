@@ -42,11 +42,12 @@ const publicRoutes = {
     dummy: "",
     error: "/error",
     faqs: "/faqs",
-    index: "/",
+    home: "/",
     maintenance: "/maintenance",
     payment: "/payment",
     pricing: "/pricing",
     resetPassword: "/forgot-password",
+    services: "/services",
 }
 
 const routes = {

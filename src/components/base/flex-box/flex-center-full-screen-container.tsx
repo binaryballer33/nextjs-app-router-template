@@ -1,8 +1,9 @@
 import type { FlexContainerProps } from "@/components/base/flex-box/flex-container"
 import type { ReactNode } from "react"
 
-import FlexContainer from "@/components/base/flex-box/flex-container"
 import { cn } from "@/lib/utils"
+
+import FlexContainer from "@/components/base/flex-box/flex-container"
 
 type MinHeight = "100dvh" | "25dvh" | "33dvh" | "50dvh" | "66dvh" | "75dvh" | "80dvh" | "85dvh" | "90dvh" | "95dvh"
 

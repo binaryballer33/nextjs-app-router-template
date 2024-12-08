@@ -2,9 +2,10 @@ import type { ReactNode } from "react"
 
 import { useFormContext } from "react-hook-form"
 
+import { cn } from "@/lib/utils"
+
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Switch } from "@/components/ui/switch"
-import { cn } from "@/lib/utils"
 
 type RHFSwitchProps = {
     className?: string

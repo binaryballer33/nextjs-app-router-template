@@ -1,9 +1,10 @@
 import { Controller, useFormContext } from "react-hook-form"
 
+import { cn } from "@/lib/utils"
+
 import { Checkbox } from "@/components/ui/checkbox"
 import { FormControl, FormDescription, FormItem, FormLabel } from "@/components/ui/form"
 import { Label } from "@/components/ui/label"
-import { cn } from "@/lib/utils"
 
 type RHFCheckboxProps = {
     className?: string

@@ -1,13 +1,16 @@
 import type { NextAuthConfig } from "next-auth"
 
-import getUserByEmail from "@/actions/user/get-user-by-email"
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "@/lib/secrets"
 import { LoginRequestSchema } from "@/types/forms/login"
+
 import { CredentialsSignin } from "@auth/core/errors"
 import Credentials from "@auth/core/providers/credentials"
 import { compare } from "bcryptjs"
 import Facebook from "next-auth/providers/facebook"
 import Google from "next-auth/providers/google"
+
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "@/lib/secrets"
+
+import getUserByEmail from "@/actions/user/get-user-by-email"
 
 /*
  * Array of objects that define the authentication providers

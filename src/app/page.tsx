@@ -2,10 +2,12 @@ import prefetchHomePageDataDehydrateState from "@/app/prefetch-home-page-data"
 // import AvatarAccordion from "@/components/accordions/basic-accordion"
 // import Container from "@/components/base/container"
 // import PageHeading from "@/components/base/page-heading"
+import { HydrationBoundary } from "@tanstack/react-query"
+
+import { appMetadata } from "@/lib/config"
+
 // import CardsBenefits from "@/components/card-features/cards-benefits"
 import ThemeToggle from "@/components/theme/theme-toggle"
-import { appMetadata } from "@/lib/config"
-import { HydrationBoundary } from "@tanstack/react-query"
 
 export const metadata = appMetadata.homePage
 

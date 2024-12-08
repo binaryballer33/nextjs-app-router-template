@@ -6,11 +6,14 @@ import { type ReactNode } from "react"
 
 import { useFormContext } from "react-hook-form"
 
+import { Edit, Key, Mail, X } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+import { useBoolean } from "@/hooks/use-boolean"
+
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useBoolean } from "@/hooks/use-boolean"
-import { cn } from "@/lib/utils"
-import { Edit, Key, Mail, X } from "lucide-react"
 
 import FlexBetweenContainer from "../base/flex-box/flex-between-container"
 import FormFieldVisibilityIcon from "./form/form-field-visibility-icon"

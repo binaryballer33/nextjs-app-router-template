@@ -1,2 +1,2 @@
-npm run format # format the code with prettier
-npm run lint # lint the code with eslint, then commit
+bun run format:fix # format the code with prettier
+bun run lint:fix # lint the code with eslint, then commit

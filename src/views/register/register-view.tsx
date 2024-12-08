@@ -16,6 +16,8 @@ import handleServerResponse from "@/lib/helper-functions/handleServerResponse"
 
 import register from "@/actions/auth/register"
 
+import routes from "@/routes/routes"
+
 import Container from "@/components/base/container"
 import FlexBetweenContainer from "@/components/base/flex-box/flex-between-container"
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
@@ -28,8 +30,6 @@ import OAuthButton from "@/components/react-hook-form/form/form-oauth-button"
 import ClearFormButton from "@/components/react-hook-form/form/form-reset-button"
 import FormSubmitButton from "@/components/react-hook-form/form/form-submit-button"
 import AuthFormInput from "@/components/react-hook-form/rhf-custom-input"
-
-import routes from "@/routes/routes"
 
 export default function RegisterView() {
     const { t } = useTranslation()

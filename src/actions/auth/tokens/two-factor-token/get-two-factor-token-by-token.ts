@@ -2,8 +2,9 @@
 
 import type { ServerResponse } from "@/types/auth/server-response"
 
-import prisma from "@/lib/database/prisma"
 import VerifyIdSchema from "@/types/forms/verify-id"
+
+import prisma from "@/lib/database/prisma"
 
 export default async function getTwoFactorTokenByToken(token: string): Promise<ServerResponse> {
     try {

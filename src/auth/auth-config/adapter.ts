@@ -1,8 +1,9 @@
 import type { AdapterUser } from "@auth/core/adapters"
 import type { NextAuthConfig } from "next-auth"
 
-import prisma from "@/lib/database/prisma"
 import { PrismaAdapter } from "@auth/prisma-adapter"
+
+import prisma from "@/lib/database/prisma"
 
 /*
  * Just customizing the createUser method of the prisma adapter because I want to tweak how the user gets created.

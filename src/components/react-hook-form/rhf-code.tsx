@@ -2,8 +2,9 @@
 
 import { Controller, useFormContext } from "react-hook-form"
 
-import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
+
+import { Input } from "@/components/ui/input"
 
 type RHFCodesProps = {
     className?: string

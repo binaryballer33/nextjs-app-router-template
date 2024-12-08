@@ -2,8 +2,9 @@
 
 import type { ServerResponse } from "@/types/auth/server-response"
 
-import prisma from "@/lib/database/prisma"
 import VerifyEmailRequestSchema from "@/types/forms/verify-email-request"
+
+import prisma from "@/lib/database/prisma"
 
 export default async function getPasswordResetTokenByEmail(email: string): Promise<ServerResponse> {
     try {

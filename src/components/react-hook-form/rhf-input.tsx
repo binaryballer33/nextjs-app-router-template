@@ -2,10 +2,12 @@
 
 import { useFormContext } from "react-hook-form"
 
+import { X } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
-import { X } from "lucide-react"
 
 type RHFInputProps = {
     className?: string

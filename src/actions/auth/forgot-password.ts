@@ -2,12 +2,13 @@
 
 import type { ServerResponse } from "@/types/auth/server-response"
 
+import VerifyEmailRequestSchema from "@/types/forms/verify-email-request"
+
 import createPasswordResetToken from "@/actions/auth/tokens/password-reset-token/create-password-reset-token"
 import deletePasswordResetTokenById from "@/actions/auth/tokens/password-reset-token/delete-password-reset-token-by-id"
 import getPasswordResetTokenByEmail from "@/actions/auth/tokens/password-reset-token/get-password-reset-token-by-email"
 import sendResetPasswordEmail from "@/actions/emails/send-reset-password-email"
 import getUserByEmail from "@/actions/user/get-user-by-email"
-import VerifyEmailRequestSchema from "@/types/forms/verify-email-request"
 
 export default async function forgotPassword(email: string): Promise<ServerResponse> {
     try {

@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
     :root {
         --background: 0 0% 100%;
@@ -74,8 +73,10 @@
 }
 
 .toaster .sonner-toast {
-    @apply backdrop-blur-sm bg-background/90 font-medium p-4;
-    box-shadow: 0px 5px 22px rgba(0, 0, 0, 0.18), 0px 1px 4px rgba(0, 0, 0, 0.12);
+    @apply bg-background/90 p-4 font-medium backdrop-blur-sm;
+    box-shadow:
+        0px 5px 22px rgba(0, 0, 0, 0.18),
+        0px 1px 4px rgba(0, 0, 0, 0.12);
 }
 
 .dark .sonner-toast {

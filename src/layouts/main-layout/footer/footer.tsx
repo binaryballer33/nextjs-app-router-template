@@ -2,11 +2,12 @@ import { type FC } from "react"
 
 import { useTranslation } from "react-i18next"
 
+import { Facebook, Github, Instagram, Twitter, Youtube } from "lucide-react"
+import { FaReact } from "react-icons/fa"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import { Facebook, Github, Instagram, Twitter, Youtube } from "lucide-react"
-import { FaReact } from "react-icons/fa"
 
 const navigation = {
     company: [
