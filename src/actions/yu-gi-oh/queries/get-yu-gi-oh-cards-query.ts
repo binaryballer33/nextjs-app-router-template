@@ -1,6 +1,6 @@
 "use server"
 
-import prisma from "@/lib/utils/database/prisma"
+import prisma from "@/lib/database/prisma"
 
 export default async function getYuGiOhCardsQuery(page = 0, limit = 50) {
     const skipPreviousRecords = page * limit

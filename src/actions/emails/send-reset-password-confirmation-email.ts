@@ -2,7 +2,7 @@
 
 import type { ServerResponse } from "@/types/auth/server-response"
 
-import { RESEND_API_KEY } from "@/lib/utils/secrets"
+import { RESEND_API_KEY } from "@/lib/secrets"
 import VerifyEmailRequestSchema from "@/types/forms/verify-email-request"
 import { Resend } from "resend"
 

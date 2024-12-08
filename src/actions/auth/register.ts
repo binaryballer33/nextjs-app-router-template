@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache"
 import createVerificationToken from "@/actions/auth/tokens/verification-token/create-verification-token"
 import sendAccountVerificationEmail from "@/actions/emails/send-account-verification-email"
 import getUserByEmail from "@/actions/user/get-user-by-email"
-import prisma from "@/lib/utils/database/prisma"
+import prisma from "@/lib/database/prisma"
 import { RegisterRequestSchema } from "@/types/forms/register"
 import { hash } from "bcryptjs"
 

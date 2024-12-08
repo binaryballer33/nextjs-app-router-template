@@ -6,7 +6,7 @@ import { randomInt, randomUUID } from "crypto"
 
 import deletePasswordResetTokenById from "@/actions/auth/tokens/password-reset-token/delete-password-reset-token-by-id"
 import getPasswordResetTokenByEmail from "@/actions/auth/tokens/password-reset-token/get-password-reset-token-by-email"
-import prisma from "@/lib/utils/database/prisma"
+import prisma from "@/lib/database/prisma"
 
 export default async function createPasswordResetToken(email: string): Promise<ServerResponse> {
     const token = randomUUID()

@@ -2,12 +2,23 @@
 
 import type { ResetPassword } from "@/types/forms/reset-password"
 
+import { defaultValuesResetPassword as defaultValues, ResetPasswordSchema } from "@/types/forms/reset-password"
+
 import { useSearchParams } from "next/navigation"
 
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { LockKeyhole } from "lucide-react"
+import { toast } from "sonner"
+
+import handleServerResponse from "@/lib/helper-functions/handleServerResponse"
+
 import resetPassword from "@/actions/auth/reset-password"
+
+import routes from "@/routes/routes"
+
 import Container from "@/components/base/container"
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
 import Field from "@/components/react-hook-form/fields"
@@ -16,12 +27,6 @@ import FormHead from "@/components/react-hook-form/form/form-head"
 import FormReturnLink from "@/components/react-hook-form/form/form-return-link"
 import FormSubmitButton from "@/components/react-hook-form/form/form-submit-button"
 import AuthFormInput from "@/components/react-hook-form/rhf-custom-input"
-import handleServerResponse from "@/lib/utils/helper-functions/handleServerResponse"
-import routes from "@/routes/routes"
-import { defaultValuesResetPassword as defaultValues, ResetPasswordSchema } from "@/types/forms/reset-password"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { LockKeyhole } from "lucide-react"
-import { toast } from "sonner"
 
 export default function ResetPasswordView() {
     const { t } = useTranslation()

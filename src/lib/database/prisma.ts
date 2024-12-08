@@ -1,6 +1,6 @@
 // noinspection ES6ConvertVarToLetConst
 
-import { NODE_ENV } from "@/lib/utils/secrets"
+import { NODE_ENV } from "@/lib/secrets"
 import { PrismaClient } from "@prisma/client"
 
 declare global {

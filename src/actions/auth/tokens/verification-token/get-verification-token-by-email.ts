@@ -2,7 +2,7 @@
 
 import type { ServerResponse } from "@/types/auth/server-response"
 
-import prisma from "@/lib/utils/database/prisma"
+import prisma from "@/lib/database/prisma"
 import VerifyEmailRequestSchema from "@/types/forms/verify-email-request"
 
 export default async function getVerificationTokenByEmail(email: string): Promise<ServerResponse> {

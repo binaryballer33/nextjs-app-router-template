@@ -2,14 +2,25 @@
 
 import type { VerifyEmail } from "@/types/forms/verify-email"
 
+import { defaultValuesVerifyEmail as defaultValues, VerifyEmailSchema } from "@/types/forms/verify-email"
+
 import { useSearchParams } from "next/navigation"
 
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Mail } from "lucide-react"
+import { toast } from "sonner"
+
+import handleServerResponse from "@/lib/helper-functions/handleServerResponse"
+
 import createVerificationToken from "@/actions/auth/tokens/verification-token/create-verification-token"
 import verifyAccountEmail from "@/actions/auth/verify-account-email"
 import sendAccountVerificationEmail from "@/actions/emails/send-account-verification-email"
+
+import routes from "@/routes/routes"
+
 import Container from "@/components/base/container"
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
 import Field from "@/components/react-hook-form/fields"
@@ -19,12 +30,6 @@ import FormResendCode from "@/components/react-hook-form/form/form-resend-code"
 import FormReturnLink from "@/components/react-hook-form/form/form-return-link"
 import FormSubmitButton from "@/components/react-hook-form/form/form-submit-button"
 import AuthFormInput from "@/components/react-hook-form/rhf-custom-input"
-import handleServerResponse from "@/lib/utils/helper-functions/handleServerResponse"
-import routes from "@/routes/routes"
-import { defaultValuesVerifyEmail as defaultValues, VerifyEmailSchema } from "@/types/forms/verify-email"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Mail } from "lucide-react"
-import { toast } from "sonner"
 
 export default function VerifyEmailView() {
     const { t } = useTranslation()

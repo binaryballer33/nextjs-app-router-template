@@ -7,7 +7,7 @@ import fs from "fs"
 import { Prisma } from "@prisma/client"
 import { hash } from "bcryptjs"
 
-import prisma from "@/lib/utils/database/prisma"
+import prisma from "@/lib/database/prisma"
 
 import CartItemUncheckedCreateInput = Prisma.CartItemUncheckedCreateInput
 

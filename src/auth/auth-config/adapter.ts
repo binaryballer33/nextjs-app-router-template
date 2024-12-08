@@ -1,7 +1,7 @@
 import type { AdapterUser } from "@auth/core/adapters"
 import type { NextAuthConfig } from "next-auth"
 
-import prisma from "@/lib/utils/database/prisma"
+import prisma from "@/lib/database/prisma"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 
 /*

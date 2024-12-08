@@ -6,7 +6,7 @@ import type { VerifyEmail } from "@/types/forms/verify-email"
 import deleteVerificationTokenById from "@/actions/auth/tokens/verification-token/delete-verification-token-by-id"
 import getVerificationTokenByToken from "@/actions/auth/tokens/verification-token/get-verification-token-by-token"
 import getUserByEmail from "@/actions/user/get-user-by-email"
-import prisma from "@/lib/utils/database/prisma"
+import prisma from "@/lib/database/prisma"
 import { VerifyEmailSchema } from "@/types/forms/verify-email"
 import VerifyIdSchema from "@/types/forms/verify-id"
 

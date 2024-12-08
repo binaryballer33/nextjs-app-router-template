@@ -7,7 +7,7 @@ import deletePasswordResetTokenById from "@/actions/auth/tokens/password-reset-t
 import getPasswordResetTokenByToken from "@/actions/auth/tokens/password-reset-token/get-password-reset-token-by-token"
 import sendResetPasswordConfirmationEmail from "@/actions/emails/send-reset-password-confirmation-email"
 import getUserByEmail from "@/actions/user/get-user-by-email"
-import prisma from "@/lib/utils/database/prisma"
+import prisma from "@/lib/database/prisma"
 import { ResetPasswordSchema } from "@/types/forms/reset-password"
 import VerifyIdSchema from "@/types/forms/verify-id"
 import { hash } from "bcryptjs"

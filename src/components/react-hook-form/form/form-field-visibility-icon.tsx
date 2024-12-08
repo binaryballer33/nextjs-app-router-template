@@ -1,9 +1,11 @@
 import type { RegisterRequest } from "@/types/forms/register"
 
+import { Eye, EyeOff } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { cn } from "@/lib/utils"
-import { Eye, EyeOff } from "lucide-react"
 
 type FormFieldVisibilityIconProps = {
     className?: string

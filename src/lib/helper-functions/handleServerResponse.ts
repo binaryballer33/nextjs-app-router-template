@@ -1,8 +1,8 @@
 import type { ServerResponse } from "@/types/auth/server-response"
 import type { toast as reactHotToast } from "sonner"
 
-import delay from "@/lib/utils/helper-functions/delay"
-import delayAndCloseTab from "@/lib/utils/helper-functions/delay-and-close-tab"
+import delay from "@/lib/helper-functions/delay"
+import delayAndCloseTab from "@/lib/helper-functions/delay-and-close-tab"
 
 type HandleServerResponseParams = {
     closeTab?: boolean

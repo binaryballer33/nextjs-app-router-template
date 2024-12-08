@@ -3,7 +3,7 @@
 import type { ServerResponse } from "@/types/auth/server-response"
 import type { VerificationToken } from "@prisma/client"
 
-import { RESEND_API_KEY } from "@/lib/utils/secrets"
+import { RESEND_API_KEY } from "@/lib/secrets"
 import routes, { getFullRoute } from "@/routes/routes"
 import VerifyTokenSchema from "@/types/forms/verify-token"
 import { Resend } from "resend"

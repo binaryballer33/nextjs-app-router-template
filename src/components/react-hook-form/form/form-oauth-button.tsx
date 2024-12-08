@@ -9,12 +9,15 @@ import { useCallback } from "react"
 
 import { useFormContext } from "react-hook-form"
 
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-import routes from "@/routes/routes"
 import { toast } from "sonner"
 
 import { signIn } from "next-auth/react"
+
+import { cn } from "@/lib/utils"
+
+import routes from "@/routes/routes"
+
+import { Button } from "@/components/ui/button"
 
 type OAuthButtonProps = {
     className?: string
