@@ -2,10 +2,10 @@ import { type FC } from "react"
 
 import { useTranslation } from "react-i18next"
 
+import { Facebook, Github, Instagram, Twitter, Youtube } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import { Facebook, Github, Instagram, Twitter, Youtube } from "lucide-react"
 import { FaReact } from "react-icons/fa";
 
 
@@ -83,7 +83,7 @@ const Footer: FC = () => {
                     </div>
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-12">
                         <div className="flex gap-2 sm:col-span-3">
-                            <FaReact className="mb-2 h-6 w-6" color="teal"/>
+                            <FaReact color="teal" className="mb-2 h-6 w-6"/>
                             <h2 className="mb-1 text-xl font-semibold">{t("MANDYTEC LLC")}</h2>
                         </div>
                         <div className="grid grid-cols-2 gap-4 sm:col-span-9 md:grid-cols-4">

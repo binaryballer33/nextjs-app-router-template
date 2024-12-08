@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 
 import NProgress from "@/components/base/nprogress"
 import MainLayout from "@/layouts/main-layout"
-import ProvidersLayout from "@/layouts/providers/providers-layout"
+import Providers from "@/layouts/providers/providers-layout"
 
 export const dynamic = "force-dynamic"
 
@@ -19,14 +19,14 @@ type LayoutProps = {
 
 export default async function Layout({ children }: LayoutProps) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <body>
-                <ProvidersLayout>
+                <Providers>
                     <MainLayout>
                         {children}
                         <NProgress />
                     </MainLayout>
-                </ProvidersLayout>
+                </Providers>
             </body>
         </html>
     )

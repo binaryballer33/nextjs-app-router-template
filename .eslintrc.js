@@ -1,7 +1,5 @@
-/**
- *  @type {import("eslint").ESLint.ConfigData}
- */
-module.exports = {
+/** @type {import("eslint").ESLint.ConfigData} */
+export default {
     root: true,
     env: { browser: true, es2020: true },
     plugins: ["perfectionist", "unused-imports", "@typescript-eslint", "prettier"],

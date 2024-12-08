@@ -1,8 +1,8 @@
 import prefetchHomePageDataDehydrateState from "@/app/prefetch-home-page-data"
-import AvatarAccordion from "@/components/accordions/basic-accordion"
-import Container from "@/components/base/container"
-import PageHeading from "@/components/base/page-heading"
-import CardsBenefits from "@/components/card-features/cards-benefits"
+// import AvatarAccordion from "@/components/accordions/basic-accordion"
+// import Container from "@/components/base/container"
+// import PageHeading from "@/components/base/page-heading"
+// import CardsBenefits from "@/components/card-features/cards-benefits"
 import ThemeToggle from "@/components/theme/theme-toggle"
 import { appMetadata } from "@/lib/utils/config"
 import { HydrationBoundary } from "@tanstack/react-query"
@@ -23,7 +23,7 @@ export default async function HomePage() {
         <HydrationBoundary state={dehydratedState}>
 
             <ThemeToggle />
-            <Container>
+            {/* <Container>
                 <PageHeading bottomText="This is a sample page" title="Home Page" />
             </Container>
 
@@ -36,7 +36,7 @@ export default async function HomePage() {
 
             <Container>
                 <AvatarAccordion />
-            </Container>
+            </Container> */}
         </HydrationBoundary>
     )
 }
