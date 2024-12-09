@@ -28,6 +28,8 @@ export default async function sendAccountVerificationEmail(
             text: `Click The Link Below To Confirm Your Email:\n${confirmationLink}\n\nYour Confirmation Code Is: ${sixDigitCode}`,
             to: email,
         })
+        console.log(emailResponse)
+
         if (!emailResponse?.data) return { error: `Error Sending Account Verification Email To: ${email}`, status: 500 }
 
         return {

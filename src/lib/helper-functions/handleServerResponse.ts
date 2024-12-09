@@ -1,5 +1,5 @@
 import type { ServerResponse } from "@/types/auth/server-response"
-import type { toast as reactHotToast } from "sonner"
+import type { toast as sonnerReeactHotToast } from "sonner"
 
 import delay from "@/lib/helper-functions/delay"
 import delayAndCloseTab from "@/lib/helper-functions/delay-and-close-tab"
@@ -9,7 +9,7 @@ type HandleServerResponseParams = {
     delay?: number
     redirectTo?: string
     response: ServerResponse
-    toast: typeof reactHotToast
+    toast: typeof sonnerReeactHotToast
 }
 
 export default async function handleServerResponse(params: HandleServerResponseParams) {

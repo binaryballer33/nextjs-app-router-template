@@ -2,7 +2,20 @@ import type { NavBarItemWithIcon } from "@/types/navbar-item"
 
 import { useTranslation } from "react-i18next"
 
-import { HelpCircle, Home, MessageCircleWarning, Phone, Receipt, ShoppingCart, User, UserCog } from "lucide-react"
+import {
+    HelpCircle,
+    Home,
+    LogIn,
+    MessageCircleWarning,
+    Phone,
+    Receipt,
+    ShoppingCart,
+    User,
+    UserCog,
+    UserPlus,
+} from "lucide-react"
+import { FaSignOutAlt } from "react-icons/fa"
+import { MdLockReset } from "react-icons/md"
 
 import routes from "@/routes/routes"
 
@@ -45,8 +58,19 @@ export function useNavigationItems(): NavBarItemWithIcon[] {
     ]
 }
 
+// not logged in auth items with translations
+export function useNotLoggedInAuthItems(): NavBarItemWithIcon[] {
+    const { t } = useTranslation()
+
+    return [
+        { icon: LogIn, route: routes.auth.login, title: t("Login") },
+        { icon: UserPlus, route: routes.auth.register, title: t("Register") },
+        { icon: MdLockReset, route: routes.auth.forgotPassword, title: t("Forgot Password") },
+    ]
+}
+
 // profile dropdown items with translations
-export function useProfileDropdownItems(): NavBarItemWithIcon[] {
+export function useLoggedInAuthItems(): NavBarItemWithIcon[] {
     const { t } = useTranslation()
 
     return [
@@ -104,17 +128,23 @@ export const navigationItems: NavBarItemWithIcon[] = [
     { icon: Phone, route: routes.contact, title: "Contact" },
 ]
 
+export const notLoggedInAuthItems: NavBarItemWithIcon[] = [
+    { icon: LogIn, route: routes.auth.login, title: "Login" },
+    { icon: UserPlus, route: routes.auth.register, title: "Register" },
+    { icon: MdLockReset, route: routes.auth.forgotPassword, title: "Forgot Password" },
+]
+
 // profile dropdown items without translations
-export const profileIconDropdownNavItems: NavBarItemWithIcon[] = [
+export const loggedInAuthItems: NavBarItemWithIcon[] = [
     {
         icon: User,
         route: routes.user.profile,
-        title: "My Profile",
+        title: "Profile",
     },
     {
         icon: UserCog,
         route: routes.dummy,
-        title: "Profile settings",
+        title: "Account Settings",
     },
     {
         icon: ShoppingCart,
@@ -125,5 +155,10 @@ export const profileIconDropdownNavItems: NavBarItemWithIcon[] = [
         icon: Receipt,
         route: routes.dummy,
         title: "Orders",
+    },
+    {
+        icon: FaSignOutAlt,
+        route: routes.auth.signOut,
+        title: "Logout",
     },
 ]

@@ -24,9 +24,6 @@ import Form from "@/components/react-hook-form/form-provider"
 
 /*
   TODO: maybe I need this, maybe I don't import { useSession } from "next-auth/react"
-  it doesn't affect the functionality of the app
-  You can duplicate the error by toggling the password visibility icon in the register or login form
-  TODO: there's a mui warning in the chrome dev tools, figure out how to fix it later,
 */
 export default function LoginView() {
     const { t } = useTranslation()

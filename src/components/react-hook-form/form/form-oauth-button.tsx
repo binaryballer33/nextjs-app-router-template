@@ -41,9 +41,7 @@ export default function OAuthButton(props: OAuthButtonProps) {
 
     const onAuth = useCallback(
         async (oauthProvider: OAuthProvider["id"]): Promise<void> => {
-            await signIn(oauthProvider, {
-                redirectTo: routes.nextAuth.defaultLoginRedirect,
-            })
+            await signIn(oauthProvider, { redirectTo: routes.nextAuth.defaultLoginRedirect })
             if (loginError) toast.error(oauthLoginError)
         },
         [loginError, oauthLoginError],
@@ -54,6 +52,7 @@ export default function OAuthButton(props: OAuthButtonProps) {
             className={cn("w-full text-base font-normal", className)}
             disabled={isSubmitting}
             onClick={() => onAuth(provider.id).catch(() => {})}
+            type="button"
             variant="outline"
         >
             <Icon className="mr-2 h-5 w-5" />

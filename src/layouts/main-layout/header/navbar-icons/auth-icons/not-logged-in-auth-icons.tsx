@@ -1,10 +1,8 @@
-import type { NavBarItemWithIcon } from "@/types/navbar-item"
-
 import Link from "next/link"
 
-import { Lock, LogIn, UserPlus } from "lucide-react"
-import { MdLockReset } from "react-icons/md"
+import { Lock } from "lucide-react"
 
+import { notLoggedInAuthItems } from "@/routes/navbar"
 import routes from "@/routes/routes"
 
 import {
@@ -16,12 +14,6 @@ import {
 } from "@/components/ui/navigation-menu"
 
 export default function NotLoggedInAuthIcons() {
-    const authLinks: NavBarItemWithIcon[] = [
-        { icon: LogIn, route: routes.auth.login, title: "Login" },
-        { icon: UserPlus, route: routes.auth.register, title: "Register" },
-        { icon: MdLockReset, route: routes.auth.forgotPassword, title: "Forgot Password" },
-    ]
-
     return (
         <NavigationMenu>
             <NavigationMenuList>
@@ -33,7 +25,7 @@ export default function NotLoggedInAuthIcons() {
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
                         <div className="flex flex-col gap-2 text-sm">
-                            {authLinks.map((link) => (
+                            {notLoggedInAuthItems.map((link) => (
                                 <Link
                                     className="flex w-[150px] items-center gap-2 rounded-md p-2 hover:bg-accent"
                                     href={link.route}

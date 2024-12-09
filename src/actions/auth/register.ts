@@ -15,7 +15,6 @@ import createVerificationToken from "@/actions/auth/tokens/verification-token/cr
 import sendAccountVerificationEmail from "@/actions/emails/send-account-verification-email"
 import getUserByEmail from "@/actions/user/get-user-by-email"
 
-// TODO: do a zod parse to verify client side data is as expected
 export default async function register(credentials: RegisterRequest): Promise<ServerResponse> {
     try {
         // validate the users credentials from the form using zod, throw error if data sent from front end is invalid

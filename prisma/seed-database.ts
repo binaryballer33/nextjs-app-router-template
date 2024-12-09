@@ -11,7 +11,7 @@ import prisma from "@/lib/database/prisma"
 
 import CartItemUncheckedCreateInput = Prisma.CartItemUncheckedCreateInput
 
-const cardDataFilePath = "@/mocks/yugioh-cards.json"
+const cardDataFilePath = "src/mocks/yugioh-cards.json"
 const cards = JSON.parse(fs.readFileSync(cardDataFilePath, "utf-8"))
 const outlookUserId = randomUUID()
 const gmailUserId = randomUUID()
