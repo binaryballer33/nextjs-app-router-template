@@ -10,4 +10,8 @@ export type NavBarItem = {
 
 export type NavBarItemWithIcon = {
     icon: IconType | LucideIcon
-} & NavBarItem
+    route: string
+    separator?: boolean
+    subMenu?: NavBarItemWithIcon[]
+    title: string
+}

@@ -1,3 +1,5 @@
+"use client"
+
 import type { RegisterRequest } from "@/types/forms/register"
 
 import { Eye, EyeOff } from "lucide-react"

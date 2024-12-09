@@ -1,5 +1,3 @@
-"use client"
-
 import { type ReactNode } from "react"
 
 import Footer from "./footer/footer"
@@ -9,7 +7,9 @@ type MainLayoutProps = {
     children?: ReactNode
 }
 
-export default function MainLayout({ children }: MainLayoutProps) {
+export default function MainLayout(props: MainLayoutProps) {
+    const { children } = props
+
     return (
         <div className="mx-auto w-[95%]">
             <Header />

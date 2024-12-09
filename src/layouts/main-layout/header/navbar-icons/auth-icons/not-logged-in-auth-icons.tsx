@@ -15,7 +15,7 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 
-export default function AuthIcon() {
+export default function NotLoggedInAuthIcons() {
     const authLinks: NavBarItemWithIcon[] = [
         { icon: LogIn, route: routes.auth.login, title: "Login" },
         { icon: UserPlus, route: routes.auth.register, title: "Register" },
@@ -23,16 +23,16 @@ export default function AuthIcon() {
     ]
 
     return (
-        <NavigationMenu className="hidden md:flex">
+        <NavigationMenu>
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <NavigationMenuTrigger>
+                    <NavigationMenuTrigger className="p-2">
                         <Link href={routes.auth.login}>
                             <Lock className="h-4 w-4" />
                         </Link>
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                        <div className="flex flex-col gap-2 p-4 text-sm">
+                        <div className="flex flex-col gap-2 text-sm">
                             {authLinks.map((link) => (
                                 <Link
                                     className="flex w-[150px] items-center gap-2 rounded-md p-2 hover:bg-accent"
