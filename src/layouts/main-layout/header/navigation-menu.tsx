@@ -50,9 +50,10 @@ const links: NavBarItemWithIcon[] = [
 
 export default function Navbar() {
     return (
-        <NavigationMenu className="hidden md:flex">
+        <NavigationMenu className="hidden bg-white dark:bg-black md:flex">
             <Logo />
             <NavigationMenuList>
+                {/* for nested navigation links */}
                 <DropdownMenuButton navItems={dropdownMenuItems} title="Services" />
 
                 {/* navigation route links */}

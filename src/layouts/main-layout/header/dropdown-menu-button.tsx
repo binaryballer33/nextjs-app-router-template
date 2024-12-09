@@ -2,7 +2,7 @@
 
 import type { NavBarItem } from "@/types/navbar-item"
 
-import { useRef, useState } from "react"
+import { Fragment, useRef, useState } from "react"
 
 import { ChevronDown } from "lucide-react"
 
@@ -45,46 +45,36 @@ export default function NestedDropdownMenu(props: NestedDropdownMenuProps) {
         <div className={cn("w-fit p-0", className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <DropdownMenu onOpenChange={setOpen} open={open}>
                 <DropdownMenuTrigger asChild>
-                    <Button
-                        className="w-fit justify-between bg-zinc-900 text-white hover:bg-zinc-800"
-                        variant="default"
-                    >
+                    <Button className="w-fit justify-between" variant="ghost">
                         {title}
                         <ChevronDown className="h-4 w-4" />
                     </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-fit border-zinc-800 bg-zinc-900 text-white">
+                <DropdownMenuContent className="w-fit">
                     {navItems.map((navItem) => (
-                        <>
+                        <Fragment key={navItem.title}>
                             {/* menu item */}
                             {!navItem.subMenu && (
-                                <DropdownMenuItem className="cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800 focus:text-white data-[highlighted]:bg-zinc-800">
-                                    {navItem.title}
-                                </DropdownMenuItem>
+                                <DropdownMenuItem className="cursor-pointer">{navItem.title}</DropdownMenuItem>
                             )}
 
                             {/* optional separator */}
-                            {navItem.separator && <DropdownMenuSeparator className="bg-zinc-800" />}
+                            {navItem.separator && <DropdownMenuSeparator />}
 
                             {/* submenu */}
                             {navItem.subMenu && (
                                 <DropdownMenuSub>
-                                    <DropdownMenuSubTrigger className="hover:bg-zinc-800 focus:bg-zinc-800 focus:text-white data-[highlighted]:bg-zinc-800">
-                                        {navItem.title}
-                                    </DropdownMenuSubTrigger>
-                                    <DropdownMenuSubContent className="border-zinc-800 bg-zinc-900 text-white">
+                                    <DropdownMenuSubTrigger>{navItem.title}</DropdownMenuSubTrigger>
+                                    <DropdownMenuSubContent className="w-fit">
                                         {navItem.subMenu.map((subItem) => (
-                                            <DropdownMenuItem
-                                                className="cursor-pointer hover:bg-zinc-800 focus:bg-zinc-800 focus:text-white data-[highlighted]:bg-zinc-800"
-                                                key={subItem.title}
-                                            >
+                                            <DropdownMenuItem className="cursor-pointer" key={subItem.title}>
                                                 {subItem.title}
                                             </DropdownMenuItem>
                                         ))}
                                     </DropdownMenuSubContent>
                                 </DropdownMenuSub>
                             )}
-                        </>
+                        </Fragment>
                     ))}
                 </DropdownMenuContent>
             </DropdownMenu>

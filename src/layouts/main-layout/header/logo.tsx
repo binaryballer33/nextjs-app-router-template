@@ -12,7 +12,7 @@ type LogoProps = {
 export default function Logo(props: LogoProps) {
     const { className, src } = props
     return (
-        <Link className="mr-6" href={routes.home}>
+        <Link className="mr-4" href={routes.home}>
             <img
                 alt="Logo"
                 className={cn("h-6 w-6 rounded-full", className)}
