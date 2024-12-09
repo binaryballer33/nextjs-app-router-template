@@ -1,8 +1,13 @@
-import type { ReactNode } from "react"
+import type { LucideIcon } from "lucide-react"
+import type { IconType } from "react-icons"
 
 export type NavBarItem = {
-    icon?: ReactNode
-    route?: string
+    route: string
+    separator?: boolean
     subMenu?: NavBarItem[]
     title: string
 }
+
+export type NavBarItemWithIcon = {
+    icon: IconType | LucideIcon
+} & NavBarItem
