@@ -26,6 +26,7 @@ async function dropTables() {
     await prisma.yugiohCard.deleteMany({})
     await prisma.account.deleteMany({})
     await prisma.verificationToken.deleteMany({})
+    await prisma.passwordResetToken.deleteMany({})
 
     console.log("Dropped Tables Successfully\n")
 }

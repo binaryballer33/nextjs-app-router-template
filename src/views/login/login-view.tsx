@@ -29,7 +29,9 @@ export default function LoginView() {
     const { t } = useTranslation()
 
     const form = useForm<LoginRequest>({ defaultValues, resolver: zodResolver(LoginRequestSchema) })
+
     const { handleSubmit } = form
+
     const [showTwoFactorInput, setShowTwoFactorInput] = useQueryState(
         "showTwoFactorInput",
         parseAsBoolean.withDefault(false),
