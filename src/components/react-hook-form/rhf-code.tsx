@@ -2,9 +2,8 @@
 
 import { Controller, useFormContext } from "react-hook-form"
 
-import { cn } from "@/lib/utils"
-
-import { Input } from "@/components/ui/input"
+import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
 
 type RHFCodesProps = {
     className?: string
@@ -12,47 +11,32 @@ type RHFCodesProps = {
     name: string
 }
 
-export default function RHFCode({ className, length = 6, name }: RHFCodesProps) {
+export default function RHFCode(props: RHFCodesProps) {
+    const { name } = props
     const { control } = useFormContext()
 
     return (
         <Controller
             control={control}
             name={name}
-            render={({ field, fieldState: { error } }) => (
-                <div className="w-full">
-                    <div className={cn("flex justify-around gap-2 py-4", className)}>
-                        {[...Array(length)].map((_, index) => (
-                            <Input
-                                className={cn("h-12 w-10 text-center text-lg md:w-16", error && "border-destructive")}
-                                inputMode="numeric"
-                                key={index}
-                                maxLength={1}
-                                name={`${name}-${index}`}
-                                onChange={(e) => {
-                                    const { value } = e.target
-                                    const values = field.value ? field.value.split("") : []
-                                    values[index] = value
-                                    field.onChange(values.join(""))
-
-                                    // Auto-focus next input
-                                    if (value && index < length - 1) {
-                                        const nextInput = document.querySelector(
-                                            `input[name="${name}-${index + 1}"]`,
-                                        ) as HTMLInputElement
-                                        nextInput?.focus()
-                                    }
-                                }}
-                                pattern="\d*"
-                                placeholder="-"
-                                type="text"
-                                value={field.value?.[index] || ""}
-                            />
-                        ))}
-                    </div>
-
-                    {error && <p className="mt-2 px-2 text-sm text-destructive">{error.message}</p>}
-                </div>
+            render={({ field }) => (
+                <FormItem>
+                    <FormLabel>One-Time Password</FormLabel>
+                    <FormControl>
+                        <InputOTP maxLength={6} {...field}>
+                            <InputOTPGroup className="flex h-12 w-full gap-2 sm:gap-4">
+                                <InputOTPSlot className="h-full flex-1 bg-accent" index={0} />
+                                <InputOTPSlot className="h-full flex-1 bg-accent" index={1} />
+                                <InputOTPSlot className="h-full flex-1 bg-accent" index={2} />
+                                <InputOTPSlot className="h-full flex-1 bg-accent" index={3} />
+                                <InputOTPSlot className="h-full flex-1 bg-accent" index={4} />
+                                <InputOTPSlot className="h-full flex-1 bg-accent" index={5} />
+                            </InputOTPGroup>
+                        </InputOTP>
+                    </FormControl>
+                    <FormDescription>Please Enter The One-Time Password Sent To Your Email.</FormDescription>
+                    <FormMessage />
+                </FormItem>
             )}
         />
     )

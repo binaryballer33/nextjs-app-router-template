@@ -26,7 +26,7 @@ export default function ThemeProvider({ children, props }: ThemeProviderProps) {
         >
             <div className="flex min-h-screen">
                 {children}
-                <Toaster closeButton duration={3000} expand position="top-right" richColors />
+                <Toaster duration={3000} expand position="top-right" richColors />
             </div>
         </NextThemesProvider>
     )

@@ -64,6 +64,7 @@ const providers: NextAuthConfig["providers"] = [
                 id: existingUserResponse.user.id,
                 image: existingUserResponse.user.imageUrl,
                 imageUrl: existingUserResponse.user.imageUrl!,
+                isTwoFactorEnabled: existingUserResponse.user.isTwoFactorEnabled,
                 lastName: existingUserResponse.user.lastName,
                 name: `${existingUserResponse.user.firstName} ${existingUserResponse.user.lastName}`,
                 role: existingUserResponse.user.role,

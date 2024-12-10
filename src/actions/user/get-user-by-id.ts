@@ -1,3 +1,5 @@
+"use server"
+
 import type { ServerResponse } from "@/types/auth/server-response"
 
 import VerifyUUIDSchema from "@/types/forms/verify-id"

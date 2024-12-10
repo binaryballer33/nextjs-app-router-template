@@ -54,6 +54,7 @@ export default function CustomInput(props: CustomInputProps) {
                     <FlexBetweenContainer>
                         <FormLabel className="flex h-8 items-center justify-center font-medium">{label}</FormLabel>
 
+                        {/* visibility toggle icon */}
                         {showVisibilityToggle ? (
                             <FormFieldVisibilityIcon
                                 inputName={inputName}
@@ -65,12 +66,14 @@ export default function CustomInput(props: CustomInputProps) {
 
                     <FormControl>
                         <div className="relative">
+                            {/* input icon */}
                             {icon ? (
                                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                                     {icon}
                                 </div>
                             ) : null}
 
+                            {/* input field */}
                             <Input
                                 {...field}
                                 className={cn("bg-accent pl-10", className)}

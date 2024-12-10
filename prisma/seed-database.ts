@@ -66,7 +66,7 @@ async function createUsers() {
     console.log("Attempting To Create Users")
     const hashedPasswordForGmailUser = await hash("password", 10)
     const hashedPasswordForOutlookUser = await hash("password", 10)
-    const placeholderImage = "https://images.unsplash.com/photo-1569511502671-8c1bbf96fc8d?w=320&ah=320"
+    const placeholderImage = "https://placehold.co/320x320"
 
     try {
         await prisma.user.create({

@@ -9,9 +9,9 @@ import {
     MessageCircleWarning,
     Phone,
     Receipt,
+    Settings,
     ShoppingCart,
     User,
-    UserCog,
     UserPlus,
 } from "lucide-react"
 import { FaSignOutAlt } from "react-icons/fa"
@@ -80,8 +80,8 @@ export function useLoggedInAuthItems(): NavBarItemWithIcon[] {
             title: t("My Profile"),
         },
         {
-            icon: UserCog,
-            route: routes.dummy,
+            icon: Settings,
+            route: routes.user.settings,
             title: t("Profile settings"),
         },
         {
@@ -142,8 +142,8 @@ export const loggedInAuthItems: NavBarItemWithIcon[] = [
         title: "Profile",
     },
     {
-        icon: UserCog,
-        route: routes.dummy,
+        icon: Settings,
+        route: routes.user.settings,
         title: "Account Settings",
     },
     {

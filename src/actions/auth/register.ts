@@ -21,7 +21,7 @@ export default async function register(credentials: RegisterRequest): Promise<Se
         const { email, firstName, lastName, password } = RegisterRequestSchema.parse(credentials)
 
         const hashedPassword = await hash(password, 10)
-        const placeholderImage = "https://images.unsplash.com/photo-1569511502671-8c1bbf96fc8d?w=320&ah=320"
+        const placeholderImage = "https://placehold.co/320x320"
 
         // check if the user already exists with that email, if user exists don't try to create the user
         const userResponse = await getUserByEmail(email)

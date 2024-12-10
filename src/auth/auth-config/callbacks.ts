@@ -55,6 +55,10 @@ const callbacks: NextAuthConfig["callbacks"] = {
         if (!("user" in existingUserResponse)) return token
 
         token.role = existingUserResponse.user.role
+        token.firstName = existingUserResponse.user.firstName
+        token.lastName = existingUserResponse.user.lastName
+        token.isTwoFactorEnabled = existingUserResponse.user.isTwoFactorEnabled
+        token.imageUrl = existingUserResponse.user.imageUrl!
 
         return token
     },
@@ -62,6 +66,12 @@ const callbacks: NextAuthConfig["callbacks"] = {
     async session({ session, token }) {
         if (token.sub && session.user) session.user.id = token.sub
         if (token.role && session.user) session.user.role = token.role
+        if (token.firstName && session.user) session.user.firstName = token.firstName
+        if (token.lastName && session.user) session.user.lastName = token.lastName
+        if (token.isTwoFactorEnabled !== undefined && session.user)
+            session.user.isTwoFactorEnabled = token.isTwoFactorEnabled
+
+        if (token.imageUrl && session.user) session.user.imageUrl = token.imageUrl
 
         return session
     },

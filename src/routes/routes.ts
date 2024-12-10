@@ -13,8 +13,8 @@ const yugiohApi = {
 }
 
 const user = {
-    account: `/user/account`,
     profile: `/user/profile`,
+    settings: `/user/settings`,
 }
 
 const nextAuth = {

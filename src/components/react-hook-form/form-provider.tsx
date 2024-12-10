@@ -5,14 +5,15 @@ import { Form as RHFProvider } from "@/components/ui/form"
 
 export type FormProps = {
     children: ReactNode
+    className?: string
     form: UseFormReturn<any>
     onSubmit: (e?: BaseSyntheticEvent) => Promise<void>
 }
 
-export default function Form({ children, form, onSubmit }: FormProps) {
+export default function Form({ children, className, form, onSubmit }: FormProps) {
     return (
         <RHFProvider {...form}>
-            <form noValidate onSubmit={onSubmit}>
+            <form className={className} noValidate onSubmit={onSubmit}>
                 {children}
             </form>
         </RHFProvider>

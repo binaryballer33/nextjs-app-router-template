@@ -10,10 +10,12 @@ import handleServerResponse from "@/lib/helper-functions/handleServerResponse"
 
 import signOut from "@/actions/auth/sign-out"
 
+import useAuthUser from "@/hooks/useAuthUser"
+
 import { loggedInAuthItems } from "@/routes/navbar"
 import routes from "@/routes/routes"
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
     NavigationMenu,
@@ -24,10 +26,14 @@ import {
 } from "@/components/ui/navigation-menu"
 
 export default function LoggedInAuthIcons() {
+    const { user } = useAuthUser()
+
     const handleSignOut = useCallback(async (): Promise<void> => {
         const response = await signOut() // sign out the user with next auth
         await handleServerResponse({ redirectTo: routes.auth.signOut, response, toast })
     }, [])
+
+    const placeholderImage = "https://placehold.co/600x600"
 
     return (
         <NavigationMenu>
@@ -35,7 +41,8 @@ export default function LoggedInAuthIcons() {
                 <NavigationMenuItem>
                     <NavigationMenuTrigger className="p-2">
                         <Link href={routes.user.profile}>
-                            <Avatar className="h-9 w-9">
+                            <Avatar className="h-6 w-6">
+                                <AvatarImage alt="Profile picture" src={user?.imageUrl || placeholderImage} />
                                 <AvatarFallback>SM</AvatarFallback>
                             </Avatar>
                         </Link>
