@@ -41,7 +41,7 @@ const publicRoutes = {
     contact: "/contact-us",
     dummy: "",
     error: "/error",
-    faqs: "/faqs",
+    faq: "/faq",
     home: "/",
     maintenance: "/maintenance",
     payment: "/payment",

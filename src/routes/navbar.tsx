@@ -53,7 +53,7 @@ export function useNavigationItems(): NavBarItemWithIcon[] {
 
     return [
         { icon: Home, route: routes.about, title: t("About") },
-        { icon: HelpCircle, route: routes.services, title: t("FAQs") },
+        { icon: HelpCircle, route: routes.faq, title: t("FAQs") },
         { icon: Phone, route: routes.contact, title: t("Contact") },
     ]
 }
@@ -124,7 +124,7 @@ export const dropdownItems: NavBarItemWithIcon[] = [
 // navigation items without translations
 export const navigationItems: NavBarItemWithIcon[] = [
     { icon: MessageCircleWarning, route: routes.about, title: "About" },
-    { icon: HelpCircle, route: routes.services, title: "FAQs" },
+    { icon: HelpCircle, route: routes.faq, title: "FAQs" },
     { icon: Phone, route: routes.contact, title: "Contact" },
 ]
 
