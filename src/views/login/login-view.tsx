@@ -22,9 +22,6 @@ import TwoFactorCode from "@/views/login/blocks/two-factor-code"
 
 import Form from "@/components/react-hook-form/form-provider"
 
-/*
-  TODO: maybe I need this, maybe I don't import { useSession } from "next-auth/react"
-*/
 export default function LoginView() {
     const { t } = useTranslation()
 

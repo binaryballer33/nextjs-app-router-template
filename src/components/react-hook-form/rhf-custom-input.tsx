@@ -18,15 +18,17 @@ import { Input } from "@/components/ui/input"
 import FlexBetweenContainer from "../base/flex-box/flex-between-container"
 import FormFieldVisibilityIcon from "./form/form-field-visibility-icon"
 
-type AuthInputProps = {
+type InputName = "name" | keyof RegisterRequest
+
+type CustomInputProps = {
     className?: string
     icon?: ReactNode
-    inputName: keyof RegisterRequest
+    inputName: InputName
     label: string
     showVisibilityToggle?: boolean
 }
 
-export default function AuthFormInput(props: AuthInputProps) {
+export default function CustomInput(props: CustomInputProps) {
     const { className, inputName, label, showVisibilityToggle = false } = props
 
     const placeholder = getPlaceholder(inputName, label)
@@ -71,7 +73,7 @@ export default function AuthFormInput(props: AuthInputProps) {
 
                             <Input
                                 {...field}
-                                className={cn("bg-muted/50 pl-10", className)}
+                                className={cn("bg-accent pl-10", className)}
                                 placeholder={placeholder}
                                 type={inputType}
                             />
@@ -96,7 +98,7 @@ export default function AuthFormInput(props: AuthInputProps) {
 }
 
 /* gives you a basic good placeholder for your input */
-function getPlaceholder(inputName: keyof RegisterRequest, label: string) {
+function getPlaceholder(inputName: InputName, label: string) {
     if (label === "Confirm New Password") return "Write Your New Password Again"
     if (label === "Confirm Password" || inputName === "confirmPassword") return "Write Your Password Again"
     return `Write Your ${label}`
@@ -121,7 +123,7 @@ function getInputType(name: string, label: string, showButtons: boolean | undefi
 }
 
 /*  gets the correct icon for each input type  */
-function getStartAdornment(inputName: keyof RegisterRequest) {
+function getStartAdornment(inputName: InputName) {
     const iconProps = { className: "h-4 w-4" }
 
     switch (inputName) {

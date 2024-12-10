@@ -1,38 +1,23 @@
 "use client"
 
+import type { ContactRequest } from "@/types/forms/contact"
+
+import { ContactRequestSchema, defaultValues } from "@/types/forms/contact"
+
 import { useForm } from "react-hook-form"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
-import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
 import Form from "@/components/react-hook-form/form-provider"
-
-const formSchema = z.object({
-    email: z.string().email({
-        message: "Please enter a valid email address.",
-    }),
-    message: z.string().min(10, {
-        message: "Message must be at least 10 characters.",
-    }),
-    name: z.string().min(2, {
-        message: "Name must be at least 2 characters.",
-    }),
-})
-
-const defaultValues = {
-    email: "",
-    message: "",
-    name: "",
-}
+import CustomInput from "@/components/react-hook-form/rhf-custom-input"
 
 export default function ContactPage() {
-    const form = useForm<z.infer<typeof formSchema>>({ defaultValues, resolver: zodResolver(formSchema) })
+    const form = useForm<ContactRequest>({ defaultValues, resolver: zodResolver(ContactRequestSchema) })
 
     const onSubmit = form.handleSubmit(async (values) => {
         // Here you would typically send the form data to your server
@@ -45,6 +30,7 @@ export default function ContactPage() {
         <main className="flex-1">
             <section className="w-full py-12 md:py-24 lg:py-32">
                 <div className="container px-4 md:px-6">
+                    {/* Contact Form Header */}
                     <div className="flex flex-col items-center space-y-4 text-center">
                         <div className="space-y-2">
                             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
@@ -56,39 +42,13 @@ export default function ContactPage() {
                             </p>
                         </div>
                     </div>
+
+                    {/* Contact Form */}
                     <div className="mx-auto grid max-w-5xl gap-6 py-12 lg:grid-cols-2">
                         <div className="space-y-4">
                             <Form form={form} onSubmit={onSubmit}>
-                                <FormField
-                                    control={form.control}
-                                    name="name"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Name</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="Your name" {...field} />
-                                            </FormControl>
-                                            <FormDescription>Please enter your full name.</FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="email"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Email</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="Your email" type="email" {...field} />
-                                            </FormControl>
-                                            <FormDescription>
-                                                We'll never share your email with anyone else.
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                                <CustomInput inputName="name" label="Name" />
+                                <CustomInput inputName="email" label="Email" />
                                 <FormField
                                     control={form.control}
                                     name="message"
@@ -97,7 +57,7 @@ export default function ContactPage() {
                                             <FormLabel>Message</FormLabel>
                                             <FormControl>
                                                 <Textarea
-                                                    className="resize-none"
+                                                    className="resize-none bg-accent"
                                                     placeholder="Your message"
                                                     {...field}
                                                 />
@@ -113,6 +73,7 @@ export default function ContactPage() {
                                     Send Message
                                 </Button>
                             </Form>
+
                             <div className="space-y-2">
                                 <h2 className="text-xl font-bold">Contact Information</h2>
                                 <p>Email: contact@acmeinc.com</p>
@@ -120,6 +81,8 @@ export default function ContactPage() {
                                 <p>Address: Tampa, FL 33602</p>
                             </div>
                         </div>
+
+                        {/* Google Maps */}
                         <div className="space-y-4">
                             <div className="h-full">
                                 <div className="relative h-full min-h-[500px]">
