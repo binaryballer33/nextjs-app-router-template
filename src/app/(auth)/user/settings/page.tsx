@@ -31,6 +31,7 @@ import CustomFormInput from "@/components/react-hook-form/rhf-custom-input"
 
 export default function UserSettingsPage() {
     const { user } = useAuthUser()
+
     const defaultValues = {
         firstName: user?.firstName || "",
         isTwoFactorEnabled: user?.isTwoFactorEnabled || false,

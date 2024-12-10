@@ -8,6 +8,7 @@ import { appMetadata } from "@/lib/config"
 
 import Container from "@/components/base/container"
 import PageHeading from "@/components/base/page-heading"
+import PlaceholderBox from "@/components/base/placeholder-box"
 // import CardsBenefits from "@/components/card-features/cards-benefits"
 
 export const metadata = appMetadata.homePage
@@ -26,6 +27,7 @@ export default async function HomePage() {
         <HydrationBoundary state={dehydratedState}>
             <Container>
                 <PageHeading bottomText="This Is A Sample Page" title="Home Page" />
+                <PlaceholderBox height={500} title="Home Page" />
             </Container>
         </HydrationBoundary>
     )

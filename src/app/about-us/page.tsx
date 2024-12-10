@@ -2,10 +2,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function AboutUsPage() {
+    const placeholderImage = "https://placehold.co/600x600"
+
     const teamMembers = [
-        { image: "https://placehold.co/600x600", name: "Alice Johnson", role: "CEO" },
-        { image: "https://placehold.co/600x600", name: "Bob Smith", role: "CTO" },
-        { image: "https://placehold.co/600x600", name: "Carol Williams", role: "COO" },
+        { image: placeholderImage, name: "Alice Johnson", role: "CEO" },
+        { image: placeholderImage, name: "Bob Smith", role: "CTO" },
+        { image: placeholderImage, name: "Carol Williams", role: "COO" },
     ]
 
     return (
@@ -27,7 +29,7 @@ export default function AboutUsPage() {
                             alt="Team meeting"
                             className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
                             height="310"
-                            src="https://placehold.co/600x600"
+                            src={placeholderImage}
                             width="550"
                         />
                         <div className="flex flex-col justify-center space-y-4">
