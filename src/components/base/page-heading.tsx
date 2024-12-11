@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next"
 
 import { cn } from "@/lib/utils"
 
+import { H1, H6 } from "./typography"
+
 type PageHeadingProps = {
     actions?: ReactNode
     background?: string
@@ -45,6 +47,24 @@ export default function PageHeading(props: PageHeadingProps) {
                     <p className="text-center text-base text-muted-foreground md:text-left">{t(bottomText)}</p>
                 </div>
             )}
+        </div>
+    )
+}
+
+type PageHeaderProps = {
+    description: string
+    title: string
+}
+
+export function PageHeadingCentered(props: PageHeaderProps) {
+    const { description, title } = props
+
+    return (
+        <div className="mb-16 flex flex-col items-center space-y-4 text-center">
+            <div className="space-y-2">
+                <H1 className="text-primary hover:text-secondary">{title}</H1>
+                <H6 className="mx-auto max-w-[700px] text-gray-500 dark:text-gray-400">{description}</H6>
+            </div>
         </div>
     )
 }
