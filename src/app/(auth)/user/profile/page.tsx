@@ -1,5 +1,9 @@
-import PlaceholderBox from "@/components/base/placeholder-box"
+import { appMetadata } from "@/lib/config"
 
-export default function UserProfile() {
-    return <PlaceholderBox height={800} title="User Profile" />
+import UserProfileView from "@/views/user/profile/user-profile-view"
+
+export const metadata = appMetadata.userProfile
+
+export default async function UserProfile() {
+    return <UserProfileView />
 }

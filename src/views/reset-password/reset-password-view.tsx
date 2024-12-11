@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { LockKeyhole } from "lucide-react"
+import { MdLockReset } from "react-icons/md"
 import { toast } from "sonner"
 
 import handleServerResponse from "@/lib/helper-functions/handleServerResponse"
@@ -47,7 +47,7 @@ export default function ResetPasswordView() {
                 <Form form={methods} onSubmit={onSubmit}>
                     <FormHead
                         description={t(`Enter Your New Password Below\nFollowed By Your Six Digit Code`)}
-                        icon={<LockKeyhole className="h-20 w-20 text-primary" />}
+                        icon={<MdLockReset className="h-20 w-20 text-primary" />}
                         title={t("Reset Your Password")}
                     />
                     <div className="flex flex-col gap-2">

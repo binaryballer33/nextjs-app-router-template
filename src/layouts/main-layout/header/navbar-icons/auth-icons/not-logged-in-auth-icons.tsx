@@ -15,7 +15,7 @@ import {
 
 export default function NotLoggedInAuthIcons() {
     return (
-        <NavigationMenu>
+        <NavigationMenu className="w-auto">
             <NavigationMenuList>
                 <NavigationMenuItem>
                     <NavigationMenuTrigger className="p-2">
@@ -23,16 +23,17 @@ export default function NotLoggedInAuthIcons() {
                             <Lock className="h-4 w-4" />
                         </Link>
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <div className="flex flex-col gap-2 text-sm">
-                            {notLoggedInAuthItems.map((link) => (
+                    <NavigationMenuContent className="data-[side=bottom]:animate-slideUpAndFade min-w-[225px] p-0">
+                        <div className="flex flex-col p-2">
+                            {notLoggedInAuthItems.map((item) => (
+                                // create the navigation menu items
                                 <Link
-                                    className="flex w-[150px] items-center gap-2 rounded-md p-2 hover:bg-accent"
-                                    href={link.route}
-                                    key={link.title}
+                                    className="flex h-12 cursor-pointer items-center justify-between px-4 py-2 hover:bg-accent"
+                                    href={item.route}
+                                    key={item.title}
                                 >
-                                    <link.icon className="h-4 w-4" />
-                                    <p className="font-sm">{link.title}</p>
+                                    <span className="text-base">{item.title}</span>
+                                    <item.icon className="h-6 w-6" />
                                 </Link>
                             ))}
                         </div>

@@ -12,7 +12,7 @@ type LogoProps = {
 export default function Logo(props: LogoProps) {
     const { className, src } = props
 
-    const placeholderImage = "https://placehold.co/600x600"
+    const placeholderImage = "https://placehold.co/320x320"
 
     return (
         <Link className="mr-4" href={routes.home}>

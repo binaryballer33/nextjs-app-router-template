@@ -18,9 +18,9 @@ export default function MobileNavbarIcons(props: MobileNavbarIconsProps) {
 
     return (
         <div className={cn("flex  items-center justify-center space-x-4", className)}>
+            {user ? <LoggedInAuthIcons /> : <NotLoggedInAuthIcons />}
             <Logo />
             <ThemeToggle />
-            {user ? <LoggedInAuthIcons /> : <NotLoggedInAuthIcons />}
         </div>
     )
 }

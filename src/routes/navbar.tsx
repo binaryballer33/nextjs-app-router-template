@@ -6,6 +6,7 @@ import {
     HelpCircle,
     Home,
     LogIn,
+    LogOut,
     MessageCircleWarning,
     Phone,
     Receipt,
@@ -14,7 +15,6 @@ import {
     User,
     UserPlus,
 } from "lucide-react"
-import { FaSignOutAlt } from "react-icons/fa"
 import { MdLockReset } from "react-icons/md"
 
 import routes from "@/routes/routes"
@@ -148,17 +148,17 @@ export const loggedInAuthItems: NavBarItemWithIcon[] = [
     },
     {
         icon: ShoppingCart,
-        route: routes.dummy,
+        route: routes.user.cart,
         title: "Cart",
     },
     {
         icon: Receipt,
-        route: routes.dummy,
+        route: routes.user.orders,
         title: "Orders",
     },
     {
-        icon: FaSignOutAlt,
+        icon: LogOut,
         route: routes.auth.signOut,
-        title: "Logout",
+        title: "Sign Out",
     },
 ]

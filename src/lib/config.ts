@@ -3,6 +3,9 @@ import type { Metadata } from "next"
 const APP_NAME = "Next MUI Template"
 
 type AppMetadata = {
+    aboutUs: Metadata
+    contactUs: Metadata
+    faq: Metadata
     forgotPassword: Metadata
     homePage: Metadata
     login: Metadata
@@ -10,11 +13,24 @@ type AppMetadata = {
     resetPassword: Metadata
     signOut: Metadata
     userProfile: Metadata
+    userSettings: Metadata
     verifyEmail: Metadata
 }
 
 // eslint-disable-next-line import/prefer-default-export
 export const appMetadata: AppMetadata = {
+    aboutUs: {
+        description: "About Us Page For The App",
+        title: `About Us | ${APP_NAME}`,
+    },
+    contactUs: {
+        description: "Contact Us Page For The App",
+        title: `Contact Us | ${APP_NAME}`,
+    },
+    faq: {
+        description: "Frequently Asked Questions Page For The App",
+        title: `FAQ | ${APP_NAME}`,
+    },
     forgotPassword: {
         description: "User Forgot Password Page For The App",
         title: `Forgot Password | ${APP_NAME}`,
@@ -42,6 +58,10 @@ export const appMetadata: AppMetadata = {
     userProfile: {
         description: "User Profile Page For The App",
         title: `User Profile | ${APP_NAME}`,
+    },
+    userSettings: {
+        description: "User Account Settings Page For The App",
+        title: `Account Settings | ${APP_NAME}`,
     },
     verifyEmail: {
         description: "User Verify Email Page For The App",

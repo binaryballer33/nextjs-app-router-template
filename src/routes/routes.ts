@@ -13,6 +13,8 @@ const yugiohApi = {
 }
 
 const user = {
+    cart: `/user/cart`,
+    orders: `/user/orders`,
     profile: `/user/profile`,
     settings: `/user/settings`,
 }
