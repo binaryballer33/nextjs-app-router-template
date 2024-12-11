@@ -45,7 +45,7 @@ export default function DesktopNavbarNestedDropdownMenu(props: DesktopNavbarNest
                     </Button>
                 </DropdownMenuTrigger>
 
-                <DropdownMenuContent className="w-fit">
+                <DropdownMenuContent className="w-fit bg-accent">
                     {dropdownItems.map((navItem) => (
                         <Fragment key={navItem.title}>
                             {/* navigation route link */}
@@ -73,7 +73,7 @@ export default function DesktopNavbarNestedDropdownMenu(props: DesktopNavbarNest
                                         </div>
                                     </DropdownMenuSubTrigger>
 
-                                    <DropdownMenuSubContent>
+                                    <DropdownMenuSubContent className="bg-accent">
                                         {navItem.subMenu.map((subItem) => (
                                             <Link href={subItem.route} key={subItem.title} passHref>
                                                 <DropdownMenuItem className="cursor-pointer">

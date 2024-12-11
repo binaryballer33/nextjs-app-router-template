@@ -48,7 +48,7 @@ export default function ProfileMenu() {
                         <AvatarLink className="h-6 w-6" user={user} />
                     </NavigationMenuTrigger>
 
-                    <NavigationMenuContent className="min-w-[250px] p-0">
+                    <NavigationMenuContent className="min-w-[250px] bg-accent/45 p-0">
                         {/* Avatar and user info */}
                         <div className="flex items-center gap-3 border-b p-4">
                             <AvatarLink user={user} />

@@ -31,7 +31,7 @@ export default function RHFTextArea(props: RHFTextAreaProps) {
 
                     <FormControl>
                         <div className="relative">
-                            <Textarea className={cn("bg-muted/50 pl-2", className)} {...field} />
+                            <Textarea className={cn("bg-accent pl-2", className)} {...field} />
 
                             {/* Icon on the far right of the input field, used to clear the text in the field */}
                             {field.value && (

@@ -23,7 +23,7 @@ export default function NotLoggedInAuthIcons() {
                             <Lock className="h-4 w-4 text-primary" />
                         </Link>
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent className="min-w-[225px] p-0">
+                    <NavigationMenuContent className="min-w-[225px] bg-accent/45 p-0">
                         <div className="flex flex-col p-2">
                             {notLoggedInAuthItems.map((item) => (
                                 // create the navigation menu items
