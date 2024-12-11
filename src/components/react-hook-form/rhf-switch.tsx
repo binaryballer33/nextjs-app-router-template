@@ -1,68 +1,41 @@
-import type { FormControlLabelProps } from "@mui/material/FormControlLabel"
-import type { FormGroupProps } from "@mui/material/FormGroup"
-import type { FormHelperTextProps } from "@mui/material/FormHelperText"
-import type { FormLabelProps } from "@mui/material/FormLabel"
-import type { SxProps, Theme } from "@mui/material/styles"
-import type { SwitchProps } from "@mui/material/Switch"
 import type { ReactNode } from "react"
 
-import { Controller, useFormContext } from "react-hook-form"
+import { useFormContext } from "react-hook-form"
 
-import Box from "@mui/material/Box"
-import FormControl from "@mui/material/FormControl"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import FormGroup from "@mui/material/FormGroup"
-import FormHelperText from "@mui/material/FormHelperText"
-import FormLabel from "@mui/material/FormLabel"
-import Switch from "@mui/material/Switch"
+import { cn } from "@/lib/utils"
 
-export type RHFSwitchProps = {
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Switch } from "@/components/ui/switch"
+
+type RHFSwitchProps = {
+    className?: string
     helperText?: ReactNode
+    label?: string
     name: string
-    slotProps?: {
-        formHelperText?: FormHelperTextProps
-        switch: SwitchProps
-        wrap?: SxProps<Theme>
-    }
-} & Omit<FormControlLabelProps, "control">
+}
 
-export default function RHFSwitch({ helperText, label, name, slotProps, ...other }: RHFSwitchProps) {
+export default function RHFSwitch({ className, helperText, label, name }: RHFSwitchProps) {
     const { control } = useFormContext()
 
-    const ariaLabel = `Switch ${name}`
-
     return (
-        <Controller
+        <FormField
             control={control}
             name={name}
-            render={({ field, fieldState: { error } }) => (
-                <Box sx={slotProps?.wrap}>
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                {...field}
-                                checked={field.value}
-                                {...slotProps?.switch}
-                                inputProps={{
-                                    ...(!label && { "aria-label": ariaLabel }),
-                                    ...slotProps?.switch?.inputProps,
-                                }}
-                            />
-                        }
-                        label={label}
-                        {...other}
-                    />
-
-                    {(!!error || helperText) && (
-                        <FormHelperText
-                            error={!!error}
-                            {...slotProps?.formHelperText}
-                            sx={slotProps?.formHelperText?.sx}
-                        >
-                            {error ? error?.message : helperText}
-                        </FormHelperText>
-                    )}
-                </Box>
+            render={({ field }) => (
+                <FormItem className={cn("flex flex-row items-center justify-between rounded-lg border p-4", className)}>
+                    <div className="space-y-0.5">
+                        {label && <FormLabel className="text-base">{label}</FormLabel>}
+                        {helperText && <div className="text-sm text-muted-foreground">{helperText}</div>}
+                    </div>
+                    <FormControl>
+                        <Switch
+                            aria-label={label || `Switch ${name}`}
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                        />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
             )}
         />
     )
@@ -71,6 +44,7 @@ export default function RHFSwitch({ helperText, label, name, slotProps, ...other
 // ----------------------------------------------------------------------
 
 type RHFMultiSwitchProps = {
+    className?: string
     helperText?: React.ReactNode
     label?: string
     name: string
@@ -78,66 +52,43 @@ type RHFMultiSwitchProps = {
         label: string
         value: string
     }[]
-    slotProps?: {
-        formHelperText?: FormHelperTextProps
-        formLabel?: FormLabelProps
-        switch: SwitchProps
-        wrap?: SxProps<Theme>
-    }
-} & FormGroupProps
+}
 
-export function RHFMultiSwitch({ helperText, label, name, options, slotProps, ...other }: RHFMultiSwitchProps) {
+export function RHFMultiSwitch({ className, helperText, label, name, options }: RHFMultiSwitchProps) {
     const { control } = useFormContext()
 
     const getSelected = (selectedItems: string[], item: string) =>
         selectedItems.includes(item) ? selectedItems.filter((value) => value !== item) : [...selectedItems, item]
 
-    const accessibility = (val: string) => val
-    const ariaLabel = (val: string) => `Switch ${val}`
-
     return (
-        <Controller
+        <FormField
             control={control}
             name={name}
-            render={({ field, fieldState: { error } }) => (
-                <FormControl component="fieldset" sx={slotProps?.wrap}>
-                    {label && (
-                        <FormLabel
-                            component="legend"
-                            {...slotProps?.formLabel}
-                            sx={{ mb: 1, typography: "body2", ...slotProps?.formLabel?.sx }}
-                        >
-                            {label}
-                        </FormLabel>
-                    )}
+            render={({ field }) => (
+                <FormItem className={cn("space-y-4", className)}>
+                    {label && <FormLabel>{label}</FormLabel>}
 
-                    <FormGroup {...other}>
+                    <div className="space-y-4">
                         {options.map((option) => (
-                            <FormControlLabel
-                                control={
-                                    <Switch
-                                        checked={field.value.includes(option.value)}
-                                        name={accessibility(option.label)}
-                                        onChange={() => field.onChange(getSelected(field.value, option.value))}
-                                        {...slotProps?.switch}
-                                        inputProps={{
-                                            ...(!option.label && { "aria-label": ariaLabel(option.label) }),
-                                            ...slotProps?.switch?.inputProps,
-                                        }}
-                                    />
-                                }
+                            <div
+                                className="flex flex-row items-center justify-between rounded-lg border p-4"
                                 key={option.value}
-                                label={option.label}
-                            />
+                            >
+                                <FormLabel className="text-base">{option.label}</FormLabel>
+                                <FormControl>
+                                    <Switch
+                                        aria-label={option.label}
+                                        checked={field.value.includes(option.value)}
+                                        onCheckedChange={() => field.onChange(getSelected(field.value, option.value))}
+                                    />
+                                </FormControl>
+                            </div>
                         ))}
-                    </FormGroup>
+                    </div>
 
-                    {(!!error || helperText) && (
-                        <FormHelperText error={!!error} sx={{ mx: 0 }} {...slotProps?.formHelperText}>
-                            {error ? error?.message : helperText}
-                        </FormHelperText>
-                    )}
-                </FormControl>
+                    {helperText && <div className="text-sm text-muted-foreground">{helperText}</div>}
+                    <FormMessage />
+                </FormItem>
             )}
         />
     )

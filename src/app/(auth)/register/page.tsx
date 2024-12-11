@@ -1,8 +1,8 @@
 import type { Metadata } from "next/"
 
-import { appMetadata } from "src/utils/config"
+import { appMetadata } from "@/lib/config"
 
-import RegisterView from "src/views/register/register-view"
+import RegisterView from "@/views/register/register-view"
 
 export const metadata: Metadata = appMetadata.register
 

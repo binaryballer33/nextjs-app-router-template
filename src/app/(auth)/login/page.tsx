@@ -1,8 +1,8 @@
 import type { Metadata } from "next/"
 
-import { appMetadata } from "src/utils/config"
+import { appMetadata } from "@/lib/config"
 
-import LoginView from "src/views/login/login-view"
+import LoginView from "@/views/login/login-view"
 
 export const metadata: Metadata = appMetadata.login
 

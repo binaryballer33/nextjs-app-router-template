@@ -2,14 +2,19 @@
 
 import { useFormContext } from "react-hook-form"
 
-import { Button } from "@mui/material"
+import { cn } from "@/lib/utils"
 
-type ClearFormProps = {
+import { Button } from "@/components/ui/button"
+
+type ResetFormProps = {
+    className?: string
+    size?: "default" | "icon" | "lg" | "sm"
     title: string
+    variant?: "default" | "destructive" | "ghost" | "link" | "outline" | "secondary"
 }
 
-export default function ClearFormButton(props: ClearFormProps) {
-    const { title } = props
+export default function ResetFormButton(props: ResetFormProps) {
+    const { className, size = "sm", title, variant = "outline" } = props
 
     const {
         formState: { isSubmitting },
@@ -18,11 +23,12 @@ export default function ClearFormButton(props: ClearFormProps) {
 
     return (
         <Button
+            className={cn("mt-1 whitespace-nowrap px-4 hover:bg-primary/10", className)}
             disabled={isSubmitting}
-            onClick={() => resetForm()}
-            size="small"
-            sx={{ mt: 1, px: 2, textWrap: "nowrap" }}
-            variant="outlined"
+            onClick={resetForm}
+            size={size}
+            type="button"
+            variant={variant}
         >
             {title}
         </Button>

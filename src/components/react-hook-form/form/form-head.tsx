@@ -1,46 +1,26 @@
-import type { BoxProps } from "@mui/material/Box"
 import type { ReactNode } from "react"
 
-import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography" // ----------------------------------------------------------------------
-
-// ----------------------------------------------------------------------
+import { cn } from "@/lib/utils"
 
 type FormHeadProps = {
+    className?: string
     description?: ReactNode
     icon?: ReactNode
     title: ReactNode
-} & BoxProps
+}
 
-export default function FormHead({ description, icon, sx, title, ...other }: FormHeadProps) {
+export default function FormHead(props: FormHeadProps) {
+    const { className, description, icon, title } = props
+
     return (
         <>
-            {icon && (
-                <Box
-                    component="span"
-                    display="inline-flex"
-                    justifyContent="center"
-                    sx={{ mb: 3, mx: "auto", width: 1 }}
-                >
-                    {icon}
-                </Box>
-            )}
+            {icon && <div className={cn("mb-3 flex w-full justify-center")}>{icon}</div>}
 
-            <Box
-                display="flex"
-                flexDirection="column"
-                gap={1.5}
-                sx={{ mb: 5, textAlign: "center", whiteSpace: "pre-line", ...sx }}
-                {...other}
-            >
-                <Typography variant="h5">{title}</Typography>
+            <div className={cn("mb-5 flex flex-col gap-1.5 whitespace-pre-line text-center", className)}>
+                <h2 className="text-xl font-semibold">{title}</h2>
 
-                {description && (
-                    <Typography sx={{ color: "text.secondary" }} variant="body1">
-                        {description}
-                    </Typography>
-                )}
-            </Box>
+                {description && <p className="text-muted-foreground">{description}</p>}
+            </div>
         </>
     )
 }

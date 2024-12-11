@@ -1,47 +1,47 @@
-import type { BoxProps } from "@mui/material/Box"
-import type { ReactNode } from "react"
+import type { HTMLAttributes } from "react"
 
-import Box from "@mui/material/Box"
+import { cn } from "@/lib/utils"
+
+type FlexDirection = "column-reverse" | "column" | "row-reverse" | "row"
+type StackOn = "desktop" | "mobile" | "tablet"
 
 export type FlexContainerProps = {
-    children: ReactNode
-    flexDirection?: BoxProps["flexDirection"]
-    stackOn?: "desktop" | "mobile" | "tablet"
-} & BoxProps
+    children: React.ReactNode
+    className?: string
+    flexDirection?: FlexDirection
+    stackOn?: StackOn
+} & HTMLAttributes<HTMLDivElement>
 
 export default function FlexContainer(props: FlexContainerProps) {
-    const { alignItems, children, flexDirection = "row", justifyContent, stackOn, ...restOfProps } = props
+    const { children, className, flexDirection = "row", stackOn, ...restOfProps } = props
 
-    // Y-Axis should be centered by default, but X-Axis should be modified manually
-    const localAlignItems = flexDirection === "column" || flexDirection === "column-reverse" ? "center" : "initial"
-    const localJustifyContent = flexDirection === "row" || flexDirection === "row-reverse" ? "initial" : "center"
+    const stackClasses = {
+        desktop: "flex-col lg:flex-row",
+        mobile: "flex-col sm:flex-row",
+        tablet: "flex-col md:flex-row",
+    }
 
-    // allow you to customize when the elements should be stacked
-    const responsiveFlexDirection = stackOn ? getStackPreference(stackOn) : flexDirection
+    // Base direction classes
+    const directionClasses = {
+        column: "flex-col items-center",
+        "column-reverse": "flex-col-reverse items-center",
+        row: "flex-row",
+        "row-reverse": "flex-row-reverse",
+    }
 
     return (
-        <Box
-            alignItems={alignItems || localAlignItems}
-            display="flex"
-            flexDirection={responsiveFlexDirection as BoxProps["flexDirection"]}
-            gap={2}
-            justifyContent={justifyContent || localJustifyContent}
-            my={1}
+        <div
+            className={cn(
+                "my-1 flex gap-2",
+                // If stackOn is provided, use responsive classes, otherwise use fixed direction
+                stackOn ? stackClasses[stackOn] : directionClasses[flexDirection],
+                // Row variants get initial alignment, columns get centered
+                !stackOn && (flexDirection.includes("row") ? "items-start" : "justify-center"),
+                className,
+            )}
             {...restOfProps}
         >
             {children}
-        </Box>
+        </div>
     )
-}
-
-const getStackPreference = (stackOn: FlexContainerProps["stackOn"]) => {
-    const stackPreferences = {
-        desktop: { lg: "row", xs: "column" },
-        mobile: { sm: "row", xs: "column" },
-        tablet: { md: "row", xs: "column" },
-    }
-
-    // if the stackOn prop is not provided, return the default stack preference
-    if (!stackOn) return null
-    return stackPreferences[stackOn]
 }

@@ -1,31 +1,48 @@
-import type { SliderProps } from "@mui/material/Slider"
 import type { ReactNode } from "react"
 
-import { Controller, useFormContext } from "react-hook-form"
+import { useFormContext } from "react-hook-form"
 
-import FormHelperText from "@mui/material/FormHelperText"
-import Slider from "@mui/material/Slider"
+import { cn } from "@/lib/utils"
+
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Slider } from "@/components/ui/slider"
 
 type Props = {
+    className?: string
+    defaultValue?: number[]
     helperText?: ReactNode
+    label?: string
+    max?: number
+    min?: number
     name: string
-} & SliderProps
+    step?: number
+} & React.ComponentProps<typeof Slider>
 
-export default function RHFSlider({ helperText, name, ...other }: Props) {
+export default function RHFSlider(props: Props) {
+    const { className, defaultValue, helperText, label, max, min, name, step, ...other } = props
     const { control } = useFormContext()
 
     return (
-        <Controller
+        <FormField
             control={control}
             name={name}
-            render={({ field, fieldState: { error } }) => (
-                <>
-                    <Slider {...field} valueLabelDisplay="auto" {...other} />
-
-                    {(!!error || helperText) && (
-                        <FormHelperText error={!!error}>{error ? error?.message : helperText}</FormHelperText>
-                    )}
-                </>
+            render={({ field }) => (
+                <FormItem className={cn("space-y-4", className)}>
+                    {label && <FormLabel>{label}</FormLabel>}
+                    <FormControl>
+                        <Slider
+                            defaultValue={defaultValue}
+                            max={max}
+                            min={min}
+                            onValueChange={([value]) => field.onChange(value)}
+                            step={step}
+                            value={[field.value]}
+                            {...other}
+                        />
+                    </FormControl>
+                    {helperText && <div className="text-sm text-muted-foreground">{helperText}</div>}
+                    <FormMessage />
+                </FormItem>
             )}
         />
     )

@@ -1,15 +1,16 @@
 import { type ReactNode } from "react"
 
-import ClientProvidersLayout from "src/layouts/providers/client-providers-layout"
-import ServerProvidersLayout from "src/layouts/providers/server-providers-layout"
+import ClientProvidersLayout from "@/layouts/providers/client-providers/client-providers-layout"
+import ServerProvidersLayout from "@/layouts/providers/server-providers/server-providers-layout"
 
 type LayoutProps = {
     children: ReactNode
 }
 
-export default async function Layout({ children }: LayoutProps) {
+export default function Providers({ children }: LayoutProps) {
     return (
         <ClientProvidersLayout>
+            {/* @ts-expect-error Async Server Component */}
             <ServerProvidersLayout>{children}</ServerProvidersLayout>
         </ClientProvidersLayout>
     )

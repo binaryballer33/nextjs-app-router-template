@@ -1,65 +1,43 @@
-import type { CheckboxProps } from "@mui/material/Checkbox"
-import type { FormControlLabelProps } from "@mui/material/FormControlLabel"
-import type { FormGroupProps } from "@mui/material/FormGroup"
-import type { FormHelperTextProps } from "@mui/material/FormHelperText"
-import type { FormLabelProps } from "@mui/material/FormLabel"
-import type { SxProps, Theme } from "@mui/material/styles"
-
 import { Controller, useFormContext } from "react-hook-form"
 
-import Box from "@mui/material/Box"
-import Checkbox from "@mui/material/Checkbox"
-import FormControl from "@mui/material/FormControl"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import FormGroup from "@mui/material/FormGroup"
-import FormHelperText from "@mui/material/FormHelperText"
-import FormLabel from "@mui/material/FormLabel"
+import { cn } from "@/lib/utils"
 
-// ----------------------------------------------------------------------
+import { Checkbox } from "@/components/ui/checkbox"
+import { FormControl, FormDescription, FormItem, FormLabel } from "@/components/ui/form"
+import { Label } from "@/components/ui/label"
 
 type RHFCheckboxProps = {
+    className?: string
     helperText?: React.ReactNode
+    label?: React.ReactNode
     name: string
-    slotProps?: {
-        checkbox?: CheckboxProps
-        formHelperText?: FormHelperTextProps
-        wrap?: SxProps<Theme>
-    }
-} & Omit<FormControlLabelProps, "control">
+}
 
-export default function RHFCheckbox({ helperText, label, name, slotProps, ...other }: RHFCheckboxProps) {
+export default function RHFCheckbox({ className, helperText, label, name }: RHFCheckboxProps) {
     const { control } = useFormContext()
-
-    const ariaLabel = `Checkbox ${name}`
 
     return (
         <Controller
             control={control}
             name={name}
             render={({ field, fieldState: { error } }) => (
-                <Box sx={slotProps?.wrap}>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                {...field}
-                                checked={field.value}
-                                {...slotProps?.checkbox}
-                                inputProps={{
-                                    ...(!label && { "aria-label": ariaLabel }),
-                                    ...slotProps?.checkbox?.inputProps,
-                                }}
-                            />
-                        }
-                        label={label}
-                        {...other}
-                    />
+                <FormItem className={cn("flex flex-row items-start space-x-3 space-y-0", className)}>
+                    <FormControl>
+                        <Checkbox
+                            aria-label={!label ? `Checkbox ${name}` : undefined}
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                        />
+                    </FormControl>
 
-                    {(!!error || helperText) && (
-                        <FormHelperText error={!!error} {...slotProps?.formHelperText}>
-                            {error ? error?.message : helperText}
-                        </FormHelperText>
+                    {label && <Label className="text-sm font-normal">{label}</Label>}
+
+                    {(error || helperText) && (
+                        <FormDescription className={cn("mt-1", error && "text-destructive")}>
+                            {error ? error.message : helperText}
+                        </FormDescription>
                     )}
-                </Box>
+                </FormItem>
             )}
         />
     )
@@ -68,6 +46,7 @@ export default function RHFCheckbox({ helperText, label, name, slotProps, ...oth
 // ----------------------------------------------------------------------
 
 type RHFMultiCheckboxProps = {
+    className?: string
     helperText?: React.ReactNode
     label?: string
     name: string
@@ -75,66 +54,44 @@ type RHFMultiCheckboxProps = {
         label: string
         value: string
     }[]
-    slotProps?: {
-        checkbox?: CheckboxProps
-        formHelperText?: FormHelperTextProps
-        formLabel?: FormLabelProps
-        wrap?: SxProps<Theme>
-    }
-} & FormGroupProps
+}
 
-export function RHFMultiCheckbox({ helperText, label, name, options, slotProps, ...other }: RHFMultiCheckboxProps) {
+export function RHFMultiCheckbox({ className, helperText, label, name, options }: RHFMultiCheckboxProps) {
     const { control } = useFormContext()
 
     const getSelected = (selectedItems: string[], item: string) =>
         selectedItems.includes(item) ? selectedItems.filter((value) => value !== item) : [...selectedItems, item]
-
-    const accessibility = (val: string) => val
-    const ariaLabel = (val: string) => `Checkbox ${val}`
 
     return (
         <Controller
             control={control}
             name={name}
             render={({ field, fieldState: { error } }) => (
-                <FormControl component="fieldset" sx={slotProps?.wrap}>
-                    {label && (
-                        <FormLabel
-                            component="legend"
-                            {...slotProps?.formLabel}
-                            sx={{ mb: 1, typography: "body2", ...slotProps?.formLabel?.sx }}
-                        >
-                            {label}
-                        </FormLabel>
-                    )}
+                <FormItem className={className}>
+                    {label && <FormLabel className="text-base">{label}</FormLabel>}
 
-                    <FormGroup {...other}>
+                    <div className="space-y-2">
                         {options.map((option) => (
-                            <FormControlLabel
-                                control={
+                            <div className="flex items-center space-x-3" key={option.value}>
+                                <FormControl>
                                     <Checkbox
+                                        aria-label={!option.label ? `Checkbox ${option.label}` : undefined}
                                         checked={field.value.includes(option.value)}
-                                        name={accessibility(option.label)}
-                                        onChange={() => field.onChange(getSelected(field.value, option.value))}
-                                        {...slotProps?.checkbox}
-                                        inputProps={{
-                                            ...(!option.label && { "aria-label": ariaLabel(option.label) }),
-                                            ...slotProps?.checkbox?.inputProps,
-                                        }}
+                                        onCheckedChange={() => field.onChange(getSelected(field.value, option.value))}
                                     />
-                                }
-                                key={option.value}
-                                label={option.label}
-                            />
-                        ))}
-                    </FormGroup>
+                                </FormControl>
 
-                    {(!!error || helperText) && (
-                        <FormHelperText error={!!error} sx={{ mx: 0 }} {...slotProps?.formHelperText}>
-                            {error ? error?.message : helperText}
-                        </FormHelperText>
+                                <Label className="text-sm font-normal">{option.label}</Label>
+                            </div>
+                        ))}
+                    </div>
+
+                    {(error || helperText) && (
+                        <FormDescription className={cn("mt-1", error && "text-destructive")}>
+                            {error ? error.message : helperText}
+                        </FormDescription>
                     )}
-                </FormControl>
+                </FormItem>
             )}
         />
     )

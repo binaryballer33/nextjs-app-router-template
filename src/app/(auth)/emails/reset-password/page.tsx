@@ -1,8 +1,8 @@
 import type { Metadata } from "next/"
 
-import { appMetadata } from "src/utils/config"
+import { appMetadata } from "@/lib/config"
 
-import ResetPasswordView from "src/views/reset-password/reset-password-view"
+import ResetPasswordView from "@/views/reset-password/reset-password-view"
 
 export const metadata: Metadata = appMetadata.resetPassword
 

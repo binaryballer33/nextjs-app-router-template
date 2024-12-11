@@ -1,4 +1,4 @@
-import { BACKEND_BASE_URL } from "src/utils/secrets" // API URLs
+import { BACKEND_BASE_URL } from "@/lib/secrets" // API URLs
 
 // API URLs
 const YU_GI_OH_API_BASE_URL = `${BACKEND_BASE_URL}/api/yu-gi-oh`
@@ -13,8 +13,10 @@ const yugiohApi = {
 }
 
 const user = {
-    account: `/user/account`,
+    cart: `/user/cart`,
+    orders: `/user/orders`,
     profile: `/user/profile`,
+    settings: `/user/settings`,
 }
 
 const nextAuth = {
@@ -41,12 +43,13 @@ const publicRoutes = {
     contact: "/contact-us",
     dummy: "",
     error: "/error",
-    faqs: "/faqs",
-    index: "/",
+    faq: "/faq",
+    home: "/",
     maintenance: "/maintenance",
     payment: "/payment",
     pricing: "/pricing",
     resetPassword: "/forgot-password",
+    services: "/services",
 }
 
 const routes = {

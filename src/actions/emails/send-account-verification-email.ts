@@ -1,15 +1,15 @@
 "use server"
 
+import type { ServerResponse } from "@/types/auth/server-response"
 import type { VerificationToken } from "@prisma/client"
-import type { ServerResponse } from "src/types/auth/server-response"
 
-import VerifyTokenSchema from "src/types/forms/verify-token"
+import VerifyTokenSchema from "@/types/forms/verify-token"
 
 import { Resend } from "resend"
 
-import { RESEND_API_KEY } from "src/utils/secrets"
+import { RESEND_API_KEY } from "@/lib/secrets"
 
-import routes, { getFullRoute } from "src/routes/routes"
+import routes, { getFullRoute } from "@/routes/routes"
 
 const resend = new Resend(RESEND_API_KEY)
 
@@ -28,6 +28,8 @@ export default async function sendAccountVerificationEmail(
             text: `Click The Link Below To Confirm Your Email:\n${confirmationLink}\n\nYour Confirmation Code Is: ${sixDigitCode}`,
             to: email,
         })
+        console.log(emailResponse)
+
         if (!emailResponse?.data) return { error: `Error Sending Account Verification Email To: ${email}`, status: 500 }
 
         return {

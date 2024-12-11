@@ -1,38 +1,34 @@
 "use client"
 
-import type { LoginRequest } from "src/types/forms/login"
+import type { LoginRequest } from "@/types/forms/login"
 
-import { defaultValuesLoginRequest as defaultValues, LoginRequestSchema } from "src/types/forms/login"
+import { defaultValuesLoginRequest as defaultValues, LoginRequestSchema } from "@/types/forms/login"
 
 import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { parseAsBoolean, useQueryState } from "nuqs"
+import { toast } from "sonner"
 
-import handleServerResponse from "src/utils/helper-functions/handleServerResponse"
+import handleServerResponse from "@/lib/helper-functions/handleServerResponse"
 
-import login from "src/actions/auth/login"
+import login from "@/actions/auth/login"
 
-import Form from "src/components/react-hook-form/form-provider"
+import routes from "@/routes/routes"
 
-import routes from "src/routes/routes"
+import LoginForm from "@/views/login/blocks/login-form"
+import TwoFactorCode from "@/views/login/blocks/two-factor-code"
 
-import LoginForm from "src/views/login/blocks/login-form"
-import TwoFactorCode from "src/views/login/blocks/two-factor-code"
+import Form from "@/components/react-hook-form/form-provider"
 
-/*
-  TODO: maybe I need this, maybe I don't import { useSession } from "next-auth/react"
-  it doesn't affect the functionality of the app
-  You can duplicate the error by toggling the password visibility icon in the register or login form
-  TODO: there's a mui warning in the chrome dev tools, figure out how to fix it later,
-*/
 export default function LoginView() {
     const { t } = useTranslation()
 
-    const methods = useForm<LoginRequest>({ defaultValues, resolver: zodResolver(LoginRequestSchema) })
-    const { handleSubmit } = methods
+    const form = useForm<LoginRequest>({ defaultValues, resolver: zodResolver(LoginRequestSchema) })
+
+    const { handleSubmit } = form
+
     const [showTwoFactorInput, setShowTwoFactorInput] = useQueryState(
         "showTwoFactorInput",
         parseAsBoolean.withDefault(false),
@@ -52,7 +48,7 @@ export default function LoginView() {
     })
 
     return (
-        <Form methods={methods} onSubmit={onSubmit}>
+        <Form form={form} onSubmit={onSubmit}>
             {showTwoFactorInput ? <TwoFactorCode t={t} /> : <LoginForm t={t} />}
         </Form>
     )

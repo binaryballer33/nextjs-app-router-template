@@ -1,26 +1,21 @@
-import { Box, Link, Typography } from "@mui/material"
+import Link from "next/link"
 
-import RouterLink from "src/components/base/router-link"
+import { cn } from "@/lib/utils"
 
 type FormLinkProps = {
+    className?: string
     linkTitle: string
     linkTo: string
     title?: string
 }
 
-export default function FormLink(props: FormLinkProps) {
-    const { linkTitle, linkTo, title } = props
-
+export default function FormLink({ className, linkTitle, linkTo, title }: FormLinkProps) {
     return (
-        <Box mt={1}>
-            {title && (
-                <Typography color="text.secondary" component="span">
-                    {title}{" "}
-                </Typography>
-            )}
-            <Link component={RouterLink} fontWeight={500} href={linkTo} underline="hover">
+        <div className={cn("mt-1", className)}>
+            {title && <span className="text-muted-foreground">{title} </span>}
+            <Link className="font-medium text-primary hover:underline" href={linkTo}>
                 {linkTitle}
             </Link>
-        </Box>
+        </div>
     )
 }

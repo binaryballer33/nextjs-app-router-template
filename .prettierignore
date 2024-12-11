@@ -17,3 +17,7 @@ public
 
 src/mocks/yugioh-cards.json
 
+# UI Components
+src/components/ui/*
+src/lib/utils.ts
+

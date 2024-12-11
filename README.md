@@ -2,50 +2,50 @@
 
 ## Template Project Tech Stack
 
-- React v18
-- Next v14 ( App Router )
-- Typescript v5
-- Node v20.x
-- Docker ( Containerization )
-- Eslint ( Linting )
-- Prettier ( Formatting )
-- Import, Objects, Types And JSX Props Sorting With Perfectionist
-- Husky ( Pre-Commit Validation )
-- Redux Toolkit
-- Zod ( Client Side Validation And Data Modelling )
-- React-Hook-Form ( Form Validation )
-- Server Actions ( API Endpoints )
-- TanStack React Query v5 ( Caching, API Queries And Mutations )
-- Authentication ( Next Auth v5 )
-    - Login
-    - Register
-    - Account Verification
-    - Forgot Password
-    - Two-Factor Authentication
-- Personalized Emails ( Resend and React Email )
-- Postgres Database Provider ( Supabase, Can Be Any Database Provider )
-- Prisma ORM ( DB CRUD Operations, Type Generation )
-- Pagination
-- Internationalization ( i18next ) - Multilanguage Support
-- Fully Responsive On Desktop, Tablet And Mobile
-- Advance MUI Components
-    - Light And Dark Themes
-    - Count Up
-    - Accordions
-    - Graphs
-    - Charts
-    - Modals & Dialogs
-    - Tabs
-    - Mobile App Bottom Navigation Bar ( Work In Progress )
-    - Multi-Layouts ( Work In Progress )
-    - Website Keyboard Shortcut Cmd + K ( For Searching Through The Website Work In Progress )
-    - Animations ( AOS But Changing Library To Framer Motion Work In Progress )
-    - Date Pickers ( Work In Progress )
-    - Carousels ( Work In Progress )
-    - Drag And Drop ( Work In Progress )
-    - File Uploads ( Work In Progress )
-    - Maps ( react-map-gl and mapbox-gl Work In Progress )
-    - Paginated Tables And Grids ( Changing To Mui-Data-Grid Work In Progress )
+-   React v18
+-   Next v14 ( App Router )
+-   Typescript v5
+-   Node v20.x
+-   Docker ( Containerization )
+-   Eslint ( Linting )
+-   Prettier ( Formatting )
+-   Import, Objects, Types And JSX Props Sorting With Perfectionist
+-   Husky ( Pre-Commit Validation )
+-   Redux Toolkit
+-   Zod ( Client Side Validation And Data Modelling )
+-   React-Hook-Form ( Form Validation )
+-   Server Actions ( API Endpoints )
+-   TanStack React Query v5 ( Caching, API Queries And Mutations )
+-   Authentication ( Next Auth v5 )
+    -   Login
+    -   Register
+    -   Account Verification
+    -   Forgot Password
+    -   Two-Factor Authentication
+-   Personalized Emails ( Resend and React Email )
+-   Postgres Database Provider ( Supabase, Can Be Any Database Provider )
+-   Prisma ORM ( DB CRUD Operations, Type Generation )
+-   Pagination
+-   Internationalization ( i18next ) - Multilanguage Support
+-   Fully Responsive On Desktop, Tablet And Mobile
+-   Advance MUI Components
+    -   Light And Dark Themes
+    -   Count Up
+    -   Accordions
+    -   Graphs
+    -   Charts
+    -   Modals & Dialogs
+    -   Tabs
+    -   Mobile App Bottom Navigation Bar ( Work In Progress )
+    -   Multi-Layouts ( Work In Progress )
+    -   Website Keyboard Shortcut Cmd + K ( For Searching Through The Website Work In Progress )
+    -   Animations ( AOS But Changing Library To Framer Motion Work In Progress )
+    -   Date Pickers ( Work In Progress )
+    -   Carousels ( Work In Progress )
+    -   Drag And Drop ( Work In Progress )
+    -   File Uploads ( Work In Progress )
+    -   Maps ( react-map-gl and mapbox-gl Work In Progress )
+    -   Paginated Tables And Grids ( Changing To Mui-Data-Grid Work In Progress )
 
 ## Getting Started With The Package
 

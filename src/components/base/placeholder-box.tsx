@@ -1,76 +1,56 @@
-import type { SxProps, Theme } from "@mui/material"
+"use client"
 
 import { useTranslation } from "react-i18next"
 
-import { alpha, Box, Typography, useTheme } from "@mui/material"
+import { cn } from "@/lib/utils"
 
 type PlaceholderBoxProps = {
+    className?: string
     dark?: boolean
     disableHover?: boolean
     fixedHeight?: number
     flex?: number
     height?: number
-    sx?: SxProps<Theme>
     title?: string
 }
 
 export default function PlaceholderBox(props: PlaceholderBoxProps) {
-    const { dark = false, disableHover, fixedHeight, flex, height, sx, title, ...other } = props
+    const { className, dark, disableHover, fixedHeight, flex, height, title, ...other } = props
     const { t } = useTranslation()
-    const theme = useTheme()
-
-    const isDarkMode = theme.palette.mode === "dark" || dark
 
     const darkBackground = `repeating-linear-gradient(
-    -55deg,
-    ${alpha(theme.palette.common.black, 0.3)} 0px,
-    ${alpha(theme.palette.common.black, 0.3)} 4px,
-    ${alpha(theme.palette.neutral[900], 0.3)} 4px,
-    ${alpha(theme.palette.neutral[900], 0.3)} 8px
-  )`
+        -55deg,
+        rgba(0, 0, 0, 0.3) 0px,
+        rgba(0, 0, 0, 0.3) 4px,
+        rgba(23, 23, 23, 0.3) 4px,
+        rgba(23, 23, 23, 0.3) 8px
+    )`
 
     const lightBackground = `repeating-linear-gradient(
-    -55deg,
-    ${alpha(theme.palette.common.white, 0.7)} 0px,
-    ${alpha(theme.palette.common.white, 0.7)} 4px,
-    ${alpha(theme.palette.neutral[100], 0.7)} 4px,
-    ${alpha(theme.palette.neutral[100], 0.7)} 8px
-  )`
-
-    const getBorderColor = () => {
-        if (!disableHover) return theme.palette.primary.main
-        return dark ? theme.palette.neutral[400] : theme.palette.neutral[25]
-    }
+        -55deg,
+        rgba(255, 255, 255, 0.7) 0px,
+        rgba(255, 255, 255, 0.7) 4px,
+        rgba(245, 245, 245, 0.7) 4px,
+        rgba(245, 245, 245, 0.7) 8px
+    )`
 
     return (
-        <Box
-            sx={{
-                ...sx,
-                "&:hover": {
-                    borderColor: getBorderColor(),
-                    // @ts-ignore
-                    boxShadow: !disableHover && theme.shadows[7],
-                },
-                alignItems: "center",
-                background: isDarkMode ? darkBackground : lightBackground,
-                borderColor: theme.palette.mode === "dark" ? theme.palette.neutral[800] : theme.palette.neutral[500],
-                borderRadius: `${theme.shape.borderRadius}px`,
-                borderStyle: "dashed",
-                borderWidth: 1,
-                display: "flex",
-                flex: flex ? 1 : 0,
-                height: fixedHeight || "100%",
-                justifyContent: "center",
-
-                minHeight: height || 40,
+        <div
+            className={cn(
+                "flex items-center justify-center rounded-md border border-dashed",
+                dark ? "border-neutral-400" : "border-neutral-300",
+                !disableHover && "hover:border-primary hover:shadow-lg",
+                flex && "flex-1",
+                className,
+            )}
+            style={{
+                background: dark ? darkBackground : lightBackground,
+                height: fixedHeight ? `${fixedHeight}px` : "100%",
+                minHeight: `${height}px`,
             }}
             {...other}
         >
-            {title && (
-                <Typography fontWeight={600} variant="h3">
-                    {t(title)}
-                </Typography>
-            )}
-        </Box>
+            {title && <h3 className="text-xl font-semibold">{t(title)}</h3>}
+        </div>
     )
 }

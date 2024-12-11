@@ -1,5 +1,5 @@
-import type { SavedItemWithoutId } from "src/types/saved-item"
-import type { YuGiOhCard } from "src/types/yu-gi-oh/yu-gi-oh"
+import type { SavedItemWithoutId } from "@/types/saved-item"
+import type { YuGiOhCard } from "@/types/yu-gi-oh/yu-gi-oh"
 
 import { randomInt, randomUUID } from "crypto"
 import fs from "fs"
@@ -7,7 +7,7 @@ import fs from "fs"
 import { Prisma } from "@prisma/client"
 import { hash } from "bcryptjs"
 
-import prisma from "src/utils/database/prisma"
+import prisma from "@/lib/database/prisma"
 
 import CartItemUncheckedCreateInput = Prisma.CartItemUncheckedCreateInput
 
@@ -26,6 +26,7 @@ async function dropTables() {
     await prisma.yugiohCard.deleteMany({})
     await prisma.account.deleteMany({})
     await prisma.verificationToken.deleteMany({})
+    await prisma.passwordResetToken.deleteMany({})
 
     console.log("Dropped Tables Successfully\n")
 }
@@ -65,7 +66,7 @@ async function createUsers() {
     console.log("Attempting To Create Users")
     const hashedPasswordForGmailUser = await hash("password", 10)
     const hashedPasswordForOutlookUser = await hash("password", 10)
-    const placeholderImage = "https://images.unsplash.com/photo-1569511502671-8c1bbf96fc8d?w=320&ah=320"
+    const placeholderImage = ""
 
     try {
         await prisma.user.create({

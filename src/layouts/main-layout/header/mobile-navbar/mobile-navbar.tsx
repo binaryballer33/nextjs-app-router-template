@@ -1,77 +1,47 @@
-import type { ListProps, Theme } from "@mui/material"
-import type { NavBarItem } from "src/types/navbar-item"
+"use client"
 
-import { Box, List, ListSubheader, styled, useMediaQuery } from "@mui/material"
+import Link from "next/link"
 
-import Scrollbar from "src/components/base/scrollbar"
+import { Home, Menu } from "lucide-react"
 
-import Logo from "src/layouts/main-layout/header/navbar-icons/logo/logo"
-import { neutral } from "src/theme/theme"
-import { SIDEBAR_WIDTH } from "src/theme/utils"
+import { dropdownItems, navigationItems } from "@/routes/navbar"
 
-import MobileNavBarNavItem from "./mobile-navbar-nav-item"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 
-const MobileSidebarWrapper = styled(Box)(({ theme }) => ({
-    background: theme.palette.mode === "dark" ? neutral[900] : neutral[100],
-    color: theme.palette.mode === "dark" ? neutral[100] : neutral[900],
-    display: "flex",
-    flexDirection: "column",
-    height: "100vh",
-    overflow: "auto",
-}))
+import MobileNavbarIcons from "./mobile-navbar-icons"
+import MobileNavbarNestedDropdown from "./mobile-navbar-nested-dropdown"
 
-type MobileNavBarProps = {
-    navbarItems?: NavBarItem[]
-}
-
-const ListSubheaderWrapper = styled(ListSubheader)<ListProps<"div", { component: "div" }>>(({ theme }) => ({
-    background: theme.palette.mode === "dark" ? neutral[900] : neutral[100],
-    color: theme.palette.mode === "dark" ? neutral[100] : neutral[900],
-    fontSize: 13,
-    fontWeight: 500,
-    lineHeight: theme.spacing(5),
-    padding: theme.spacing(0, 2),
-    textTransform: "uppercase",
-}))
-
-export default function MobileNavBar({ navbarItems }: MobileNavBarProps) {
-    const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
-    if (!navbarItems) return null
-
+export default function MobileNavbar() {
     return (
-        <MobileSidebarWrapper
-            component="nav"
-            role="navigation"
-            sx={{
-                width: SIDEBAR_WIDTH,
-            }}
-        >
-            <Box alignItems="center" display="flex" justifyContent={{ lg: "space-between", xs: "flex-start" }} p={2}>
-                <Logo />
-            </Box>
+        <Sheet>
+            <SheetTrigger asChild className="flex w-full justify-center md:hidden">
+                <Button size="icon" variant="ghost">
+                    <Menu className="h-5 w-5" />
+                    <span className="sr-only">Toggle menu</span>
+                </Button>
+            </SheetTrigger>
 
-            <Box>
-                <Box flex={1} overflow="auto" position="relative" zIndex={6}>
-                    <Scrollbar dark>
-                        {navbarItems.map((navbarItem) => (
-                            <Box key={navbarItem.title}>
-                                <List
-                                    component="nav"
-                                    subheader={
-                                        <ListSubheaderWrapper component="div" disableSticky={!mdUp}>
-                                            {navbarItem.title}
-                                        </ListSubheaderWrapper>
-                                    }
-                                >
-                                    {navbarItem.subMenu?.map((subItem) => (
-                                        <MobileNavBarNavItem item={subItem} key={subItem.title} />
-                                    ))}
-                                </List>
-                            </Box>
-                        ))}
-                    </Scrollbar>
-                </Box>
-            </Box>
-        </MobileSidebarWrapper>
+            <SheetContent className="w-full py-14 sm:w-[500px] sm:max-w-[500px]" side="left">
+                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                <SheetDescription className="sr-only">Main navigation menu for mobile devices</SheetDescription>
+
+                <nav className="flex flex-col space-y-4">
+                    <MobileNavbarIcons className="mb-[100px]" />
+
+                    <MobileNavbarNestedDropdown dropdownItems={dropdownItems} Icon={Home} title="Services" />
+
+                    {/* navigation route links */}
+                    {navigationItems.map((item) => (
+                        <Link className="px-4 py-2 hover:bg-accent" href={item.route} key={item.title}>
+                            <div className="flex items-center gap-2">
+                                {item.icon && <item.icon className="h-4 w-4" />}
+                                {item.title}
+                            </div>
+                        </Link>
+                    ))}
+                </nav>
+            </SheetContent>
+        </Sheet>
     )
 }

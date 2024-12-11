@@ -1,12 +1,17 @@
-import type { MouseEvent } from "react"
+"use client"
 
-import { useCallback, useState } from "react"
+import { useCallback } from "react"
 
 import ReactCountryFlag from "react-country-flag"
-import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
-import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from "@mui/material"
+import { toast } from "sonner"
+
+import { cn } from "@/lib/utils"
+
+import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 type Language = "ae" | "br" | "cn" | "de" | "en" | "es" | "fr" | "pt"
 
@@ -65,24 +70,11 @@ const languageOptions: LanguageOptions = {
 
 type LanguageDropdownProps = {
     color?: "error" | "info" | "inherit" | "primary" | "secondary" | "success" | "warning"
-    sx?: object
 }
 
-export default function LanguageDropdown({ color = "inherit", sx = {} }: LanguageDropdownProps) {
-    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
-    const open = Boolean(anchorEl)
-
-    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget)
-    }
-
-    const handleClose = () => {
-        setAnchorEl(null)
-    }
-
-    const { t } = useTranslation()
-    const { i18n } = useTranslation()
-
+export default function LanguageDropdown(props: LanguageDropdownProps) {
+    const { color = "inherit" } = props
+    const { i18n, t } = useTranslation()
     const flag = languages[i18n.language as Language]
 
     const handleChange = useCallback(
@@ -92,73 +84,54 @@ export default function LanguageDropdown({ color = "inherit", sx = {} }: Languag
             toast.success(message, {
                 position: "bottom-center",
             })
-            handleClose()
         },
         [i18n, t],
     )
 
     return (
-        <>
-            <Tooltip arrow title={t("Switch Language")}>
-                <IconButton
-                    aria-controls={open ? "language-menu" : undefined}
-                    aria-expanded={open ? "true" : undefined}
-                    aria-haspopup="true"
-                    color={color}
-                    id="language-button"
-                    onClick={handleClick}
-                    sx={{
-                        ...sx,
-                    }}
-                >
-                    <ReactCountryFlag countryCode={flag} svg />
-                </IconButton>
+        <TooltipProvider>
+            <Tooltip>
+                <DropdownMenu>
+                    <TooltipTrigger asChild>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                className={cn(
+                                    "h-9 w-9",
+                                    color === "primary" && "text-primary",
+                                    color === "secondary" && "text-secondary",
+                                    color === "success" && "text-success",
+                                    color === "error" && "text-destructive",
+                                    color === "warning" && "text-warning",
+                                    color === "info" && "text-info",
+                                )}
+                                size="icon"
+                                variant="ghost"
+                            >
+                                <ReactCountryFlag countryCode={flag} svg />
+                            </Button>
+                        </DropdownMenuTrigger>
+                    </TooltipTrigger>
+                    <TooltipContent>{t("Switch Language")}</TooltipContent>
+                    <DropdownMenuContent align="end">
+                        {(Object.keys(languageOptions) as Language[]).map((language) => {
+                            const option = languageOptions[language]
+                            return (
+                                <DropdownMenuItem
+                                    className={cn(
+                                        "flex cursor-pointer items-center gap-2",
+                                        i18n.language === language && "bg-accent",
+                                    )}
+                                    key={language}
+                                    onClick={() => handleChange(language)}
+                                >
+                                    <ReactCountryFlag className="h-4 w-4" countryCode={option.icon} svg />
+                                    <span>{option.label}</span>
+                                </DropdownMenuItem>
+                            )
+                        })}
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </Tooltip>
-            <Menu
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                    horizontal: "right",
-                    vertical: "bottom",
-                }}
-                id="language-menu"
-                MenuListProps={{
-                    "aria-labelledby": "language-button",
-                }}
-                onClose={handleClose}
-                open={open}
-                transformOrigin={{
-                    horizontal: "right",
-                    vertical: "top",
-                }}
-            >
-                {(Object.keys(languageOptions) as Language[]).map((language) => {
-                    const option = languageOptions[language]
-                    return (
-                        <MenuItem
-                            key={language}
-                            onClick={() => handleChange(language)}
-                            selected={i18n.language === language}
-                        >
-                            <ListItemIcon>
-                                <ReactCountryFlag
-                                    countryCode={option.icon}
-                                    style={{
-                                        height: "2em",
-                                        width: "2em",
-                                    }}
-                                    svg
-                                />
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={option.label}
-                                sx={{
-                                    pl: 1,
-                                }}
-                            />
-                        </MenuItem>
-                    )
-                })}
-            </Menu>
-        </>
+        </TooltipProvider>
     )
 }

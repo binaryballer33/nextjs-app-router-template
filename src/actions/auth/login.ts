@@ -1,23 +1,23 @@
 "use server"
 
-import type { ServerResponse } from "src/types/auth/server-response"
-import type { LoginRequest } from "src/types/forms/login"
+import type { ServerResponse } from "@/types/auth/server-response"
+import type { LoginRequest } from "@/types/forms/login"
 
-import { LoginRequestSchema } from "src/types/forms/login"
+import { LoginRequestSchema } from "@/types/forms/login"
 
-import { signIn } from "src/auth/auth"
+import { signIn } from "@/auth/auth"
 
-import createTwoFactorConfirmation from "src/actions/auth/tokens/two-factor-confirmation/create-two-factor-confirmation"
-import deleteTwoFactorConfirmationById from "src/actions/auth/tokens/two-factor-confirmation/delete-two-factor-confirmation-by-id"
-import deleteTwoFactorConfirmationByUserId from "src/actions/auth/tokens/two-factor-confirmation/delete-two-factor-confirmation-by-userId"
-import getTwoFactorConfirmationByUserId from "src/actions/auth/tokens/two-factor-confirmation/get-two-factor-confirmation-by-userId"
-import createTwoFactorToken from "src/actions/auth/tokens/two-factor-token/create-two-factor-token"
-import deleteTwoFactorTokenById from "src/actions/auth/tokens/two-factor-token/delete-two-factor-token-by-id"
-import getTwoFactorTokenByEmail from "src/actions/auth/tokens/two-factor-token/get-two-factor-token-by-email"
-import createVerificationToken from "src/actions/auth/tokens/verification-token/create-verification-token"
-import sendAccountVerificationEmail from "src/actions/emails/send-account-verification-email"
-import sendTwoFactorEmail from "src/actions/emails/send-two-factor-email"
-import getUserByEmail from "src/actions/user/get-user-by-email"
+import createTwoFactorConfirmation from "@/actions/auth/tokens/two-factor-confirmation/create-two-factor-confirmation"
+import deleteTwoFactorConfirmationById from "@/actions/auth/tokens/two-factor-confirmation/delete-two-factor-confirmation-by-id"
+import deleteTwoFactorConfirmationByUserId from "@/actions/auth/tokens/two-factor-confirmation/delete-two-factor-confirmation-by-userId"
+import getTwoFactorConfirmationByUserId from "@/actions/auth/tokens/two-factor-confirmation/get-two-factor-confirmation-by-userId"
+import createTwoFactorToken from "@/actions/auth/tokens/two-factor-token/create-two-factor-token"
+import deleteTwoFactorTokenById from "@/actions/auth/tokens/two-factor-token/delete-two-factor-token-by-id"
+import getTwoFactorTokenByEmail from "@/actions/auth/tokens/two-factor-token/get-two-factor-token-by-email"
+import createVerificationToken from "@/actions/auth/tokens/verification-token/create-verification-token"
+import sendAccountVerificationEmail from "@/actions/emails/send-account-verification-email"
+import sendTwoFactorEmail from "@/actions/emails/send-two-factor-email"
+import getUserByEmail from "@/actions/user/get-user-by-email"
 
 export default async function login(credentials: LoginRequest): Promise<ServerResponse> {
     try {

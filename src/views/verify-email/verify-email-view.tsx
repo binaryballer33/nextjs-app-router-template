@@ -1,37 +1,35 @@
 "use client"
 
-import type { VerifyEmail } from "src/types/forms/verify-email"
+import type { VerifyEmail } from "@/types/forms/verify-email"
 
-import { defaultValuesVerifyEmail as defaultValues, VerifyEmailSchema } from "src/types/forms/verify-email"
+import { defaultValuesVerifyEmail as defaultValues, VerifyEmailSchema } from "@/types/forms/verify-email"
 
 import { useSearchParams } from "next/navigation"
 
 import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Mail } from "lucide-react"
+import { toast } from "sonner"
 
-import EmailIcon from "@mui/icons-material/Email"
+import handleServerResponse from "@/lib/helper-functions/handleServerResponse"
 
-import { Container, Stack } from "@mui/material"
+import createVerificationToken from "@/actions/auth/tokens/verification-token/create-verification-token"
+import verifyAccountEmail from "@/actions/auth/verify-account-email"
+import sendAccountVerificationEmail from "@/actions/emails/send-account-verification-email"
 
-import handleServerResponse from "src/utils/helper-functions/handleServerResponse"
+import routes from "@/routes/routes"
 
-import createVerificationToken from "src/actions/auth/tokens/verification-token/create-verification-token"
-import verifyAccountEmail from "src/actions/auth/verify-account-email"
-import sendAccountVerificationEmail from "src/actions/emails/send-account-verification-email"
-
-import FlexCenteredFullScreenContainer from "src/components/base/flex-box/flex-center-full-screen-container"
-import Field from "src/components/react-hook-form/fields"
-import Form from "src/components/react-hook-form/form-provider"
-import FormHead from "src/components/react-hook-form/form/form-head"
-import FormResendCode from "src/components/react-hook-form/form/form-resend-code"
-import FormReturnLink from "src/components/react-hook-form/form/form-return-link"
-import FormSubmitButton from "src/components/react-hook-form/form/form-submit-button"
-import AuthFormInput from "src/components/react-hook-form/rhf-filled-input-custom"
-
-import routes from "src/routes/routes"
+import Container from "@/components/base/container"
+import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
+import Field from "@/components/react-hook-form/fields"
+import Form from "@/components/react-hook-form/form-provider"
+import FormHead from "@/components/react-hook-form/form/form-head"
+import FormResendCode from "@/components/react-hook-form/form/form-resend-code"
+import FormReturnLink from "@/components/react-hook-form/form/form-return-link"
+import FormSubmitButton from "@/components/react-hook-form/form/form-submit-button"
+import AuthFormInput from "@/components/react-hook-form/rhf-custom-input"
 
 export default function VerifyEmailView() {
     const { t } = useTranslation()
@@ -60,21 +58,21 @@ export default function VerifyEmailView() {
     }
 
     return (
-        <Form methods={methods} onSubmit={onSubmit}>
+        <Form form={methods} onSubmit={onSubmit}>
             <FlexCenteredFullScreenContainer minHeight="80dvh">
                 <Container maxWidth="sm">
                     <FormHead
                         description={t(
                             `We've Emailed A 6-digit Confirmation Code. \nPlease Enter The Code In The Box Below To Verify Your Email.`,
                         )}
-                        icon={<EmailIcon sx={{ color: "primary.main", fontSize: 80 }} />}
+                        icon={<Mail className="h-20 w-20 text-primary" />}
                         title={t("Please Check Your Email!")}
                     />
-                    <Stack gap={2}>
+                    <div className="flex flex-col gap-2">
                         <AuthFormInput inputName="email" label={t("Email Address")} />
                         <Field.Code name="sixDigitCode" />
                         <FormSubmitButton loadingTitle={t("Verifying Code...")} title={t("Verify")} />
-                    </Stack>
+                    </div>
                     <FormResendCode disabled={false} onResendCode={onResendCode} value={0} />
                     <FormReturnLink href={routes.auth.login} title={t("Return To Sign In")} />
                 </Container>

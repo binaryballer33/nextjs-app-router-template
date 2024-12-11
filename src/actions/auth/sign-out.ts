@@ -1,8 +1,8 @@
 "use server"
 
-import type { ServerResponse } from "src/types/auth/server-response"
+import type { ServerResponse } from "@/types/auth/server-response"
 
-import { signOut as nextAuthSignOut } from "src/auth/auth"
+import { signOut as nextAuthSignOut } from "@/auth/auth"
 
 export default async function signOut(): Promise<ServerResponse> {
     try {

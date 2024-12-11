@@ -1,16 +1,9 @@
-import { Stack } from "@mui/material"
-
 import LanguageDropdown from "./language-icon-dropdown"
 
 export default function LanguageIcon() {
     return (
-        <Stack
-            alignItems="center"
-            direction={{ sm: "row", xs: "column" }}
-            justifyContent="space-around"
-            spacing={{ md: 3, sm: 0, xs: 3 }}
-        >
+        <div className="flex flex-col items-center justify-around gap-3 sm:flex-row sm:gap-0 md:gap-3">
             <LanguageDropdown />
-        </Stack>
+        </div>
     )
 }

@@ -1,13 +1,12 @@
 import type { TFunction } from "i18next"
 
-import LoginIcon from "@mui/icons-material/Login"
+import { LogIn } from "lucide-react"
 
-import { Container } from "@mui/material"
-
-import FlexCenteredFullScreenContainer from "src/components/base/flex-box/flex-center-full-screen-container"
-import Field from "src/components/react-hook-form/fields"
-import FormHead from "src/components/react-hook-form/form/form-head"
-import FormSubmitButton from "src/components/react-hook-form/form/form-submit-button"
+import Container from "@/components/base/container"
+import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
+import Field from "@/components/react-hook-form/fields"
+import FormHead from "@/components/react-hook-form/form/form-head"
+import FormSubmitButton from "@/components/react-hook-form/form/form-submit-button"
 
 type TwoFactorCodeProps = {
     t: TFunction<"translation", undefined>
@@ -21,7 +20,7 @@ export default function TwoFactorCode(props: TwoFactorCodeProps) {
             <Container maxWidth="sm">
                 <FormHead
                     description="Enter The Code Sent To Your Email"
-                    icon={<LoginIcon sx={{ color: "primary.main", fontSize: 80 }} />}
+                    icon={<LogIn className="h-20 w-20 text-primary" />}
                     title="Two Factor Authentication"
                 />
                 <Field.Code name="sixDigitCode" />

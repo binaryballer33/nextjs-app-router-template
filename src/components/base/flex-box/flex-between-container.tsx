@@ -1,12 +1,13 @@
-import type { FlexContainerProps } from "src/components/base/flex-box/flex-container"
+import type { FlexContainerProps } from "@/components/base/flex-box/flex-container"
 
-import FlexContainer from "src/components/base/flex-box/flex-container"
+import { cn } from "@/lib/utils"
+
+import FlexContainer from "@/components/base/flex-box/flex-container"
 
 export default function FlexBetweenContainer(props: FlexContainerProps) {
-    const { children, stackOn, ...restOfProps } = props
-
+    const { children, className, stackOn, ...restOfProps } = props
     return (
-        <FlexContainer justifyContent="space-between" stackOn={stackOn} {...restOfProps}>
+        <FlexContainer className={cn("justify-between", className)} stackOn={stackOn} {...restOfProps}>
             {children}
         </FlexContainer>
     )

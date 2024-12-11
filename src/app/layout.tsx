@@ -1,10 +1,10 @@
 import type { Viewport } from "next/"
 import type { ReactNode } from "react"
 
-import NProgress from "src/components/base/nprogress"
+import MainLayout from "@/layouts/main-layout"
+import Providers from "@/layouts/providers/providers-layout"
 
-import MainLayout from "src/layouts/main-layout"
-import ProvidersLayout from "src/layouts/providers/providers-layout"
+import NProgress from "@/components/base/nprogress"
 
 export const dynamic = "force-dynamic"
 
@@ -20,14 +20,14 @@ type LayoutProps = {
 
 export default async function Layout({ children }: LayoutProps) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <body>
-                <ProvidersLayout>
+                <Providers>
                     <MainLayout>
                         {children}
                         <NProgress />
                     </MainLayout>
-                </ProvidersLayout>
+                </Providers>
             </body>
         </html>
     )

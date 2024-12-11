@@ -1,28 +1,32 @@
 "use client"
 
+import type { OAuthProvider } from "@/types/forms/common"
 import type { TFunction } from "i18next"
-import type { OAuthProvider } from "src/types/forms/common"
 
 import { useSearchParams } from "next/navigation"
 
 import { useCallback } from "react"
 
 import { useFormContext } from "react-hook-form"
-import toast from "react-hot-toast"
 
-import { Button } from "@mui/material"
+import { toast } from "sonner"
 
 import { signIn } from "next-auth/react"
 
-import routes from "src/routes/routes"
+import { cn } from "@/lib/utils"
+
+import routes from "@/routes/routes"
+
+import { Button } from "@/components/ui/button"
 
 type OAuthButtonProps = {
+    className?: string
     provider: OAuthProvider
     t: TFunction<"translation", undefined>
 }
 
 export default function OAuthButton(props: OAuthButtonProps) {
-    const { provider, t } = props
+    const { className, provider, t } = props
     const { icon: Icon } = provider
 
     const {
@@ -45,15 +49,13 @@ export default function OAuthButton(props: OAuthButtonProps) {
 
     return (
         <Button
-            color="primary"
+            className={cn("w-full border-primary/30 text-base font-normal hover:bg-primary/10", className)}
             disabled={isSubmitting}
-            fullWidth
-            key={provider.id}
             onClick={() => onAuth(provider.id).catch(() => {})}
-            startIcon={<Icon />}
-            sx={{ fontSize: 16, whiteSpace: "nowrap" }}
-            variant="outlined"
+            type="button"
+            variant="outline"
         >
+            <Icon className="mr-2 h-5 w-5" />
             {t(`Access With ${provider.name}`)}
         </Button>
     )

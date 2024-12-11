@@ -1,6 +1,6 @@
 "use server"
 
-import prisma from "src/utils/database/prisma"
+import prisma from "@/lib/database/prisma"
 
 export default async function getYuGiOhCardByIdQuery(id: number) {
     try {

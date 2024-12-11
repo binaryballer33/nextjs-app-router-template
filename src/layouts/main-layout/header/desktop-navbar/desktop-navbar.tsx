@@ -1,23 +1,55 @@
-import type { NavBarItem } from "src/types/navbar-item"
+"use client"
 
-import { Box, Stack } from "@mui/material"
+import Link from "next/link"
 
-import DesktopNavBarItem from "./desktop-navbar-item"
+import { Home } from "lucide-react"
 
-type DesktopNavBarProps = {
-    navbarItems?: NavBarItem[]
-}
+import { dropdownItems, navigationItems } from "@/routes/navbar"
 
-export default function DesktopNavBar({ navbarItems }: DesktopNavBarProps) {
-    if (!navbarItems) return null
+import {
+    NavigationMenu,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
 
+import Logo from "../navbar-icons/logo/logo"
+import DesktopNavbarIcons from "./desktop-navbar-icons"
+import DesktopNavbarNestedDropdownMenu from "./desktop-navbar-nested-dropdown-menu"
+
+export default function DesktopNavbar() {
     return (
-        <Box position="relative">
-            <Stack alignItems="center" flexDirection="row" position="sticky" spacing={0} top={0}>
-                {navbarItems.map((item) => (
-                    <DesktopNavBarItem key={item.title} navbarItem={item} />
-                ))}
-            </Stack>
-        </Box>
+        <div className="hidden w-full items-center md:flex">
+            <NavigationMenu className="w-full">
+                <Logo />
+
+                <div className="flex w-full items-center justify-between">
+                    <NavigationMenuList>
+                        {/* desktop nested navigation links */}
+                        <DesktopNavbarNestedDropdownMenu dropdownItems={dropdownItems} Icon={Home} title="Services" />
+
+                        {/* desktop navigation route links */}
+                        {navigationItems.map((item) => (
+                            <NavigationMenuItem key={item.title}>
+                                <Link href={item.route} legacyBehavior passHref>
+                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                        <div className="flex items-center gap-2 hover:text-primary">
+                                            {item.icon && <item.icon className="h-4 w-4" />}
+                                            {item.title}
+                                        </div>
+                                    </NavigationMenuLink>
+                                </Link>
+                            </NavigationMenuItem>
+                        ))}
+                    </NavigationMenuList>
+                </div>
+            </NavigationMenu>
+
+            {/* desktop navbar icons */}
+            <div className="ml-auto items-center">
+                <DesktopNavbarIcons />
+            </div>
+        </div>
     )
 }

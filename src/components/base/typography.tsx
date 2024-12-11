@@ -1,187 +1,92 @@
 "use client"
 
-import type { BoxProps } from "@mui/material/Box"
+import type { HTMLAttributes } from "react"
 
-import clsx from "clsx"
+import { cn } from "@/lib/utils"
 
-import Box from "@mui/material/Box"
-import styled from "@mui/material/styles/styled"
-
-type Ellipsis = { ellipsis: number }
-
-type HeaderProps = {
+interface TypographyProps extends HTMLAttributes<HTMLElement> {
+    children: React.ReactNode
     ellipsis?: boolean
-} & BoxProps
+}
 
-const StyledBox = styled(Box, { shouldForwardProp: (prop) => prop !== "ellipsis" })<Ellipsis>(({ ellipsis }) => ({
-    ...(ellipsis && { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }),
-}))
+const ellipsisClasses = "overflow-hidden text-ellipsis whitespace-nowrap"
 
-export function H1(props: HeaderProps) {
-    const { children, className, ellipsis, ...others } = props
-
+export function H1({ children, className, ellipsis, ...props }: TypographyProps) {
     return (
-        <StyledBox
-            component="h1"
-            ellipsis={ellipsis ? 1 : 0}
-            fontSize={30}
-            fontWeight={700}
-            {...(className && { className: clsx({ [className]: true }) })}
-            {...others}
-        >
+        <h1 className={cn("text-3xl font-bold", ellipsis && ellipsisClasses, className)} {...props}>
             {children}
-        </StyledBox>
+        </h1>
     )
 }
 
-export function H2(props: HeaderProps) {
-    const { children, className, ellipsis, ...others } = props
-
+export function H2({ children, className, ellipsis, ...props }: TypographyProps) {
     return (
-        <StyledBox
-            component="h2"
-            ellipsis={ellipsis ? 1 : 0}
-            fontSize={25}
-            fontWeight={700}
-            {...(className && { className: clsx({ [className]: true }) })}
-            {...others}
-        >
+        <h2 className={cn("text-2xl font-bold", ellipsis && ellipsisClasses, className)} {...props}>
             {children}
-        </StyledBox>
+        </h2>
     )
 }
 
-export function H3(props: HeaderProps) {
-    const { children, className, ellipsis, ...others } = props
-
+export function H3({ children, className, ellipsis, ...props }: TypographyProps) {
     return (
-        <StyledBox
-            component="h3"
-            ellipsis={ellipsis ? 1 : 0}
-            fontSize={20}
-            fontWeight={700}
-            {...(className && { className: clsx({ [className]: true }) })}
-            {...others}
-        >
+        <h3 className={cn("text-xl font-bold", ellipsis && ellipsisClasses, className)} {...props}>
             {children}
-        </StyledBox>
+        </h3>
     )
 }
 
-export function H4(props: HeaderProps) {
-    const { children, className, ellipsis, ...others } = props
-
+export function H4({ children, className, ellipsis, ...props }: TypographyProps) {
     return (
-        <StyledBox
-            component="h4"
-            ellipsis={ellipsis ? 1 : 0}
-            fontSize={17}
-            fontWeight={600}
-            {...(className && { className: clsx({ [className]: true }) })}
-            {...others}
-        >
+        <h4 className={cn("text-lg font-semibold", ellipsis && ellipsisClasses, className)} {...props}>
             {children}
-        </StyledBox>
+        </h4>
     )
 }
 
-export function H5(props: HeaderProps) {
-    const { children, className, ellipsis, ...others } = props
-
+export function H5({ children, className, ellipsis, ...props }: TypographyProps) {
     return (
-        <StyledBox
-            component="h5"
-            ellipsis={ellipsis ? 1 : 0}
-            fontSize={16}
-            fontWeight={600}
-            lineHeight={1}
-            {...(className && { className: clsx({ [className]: true }) })}
-            {...others}
-        >
+        <h5 className={cn("text-base font-semibold leading-none", ellipsis && ellipsisClasses, className)} {...props}>
             {children}
-        </StyledBox>
+        </h5>
     )
 }
 
-export function H6(props: HeaderProps) {
-    const { children, className, ellipsis, ...others } = props
-
+export function H6({ children, className, ellipsis, ...props }: TypographyProps) {
     return (
-        <StyledBox
-            component="h6"
-            ellipsis={ellipsis ? 1 : 0}
-            fontSize={14}
-            fontWeight={600}
-            {...(className && { className: clsx({ [className]: true }) })}
-            {...others}
-        >
+        <h6 className={cn("text-sm font-semibold", ellipsis && ellipsisClasses, className)} {...props}>
             {children}
-        </StyledBox>
+        </h6>
     )
 }
 
-export function Paragraph(props: HeaderProps) {
-    const { children, className, ellipsis, ...others } = props
-
+export function Paragraph({ children, className, ellipsis, ...props }: TypographyProps) {
     return (
-        <StyledBox
-            component="p"
-            ellipsis={ellipsis ? 1 : 0}
-            fontSize={14}
-            fontWeight={400}
-            {...(className && { className: clsx({ [className]: true }) })}
-            {...others}
-        >
+        <p className={cn("text-sm font-normal", ellipsis && ellipsisClasses, className)} {...props}>
             {children}
-        </StyledBox>
+        </p>
     )
 }
 
-export function Small(props: HeaderProps) {
-    const { children, className, ellipsis = false, ...others } = props
-
+export function Small({ children, className, ellipsis = false, ...props }: TypographyProps) {
     return (
-        <StyledBox
-            component="small"
-            ellipsis={ellipsis ? 1 : 0}
-            fontSize={12}
-            fontWeight={400}
-            {...(className && { className: clsx({ [className]: true }) })}
-            {...others}
-        >
+        <small className={cn("text-xs font-normal", ellipsis && ellipsisClasses, className)} {...props}>
             {children}
-        </StyledBox>
+        </small>
     )
 }
 
-export function Span(props: HeaderProps) {
-    const { children, className, ellipsis = false, ...others } = props
-
+export function Span({ children, className, ellipsis = false, ...props }: TypographyProps) {
     return (
-        <StyledBox
-            component="span"
-            ellipsis={ellipsis ? 1 : 0}
-            {...(className && { className: clsx({ [className]: true }) })}
-            {...others}
-        >
+        <span className={cn(ellipsis && ellipsisClasses, className)} {...props}>
             {children}
-        </StyledBox>
+        </span>
     )
 }
 
-export function Tiny(props: HeaderProps) {
-    const { children, className, ellipsis = false, ...others } = props
-
+export function Tiny({ children, className, ellipsis = false, ...props }: TypographyProps) {
     return (
-        <StyledBox
-            component="small"
-            ellipsis={ellipsis ? 1 : 0}
-            fontSize={10}
-            fontWeight={400}
-            {...(className && { className: clsx({ [className]: true }) })}
-            {...others}
-        >
+        <small className={cn("text-[10px] font-normal", ellipsis && ellipsisClasses, className)} {...props}>
             {children}
-        </StyledBox>
+        </small>
     )
 }

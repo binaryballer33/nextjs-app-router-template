@@ -1,23 +1,22 @@
 import type { TFunction } from "i18next"
 
-import oAuthProviders from "src/types/forms/common"
+import oAuthProviders from "@/types/forms/common"
 
-import LoginIcon from "@mui/icons-material/Login"
+import { LogIn } from "lucide-react"
 
-import { Container } from "@mui/material"
+import routes from "@/routes/routes"
 
-import FlexBetweenContainer from "src/components/base/flex-box/flex-between-container"
-import FlexCenteredFullScreenContainer from "src/components/base/flex-box/flex-center-full-screen-container"
-import FlexContainer from "src/components/base/flex-box/flex-container"
-import FormDivider from "src/components/react-hook-form/form/form-divider"
-import FormHead from "src/components/react-hook-form/form/form-head"
-import FormLink from "src/components/react-hook-form/form/form-link"
-import OAuthButton from "src/components/react-hook-form/form/form-oauth-button"
-import ClearFormButton from "src/components/react-hook-form/form/form-reset-button"
-import FormSubmitButton from "src/components/react-hook-form/form/form-submit-button"
-import AuthFormInput from "src/components/react-hook-form/rhf-filled-input-custom"
-
-import routes from "src/routes/routes"
+import Container from "@/components/base/container"
+import FlexBetweenContainer from "@/components/base/flex-box/flex-between-container"
+import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
+import FlexContainer from "@/components/base/flex-box/flex-container"
+import FormDivider from "@/components/react-hook-form/form/form-divider"
+import FormHead from "@/components/react-hook-form/form/form-head"
+import FormLink from "@/components/react-hook-form/form/form-link"
+import OAuthButton from "@/components/react-hook-form/form/form-oauth-button"
+import ClearFormButton from "@/components/react-hook-form/form/form-reset-button"
+import FormSubmitButton from "@/components/react-hook-form/form/form-submit-button"
+import AuthFormInput from "@/components/react-hook-form/rhf-custom-input"
 
 type LoginFormProps = {
     t: TFunction<"translation", undefined>
@@ -27,10 +26,10 @@ export default function LoginForm(props: LoginFormProps) {
     const { t } = props
 
     return (
-        <FlexCenteredFullScreenContainer minHeight="80dvh">
+        <FlexCenteredFullScreenContainer minHeight="85dvh">
             <FormHead
                 description="Login To Your Account For Full Access"
-                icon={<LoginIcon sx={{ color: "primary.main", fontSize: 80 }} />}
+                icon={<LogIn className="h-20 w-20 text-primary" />}
                 title="Sign In"
             />
 
@@ -45,12 +44,13 @@ export default function LoginForm(props: LoginFormProps) {
 
             <Container maxWidth="sm">
                 <AuthFormInput inputName="email" label="Email" />
-                <AuthFormInput inputName="password" label="Password" showVisibilityButtons />
+                <AuthFormInput inputName="password" label="Password" showVisibilityToggle />
 
                 <FlexBetweenContainer>
                     <FormLink linkTitle={t("Forgot Password?")} linkTo={routes.auth.forgotPassword} />
                     <ClearFormButton title={t("Clear Form")} />
                 </FlexBetweenContainer>
+
                 <FormSubmitButton loadingTitle={t("Signing In...")} title={t("Sign In")} />
                 <FormLink linkTitle={t("Sign Up")} linkTo={routes.auth.register} title={t("Not A Member Yet?")} />
             </Container>

@@ -1,23 +1,22 @@
-import type { SvgIconTypeMap } from "@mui/material"
-import type { OverridableComponent } from "@mui/material/OverridableComponent"
+import type { IconType } from "react-icons"
 
-import FacebookIcon from "@mui/icons-material/Facebook"
-import GoogleIcon from "@mui/icons-material/Google"
+import { FaFacebookSquare } from "react-icons/fa"
+import { FcGoogle } from "react-icons/fc"
 
 export type OAuthProvider = {
-    icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>
+    icon: IconType
     id: "facebook" | "google"
     name: string
 }
 
 const oAuthProviders = {
     facebook: {
-        icon: FacebookIcon,
+        icon: FaFacebookSquare,
         id: "facebook",
         name: "Facebook",
     } satisfies OAuthProvider,
     google: {
-        icon: GoogleIcon,
+        icon: FcGoogle,
         id: "google",
         name: "Google",
     } satisfies OAuthProvider,

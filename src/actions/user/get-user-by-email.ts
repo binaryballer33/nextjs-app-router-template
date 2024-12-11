@@ -1,8 +1,10 @@
-import type { ServerResponse } from "src/types/auth/server-response"
+"use server"
 
-import VerifyEmailRequestSchema from "src/types/forms/verify-email-request"
+import type { ServerResponse } from "@/types/auth/server-response"
 
-import prisma from "src/utils/database/prisma"
+import VerifyEmailRequestSchema from "@/types/forms/verify-email-request"
+
+import prisma from "@/lib/database/prisma"
 
 export default async function getUserByEmail(email: string): Promise<ServerResponse> {
     try {
