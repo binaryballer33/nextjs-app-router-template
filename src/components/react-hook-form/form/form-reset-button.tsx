@@ -23,7 +23,7 @@ export default function ResetFormButton(props: ResetFormProps) {
 
     return (
         <Button
-            className={cn("mt-1 whitespace-nowrap px-4", className)}
+            className={cn("mt-1 whitespace-nowrap px-4 hover:bg-primary/10", className)}
             disabled={isSubmitting}
             onClick={resetForm}
             size={size}

@@ -10,9 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
 
+import Field from "@/components/react-hook-form/fields"
 import Form from "@/components/react-hook-form/form-provider"
 import CustomInput from "@/components/react-hook-form/rhf-custom-input"
 
@@ -46,29 +45,11 @@ export default function ContactView() {
                     {/* Contact Form */}
                     <div className="mx-auto grid max-w-5xl gap-6 py-12 lg:grid-cols-2">
                         <div className="space-y-4">
-                            <Form form={form} onSubmit={onSubmit}>
+                            <Form className="space-y-4" form={form} onSubmit={onSubmit}>
                                 <CustomInput inputName="name" label="Name" />
                                 <CustomInput inputName="email" label="Email" />
-                                <FormField
-                                    control={form.control}
-                                    name="message"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Message</FormLabel>
-                                            <FormControl>
-                                                <Textarea
-                                                    className="resize-none bg-accent"
-                                                    placeholder="Your message"
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormDescription>
-                                                Please provide as much detail as possible.
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                                <Field.TextArea name="Message" />
+
                                 <Button className="my-4 w-full" type="submit">
                                     Send Message
                                 </Button>

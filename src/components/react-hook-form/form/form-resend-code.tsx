@@ -16,7 +16,10 @@ export default function FormResendCode({ className, disabled, onResendCode, valu
         <div className={cn("mt-3 text-center text-sm", className)}>
             Don't have a code?{" "}
             <Button
-                className={cn("px-1 font-semibold", disabled && "pointer-events-none text-muted-foreground")}
+                className={cn(
+                    "px-1 font-semibold hover:bg-primary/10",
+                    disabled && "pointer-events-none text-muted-foreground",
+                )}
                 disabled={disabled}
                 onClick={onResendCode}
                 variant="link"

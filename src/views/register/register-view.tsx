@@ -71,7 +71,7 @@ export default function RegisterView() {
                     <AuthFormInput inputName="password" label="Password" showVisibilityToggle />
                     <AuthFormInput inputName="confirmPassword" label="Confirm Password" showVisibilityToggle />
 
-                    <FlexBetweenContainer stackOn="mobile">
+                    <FlexBetweenContainer className="my-3" stackOn="mobile">
                         <FormLink
                             linkTitle={t("Sign In Here")}
                             linkTo={routes.auth.login}

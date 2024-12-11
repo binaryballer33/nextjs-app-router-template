@@ -50,6 +50,7 @@ export default function LoginForm(props: LoginFormProps) {
                     <FormLink linkTitle={t("Forgot Password?")} linkTo={routes.auth.forgotPassword} />
                     <ClearFormButton title={t("Clear Form")} />
                 </FlexBetweenContainer>
+
                 <FormSubmitButton loadingTitle={t("Signing In...")} title={t("Sign In")} />
                 <FormLink linkTitle={t("Sign Up")} linkTo={routes.auth.register} title={t("Not A Member Yet?")} />
             </Container>

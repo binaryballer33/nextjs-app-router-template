@@ -34,7 +34,7 @@ export default function DesktopNavbar() {
                             <NavigationMenuItem key={item.title}>
                                 <Link href={item.route} legacyBehavior passHref>
                                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-2 hover:text-primary">
                                             {item.icon && <item.icon className="h-4 w-4" />}
                                             {item.title}
                                         </div>

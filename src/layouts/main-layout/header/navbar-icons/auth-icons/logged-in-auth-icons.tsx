@@ -41,14 +41,14 @@ export default function ProfileMenu() {
     if (!user) return null
 
     return (
-        <NavigationMenu className="w-auto">
+        <NavigationMenu className="w-auto hover:border-b-2 hover:border-primary">
             <NavigationMenuList>
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>
                         <AvatarLink className="h-6 w-6" user={user} />
                     </NavigationMenuTrigger>
 
-                    <NavigationMenuContent className="data-[side=bottom]:animate-slideUpAndFade min-w-[250px] p-0">
+                    <NavigationMenuContent className="min-w-[250px] p-0">
                         {/* Avatar and user info */}
                         <div className="flex items-center gap-3 border-b p-4">
                             <AvatarLink user={user} />
@@ -88,7 +88,7 @@ export default function ProfileMenu() {
                                                 variant="ghost"
                                             >
                                                 <span className="text-base">{item.title}</span>
-                                                <item.icon className="!h-6 !w-6" />
+                                                <item.icon className="!h-6 !w-6 text-primary" />
                                             </Button>
                                         </div>
                                     )
@@ -102,7 +102,7 @@ export default function ProfileMenu() {
                                         key={item.title}
                                     >
                                         <span className="text-base">{item.title}</span>
-                                        <item.icon className="h-6 w-6" />
+                                        <item.icon className="h-6 w-6 text-primary" />
                                     </Link>
                                 )
                             })}

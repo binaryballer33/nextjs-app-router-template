@@ -7,6 +7,7 @@ import RHFRating from "./rhf-rating"
 import RHFSelect, { RHFMultiSelect } from "./rhf-select"
 import RHFSlider from "./rhf-slider"
 import RHFSwitch, { RHFMultiSwitch } from "./rhf-switch"
+import RHFTextArea from "./rhf-textarea"
 
 const Field = {
     Autocomplete: RHFAutocomplete,
@@ -21,6 +22,7 @@ const Field = {
     Select: RHFSelect,
     Slider: RHFSlider,
     Switch: RHFSwitch,
+    TextArea: RHFTextArea,
     // CountrySelect: RHFCountrySelect,
     // MobileDateTimePicker: RHFMobileDateTimePicker,
     // DatePicker: RHFDatePicker,

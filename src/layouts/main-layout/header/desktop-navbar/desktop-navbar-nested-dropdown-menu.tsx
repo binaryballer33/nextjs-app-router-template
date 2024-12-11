@@ -36,7 +36,7 @@ export default function DesktopNavbarNestedDropdownMenu(props: DesktopNavbarNest
         <div className={cn("w-fit p-0", className)}>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button className="w-fit justify-between" variant="ghost">
+                    <Button className="w-fit justify-between hover:text-primary" variant="ghost">
                         <div className="flex items-center gap-2">
                             {Icon && <Icon className="h-4 w-4" />}
                             {title}
@@ -52,7 +52,7 @@ export default function DesktopNavbarNestedDropdownMenu(props: DesktopNavbarNest
                             {!navItem.subMenu && (
                                 <Link href={navItem.route} passHref>
                                     <DropdownMenuItem className="cursor-pointer">
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-2 hover:text-primary">
                                             {navItem.icon && <navItem.icon className="h-4 w-4" />}
                                             {navItem.title}
                                         </div>
@@ -67,7 +67,7 @@ export default function DesktopNavbarNestedDropdownMenu(props: DesktopNavbarNest
                             {navItem.subMenu && (
                                 <DropdownMenuSub>
                                     <DropdownMenuSubTrigger>
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-2 hover:text-primary">
                                             {navItem.icon && <navItem.icon className="h-4 w-4" />}
                                             {navItem.title}
                                         </div>
@@ -77,7 +77,7 @@ export default function DesktopNavbarNestedDropdownMenu(props: DesktopNavbarNest
                                         {navItem.subMenu.map((subItem) => (
                                             <Link href={subItem.route} key={subItem.title} passHref>
                                                 <DropdownMenuItem className="cursor-pointer">
-                                                    <div className="flex items-center gap-2">
+                                                    <div className="flex items-center gap-2 hover:text-primary">
                                                         {subItem.icon && <subItem.icon className="h-4 w-4" />}
                                                         {subItem.title}
                                                     </div>

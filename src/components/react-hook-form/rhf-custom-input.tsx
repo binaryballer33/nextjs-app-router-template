@@ -50,9 +50,11 @@ export default function CustomInput(props: CustomInputProps) {
             control={control}
             name={inputName}
             render={({ field }) => (
-                <FormItem className="flex-grow">
+                <FormItem className="group flex-grow">
                     <FlexBetweenContainer>
-                        <FormLabel className="flex h-8 items-center justify-center font-medium">{label}</FormLabel>
+                        <FormLabel className="flex h-8 items-center justify-center font-medium group-focus-within:text-primary">
+                            {label}
+                        </FormLabel>
 
                         {/* visibility toggle icon */}
                         {showVisibilityToggle ? (

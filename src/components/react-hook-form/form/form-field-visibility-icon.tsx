@@ -22,7 +22,7 @@ export default function FormFieldVisibilityIcon(props: FormFieldVisibilityIconPr
 
     return (
         <TooltipProvider>
-            <Tooltip>
+            <Tooltip delayDuration={100}>
                 <TooltipTrigger asChild>
                     <Button
                         className={cn("h-8 w-8", className)}
@@ -34,12 +34,18 @@ export default function FormFieldVisibilityIcon(props: FormFieldVisibilityIconPr
                         {isFieldVisible ? (
                             <EyeOff
                                 aria-label={`hide ${inputName}`}
-                                className={cn("h-4 w-4", iconSize && `h-[${iconSize}px] w-[${iconSize}px]`)}
+                                className={cn(
+                                    "h-4 w-4 text-primary",
+                                    iconSize && `h-[${iconSize}px] w-[${iconSize}px]`,
+                                )}
                             />
                         ) : (
                             <Eye
                                 aria-label={`show ${inputName}`}
-                                className={cn("h-4 w-4", iconSize && `h-[${iconSize}px] w-[${iconSize}px]`)}
+                                className={cn(
+                                    "h-4 w-4 text-primary",
+                                    iconSize && `h-[${iconSize}px] w-[${iconSize}px]`,
+                                )}
                             />
                         )}
                     </Button>

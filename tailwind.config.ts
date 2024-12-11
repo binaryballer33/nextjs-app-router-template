@@ -62,6 +62,8 @@ const config = {
                     "4": "hsl(var(--chart-4))",
                     "5": "hsl(var(--chart-5))",
                 },
+                customPrimary: "#14191e",
+                customPrimaryDark: "#009688",
             },
             borderRadius: {
                 lg: "var(--radius)",

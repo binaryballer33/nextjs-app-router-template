@@ -16,7 +16,14 @@ export default function Logo(props: LogoProps) {
 
     return (
         <Link className="mr-4" href={routes.home}>
-            <img alt="Logo" className={cn("h-6 w-6 rounded-full", className)} src={src || placeholderImage} />
+            <img
+                alt="Logo"
+                className={cn(
+                    "h-6 w-6 rounded-full hover:h-7 hover:w-7 hover:border-2 hover:border-primary",
+                    className,
+                )}
+                src={src || placeholderImage}
+            />
         </Link>
     )
 }

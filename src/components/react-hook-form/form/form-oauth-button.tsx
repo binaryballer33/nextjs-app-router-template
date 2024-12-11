@@ -49,7 +49,7 @@ export default function OAuthButton(props: OAuthButtonProps) {
 
     return (
         <Button
-            className={cn("w-full text-base font-normal", className)}
+            className={cn("w-full border-primary/30 text-base font-normal hover:bg-primary/10", className)}
             disabled={isSubmitting}
             onClick={() => onAuth(provider.id).catch(() => {})}
             type="button"
