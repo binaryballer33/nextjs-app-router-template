@@ -18,6 +18,8 @@ import updateUserAccountSettings from "@/actions/user/update-user-account-settin
 
 import useAuthUser from "@/hooks/useAuthUser"
 
+import routes from "@/routes/routes"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
 
@@ -47,7 +49,7 @@ export default function UserAccountSettingsView() {
 
     const onSubmit = form.handleSubmit(async (formData) => {
         const response = await updateUserAccountSettings(user?.id, formData)
-        await handleServerResponse({ response, toast })
+        await handleServerResponse({ redirectTo: routes.user.profile, response, toast })
     })
 
     const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
