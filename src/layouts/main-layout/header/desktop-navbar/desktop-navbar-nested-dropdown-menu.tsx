@@ -42,7 +42,7 @@ export default function DesktopNavbarNestedDropdownMenu(props: DesktopNavbarNest
         <div className={cn("w-fit p-0", className)}>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button className="w-fitjustify-between hover:text-primary" variant="ghost">
+                    <Button className="w-fit justify-between hover:text-primary" variant="ghost">
                         <div className="flex items-center gap-4">
                             {Icon && <Icon className="h-4 w-4" />}
                             {title}
@@ -57,7 +57,9 @@ export default function DesktopNavbarNestedDropdownMenu(props: DesktopNavbarNest
                             {/* navigation route link */}
                             {!navItem.subMenu && (
                                 <Link href={navItem.route} passHref>
-                                    <DropdownMenuItem className="cursor-pointer">
+                                    <DropdownMenuItem
+                                        className={cn("cursor-pointer", isLinkActive(navItem.route) && "bg-accent")}
+                                    >
                                         <div
                                             className={cn(
                                                 "flex items-center gap-4 hover:text-primary",
@@ -87,7 +89,12 @@ export default function DesktopNavbarNestedDropdownMenu(props: DesktopNavbarNest
                                     <DropdownMenuSubContent className="w-[150px] pb-2">
                                         {navItem.subMenu.map((subItem) => (
                                             <Link href={subItem.route} key={subItem.title} passHref>
-                                                <DropdownMenuItem className="cursor-pointer">
+                                                <DropdownMenuItem
+                                                    className={cn(
+                                                        "cursor-pointer",
+                                                        isLinkActive(subItem.route) && "bg-accent",
+                                                    )}
+                                                >
                                                     <div className="flex items-center gap-4 hover:text-primary">
                                                         {subItem.icon && <subItem.icon className="h-4 w-4" />}
                                                         {subItem.title}

@@ -74,6 +74,9 @@ const routes = {
     publicRoutes: Object.values(publicRoutes),
 
     user,
+
+    // user routes
+    userRoutes: Object.values(user),
 }
 
 export default routes

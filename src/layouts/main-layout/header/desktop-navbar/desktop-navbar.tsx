@@ -39,13 +39,13 @@ export default function DesktopNavbar() {
                         {navigationItems.map((item) => (
                             <NavigationMenuItem key={item.title}>
                                 <Link href={item.route} legacyBehavior passHref>
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                        <div
-                                            className={cn(
-                                                "flex items-center gap-2 hover:text-primary",
-                                                isLinkActive(item.route) && "text-primary hover:text-secondary",
-                                            )}
-                                        >
+                                    <NavigationMenuLink
+                                        className={cn(
+                                            navigationMenuTriggerStyle(),
+                                            isLinkActive(item.route) && "bg-accent text-primary  hover:text-secondary",
+                                        )}
+                                    >
+                                        <div className="flex items-center gap-2">
                                             {item.icon && <item.icon className="h-4 w-4" />}
                                             {item.title}
                                         </div>

@@ -33,7 +33,8 @@ import { Separator } from "@/components/ui/separator"
 
 export default function ProfileMenu() {
     const { user } = useAuthUser()
-    const { isLinkActive } = useCheckPathname()
+    const { isLinkActive, pathname } = useCheckPathname()
+    const isUserPage = routes.userRoutes.includes(pathname)
 
     const handleSignOut = useCallback(async (): Promise<void> => {
         const response = await signOut() // sign out the user with next auth
@@ -47,13 +48,13 @@ export default function ProfileMenu() {
             <NavigationMenuList>
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>
-                        <AvatarLink className="h-6 w-6" user={user} />
+                        <AvatarLink className="h-6 w-6" isUserPage={isUserPage} user={user} />
                     </NavigationMenuTrigger>
 
                     <NavigationMenuContent className="min-w-[250px]">
                         {/* Avatar and user info */}
                         <div className="flex items-center gap-3 border-b p-4">
-                            <AvatarLink user={user} />
+                            <AvatarLink className="border border-primary" user={user} />
 
                             {/* User Info */}
                             <div className="flex flex-col">
@@ -101,7 +102,7 @@ export default function ProfileMenu() {
                                     <Link
                                         className={cn(
                                             "flex h-12 cursor-pointer items-center justify-between px-4 py-2 hover:bg-secondary/45",
-                                            isLinkActive(item.route) && "bg-primary",
+                                            isLinkActive(item.route) && "bg-primary text-primary-foreground",
                                         )}
                                         href={item.route}
                                         key={item.title}
@@ -126,16 +127,17 @@ export default function ProfileMenu() {
 
 type AvatarLinkProps = {
     className?: string
+    isUserPage?: boolean
     user: ExtendedUser
 }
 
 function AvatarLink(props: AvatarLinkProps) {
-    const { className, user } = props
+    const { className, isUserPage, user } = props
 
     if (!user) return null
 
     return (
-        <Link href={routes.user.profile}>
+        <Link className={isUserPage ? "border-b-2 border-primary" : ""} href={routes.user.profile}>
             <Avatar className={cn("h-12 w-12", className)}>
                 <AvatarImage alt="Profile picture" src={user?.imageUrl} />
                 <AvatarFallback>

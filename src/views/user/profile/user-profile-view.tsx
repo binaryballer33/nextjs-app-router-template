@@ -13,7 +13,7 @@ export default function UserProfileView() {
     return (
         <div className="w-full">
             <H1 className="my-4 text-center">Welcome Back {user.firstName}</H1>
-            <PlaceholderBox className="mx-auto w-5/6" height={700} title={`${user.email} Profile`} />
+            <PlaceholderBox className="mx-auto w-5/6" height={700} title={user.email} />
         </div>
     )
 }

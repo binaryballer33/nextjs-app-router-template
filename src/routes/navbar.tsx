@@ -113,9 +113,9 @@ export const dropdownItems: NavBarItemWithIcon[] = [
         icon: Home,
         route: routes.faq,
         subMenu: [
-            { icon: Home, route: routes.payment, separator: true, title: "Service 3.1" },
-            { icon: Home, route: routes.pricing, title: "Service 3.2" },
-            { icon: Home, route: routes.services, title: "Service 3.3" },
+            { icon: Home, route: routes.home, separator: true, title: "Service 3.1" },
+            { icon: Home, route: routes.about, title: "Service 3.2" },
+            { icon: Home, route: routes.faq, title: "Service 3.3" },
         ],
         title: "Service 3",
     },

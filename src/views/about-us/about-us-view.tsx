@@ -57,7 +57,9 @@ export default function AboutUsView() {
                                 {aboutUs.map((item) => (
                                     <li key={item.title}>
                                         <div className="grid gap-1">
-                                            <h3 className="text-xl font-bold hover:text-primary">{item.title}</h3>
+                                            <h3 className="text-xl font-bold hover:text-2xl hover:text-primary">
+                                                {item.title}
+                                            </h3>
                                             <p className="text-gray-500 dark:text-gray-400">{item.description}</p>
                                         </div>
                                     </li>
