@@ -42,7 +42,8 @@ export default function DesktopNavbar() {
                                     <NavigationMenuLink
                                         className={cn(
                                             navigationMenuTriggerStyle(),
-                                            isLinkActive(item.route) && "bg-accent text-primary  hover:text-secondary",
+                                            isLinkActive(item.route) &&
+                                                "bg-accent text-primary hover:text-secondary focus:bg-accent focus:text-primary",
                                         )}
                                     >
                                         <div className="flex items-center gap-2">
