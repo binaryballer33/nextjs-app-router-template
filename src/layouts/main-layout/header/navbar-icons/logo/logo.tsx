@@ -1,6 +1,10 @@
+"use client"
+
 import Link from "next/link"
 
 import { cn } from "@/lib/utils"
+
+import useCheckPathname from "@/hooks/use-check-pathname"
 
 import routes from "@/routes/routes"
 
@@ -12,6 +16,8 @@ type LogoProps = {
 export default function Logo(props: LogoProps) {
     const { className, src } = props
 
+    const { isLinkActive } = useCheckPathname()
+
     const placeholderImage = "https://placehold.co/320x320"
 
     return (
@@ -19,7 +25,8 @@ export default function Logo(props: LogoProps) {
             <img
                 alt="Logo"
                 className={cn(
-                    "h-6 w-6 rounded-full hover:h-7 hover:w-7 hover:border-2 hover:border-primary",
+                    "h-6 w-6 rounded-full hover:h-7 hover:w-7 hover:border-2 hover:border-secondary",
+                    isLinkActive(routes.home) && "border-2 border-primary",
                     className,
                 )}
                 src={src || placeholderImage}

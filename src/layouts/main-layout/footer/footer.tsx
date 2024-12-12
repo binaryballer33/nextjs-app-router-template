@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next"
 
 import { FaReact } from "react-icons/fa"
 
-import { footerNavigationItems } from "@/routes/navbar"
+import { footerNavigationItems } from "@/routes/footer"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"

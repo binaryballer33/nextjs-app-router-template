@@ -3,11 +3,8 @@ import type { NavBarItemWithIcon } from "@/types/navbar-item"
 import { useTranslation } from "react-i18next"
 
 import {
-    Facebook,
-    Github,
     HelpCircle,
     Home,
-    Instagram,
     LogIn,
     LogOut,
     MessageCircleWarning,
@@ -15,10 +12,8 @@ import {
     Receipt,
     Settings,
     ShoppingCart,
-    Twitter,
     User,
     UserPlus,
-    Youtube,
 } from "lucide-react"
 import { MdLockReset } from "react-icons/md"
 
@@ -111,16 +106,16 @@ export const dropdownItems: NavBarItemWithIcon[] = [
     },
     {
         icon: Home,
-        route: routes.home,
+        route: routes.about,
         title: "Service 2",
     },
     {
         icon: Home,
-        route: routes.home,
+        route: routes.faq,
         subMenu: [
-            { icon: Home, route: routes.home, separator: true, title: "Service 3.1" },
-            { icon: Home, route: routes.home, title: "Service 3.2" },
-            { icon: Home, route: routes.home, title: "Service 3.3" },
+            { icon: Home, route: routes.payment, separator: true, title: "Service 3.1" },
+            { icon: Home, route: routes.pricing, title: "Service 3.2" },
+            { icon: Home, route: routes.services, title: "Service 3.3" },
         ],
         title: "Service 3",
     },
@@ -167,38 +162,3 @@ export const loggedInAuthItems: NavBarItemWithIcon[] = [
         title: "Sign Out",
     },
 ]
-
-// footer items without translations
-export const footerNavigationItems = {
-    company: [
-        { href: "#", name: "About" },
-        { href: "#", name: "Blog" },
-        { href: "#", name: "Jobs" },
-        { href: "#", name: "Press" },
-        { href: "#", name: "Partners" },
-    ],
-    legal: [
-        { href: "#", name: "Claim" },
-        { href: "#", name: "Privacy" },
-        { href: "#", name: "Terms" },
-    ],
-    social: [
-        { href: "#", icon: Facebook, name: "Facebook" },
-        { href: "#", icon: Instagram, name: "Instagram" },
-        { href: "#", icon: Twitter, name: "Twitter" },
-        { href: "#", icon: Github, name: "GitHub" },
-        { href: "#", icon: Youtube, name: "YouTube" },
-    ],
-    solutions: [
-        { href: "#", name: "Marketing" },
-        { href: "#", name: "Analytics" },
-        { href: "#", name: "Commerce" },
-        { href: "#", name: "Insights" },
-    ],
-    support: [
-        { href: "#", name: "Pricing" },
-        { href: "#", name: "Documentation" },
-        { href: "#", name: "Guides" },
-        { href: "#", name: "API Status" },
-    ],
-}
