@@ -4,46 +4,13 @@ import { type FC } from "react"
 
 import { useTranslation } from "react-i18next"
 
-import { Facebook, Github, Instagram, Twitter, Youtube } from "lucide-react"
 import { FaReact } from "react-icons/fa"
+
+import { footerNavigationItems } from "@/routes/footer"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-
-const navigation = {
-    company: [
-        { href: "#", name: "About" },
-        { href: "#", name: "Blog" },
-        { href: "#", name: "Jobs" },
-        { href: "#", name: "Press" },
-        { href: "#", name: "Partners" },
-    ],
-    legal: [
-        { href: "#", name: "Claim" },
-        { href: "#", name: "Privacy" },
-        { href: "#", name: "Terms" },
-    ],
-    social: [
-        { href: "#", icon: Facebook, name: "Facebook" },
-        { href: "#", icon: Instagram, name: "Instagram" },
-        { href: "#", icon: Twitter, name: "Twitter" },
-        { href: "#", icon: Github, name: "GitHub" },
-        { href: "#", icon: Youtube, name: "YouTube" },
-    ],
-    solutions: [
-        { href: "#", name: "Marketing" },
-        { href: "#", name: "Analytics" },
-        { href: "#", name: "Commerce" },
-        { href: "#", name: "Insights" },
-    ],
-    support: [
-        { href: "#", name: "Pricing" },
-        { href: "#", name: "Documentation" },
-        { href: "#", name: "Guides" },
-        { href: "#", name: "API Status" },
-    ],
-}
 
 const Footer: FC = () => {
     const { t } = useTranslation()
@@ -51,9 +18,12 @@ const Footer: FC = () => {
     return (
         <footer>
             <div className="py-4">
+                {/* Footer Content */}
                 <div className="mx-auto w-[95%]">
                     <Separator className="mb-6" />
+
                     <div className="mb-10 mt-2 flex flex-col items-center justify-between pt-4 md:flex-row">
+                        {/* Newsletter and Search Bar */}
                         <div className="w-full md:w-1/2">
                             <h3 className="text-lg font-medium">{t("Subscribe to our newsletter")}</h3>
                             <p className="mt-1 text-sm text-muted-foreground">
@@ -69,9 +39,11 @@ const Footer: FC = () => {
                                 <Button type="submit">{t("Subscribe")}</Button>
                             </form>
                         </div>
+
+                        {/* Social Links */}
                         <div className="mt-4 text-center md:mt-0 md:w-1/2 md:text-right">
                             <div className="space-x-2">
-                                {navigation.social.map((item) => (
+                                {footerNavigationItems.social.map((item) => (
                                     <a
                                         className="inline-block rounded-full p-2 text-primary hover:text-primary/80"
                                         href={item.href}
@@ -83,16 +55,22 @@ const Footer: FC = () => {
                             </div>
                         </div>
                     </div>
+
+                    {/* Footer Content */}
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-12">
+                        {/* Footer Logo */}
                         <div className="flex gap-2 sm:col-span-3">
                             <FaReact className="mb-2 h-6 w-6" color="teal" />
                             <h2 className="mb-1 text-xl font-semibold">{t("MANDYTEC LLC")}</h2>
                         </div>
+
+                        {/* Navigation Links */}
                         <div className="grid grid-cols-2 gap-4 sm:col-span-9 md:grid-cols-4">
+                            {/* Solutions */}
                             <div className="pl-7">
                                 <h3 className="mb-2 text-sm font-semibold">{t("Solutions")}</h3>
                                 <ul className="space-y-2">
-                                    {navigation.solutions.map((item) => (
+                                    {footerNavigationItems.solutions.map((item) => (
                                         <li key={item.name}>
                                             <a
                                                 className="text-sm text-muted-foreground hover:text-foreground"
@@ -104,10 +82,12 @@ const Footer: FC = () => {
                                     ))}
                                 </ul>
                             </div>
+
+                            {/* Support */}
                             <div className="pl-7">
                                 <h3 className="mb-2 text-sm font-semibold">{t("Support")}</h3>
                                 <ul className="space-y-2">
-                                    {navigation.support.map((item) => (
+                                    {footerNavigationItems.support.map((item) => (
                                         <li key={item.name}>
                                             <a
                                                 className="text-sm text-muted-foreground hover:text-foreground"
@@ -119,10 +99,12 @@ const Footer: FC = () => {
                                     ))}
                                 </ul>
                             </div>
+
+                            {/* Company */}
                             <div className="pl-7">
                                 <h3 className="mb-2 text-sm font-semibold">{t("Company")}</h3>
                                 <ul className="space-y-2">
-                                    {navigation.company.map((item) => (
+                                    {footerNavigationItems.company.map((item) => (
                                         <li key={item.name}>
                                             <a
                                                 className="text-sm text-muted-foreground hover:text-foreground"
@@ -134,10 +116,12 @@ const Footer: FC = () => {
                                     ))}
                                 </ul>
                             </div>
+
+                            {/* Legal */}
                             <div className="pl-7">
                                 <h3 className="mb-2 text-sm font-semibold">{t("Legal")}</h3>
                                 <ul className="space-y-2">
-                                    {navigation.legal.map((item) => (
+                                    {footerNavigationItems.legal.map((item) => (
                                         <li key={item.name}>
                                             <a
                                                 className="text-sm text-muted-foreground hover:text-foreground"
@@ -151,6 +135,8 @@ const Footer: FC = () => {
                             </div>
                         </div>
                     </div>
+
+                    {/* Copyright */}
                     <p className="mt-4 text-center text-sm text-muted-foreground">
                         &copy; {t("2023 MANDYTEC LLC, Inc. All rights reserved.")}
                     </p>

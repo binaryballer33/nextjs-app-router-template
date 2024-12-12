@@ -1,3 +1,5 @@
+"use client"
+
 import type { NavBarItemWithIcon } from "@/types/navbar-item"
 import type { LucideIcon } from "lucide-react"
 import type { IconType } from "react-icons"
@@ -9,6 +11,8 @@ import { Fragment } from "react"
 import { ChevronDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+
+import useCheckPathname from "@/hooks/use-check-pathname"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -32,12 +36,14 @@ type DesktopNavbarNestedDropdownMenuProps = {
 export default function DesktopNavbarNestedDropdownMenu(props: DesktopNavbarNestedDropdownMenuProps) {
     const { className, dropdownItems, Icon, title } = props
 
+    const { isLinkActive } = useCheckPathname()
+
     return (
         <div className={cn("w-fit p-0", className)}>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button className="w-fit justify-between hover:text-primary" variant="ghost">
-                        <div className="flex items-center gap-2">
+                    <Button className="w-fitjustify-between hover:text-primary" variant="ghost">
+                        <div className="flex items-center gap-4">
                             {Icon && <Icon className="h-4 w-4" />}
                             {title}
                             <ChevronDown className="h-4 w-4" />
@@ -45,14 +51,19 @@ export default function DesktopNavbarNestedDropdownMenu(props: DesktopNavbarNest
                     </Button>
                 </DropdownMenuTrigger>
 
-                <DropdownMenuContent className="w-fit bg-accent">
+                <DropdownMenuContent className="w-[150px] pb-2">
                     {dropdownItems.map((navItem) => (
                         <Fragment key={navItem.title}>
                             {/* navigation route link */}
                             {!navItem.subMenu && (
                                 <Link href={navItem.route} passHref>
                                     <DropdownMenuItem className="cursor-pointer">
-                                        <div className="flex items-center gap-2 hover:text-primary">
+                                        <div
+                                            className={cn(
+                                                "flex items-center gap-4 hover:text-primary",
+                                                isLinkActive(navItem.route) && "text-primary hover:text-secondary",
+                                            )}
+                                        >
                                             {navItem.icon && <navItem.icon className="h-4 w-4" />}
                                             {navItem.title}
                                         </div>
@@ -67,17 +78,17 @@ export default function DesktopNavbarNestedDropdownMenu(props: DesktopNavbarNest
                             {navItem.subMenu && (
                                 <DropdownMenuSub>
                                     <DropdownMenuSubTrigger>
-                                        <div className="flex items-center gap-2 hover:text-primary">
+                                        <div className="flex items-center gap-4 hover:text-primary">
                                             {navItem.icon && <navItem.icon className="h-4 w-4" />}
                                             {navItem.title}
                                         </div>
                                     </DropdownMenuSubTrigger>
 
-                                    <DropdownMenuSubContent className="bg-accent">
+                                    <DropdownMenuSubContent className="w-[150px] pb-2">
                                         {navItem.subMenu.map((subItem) => (
                                             <Link href={subItem.route} key={subItem.title} passHref>
                                                 <DropdownMenuItem className="cursor-pointer">
-                                                    <div className="flex items-center gap-2 hover:text-primary">
+                                                    <div className="flex items-center gap-4 hover:text-primary">
                                                         {subItem.icon && <subItem.icon className="h-4 w-4" />}
                                                         {subItem.title}
                                                     </div>

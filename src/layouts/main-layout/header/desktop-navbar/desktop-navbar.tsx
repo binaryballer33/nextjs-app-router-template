@@ -4,6 +4,10 @@ import Link from "next/link"
 
 import { Home } from "lucide-react"
 
+import { cn } from "@/lib/utils"
+
+import useCheckPathname from "@/hooks/use-check-pathname"
+
 import { dropdownItems, navigationItems } from "@/routes/navbar"
 
 import {
@@ -19,6 +23,8 @@ import DesktopNavbarIcons from "./desktop-navbar-icons"
 import DesktopNavbarNestedDropdownMenu from "./desktop-navbar-nested-dropdown-menu"
 
 export default function DesktopNavbar() {
+    const { isLinkActive } = useCheckPathname()
+
     return (
         <div className="hidden w-full items-center md:flex">
             <NavigationMenu className="w-full">
@@ -34,7 +40,12 @@ export default function DesktopNavbar() {
                             <NavigationMenuItem key={item.title}>
                                 <Link href={item.route} legacyBehavior passHref>
                                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                        <div className="flex items-center gap-2 hover:text-primary">
+                                        <div
+                                            className={cn(
+                                                "flex items-center gap-2 hover:text-primary",
+                                                isLinkActive(item.route) && "text-primary hover:text-secondary",
+                                            )}
+                                        >
                                             {item.icon && <item.icon className="h-4 w-4" />}
                                             {item.title}
                                         </div>
