@@ -4,13 +4,15 @@ import type { Trade } from "@/types/finance/trade"
 
 import { Fragment } from "react"
 
-import { flexRender, useReactTable } from "@tanstack/react-table"
+import { useReactTable } from "@tanstack/react-table"
 
-import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table"
+import { Table, TableBody, TableHeader, TableRow } from "@/components/ui/table"
 
+import TableBodyCell from "./table-body-cell"
 import ColumnVisibilitySelector from "./table-column-visibility-selector"
+import TableFooter from "./table-footer"
 import TableGlobalSearchBar from "./table-global-search-bar"
-import TableHeaderCell from "./table-header"
+import TableHeaderCell from "./table-header-cell"
 import TableNoRecordsFound from "./table-no-records-found"
 import TablePagination from "./table-pagination"
 import TableRecordsPerPage from "./table-records-per-page"
@@ -18,7 +20,6 @@ import TableRowDeleteIcon from "./table-row-delete-icon"
 import RowDetailView from "./table-row-detail-view"
 import useTableData from "./use-create-table"
 
-// TODO: add table footer with summary stats
 // TODO: dropdown column menu needs to have more detailed filtering options ( ge, lt, gte, lte, eq, neq, contains, not contains, etc.)
 // TODO: add a button to export the table to a csv file
 // TODO: add a "create new trade button"
@@ -75,18 +76,7 @@ export default function CustomTable() {
                                     >
                                         {/* get the table records and display them in the table */}
                                         {row.getVisibleCells().map((cell) => (
-                                            <TableCell
-                                                key={cell.id}
-                                                style={{
-                                                    minWidth: cell.column.columnDef.minSize || 0,
-                                                    width: Math.max(
-                                                        cell.column.getSize(),
-                                                        cell.column.columnDef.minSize || 0,
-                                                    ),
-                                                }}
-                                            >
-                                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                            </TableCell>
+                                            <TableBodyCell cell={cell} key={cell.id} />
                                         ))}
                                     </TableRow>
 
@@ -99,6 +89,9 @@ export default function CustomTable() {
                             <TableNoRecordsFound table={table} />
                         )}
                     </TableBody>
+
+                    {/* Table footer */}
+                    <TableFooter table={table} />
                 </Table>
             </div>
 

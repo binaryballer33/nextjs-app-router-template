@@ -51,7 +51,7 @@ export default function TablePagination(props: PaginationProps) {
             </div>
 
             {/* Pagination buttons */}
-            <div className="flex items-center justify-end space-x-2 max-sm:ml-0 max-sm:w-full max-sm:justify-around">
+            <div className="flex items-center justify-end space-x-2 max-sm:ml-0 max-sm:mt-2 max-sm:w-full max-sm:justify-around">
                 <Button
                     disabled={!table.getCanPreviousPage()}
                     onClick={() => table.firstPage()}

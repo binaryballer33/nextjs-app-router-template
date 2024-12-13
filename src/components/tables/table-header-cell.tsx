@@ -12,12 +12,12 @@ import { TableHead } from "@/components/ui/table"
 
 // import TableAdvancedFilter from "./table-advanced-filter"
 
-interface TableHeaderProps {
+interface TableHeaderCellProps {
     header: Header<Trade, unknown>
     table: Table<Trade>
 }
 
-export default function TableHeader(props: TableHeaderProps) {
+export default function TableHeaderCell(props: TableHeaderCellProps) {
     const { header, table } = props
 
     // don't show the vertical menu for these columns
@@ -99,7 +99,7 @@ export default function TableHeader(props: TableHeaderProps) {
     )
 }
 
-function TableHeaderResizer(props: TableHeaderProps) {
+function TableHeaderResizer(props: TableHeaderCellProps) {
     const { header, table } = props
 
     return (
