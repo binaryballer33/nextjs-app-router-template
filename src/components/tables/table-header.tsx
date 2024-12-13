@@ -25,7 +25,7 @@ export default function TableHeader(props: TableHeaderProps) {
 
     return (
         <TableHead
-            className={`group cursor-pointer whitespace-nowrap ${isPinned ? "bg-purple-900" : ""}`}
+            className={`group cursor-pointer whitespace-nowrap bg-accent ${isPinned ? "bg-purple-900" : ""}`}
             onClick={header.column.getToggleSortingHandler()}
             style={{ width: header.getSize() }}
         >

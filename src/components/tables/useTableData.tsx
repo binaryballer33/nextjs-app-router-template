@@ -20,7 +20,10 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { fuzzyFilter } from "./table-utils"
 import { trades } from "./trade-data"
 
-const DISPLAY_COLUMN_SIZE = 100
+const SHORT_COLUMN_SIZE = 100
+const MEDIUM_COLUMN_SIZE = 150
+const LONG_COLUMN_SIZE = 200
+
 const columnHelper = createColumnHelper<Trade>()
 
 export default function useTableData() {
@@ -71,67 +74,66 @@ export default function useTableData() {
             columnHelper.accessor("id", {
                 header: "ID",
                 id: "id",
-                size: DISPLAY_COLUMN_SIZE,
             }),
 
             columnHelper.accessor("date", {
                 header: "Date",
                 id: "date",
-                size: DISPLAY_COLUMN_SIZE,
+                size: MEDIUM_COLUMN_SIZE,
             }),
 
             columnHelper.accessor("ticker", {
                 header: "Ticker",
                 id: "ticker",
-                size: DISPLAY_COLUMN_SIZE,
+                size: MEDIUM_COLUMN_SIZE,
             }),
 
             columnHelper.accessor("type", {
                 header: "Type",
                 id: "type",
-                size: DISPLAY_COLUMN_SIZE,
+                size: MEDIUM_COLUMN_SIZE,
             }),
 
             columnHelper.accessor("strike", {
                 header: "Strike",
                 id: "strike",
-                size: DISPLAY_COLUMN_SIZE,
+                size: MEDIUM_COLUMN_SIZE,
             }),
 
             columnHelper.accessor("profitLoss", {
                 header: "Profit / Loss",
                 id: "profitLoss",
-                size: DISPLAY_COLUMN_SIZE,
+                size: MEDIUM_COLUMN_SIZE,
             }),
 
             columnHelper.accessor("realized", {
                 header: "Realized",
                 id: "realized",
-                size: DISPLAY_COLUMN_SIZE,
+                size: MEDIUM_COLUMN_SIZE,
             }),
 
             columnHelper.accessor("sellToOpen", {
                 header: "Sell To Open",
                 id: "sellToOpen",
-                size: DISPLAY_COLUMN_SIZE,
+                size: MEDIUM_COLUMN_SIZE,
             }),
 
             columnHelper.accessor("buyToClose", {
                 header: "Buy To Close",
                 id: "buyToClose",
-                size: DISPLAY_COLUMN_SIZE,
+                size: MEDIUM_COLUMN_SIZE,
             }),
 
             columnHelper.accessor("contracts", {
                 header: "Contracts",
                 id: "contracts",
-                size: DISPLAY_COLUMN_SIZE,
+                size: MEDIUM_COLUMN_SIZE,
             }),
 
             columnHelper.accessor("profitLossPercentage", {
                 header: "Profit / Loss %",
                 id: "profitLossPercentage",
-                size: DISPLAY_COLUMN_SIZE,
+                size: MEDIUM_COLUMN_SIZE,
             }),
 
             columnHelper.display({
