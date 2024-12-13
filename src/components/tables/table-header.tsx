@@ -17,48 +17,70 @@ interface TableHeaderProps {
 export default function TableHeader(props: TableHeaderProps) {
     const { header } = props
 
+    // don't show the vertical menu for these columns
+    const hideVerticalMenuForColumns = ["selection", "expand", "delete"]
+
     const isPinned = header.column.getIsPinned()
     const isSorted = header.column.getIsSorted()
 
     return (
-        <TableHead className={`relative${isPinned ? "bg-purple-900" : ""}`} style={{ width: header.getSize() }}>
+        <TableHead
+            className={`cursor-pointer whitespace-nowrap ${isPinned ? "bg-purple-900" : ""}`}
+            onClick={header.column.getToggleSortingHandler()}
+            style={{ width: header.getSize() }}
+        >
             {/* Column header content */}
             <div className="flex items-center justify-center gap-1">
                 <div className="text-sm">
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                 </div>
 
-                {/* Sort indicator */}
+                {/* Sort direction indicator */}
                 {isSorted && (
                     <div>
                         {isSorted === "asc" && <ArrowDown className="h-4 w-4" />}
                         {isSorted === "desc" && <ArrowUp className="h-4 w-4" />}
                     </div>
                 )}
+
+                {/* Dropdown menu for column actions */}
+                {!hideVerticalMenuForColumns.includes(header.column.id) && (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button size="icon" variant="ghost">
+                                <MoreVertical className="h-4 w-4" />
+                                <span className="sr-only">Open menu</span>
+                            </Button>
+                        </DropdownMenuTrigger>
+
+                        <DropdownMenuContent>
+                            {/* Pin to right */}
+                            {isPinned !== "right" && (
+                                <DropdownMenuItem onClick={() => header.column.pin("right")}>
+                                    Pin to Right
+                                </DropdownMenuItem>
+                            )}
+
+                            {/* Pin to left */}
+                            {isPinned !== "left" && (
+                                <DropdownMenuItem onClick={() => header.column.pin("left")}>
+                                    Pin to Left
+                                </DropdownMenuItem>
+                            )}
+
+                            {/* Unpin */}
+                            {isPinned && (
+                                <DropdownMenuItem onClick={() => header.column.pin(false)}>Unpin</DropdownMenuItem>
+                            )}
+
+                            {/* Sort */}
+                            <DropdownMenuItem onClick={header.column.getToggleSortingHandler()}>
+                                {isSorted === "desc" ? "Sort Asc" : "Sort Desc"}
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                )}
             </div>
-
-            {/* Dropdown menu for column actions */}
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button className="absolute right-1 top-2.5" size="icon" variant="ghost">
-                        <MoreVertical className="h-4 w-4" />
-                        <span className="sr-only">Open menu</span>
-                    </Button>
-                </DropdownMenuTrigger>
-
-                <DropdownMenuContent>
-                    {isPinned !== "right" && (
-                        <DropdownMenuItem onClick={() => header.column.pin("right")}>Pin to Right</DropdownMenuItem>
-                    )}
-                    {isPinned !== "left" && (
-                        <DropdownMenuItem onClick={() => header.column.pin("left")}>Pin to Left</DropdownMenuItem>
-                    )}
-                    {isPinned && <DropdownMenuItem onClick={() => header.column.pin(false)}>Unpin</DropdownMenuItem>}
-                    <DropdownMenuItem onClick={header.column.getToggleSortingHandler()}>
-                        {isSorted === "desc" ? "Sort Asc" : "Sort Desc"}
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
         </TableHead>
     )
 }

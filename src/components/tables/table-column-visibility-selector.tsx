@@ -3,7 +3,7 @@
 import type { Trade } from "@/types/finance/trade"
 import type { Table } from "@tanstack/react-table"
 
-import { Dice4 } from "lucide-react"
+import { Eye } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -29,7 +29,7 @@ export default function ColumnVisibilitySelector(props: ColumnVisibilitySelector
         <Popover>
             <PopoverTrigger asChild>
                 <Button className="m-2" size="icon" variant="ghost">
-                    <Dice4 className="h-4 w-4" />
+                    <Eye className="h-4 w-4" />
                     <span className="sr-only">Show Column Visibility</span>
                 </Button>
             </PopoverTrigger>

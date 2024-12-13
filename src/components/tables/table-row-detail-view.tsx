@@ -52,7 +52,7 @@ export default function RowDetailView(props: RowDetailViewProps) {
                     </p>
                     <p className="text-sm">
                         <span className="font-medium">Realized:</span>{" "}
-                        <span className="text-muted-foreground">{trade.realized ? "Yes" : "No"}</span>
+                        <span className="text-muted-foreground">{trade.realized}</span>
                     </p>
                 </div>
             </div>

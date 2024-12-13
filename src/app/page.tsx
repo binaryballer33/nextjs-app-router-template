@@ -5,7 +5,6 @@ import { appMetadata } from "@/lib/config"
 
 import Container from "@/components/base/container"
 import PageHeading from "@/components/base/page-heading"
-import PlaceholderBox from "@/components/base/placeholder-box"
 import CustomTable from "@/components/tables/table"
 
 export const metadata = appMetadata.homePage
@@ -22,7 +21,9 @@ export default async function HomePage() {
                 <PageHeading bottomText="This Is A Sample Page" title="Home Page" />
 
                 <CustomTable />
-                <PlaceholderBox height={600} title="Home Page" />
+
+                {/* <CustomTableTest /> */}
+                {/* <PlaceholderBox height={600} title="Home Page" /> */}
             </Container>
         </HydrationBoundary>
     )
