@@ -14,15 +14,14 @@ import {
 } from "@tanstack/react-table"
 import { Minus, Plus, Trash2 } from "lucide-react"
 
+import getDayJsDateWithPlugins from "@/lib/helper-functions/dates/get-day-js-date-with-plugins"
+
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 import { fuzzyFilter } from "./table-utils"
 import { trades } from "./trade-data"
-
-const SHORT_COLUMN_SIZE = 100
-const MEDIUM_COLUMN_SIZE = 150
-const LONG_COLUMN_SIZE = 200
 
 const columnHelper = createColumnHelper<Trade>()
 
@@ -71,69 +70,129 @@ export default function useTableData() {
                 id: "expand",
             }),
 
-            columnHelper.accessor("id", {
-                header: "ID",
-                id: "id",
-            }),
-
             columnHelper.accessor("date", {
+                cell: ({ row }) => {
+                    const { date } = row.original
+                    const dayjsDate = getDayJsDateWithPlugins(date).format("ddd, MMM D, YYYY")
+
+                    return (
+                        <TooltipProvider delayDuration={500}>
+                            <Tooltip>
+                                <TooltipTrigger>{date.toString()}</TooltipTrigger>
+                                <TooltipContent>
+                                    <p>{dayjsDate}</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    )
+                },
+                enableResizing: true,
                 header: "Date",
                 id: "date",
-                size: MEDIUM_COLUMN_SIZE,
-            }),
-
-            columnHelper.accessor("ticker", {
-                header: "Ticker",
-                id: "ticker",
-                size: MEDIUM_COLUMN_SIZE,
+                minSize: 100,
             }),
 
             columnHelper.accessor("type", {
+                enableResizing: true,
                 header: "Type",
                 id: "type",
-                size: MEDIUM_COLUMN_SIZE,
-            }),
-
-            columnHelper.accessor("strike", {
-                header: "Strike",
-                id: "strike",
-                size: MEDIUM_COLUMN_SIZE,
-            }),
-
-            columnHelper.accessor("profitLoss", {
-                header: "Profit / Loss",
-                id: "profitLoss",
-                size: MEDIUM_COLUMN_SIZE,
             }),
 
             columnHelper.accessor("realized", {
+                enableResizing: true,
                 header: "Realized",
                 id: "realized",
-                size: MEDIUM_COLUMN_SIZE,
             }),
 
-            columnHelper.accessor("sellToOpen", {
-                header: "Sell To Open",
-                id: "sellToOpen",
-                size: MEDIUM_COLUMN_SIZE,
+            columnHelper.accessor("ticker", {
+                enableResizing: true,
+                header: "Ticker",
+                id: "ticker",
             }),
 
-            columnHelper.accessor("buyToClose", {
-                header: "Buy To Close",
-                id: "buyToClose",
-                size: MEDIUM_COLUMN_SIZE,
+            columnHelper.accessor("strike", {
+                enableResizing: true,
+                header: () => (
+                    <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                            <TooltipTrigger>Strike</TooltipTrigger>
+                            <TooltipContent>
+                                <p>Strike Price</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                ),
+                id: "strike",
             }),
 
             columnHelper.accessor("contracts", {
+                enableResizing: true,
                 header: "Contracts",
                 id: "contracts",
-                size: MEDIUM_COLUMN_SIZE,
+            }),
+
+            columnHelper.accessor("sellToOpen", {
+                enableResizing: true,
+                header: () => (
+                    <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                            <TooltipTrigger>STO</TooltipTrigger>
+                            <TooltipContent>
+                                <p>Sell To Open</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                ),
+                id: "sellToOpen",
+            }),
+
+            columnHelper.accessor("buyToClose", {
+                enableResizing: true,
+                header: () => (
+                    <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                            <TooltipTrigger>BTC</TooltipTrigger>
+                            <TooltipContent>
+                                <p>Buy To Close</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                ),
+                id: "buyToClose",
+            }),
+
+            columnHelper.accessor("profitLoss", {
+                cell: ({ row }) => {
+                    const { profitLoss } = row.original
+                    return <div className={profitLoss > 0 ? "text-green-500" : "text-red-500"}>{profitLoss}</div>
+                },
+                enableResizing: true,
+                header: () => (
+                    <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                            <TooltipTrigger>P & L</TooltipTrigger>
+                            <TooltipContent>
+                                <p>Profit Loss</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                ),
+                id: "profitLoss",
             }),
 
             columnHelper.accessor("profitLossPercentage", {
-                header: "Profit / Loss %",
+                enableResizing: true,
+                header: () => (
+                    <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                            <TooltipTrigger>P & L %</TooltipTrigger>
+                            <TooltipContent>
+                                <p>Profit Loss Percentage</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                ),
                 id: "profitLossPercentage",
-                size: MEDIUM_COLUMN_SIZE,
             }),
 
             columnHelper.display({
@@ -176,8 +235,12 @@ export default function useTableData() {
 
     // create the table config
     const tableConfig: TableOptions<Trade> = {
+        columnResizeDirection: "ltr",
+        columnResizeMode: "onChange",
         columns,
+
         data,
+
         enableRowSelection: true,
 
         filterFns: {

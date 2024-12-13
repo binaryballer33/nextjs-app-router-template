@@ -1,7 +1,7 @@
 "use client"
 
 import type { Trade } from "@/types/finance/trade"
-import type { Header } from "@tanstack/react-table"
+import type { Header, Table } from "@tanstack/react-table"
 
 import { flexRender } from "@tanstack/react-table"
 import { ArrowDown, ArrowUp, MoreVertical } from "lucide-react"
@@ -10,12 +10,15 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { TableHead } from "@/components/ui/table"
 
+// import TableAdvancedFilter from "./table-advanced-filter"
+
 interface TableHeaderProps {
     header: Header<Trade, unknown>
+    table: Table<Trade>
 }
 
 export default function TableHeader(props: TableHeaderProps) {
-    const { header } = props
+    const { header, table } = props
 
     // don't show the vertical menu for these columns
     const hideVerticalMenuForColumns = ["selection", "expand", "delete"]
@@ -25,9 +28,13 @@ export default function TableHeader(props: TableHeaderProps) {
 
     return (
         <TableHead
-            className={`group cursor-pointer whitespace-nowrap bg-accent ${isPinned ? "bg-purple-900" : ""}`}
+            className={`group relative cursor-pointer whitespace-nowrap bg-accent ${isPinned ? "bg-purple-900" : ""}`}
             onClick={header.column.getToggleSortingHandler()}
-            style={{ width: header.getSize() }}
+            style={{
+                minWidth: header.column.columnDef.minSize || 0,
+                position: "relative",
+                width: Math.max(header.getSize(), header.column.columnDef.minSize || 0),
+            }}
         >
             {/* Column header content */}
             <div className="flex items-center justify-center gap-1">
@@ -45,7 +52,7 @@ export default function TableHeader(props: TableHeaderProps) {
 
                 {/* Dropdown menu for column actions */}
                 {!hideVerticalMenuForColumns.includes(header.column.id) && (
-                    <div className="invisible group-hover:visible ">
+                    <div className="invisible group-hover:visible">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button size="icon" variant="ghost">
@@ -82,7 +89,32 @@ export default function TableHeader(props: TableHeaderProps) {
                         </DropdownMenu>
                     </div>
                 )}
+
+                {/* Table header resizer */}
+                {!hideVerticalMenuForColumns.includes(header.column.id) && header.column.getCanResize() && (
+                    <TableHeaderResizer header={header} table={table} />
+                )}
             </div>
         </TableHead>
+    )
+}
+
+function TableHeaderResizer(props: TableHeaderProps) {
+    const { header, table } = props
+
+    return (
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+        <div
+            className={`
+                absolute right-0 top-0 h-full w-5
+                cursor-col-resize touch-none select-none
+                hover:bg-secondary/50 hover:opacity-100
+                ${table.options.columnResizeDirection}
+                ${header.column.getIsResizing() ? "bg-secondary opacity-100" : "opacity-0"}
+            `}
+            onDoubleClick={() => header.column.resetSize()}
+            onMouseDown={header.getResizeHandler()}
+            onTouchStart={header.getResizeHandler()}
+        />
     )
 }

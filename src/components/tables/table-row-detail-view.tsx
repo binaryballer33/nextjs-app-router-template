@@ -25,16 +25,16 @@ export default function RowDetailView(props: RowDetailViewProps) {
                         <span className="text-muted-foreground">{trade.type}</span>
                     </p>
                     <p className="text-sm">
+                        <span className="font-medium">Realized:</span>{" "}
+                        <span className="text-muted-foreground">{trade.realized}</span>
+                    </p>
+                    <p className="text-sm">
                         <span className="font-medium">Ticker:</span>{" "}
                         <span className="text-muted-foreground">{trade.ticker}</span>
                     </p>
                     <p className="text-sm">
                         <span className="font-medium">Strike:</span>{" "}
                         <span className="text-muted-foreground">{trade.strike}</span>
-                    </p>
-                    <p className="text-sm">
-                        <span className="font-medium">Realized:</span>{" "}
-                        <span className="text-muted-foreground">{trade.realized}</span>
                     </p>
                 </div>
 

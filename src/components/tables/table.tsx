@@ -14,7 +14,7 @@ import ColumnVisibilitySelector from "./table-column-visibility-selector"
 import TableHeaderCell from "./table-header"
 import TablePagination from "./table-pagination"
 import RowDetailView from "./table-row-detail-view"
-import useTableData from "./useTableData"
+import useTableData from "./useTable"
 
 // TODO: add table footer with summary stats
 // TODO: when you select a row(s) should be a trash icon to delete the row(s) and a count of the selected rows near the search box
@@ -30,7 +30,7 @@ export default function CustomTable() {
     const { pagination } = table.getState()
 
     return (
-        <div className="flex flex-col gap-2 p-2">
+        <div className="flex flex-col gap-2 md:p-2">
             {/* Table Controls */}
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
                 <div className="flex items-center md:w-4/6">
@@ -76,7 +76,7 @@ export default function CustomTable() {
             </div>
 
             {/* Table */}
-            <div className="max-h-[600px] min-h-[600px] overflow-x-auto overflow-y-auto rounded-md border">
+            <div className="max-h-[525px] min-h-[525px] overflow-x-auto overflow-y-auto rounded-md border">
                 <Table>
                     <TableHeader className="sticky top-0 z-10 bg-background">
                         {/* Table header rows */}
@@ -84,7 +84,7 @@ export default function CustomTable() {
                             <TableRow key={headerGroup.id}>
                                 {/* Table header cells */}
                                 {headerGroup.headers.map((header) => (
-                                    <TableHeaderCell header={header} key={header.id} />
+                                    <TableHeaderCell header={header} key={header.id} table={table} />
                                 ))}
                             </TableRow>
                         ))}
@@ -95,16 +95,32 @@ export default function CustomTable() {
                             table.getRowModel().rows.map((row) => (
                                 <Fragment key={row.id}>
                                     <TableRow
-                                        className={row.getIsSelected() ? "bg-muted" : undefined}
+                                        className={`
+                                            ${row.getIsSelected() ? "bg-muted" : ""}
+                                            ${row.index % 2 === 1 ? "bg-black/[.33]" : ""}
+                                            hover:bg-black/[.05]
+                                            [&>td]:border-r [&>td]:border-black/10
+                                        `}
                                         data-state={row.getIsSelected() ? "selected" : null}
                                     >
+                                        {/* get the table records and display them in the table */}
                                         {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id} style={{ width: cell.column.getSize() }}>
+                                            <TableCell
+                                                key={cell.id}
+                                                style={{
+                                                    minWidth: cell.column.columnDef.minSize || 0,
+                                                    width: Math.max(
+                                                        cell.column.getSize(),
+                                                        cell.column.columnDef.minSize || 0,
+                                                    ),
+                                                }}
+                                            >
                                                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                             </TableCell>
                                         ))}
                                     </TableRow>
 
+                                    {/* if the row is expanded, display the row detail view */}
                                     {row.getIsExpanded() && (
                                         <TableRow>
                                             <TableCell colSpan={row.getVisibleCells().length}>
@@ -115,6 +131,7 @@ export default function CustomTable() {
                                 </Fragment>
                             ))
                         ) : (
+                            // if no data is found that matches the search, display this message
                             <TableRow>
                                 <TableCell className="text-center" colSpan={table.getAllColumns().length}>
                                     No Data Found That Matches Your Search
