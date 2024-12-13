@@ -14,19 +14,42 @@ export default function RowDetailView(props: RowDetailViewProps) {
             <div className="w-[150px]">
                 <img alt="Trade preview" className="h-full w-full object-cover" src="https://placehold.co/320x320" />
             </div>
-            <div className="flex w-1/2 items-center text-left">
-                <div className="space-y-1">
-                    <p className="text-sm">
-                        <span className="font-medium">Ticker:</span>{" "}
-                        <span className="text-muted-foreground">{trade.ticker}</span>
-                    </p>
+            <div className="flex w-1/2 items-center gap-4 text-left">
+                <div className="flex flex-col space-y-2">
                     <p className="text-sm">
                         <span className="font-medium">Date:</span>{" "}
                         <span className="text-muted-foreground">{trade.date.toString()}</span>
                     </p>
                     <p className="text-sm">
+                        <span className="font-medium">Type:</span>{" "}
+                        <span className="text-muted-foreground">{trade.type}</span>
+                    </p>
+                    <p className="text-sm">
+                        <span className="font-medium">Ticker:</span>{" "}
+                        <span className="text-muted-foreground">{trade.ticker}</span>
+                    </p>
+                    <p className="text-sm">
                         <span className="font-medium">Strike:</span>{" "}
                         <span className="text-muted-foreground">{trade.strike}</span>
+                    </p>
+                    <p className="text-sm">
+                        <span className="font-medium">Realized:</span>{" "}
+                        <span className="text-muted-foreground">{trade.realized}</span>
+                    </p>
+                </div>
+
+                <div className="flex flex-col space-y-2">
+                    <p className="text-sm">
+                        <span className="font-medium">Contracts:</span>{" "}
+                        <span className="text-muted-foreground">{trade.contracts}</span>
+                    </p>
+                    <p className="text-sm">
+                        <span className="font-medium">Sell To Open:</span>{" "}
+                        <span className="text-muted-foreground">{trade.sellToOpen}</span>
+                    </p>
+                    <p className="text-sm">
+                        <span className="font-medium">Buy To Close:</span>{" "}
+                        <span className="text-muted-foreground">{trade.buyToClose}</span>
                     </p>
                     <p className="text-sm">
                         <span className="font-medium">Profit/Loss:</span>{" "}
@@ -49,10 +72,6 @@ export default function RowDetailView(props: RowDetailViewProps) {
                         >
                             {trade.profitLossPercentage}%
                         </span>
-                    </p>
-                    <p className="text-sm">
-                        <span className="font-medium">Realized:</span>{" "}
-                        <span className="text-muted-foreground">{trade.realized}</span>
                     </p>
                 </div>
             </div>

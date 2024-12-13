@@ -7,28 +7,72 @@ import { Fragment } from "react"
 import { flexRender, useReactTable } from "@tanstack/react-table"
 
 import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table"
 
 import ColumnVisibilitySelector from "./table-column-visibility-selector"
 import TableHeaderCell from "./table-header"
-import Pagination from "./table-pagination"
+import TablePagination from "./table-pagination"
 import RowDetailView from "./table-row-detail-view"
 import useTableData from "./useTableData"
 
+// TODO: add table footer with summary stats
+// TODO: when you select a row(s) should be a trash icon to delete the row(s) and a count of the selected rows near the search box
+// TODO: dropdown column menu needs to have more detailed filtering options ( ge, lt, gte, lte, eq, neq, contains, not contains, etc.)
+// TODO: add a button to export the table to a csv file
+// TODO: add a "create new trade button"
 export default function CustomTable() {
     const { columnIds, tableConfig } = useTableData()
+
+    const recordsPerPage = [10, 20, 30, 40, 50]
+
     const table = useReactTable<Trade>(tableConfig)
+    const { pagination } = table.getState()
 
     return (
         <div className="flex flex-col gap-2 p-2">
             {/* Table Controls */}
-            <div className="flex items-center">
-                <ColumnVisibilitySelector columnIds={columnIds} table={table} />
-                <Input
-                    className="ml-2 w-[300px]"
-                    onChange={(e) => table.setGlobalFilter(e.target.value)}
-                    placeholder="Search..."
-                />
+            <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+                <div className="flex items-center md:w-4/6">
+                    <ColumnVisibilitySelector columnIds={columnIds} table={table} />
+                    <Input
+                        className="ml-2 flex-1"
+                        onChange={(e) => table.setGlobalFilter(e.target.value)}
+                        placeholder="Search..."
+                    />
+                </div>
+
+                {/* Records per page option selector */}
+                <div className="flex items-center space-x-2">
+                    <p className="text-xs font-medium md:text-sm">Rows per page</p>
+
+                    <Select
+                        onValueChange={(value) => {
+                            table.setPageSize(Number(value))
+                        }}
+                        value={`${table.getState().pagination.pageSize}`}
+                    >
+                        <SelectTrigger className="h-8 w-[60px] md:w-[70px] ">
+                            <SelectValue placeholder={table.getState().pagination.pageSize} />
+                        </SelectTrigger>
+                        <SelectContent side="top">
+                            {recordsPerPage.map((pageSize) => (
+                                <SelectItem key={pageSize} value={`${pageSize}`}>
+                                    {pageSize}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+
+                    <span className="text-xs md:text-sm">
+                        {pagination.pageIndex * pagination.pageSize + 1}-
+                        {Math.min(
+                            (pagination.pageIndex + 1) * pagination.pageSize,
+                            table.getFilteredRowModel().rows.length,
+                        )}{" "}
+                        of {table.getFilteredRowModel().rows.length}
+                    </span>
+                </div>
             </div>
 
             {/* Table */}
@@ -47,34 +91,42 @@ export default function CustomTable() {
                     </TableHeader>
 
                     <TableBody>
-                        {table.getRowModel().rows.map((row) => (
-                            <Fragment key={row.id}>
-                                <TableRow
-                                    className={row.getIsSelected() ? "bg-muted" : undefined}
-                                    data-state={row.getIsSelected() ? "selected" : null}
-                                >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id} style={{ width: cell.column.getSize() }}>
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-
-                                {row.getIsExpanded() && (
-                                    <TableRow>
-                                        <TableCell colSpan={row.getVisibleCells().length}>
-                                            <RowDetailView trade={row.original} />
-                                        </TableCell>
+                        {table.getRowModel().rows.length ? (
+                            table.getRowModel().rows.map((row) => (
+                                <Fragment key={row.id}>
+                                    <TableRow
+                                        className={row.getIsSelected() ? "bg-muted" : undefined}
+                                        data-state={row.getIsSelected() ? "selected" : null}
+                                    >
+                                        {row.getVisibleCells().map((cell) => (
+                                            <TableCell key={cell.id} style={{ width: cell.column.getSize() }}>
+                                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                            </TableCell>
+                                        ))}
                                     </TableRow>
-                                )}
-                            </Fragment>
-                        ))}
+
+                                    {row.getIsExpanded() && (
+                                        <TableRow>
+                                            <TableCell colSpan={row.getVisibleCells().length}>
+                                                <RowDetailView trade={row.original} />
+                                            </TableCell>
+                                        </TableRow>
+                                    )}
+                                </Fragment>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell className="text-center" colSpan={table.getAllColumns().length}>
+                                    No Data Found That Matches Your Search
+                                </TableCell>
+                            </TableRow>
+                        )}
                     </TableBody>
                 </Table>
             </div>
 
             {/* Pagination */}
-            <Pagination table={table} />
+            <TablePagination table={table} />
         </div>
     )
 }
