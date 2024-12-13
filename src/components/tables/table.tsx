@@ -91,13 +91,7 @@ export default function CustomTable() {
                                     </TableRow>
 
                                     {/* if the row is expanded, display the row detail view */}
-                                    {row.getIsExpanded() && (
-                                        <TableRow>
-                                            <TableCell colSpan={row.getVisibleCells().length}>
-                                                <RowDetailView trade={row.original} />
-                                            </TableCell>
-                                        </TableRow>
-                                    )}
+                                    {row.getIsExpanded() && <RowDetailView row={row} trade={row.original} />}
                                 </Fragment>
                             ))
                         ) : (
