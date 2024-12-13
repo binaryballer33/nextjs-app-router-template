@@ -25,7 +25,7 @@ export default function TableHeader(props: TableHeaderProps) {
 
     return (
         <TableHead
-            className={`cursor-pointer whitespace-nowrap ${isPinned ? "bg-purple-900" : ""}`}
+            className={`group cursor-pointer whitespace-nowrap ${isPinned ? "bg-purple-900" : ""}`}
             onClick={header.column.getToggleSortingHandler()}
             style={{ width: header.getSize() }}
         >
@@ -45,40 +45,42 @@ export default function TableHeader(props: TableHeaderProps) {
 
                 {/* Dropdown menu for column actions */}
                 {!hideVerticalMenuForColumns.includes(header.column.id) && (
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button size="icon" variant="ghost">
-                                <MoreVertical className="h-4 w-4" />
-                                <span className="sr-only">Open menu</span>
-                            </Button>
-                        </DropdownMenuTrigger>
+                    <div className="invisible group-hover:visible ">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button size="icon" variant="ghost">
+                                    <MoreVertical className="h-4 w-4" />
+                                    <span className="sr-only">Open menu</span>
+                                </Button>
+                            </DropdownMenuTrigger>
 
-                        <DropdownMenuContent>
-                            {/* Pin to right */}
-                            {isPinned !== "right" && (
-                                <DropdownMenuItem onClick={() => header.column.pin("right")}>
-                                    Pin to Right
+                            <DropdownMenuContent>
+                                {/* Pin to right */}
+                                {isPinned !== "right" && (
+                                    <DropdownMenuItem onClick={() => header.column.pin("right")}>
+                                        Pin to Right
+                                    </DropdownMenuItem>
+                                )}
+
+                                {/* Pin to left */}
+                                {isPinned !== "left" && (
+                                    <DropdownMenuItem onClick={() => header.column.pin("left")}>
+                                        Pin to Left
+                                    </DropdownMenuItem>
+                                )}
+
+                                {/* Unpin */}
+                                {isPinned && (
+                                    <DropdownMenuItem onClick={() => header.column.pin(false)}>Unpin</DropdownMenuItem>
+                                )}
+
+                                {/* Sort */}
+                                <DropdownMenuItem onClick={header.column.getToggleSortingHandler()}>
+                                    {isSorted === "desc" ? "Sort Asc" : "Sort Desc"}
                                 </DropdownMenuItem>
-                            )}
-
-                            {/* Pin to left */}
-                            {isPinned !== "left" && (
-                                <DropdownMenuItem onClick={() => header.column.pin("left")}>
-                                    Pin to Left
-                                </DropdownMenuItem>
-                            )}
-
-                            {/* Unpin */}
-                            {isPinned && (
-                                <DropdownMenuItem onClick={() => header.column.pin(false)}>Unpin</DropdownMenuItem>
-                            )}
-
-                            {/* Sort */}
-                            <DropdownMenuItem onClick={header.column.getToggleSortingHandler()}>
-                                {isSorted === "desc" ? "Sort Asc" : "Sort Desc"}
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
                 )}
             </div>
         </TableHead>
