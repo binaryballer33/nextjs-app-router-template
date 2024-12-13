@@ -6,13 +6,14 @@ import { Fragment } from "react"
 
 import { flexRender, useReactTable } from "@tanstack/react-table"
 
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table"
 
 import ColumnVisibilitySelector from "./table-column-visibility-selector"
+import TableGlobalSearchBar from "./table-global-search-bar"
 import TableHeaderCell from "./table-header"
+import TableNoRecordsFound from "./table-no-records-found"
 import TablePagination from "./table-pagination"
+import TableRecordsPerPage from "./table-records-per-page"
 import TableRowDeleteIcon from "./table-row-delete-icon"
 import RowDetailView from "./table-row-detail-view"
 import useTableData from "./use-create-table"
@@ -23,11 +24,7 @@ import useTableData from "./use-create-table"
 // TODO: add a "create new trade button"
 export default function CustomTable() {
     const { columnIds, setData, tableConfig } = useTableData()
-
-    const recordsPerPage = [10, 20, 30, 40, 50]
-
     const table = useReactTable<Trade>(tableConfig)
-    const { pagination } = table.getState()
 
     return (
         <div className="flex flex-col gap-2 md:p-2">
@@ -40,44 +37,11 @@ export default function CustomTable() {
                         <ColumnVisibilitySelector columnIds={columnIds} table={table} />
                     )}
 
-                    <Input
-                        className="ml-2 flex-1"
-                        onChange={(e) => table.setGlobalFilter(e.target.value)}
-                        placeholder="Search..."
-                    />
+                    <TableGlobalSearchBar table={table} />
                 </div>
 
                 {/* Records per page option selector */}
-                <div className="flex items-center space-x-2">
-                    <p className="text-xs font-medium md:text-sm">Rows per page</p>
-
-                    <Select
-                        onValueChange={(value) => {
-                            table.setPageSize(Number(value))
-                        }}
-                        value={`${table.getState().pagination.pageSize}`}
-                    >
-                        <SelectTrigger className="h-8 w-[60px] md:w-[70px] ">
-                            <SelectValue placeholder={table.getState().pagination.pageSize} />
-                        </SelectTrigger>
-                        <SelectContent side="top">
-                            {recordsPerPage.map((pageSize) => (
-                                <SelectItem key={pageSize} value={`${pageSize}`}>
-                                    {pageSize}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-
-                    <span className="text-xs md:text-sm">
-                        {pagination.pageIndex * pagination.pageSize + 1}-
-                        {Math.min(
-                            (pagination.pageIndex + 1) * pagination.pageSize,
-                            table.getFilteredRowModel().rows.length,
-                        )}{" "}
-                        of {table.getFilteredRowModel().rows.length}
-                    </span>
-                </div>
+                <TableRecordsPerPage table={table} />
             </div>
 
             {/* Table */}
@@ -96,6 +60,7 @@ export default function CustomTable() {
                     </TableHeader>
 
                     <TableBody>
+                        {/* table body rows */}
                         {table.getRowModel().rows.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <Fragment key={row.id}>
@@ -137,11 +102,7 @@ export default function CustomTable() {
                             ))
                         ) : (
                             // if no data is found that matches the search, display this message
-                            <TableRow>
-                                <TableCell className="text-center" colSpan={table.getAllColumns().length}>
-                                    No Data Found That Matches Your Search
-                                </TableCell>
-                            </TableRow>
+                            <TableNoRecordsFound table={table} />
                         )}
                     </TableBody>
                 </Table>
