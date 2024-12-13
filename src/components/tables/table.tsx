@@ -13,16 +13,16 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components
 import ColumnVisibilitySelector from "./table-column-visibility-selector"
 import TableHeaderCell from "./table-header"
 import TablePagination from "./table-pagination"
+import TableRowDeleteIcon from "./table-row-delete-icon"
 import RowDetailView from "./table-row-detail-view"
 import useTableData from "./useTable"
 
 // TODO: add table footer with summary stats
-// TODO: when you select a row(s) should be a trash icon to delete the row(s) and a count of the selected rows near the search box
 // TODO: dropdown column menu needs to have more detailed filtering options ( ge, lt, gte, lte, eq, neq, contains, not contains, etc.)
 // TODO: add a button to export the table to a csv file
 // TODO: add a "create new trade button"
 export default function CustomTable() {
-    const { columnIds, tableConfig } = useTableData()
+    const { columnIds, setData, tableConfig } = useTableData()
 
     const recordsPerPage = [10, 20, 30, 40, 50]
 
@@ -33,8 +33,13 @@ export default function CustomTable() {
         <div className="flex flex-col gap-2 md:p-2">
             {/* Table Controls */}
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-                <div className="flex items-center md:w-4/6">
-                    <ColumnVisibilitySelector columnIds={columnIds} table={table} />
+                <div className="flex items-center gap-4 md:w-4/6">
+                    {table.getIsSomeRowsSelected() || table.getIsAllRowsSelected() ? (
+                        <TableRowDeleteIcon setData={setData} table={table} />
+                    ) : (
+                        <ColumnVisibilitySelector columnIds={columnIds} table={table} />
+                    )}
+
                     <Input
                         className="ml-2 flex-1"
                         onChange={(e) => table.setGlobalFilter(e.target.value)}

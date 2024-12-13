@@ -271,5 +271,5 @@ export default function useTableData() {
         },
     }
 
-    return { columnIds, columns, tableConfig }
+    return { columnIds, columns, setData, tableConfig }
 }
