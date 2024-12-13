@@ -15,7 +15,7 @@ import TableHeaderCell from "./table-header"
 import TablePagination from "./table-pagination"
 import TableRowDeleteIcon from "./table-row-delete-icon"
 import RowDetailView from "./table-row-detail-view"
-import useTableData from "./useTable"
+import useTableData from "./useCreateTable"
 
 // TODO: add table footer with summary stats
 // TODO: dropdown column menu needs to have more detailed filtering options ( ge, lt, gte, lte, eq, neq, contains, not contains, etc.)

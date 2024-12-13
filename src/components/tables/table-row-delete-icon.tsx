@@ -4,7 +4,7 @@ import type { Dispatch, SetStateAction } from "react"
 
 import { Trash2 } from "lucide-react"
 
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 
 type TableRowDeleteIconProps = {
     setData: Dispatch<SetStateAction<Trade[]>>

@@ -1,17 +1,9 @@
-"use client"
-
 import type { Trade } from "@/types/finance/trade"
-import type { TableOptions } from "@tanstack/react-table"
+import type { Dispatch, SetStateAction } from "react"
 
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 
-import {
-    createColumnHelper,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-} from "@tanstack/react-table"
+import { createColumnHelper } from "@tanstack/react-table"
 import { Minus, Plus, Trash2 } from "lucide-react"
 
 import getDayJsDateWithPlugins from "@/lib/helper-functions/dates/get-day-js-date-with-plugins"
@@ -20,16 +12,9 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
-import { fuzzyFilter } from "./table-utils"
-import { trades } from "./trade-data"
-
 const columnHelper = createColumnHelper<Trade>()
 
-export default function useTableData() {
-    // get table row data
-    const [data, setData] = useState(trades)
-
-    // create the table columns
+export default function useCreateTableColumns(setData: Dispatch<SetStateAction<Trade[]>>) {
     const columns = useMemo(
         () => [
             columnHelper.display({
@@ -219,57 +204,8 @@ export default function useTableData() {
                 id: "delete",
             }),
         ],
-        [],
+        [setData],
     )
 
-    // get the column ids for column visibility changes and column ordering
-    const columnIds = useMemo(() => columns.map((column) => column.id) as string[], [columns])
-
-    // get the initial column visibility
-    const columnVisibility = useMemo(() => {
-        return columnIds.reduce((acc: { [id: string]: boolean }, val) => {
-            acc[val] = true
-            return acc
-        }, {})
-    }, [columnIds])
-
-    // create the table config
-    const tableConfig: TableOptions<Trade> = {
-        columnResizeDirection: "ltr",
-        columnResizeMode: "onChange",
-        columns,
-
-        data,
-
-        enableRowSelection: true,
-
-        filterFns: {
-            fuzzy: fuzzyFilter,
-        },
-
-        getCoreRowModel: getCoreRowModel(),
-
-        // filtering for the table
-        getFilteredRowModel: getFilteredRowModel(),
-
-        // pagination for the table
-        getPaginationRowModel: getPaginationRowModel(),
-
-        // expand button for rows
-        getRowCanExpand: () => true,
-
-        // sorting for the table
-        getSortedRowModel: getSortedRowModel(),
-
-        // global filter for the table
-        globalFilterFn: fuzzyFilter,
-
-        // initial state for the table
-        initialState: {
-            columnOrder: columnIds,
-            columnVisibility,
-        },
-    }
-
-    return { columnIds, columns, setData, tableConfig }
+    return { columns }
 }
