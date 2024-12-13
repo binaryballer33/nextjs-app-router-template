@@ -9,7 +9,7 @@ import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedR
 
 import { fuzzyFilter } from "./table-utils"
 import { trades } from "./trade-data"
-import useCreateTableColumns from "./useCreateTableColumns"
+import useCreateTableColumns from "./use-create-table-columns"
 
 export default function useTableData() {
     // get table row data
