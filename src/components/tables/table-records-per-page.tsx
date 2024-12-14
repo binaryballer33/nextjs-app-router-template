@@ -17,6 +17,7 @@ export default function TableRecordsPerPage(props: TableRecordsPerPageProps) {
         <div className="flex items-center space-x-2">
             <p className="text-xs font-medium md:text-sm">Rows per page</p>
 
+            {/* Select the number of rows per page */}
             <Select
                 onValueChange={(value) => {
                     table.setPageSize(Number(value))
@@ -35,6 +36,7 @@ export default function TableRecordsPerPage(props: TableRecordsPerPageProps) {
                 </SelectContent>
             </Select>
 
+            {/* Display the current page and total pages */}
             <span className="text-xs md:text-sm">
                 {pagination.pageIndex * pagination.pageSize + 1}-
                 {Math.min((pagination.pageIndex + 1) * pagination.pageSize, table.getFilteredRowModel().rows.length)} of{" "}

@@ -9,7 +9,8 @@ import { useReactTable } from "@tanstack/react-table"
 import { Table, TableBody, TableHeader, TableRow } from "@/components/ui/table"
 
 import TableBodyCell from "./table-body-cell"
-import ColumnVisibilitySelector from "./table-column-visibility-selector"
+import TableColumnVisibilitySelector from "./table-column-visibility-selector"
+import TableExportButtons from "./table-export-buttons"
 import TableFooter from "./table-footer"
 import TableGlobalSearchBar from "./table-global-search-bar"
 import TableHeaderCell from "./table-header-cell"
@@ -23,6 +24,7 @@ import useTableData from "./use-create-table"
 // TODO: dropdown column menu needs to have more detailed filtering options ( ge, lt, gte, lte, eq, neq, contains, not contains, etc.)
 // TODO: add a button to export the table to a csv file
 // TODO: add a "create new trade button"
+// TODO: column reordering
 export default function CustomTable() {
     const { columnIds, setData, tableConfig } = useTableData()
     const table = useReactTable<Trade>(tableConfig)
@@ -35,7 +37,10 @@ export default function CustomTable() {
                     {table.getIsSomeRowsSelected() || table.getIsAllRowsSelected() ? (
                         <TableRowDeleteIcon setData={setData} table={table} />
                     ) : (
-                        <ColumnVisibilitySelector columnIds={columnIds} table={table} />
+                        <>
+                            <TableColumnVisibilitySelector columnIds={columnIds} table={table} />
+                            <TableExportButtons table={table} />
+                        </>
                     )}
 
                     <TableGlobalSearchBar table={table} />
