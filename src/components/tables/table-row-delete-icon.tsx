@@ -37,7 +37,7 @@ export default function TableRowDeleteIcon(props: TableRowDeleteIconProps) {
                 {selectedRows.length} row{selectedRows.length > 1 ? "s" : ""} selected
             </span>
             <Button
-                className="h-8 w-8 text-destructive hover:text-destructive/90"
+                className="m-2.5 h-8 w-8 text-destructive hover:text-destructive/90"
                 onClick={handleDeleteSelected}
                 size="icon"
                 variant="ghost"
