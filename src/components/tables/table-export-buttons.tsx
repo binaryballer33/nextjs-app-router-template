@@ -1,5 +1,6 @@
 import type { Trade } from "@/types/finance/trade"
 import type { Table } from "@tanstack/react-table"
+import type { ReactNode } from "react"
 
 import { Download, FileJson, Sheet } from "lucide-react"
 import * as XLSX from "xlsx"
@@ -26,6 +27,8 @@ export default function TableExportButtons(props: TableExportButtonsProps) {
     const trades = filteredRows.map((row) => row.original)
 
     const handleExportExcel = () => {
+        const fileName = "trades.xlsx"
+
         // Create a new workbook
         const wb = XLSX.utils.book_new()
 
@@ -36,11 +39,12 @@ export default function TableExportButtons(props: TableExportButtonsProps) {
         XLSX.utils.book_append_sheet(wb, ws, "Trades")
 
         // Save workbook as Excel file
-        XLSX.writeFile(wb, "trades.xlsx")
+        XLSX.writeFile(wb, fileName)
     }
 
     const handleExportJSON = () => {
         // Create a blob from the JSON data
+        const fileName = "trades.json"
         const jsonString = JSON.stringify(trades, null, 2)
         const blob = new Blob([jsonString], { type: "application/json" })
 
@@ -48,7 +52,7 @@ export default function TableExportButtons(props: TableExportButtonsProps) {
         const url = URL.createObjectURL(blob)
         const link = document.createElement("a")
         link.href = url
-        link.download = "trades.json"
+        link.download = fileName
 
         // Trigger download
         document.body.appendChild(link)
@@ -59,6 +63,19 @@ export default function TableExportButtons(props: TableExportButtonsProps) {
         URL.revokeObjectURL(url)
     }
 
+    const exportButtons = [
+        {
+            handleDownload: handleExportExcel,
+            icon: <Sheet className="h-4 w-4" />,
+            label: "Export to CSV",
+        },
+        {
+            handleDownload: handleExportJSON,
+            icon: <FileJson className="h-4 w-4" />,
+            label: "Export to JSON",
+        },
+    ]
+
     return (
         <NavigationMenu className="z-50 w-auto hover:border-b-2 hover:border-primary">
             <NavigationMenuList>
@@ -66,58 +83,53 @@ export default function TableExportButtons(props: TableExportButtonsProps) {
                     <NavigationMenuTrigger>
                         <Download className="h-6 w-6" />
                     </NavigationMenuTrigger>
-
                     <NavigationMenuContent className="min-w-[120px] p-4">
                         <div className="flex flex-col items-center gap-2">
-                            <div className="flex items-center gap-2 whitespace-nowrap">
-                                <TooltipProvider>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Button
-                                                className="h-8 w-8"
-                                                onClick={handleExportExcel}
-                                                size="icon"
-                                                variant="ghost"
-                                            >
-                                                <Sheet className="h-4 w-4" />
-                                                <span className="sr-only">Export to Excel</span>
-                                            </Button>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p className="whitespace-nowrap">Export to Excel</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-
-                                    <span className="whitespace-nowrap text-xs">Download CSV</span>
-                                </TooltipProvider>
-                            </div>
-
-                            <div className="flex items-center gap-2 whitespace-nowrap">
-                                <TooltipProvider>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Button
-                                                className="h-8 w-8"
-                                                onClick={handleExportJSON}
-                                                size="icon"
-                                                variant="ghost"
-                                            >
-                                                <FileJson className="h-4 w-4" />
-                                                <span className="sr-only">Export to JSON</span>
-                                            </Button>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p className="whitespace-nowrap">Export to JSON</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-
-                                    <span className="whitespace-nowrap text-xs">Download JSON</span>
-                                </TooltipProvider>
-                            </div>
+                            {exportButtons.map((button) => (
+                                <DownloadButton
+                                    handleDownload={button.handleDownload}
+                                    icon={button.icon}
+                                    key={button.label}
+                                    label={button.label}
+                                />
+                            ))}
                         </div>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu>
+    )
+}
+
+type DownloadButtonProps = {
+    handleDownload: () => void
+    icon: ReactNode
+    label: string
+}
+
+function DownloadButton(props: DownloadButtonProps) {
+    const { handleDownload, icon, label } = props
+
+    return (
+        <div className="flex w-[150px] items-center justify-start gap-2 whitespace-nowrap hover:text-primary">
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button
+                            className="h-8 w-8 hover:border-2 hover:border-primary"
+                            onClick={handleDownload}
+                            size="icon"
+                            variant="ghost"
+                        >
+                            {icon}
+                            <span className="sr-only">{label}</span>
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent className="whitespace-nowrap">{label}</TooltipContent>
+                </Tooltip>
+
+                <span className="whitespace-nowrap text-xs">{label}</span>
+            </TooltipProvider>
+        </div>
     )
 }
