@@ -4,11 +4,12 @@ import type { Trade } from "@/types/finance/trade"
 import type { Header, Table } from "@tanstack/react-table"
 
 import { flexRender } from "@tanstack/react-table"
-import { ArrowDown, ArrowUp, MoreVertical } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { TableHead } from "@/components/ui/table"
+
+import TableHeaderDropdownMenu from "./table-header-dropdown-menu"
+import TableHeaderResizer from "./table-header-resizer"
+import TableHeaderSortIndicator from "./table-header-sort-indicator"
 
 // import TableAdvancedFilter from "./table-advanced-filter"
 
@@ -43,50 +44,12 @@ export default function TableHeaderCell(props: TableHeaderCellProps) {
                 </div>
 
                 {/* Sort direction indicator */}
-                {isSorted && (
-                    <div>
-                        {isSorted === "asc" && <ArrowDown className="h-4 w-4" />}
-                        {isSorted === "desc" && <ArrowUp className="h-4 w-4" />}
-                    </div>
-                )}
+                <TableHeaderSortIndicator isSorted={isSorted} />
 
                 {/* Dropdown menu for column actions */}
                 {!hideVerticalMenuForColumns.includes(header.column.id) && (
                     <div className="invisible group-hover:visible">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button size="icon" variant="ghost">
-                                    <MoreVertical className="h-4 w-4" />
-                                    <span className="sr-only">Open menu</span>
-                                </Button>
-                            </DropdownMenuTrigger>
-
-                            <DropdownMenuContent>
-                                {/* Pin to right */}
-                                {isPinned !== "right" && (
-                                    <DropdownMenuItem onClick={() => header.column.pin("right")}>
-                                        Pin to Right
-                                    </DropdownMenuItem>
-                                )}
-
-                                {/* Pin to left */}
-                                {isPinned !== "left" && (
-                                    <DropdownMenuItem onClick={() => header.column.pin("left")}>
-                                        Pin to Left
-                                    </DropdownMenuItem>
-                                )}
-
-                                {/* Unpin */}
-                                {isPinned && (
-                                    <DropdownMenuItem onClick={() => header.column.pin(false)}>Unpin</DropdownMenuItem>
-                                )}
-
-                                {/* Sort */}
-                                <DropdownMenuItem onClick={header.column.getToggleSortingHandler()}>
-                                    {isSorted === "desc" ? "Sort Asc" : "Sort Desc"}
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <TableHeaderDropdownMenu header={header} />
                     </div>
                 )}
 
@@ -96,25 +59,5 @@ export default function TableHeaderCell(props: TableHeaderCellProps) {
                 )}
             </div>
         </TableHead>
-    )
-}
-
-function TableHeaderResizer(props: TableHeaderCellProps) {
-    const { header, table } = props
-
-    return (
-        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-        <div
-            className={`
-                absolute right-0 top-0 h-full w-5
-                cursor-col-resize touch-none select-none
-                hover:bg-secondary/50 hover:opacity-100
-                ${table.options.columnResizeDirection}
-                ${header.column.getIsResizing() ? "bg-secondary opacity-100" : "opacity-0"}
-            `}
-            onDoubleClick={() => header.column.resetSize()}
-            onMouseDown={header.getResizeHandler()}
-            onTouchStart={header.getResizeHandler()}
-        />
     )
 }
