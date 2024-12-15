@@ -27,12 +27,21 @@ export default function useCreateTableColumns(setData: Dispatch<SetStateAction<T
                     </div>
                 ),
                 header: ({ table }) => (
-                    <div className="flex items-center justify-center">
-                        <Checkbox
-                            checked={table.getIsAllRowsSelected()}
-                            onCheckedChange={(checked) => table.toggleAllRowsSelected(!!checked)}
-                        />
-                    </div>
+                    <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <div>
+                                    <Checkbox
+                                        checked={table.getIsAllRowsSelected()}
+                                        onCheckedChange={(checked) => table.toggleAllRowsSelected(!!checked)}
+                                    />
+                                </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Select all</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                 ),
                 id: "selection",
             }),
@@ -242,9 +251,16 @@ export default function useCreateTableColumns(setData: Dispatch<SetStateAction<T
                     </div>
                 ),
                 header: () => (
-                    <div className="flex items-center justify-center">
-                        <Trash2 className="h-4 w-4" />
-                    </div>
+                    <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <Trash2 className="h-4 w-4" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Delete row</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                 ),
                 id: "delete",
             }),
