@@ -6,6 +6,7 @@ import { appMetadata } from "@/lib/config"
 import Container from "@/components/base/container"
 import PageHeading from "@/components/base/page-heading"
 import CustomTable from "@/components/tables/table"
+// import DndShadCnTable from "@/components/tables/test-table-shadcn"
 
 export const metadata = appMetadata.homePage
 
@@ -17,11 +18,7 @@ export default async function HomePage() {
         <HydrationBoundary state={dehydratedState}>
             <Container maxWidth="xl">
                 <PageHeading bottomText="This Is A Sample Page" title="Home Page" />
-
                 <CustomTable />
-
-                {/* <CustomTableTest /> */}
-                {/* <PlaceholderBox height={600} title="Home Page" /> */}
             </Container>
         </HydrationBoundary>
     )

@@ -1,13 +1,11 @@
 "use client"
 
-import type { Trade } from "@/types/finance/trade"
-import type { DragEndEvent } from "@dnd-kit/core"
-
 import { Fragment } from "react"
 
 import {
     closestCenter,
     DndContext,
+    type DragEndEvent,
     KeyboardSensor,
     MouseSensor,
     TouchSensor,
@@ -24,7 +22,7 @@ import TableBodyCell from "./table-body-cell"
 import TableBodyDeleteIcon from "./table-body-delete-icon"
 import TableBodyDetailView from "./table-body-detail-view"
 import TableBodyNoRecordsFound from "./table-body-no-records-found"
-import TableHeaderExportButtons from "./table-export-buttons"
+import TableExportButtons from "./table-export-buttons"
 import TableFooter from "./table-footer"
 import TableGlobalSearchBar from "./table-global-search-bar"
 import TableHeaderCell from "./table-header-cell"
@@ -33,17 +31,13 @@ import TablePagination from "./table-pagination"
 import TableRecordsPerPage from "./table-records-per-page"
 import useTableData from "./use-create-table"
 
-// TODO: dropdown column menu needs to have more detailed filtering options ( ge, lt, gte, lte, eq, neq, contains, not contains, etc.)
-// TODO: add a "create new trade button"
-// TODO: row reordering
-// TODO: make the table header sticky
-// TODO: figure out how to make the entire header surface area a tooltip trigger so when hovering over the header cell, the tooltip is visible and when hovering the header title disspears and only the icons and tooltip are visible
-export default function CustomTable() {
+export default function DndShadCnTable() {
     const { columnIds, columnOrder, setColumnOrder, setData, tableConfig } = useTableData()
-    const table = useReactTable<Trade>(tableConfig)
+
+    const table = useReactTable(tableConfig)
 
     // reorder columns after drag & drop
-    const handleDragEnd = (event: DragEndEvent) => {
+    function handleDragEnd(event: DragEndEvent) {
         const { active, over } = event
         if (active && over && active.id !== over.id) {
             setColumnOrder((columnOrderPrev) => {
@@ -54,7 +48,6 @@ export default function CustomTable() {
         }
     }
 
-    // sensors for DnD column reordering
     const sensors = useSensors(useSensor(MouseSensor, {}), useSensor(TouchSensor, {}), useSensor(KeyboardSensor, {}))
 
     return (
@@ -67,7 +60,7 @@ export default function CustomTable() {
                     ) : (
                         <>
                             <TableHeaderColumnVisibilitySelector columnIds={columnIds} table={table} />
-                            <TableHeaderExportButtons table={table} />
+                            <TableExportButtons table={table} />
                         </>
                     )}
 
@@ -78,22 +71,19 @@ export default function CustomTable() {
                 <TableRecordsPerPage table={table} />
             </div>
 
-            {/* Table */}
             <DndContext
                 collisionDetection={closestCenter}
                 modifiers={[restrictToHorizontalAxis]}
+                // eslint-disable-next-line react/jsx-no-bind
                 onDragEnd={handleDragEnd}
                 sensors={sensors}
             >
                 <div className="max-h-[525px] min-h-[525px] overflow-x-auto overflow-y-auto rounded-md border">
                     <Table>
-                        <TableHeader className="sticky top-0 z-10 bg-background">
-                            {/* Table header rows */}
+                        <TableHeader>
                             {table.getHeaderGroups().map((headerGroup) => (
-                                <TableRow className="[&>th]:border-r [&>th]:border-black/10" key={headerGroup.id}>
-                                    {/* dnd sortable context for the table header cells */}
+                                <TableRow key={headerGroup.id}>
                                     <SortableContext items={columnOrder} strategy={horizontalListSortingStrategy}>
-                                        {/* Table header cells */}
                                         {headerGroup.headers.map((header) => (
                                             <TableHeaderCell header={header} key={header.id} table={table} />
                                         ))}
@@ -101,9 +91,7 @@ export default function CustomTable() {
                                 </TableRow>
                             ))}
                         </TableHeader>
-
                         <TableBody>
-                            {/* table body rows */}
                             {table.getRowModel().rows.length ? (
                                 table.getRowModel().rows.map((row) => (
                                     <Fragment key={row.id}>
@@ -114,10 +102,9 @@ export default function CustomTable() {
                                             hover:bg-black/[.05]
                                             [&>td]:border-r [&>td]:border-black/10
                                         `}
+                                            key={row.id}
                                         >
-                                            {/* get the table records and display them in the table */}
                                             {row.getVisibleCells().map((cell) => (
-                                                // dnd sortable context for the table body cells
                                                 <SortableContext
                                                     items={columnOrder}
                                                     key={cell.id}

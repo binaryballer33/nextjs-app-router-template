@@ -18,7 +18,7 @@ export default function useTableData() {
     // create the table columns
     const { columns } = useCreateTableColumns(setData)
 
-    // get the column ids for column visibility changes and column ordering
+    // get the column ids for column visibility changes
     const columnIds = useMemo(() => columns.map((column) => column.id) as string[], [columns])
 
     // get the initial column visibility
@@ -28,6 +28,9 @@ export default function useTableData() {
             return acc
         }, {})
     }, [columnIds])
+
+    // get the initial column order for dnd column reordering
+    const [columnOrder, setColumnOrder] = useState<string[]>(() => columns.map((c) => c.id!))
 
     // create the table config
     const tableConfig: TableOptions<Trade> = {
@@ -62,10 +65,16 @@ export default function useTableData() {
 
         // initial state for the table
         initialState: {
-            columnOrder: columnIds,
             columnVisibility,
+        },
+
+        // update the column order for dnd column reordering
+        onColumnOrderChange: setColumnOrder,
+
+        state: {
+            columnOrder,
         },
     }
 
-    return { columnIds, columns, setData, tableConfig }
+    return { columnIds, columnOrder, columns, data, setColumnOrder, setData, tableConfig }
 }
