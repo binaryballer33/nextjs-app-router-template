@@ -60,12 +60,14 @@ export default function TableHeaderCell(props: TableHeaderCellProps) {
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
 
                     {/* dnd column heaeder reordering button */}
-                    <GripVertical
-                        className="invisible h-5 w-5 group-hover:visible"
-                        type="button"
-                        {...attributes}
-                        {...listeners}
-                    />
+                    {!hideForColumns.includes(header.column.id) && (
+                        <GripVertical
+                            className="invisible h-5 w-5 group-hover:visible"
+                            type="button"
+                            {...attributes}
+                            {...listeners}
+                        />
+                    )}
                 </div>
 
                 {/* Sort direction indicator */}
