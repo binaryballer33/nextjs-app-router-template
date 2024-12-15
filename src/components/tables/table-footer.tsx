@@ -15,8 +15,6 @@ export default function TableFooter({ table }: TableFooterProps) {
     // Calculate summary statistics
     const totalProfitLoss = trades.reduce((sum, trade) => sum + trade.profitLoss, 0)
     const tradeCount = trades.length
-    const winningTrades = trades.filter((trade) => trade.profitLoss > 0).length
-    const winRate = tradeCount > 0 ? (winningTrades / tradeCount) * 100 : 0
     const averageProfitLoss = tradeCount > 0 ? totalProfitLoss / tradeCount : 0
 
     return (
@@ -38,27 +36,20 @@ export default function TableFooter({ table }: TableFooterProps) {
                     </div>
                 </TableCell>
 
-                {/* Expand column */}
-                <TableCell>
-                    <div className="flex items-center space-x-2">
-                        <span className="font-medium">Trade Count:</span>
-                        <span className="text-muted-foreground">{tradeCount}</span>
-                    </div>
-                </TableCell>
-
-                <TableCell>
-                    <div className="flex items-center space-x-2">
-                        <span className="font-medium">Win Rate:</span>
-                        <span className="text-muted-foreground">{winRate.toFixed(1)}%</span>
-                    </div>
-                </TableCell>
-
                 <TableCell>
                     <div className="flex items-center space-x-2">
                         <span className="font-medium">Avg P&L:</span>
                         <span className={averageProfitLoss > 0 ? "text-green-600" : "text-red-600"}>
                             ${averageProfitLoss.toFixed(2)}
                         </span>
+                    </div>
+                </TableCell>
+
+                {/* Expand column */}
+                <TableCell>
+                    <div className="flex items-center space-x-2">
+                        <span className="font-medium">Trade Count:</span>
+                        <span className="text-muted-foreground">{tradeCount}</span>
                     </div>
                 </TableCell>
             </TableRow>
