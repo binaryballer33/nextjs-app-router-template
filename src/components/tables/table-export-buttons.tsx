@@ -86,7 +86,7 @@ export default function TableExportButtons(props: TableExportButtonsProps) {
                     <NavigationMenuContent className="min-w-[120px] p-4">
                         <div className="flex flex-col items-center gap-2">
                             {exportButtons.map((button) => (
-                                <DownloadButton
+                                <TableHeaderExportButton
                                     handleDownload={button.handleDownload}
                                     icon={button.icon}
                                     key={button.label}
@@ -101,13 +101,13 @@ export default function TableExportButtons(props: TableExportButtonsProps) {
     )
 }
 
-type DownloadButtonProps = {
+type TableHeaderExportButtonProps = {
     handleDownload: () => void
     icon: ReactNode
     label: string
 }
 
-function DownloadButton(props: DownloadButtonProps) {
+function TableHeaderExportButton(props: TableHeaderExportButtonProps) {
     const { handleDownload, icon, label } = props
 
     return (

@@ -9,16 +9,16 @@ import { useReactTable } from "@tanstack/react-table"
 import { Table, TableBody, TableHeader, TableRow } from "@/components/ui/table"
 
 import TableBodyCell from "./table-body-cell"
-import TableColumnVisibilitySelector from "./table-column-visibility-selector"
-import TableExportButtons from "./table-export-buttons"
+import TableBodyDeleteIcon from "./table-body-delete-icon"
+import TableBodyDetailView from "./table-body-detail-view"
+import TableBodyNoRecordsFound from "./table-body-no-records-found"
+import TableHeaderExportButtons from "./table-export-buttons"
 import TableFooter from "./table-footer"
 import TableGlobalSearchBar from "./table-global-search-bar"
 import TableHeaderCell from "./table-header-cell"
-import TableNoRecordsFound from "./table-no-records-found"
+import TableHeaderColumnVisibilitySelector from "./table-header-column-visibility-selector"
 import TablePagination from "./table-pagination"
 import TableRecordsPerPage from "./table-records-per-page"
-import TableRowDeleteIcon from "./table-row-delete-icon"
-import RowDetailView from "./table-row-detail-view"
 import useTableData from "./use-create-table"
 
 // TODO: dropdown column menu needs to have more detailed filtering options ( ge, lt, gte, lte, eq, neq, contains, not contains, etc.)
@@ -35,11 +35,11 @@ export default function CustomTable() {
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
                 <div className="flex items-center gap-4 md:w-4/6">
                     {table.getIsSomeRowsSelected() || table.getIsAllRowsSelected() ? (
-                        <TableRowDeleteIcon setData={setData} table={table} />
+                        <TableBodyDeleteIcon setData={setData} table={table} />
                     ) : (
                         <>
-                            <TableColumnVisibilitySelector columnIds={columnIds} table={table} />
-                            <TableExportButtons table={table} />
+                            <TableHeaderColumnVisibilitySelector columnIds={columnIds} table={table} />
+                            <TableHeaderExportButtons table={table} />
                         </>
                     )}
 
@@ -86,12 +86,12 @@ export default function CustomTable() {
                                     </TableRow>
 
                                     {/* if the row is expanded, display the row detail view */}
-                                    {row.getIsExpanded() && <RowDetailView row={row} trade={row.original} />}
+                                    {row.getIsExpanded() && <TableBodyDetailView row={row} trade={row.original} />}
                                 </Fragment>
                             ))
                         ) : (
                             // if no data is found that matches the search, display this message
-                            <TableNoRecordsFound table={table} />
+                            <TableBodyNoRecordsFound table={table} />
                         )}
                     </TableBody>
 

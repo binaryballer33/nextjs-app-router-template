@@ -3,11 +3,11 @@ import type { Table } from "@tanstack/react-table"
 
 import { TableCell, TableRow } from "@/components/ui/table"
 
-type TableNoRecordsFoundProps = {
+type TableBodyNoRecordsFoundProps = {
     table: Table<Trade>
 }
 
-export default function TableNoRecordsFound(props: TableNoRecordsFoundProps) {
+export default function TableBodyNoRecordsFound(props: TableBodyNoRecordsFoundProps) {
     const { table } = props
 
     return (

@@ -5,12 +5,12 @@ import { cn } from "@/lib/utils"
 
 import { TableCell, TableRow } from "@/components/ui/table"
 
-type RowDetailViewProps = {
+type TableBodyDetailViewProps = {
     row: Row<Trade>
     trade: Trade
 }
 
-export default function RowDetailView(props: RowDetailViewProps) {
+export default function TableBodyDetailView(props: TableBodyDetailViewProps) {
     const { row, trade } = props
 
     return (

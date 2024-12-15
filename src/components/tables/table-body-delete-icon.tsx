@@ -6,12 +6,12 @@ import { Trash2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-type TableRowDeleteIconProps = {
+type TableBodyDeleteIconProps = {
     setData: Dispatch<SetStateAction<Trade[]>>
     table: Table<Trade>
 }
 
-export default function TableRowDeleteIcon(props: TableRowDeleteIconProps) {
+export default function TableBodyDeleteIcon(props: TableBodyDeleteIconProps) {
     const { setData, table } = props
 
     // get the selected rows
