@@ -72,26 +72,62 @@ export default function useCreateTableColumns(setData: Dispatch<SetStateAction<T
                     )
                 },
                 enableResizing: true,
-                header: "Date",
+                header: () => (
+                    <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                            <TooltipTrigger>Date</TooltipTrigger>
+                            <TooltipContent>
+                                <p>Date</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                ),
                 id: "date",
                 minSize: 100,
             }),
 
             columnHelper.accessor("type", {
                 enableResizing: true,
-                header: "Type",
+                header: () => (
+                    <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                            <TooltipTrigger>Type</TooltipTrigger>
+                            <TooltipContent>
+                                <p>Type</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                ),
                 id: "type",
             }),
 
             columnHelper.accessor("realized", {
                 enableResizing: true,
-                header: "Realized",
+                header: () => (
+                    <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                            <TooltipTrigger>Realized</TooltipTrigger>
+                            <TooltipContent>
+                                <p>Realized</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                ),
                 id: "realized",
             }),
 
             columnHelper.accessor("ticker", {
                 enableResizing: true,
-                header: "Ticker",
+                header: () => (
+                    <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                            <TooltipTrigger>Ticker</TooltipTrigger>
+                            <TooltipContent>
+                                <p>Ticker</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                ),
                 id: "ticker",
             }),
 
@@ -112,7 +148,16 @@ export default function useCreateTableColumns(setData: Dispatch<SetStateAction<T
 
             columnHelper.accessor("contracts", {
                 enableResizing: true,
-                header: "Contracts",
+                header: () => (
+                    <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                            <TooltipTrigger>Contracts</TooltipTrigger>
+                            <TooltipContent>
+                                <p>Contracts</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                ),
                 id: "contracts",
             }),
 
