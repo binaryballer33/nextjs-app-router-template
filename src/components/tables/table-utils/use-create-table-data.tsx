@@ -10,19 +10,21 @@ import { KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from 
 import { arrayMove } from "@dnd-kit/sortable"
 import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel } from "@tanstack/react-table"
 
-import { fuzzyFilter } from "./table-utils"
-import { trades } from "./trade-data"
-import useCreateTableColumns from "./use-create-table-columns"
+import { trades } from "../trade-data"
+import useCreateTableColumns from "../use-create-table-columns"
+import fuzzyFilter from "./filters/fuzzy-filter"
 
 // Extend TanStack's TableMeta interface
 declare module "@tanstack/table-core" {
     interface TableMeta<TData> {
+        padding: "lg" | "md" | "sm" | "xl"
         removeRow: (rowId: string) => void
         removeRows: (rowIds: string[]) => void
+        setTablePadding: (padding: "lg" | "md" | "sm" | "xl") => void
     }
 }
 
-export default function useTableData() {
+export default function useCreateTableData() {
     // get table row data
     const [data, setData] = useState(trades)
 
@@ -34,6 +36,8 @@ export default function useTableData() {
 
     // row order for dnd row reordering
     const [rowOrder, setRowOrder] = useState<string[]>(() => data.map((row) => row.id))
+
+    const [tablePadding, setTablePadding] = useState<"lg" | "md" | "sm" | "xl">("md")
 
     // sensors for dnd column reordering
     const sensors = useSensors(
@@ -113,11 +117,15 @@ export default function useTableData() {
 
         // handle row state deletion
         meta: {
+            padding: tablePadding,
             removeRow: (rowId: string) => {
                 setData((prev) => prev.filter((row) => row.id !== rowId))
             },
             removeRows: (rowIds: string[]) => {
                 setData((prev) => prev.filter((row) => !rowIds.includes(row.id)))
+            },
+            setTablePadding: (padding: "lg" | "md" | "sm" | "xl") => {
+                setTablePadding(padding)
             },
         },
 

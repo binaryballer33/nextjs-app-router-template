@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
-import { convertCamelToTitleCase } from "./table-utils"
+import convertCamelToTitleCase from "../table-utils/typography/convert-camel-to-title-case"
 
 type TableExtraColumnVisibilityProps = {
     columnOrder: string[]

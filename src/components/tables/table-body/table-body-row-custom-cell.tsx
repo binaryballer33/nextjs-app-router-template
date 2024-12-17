@@ -5,11 +5,11 @@ import { flexRender } from "@tanstack/react-table"
 
 import { TableCell } from "@/components/ui/table"
 
-type TableRowCustomCellProps = {
+type TableBodyRowCustomCellProps = {
     cell: Cell<Trade, unknown>
 }
 
-export default function TableRowCustomCell(props: TableRowCustomCellProps) {
+export default function TableBodyRowCustomCell(props: TableBodyRowCustomCellProps) {
     const { cell } = props
 
     return (

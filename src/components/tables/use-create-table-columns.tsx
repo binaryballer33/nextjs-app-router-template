@@ -8,12 +8,12 @@ import getDayJsDateWithPlugins from "@/lib/helper-functions/dates/get-day-js-dat
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
-import TableHeaderCellCheckbox from "./table-header-cell-checkbox"
-import TableHeaderCellDelete from "./table-header-cell-delete"
-import TableHeaderCellExpand from "./table-header-cell-expand"
-import TableHeaderCellRowDrag from "./table-header-cell-row-drag"
-import TableHeaderCheckboxAll from "./table-header-checkbox-all"
-import TableHeaderDelete from "./table-header-delete"
+import TableHeaderCellCheckbox from "./table-header/table-header-cell-checkbox"
+import TableHeaderCellDelete from "./table-header/table-header-cell-delete"
+import TableHeaderCellExpand from "./table-header/table-header-cell-expand"
+import TableHeaderCellRowDrag from "./table-header/table-header-cell-row-drag"
+import TableHeaderCheckboxAll from "./table-header/table-header-checkbox-all"
+import TableHeaderDelete from "./table-header/table-header-delete"
 
 const columnHelper = createColumnHelper<Trade>()
 

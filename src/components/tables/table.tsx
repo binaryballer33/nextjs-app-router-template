@@ -8,24 +8,24 @@ import { useReactTable } from "@tanstack/react-table"
 
 import { Table, TableBody, TableHeader, TableRow } from "@/components/ui/table"
 
-import TableExtraColumnVisibility from "./table-extra-column-visibility"
-import TableExtraDeleteSelected from "./table-extra-delete-selected"
-import TableExtraExportButtons from "./table-extra-export-buttons"
-import TableExtraGlobalSearchBar from "./table-extra-global-search-bar"
-import TableExtraPagination from "./table-extra-pagination"
-import TableFooter from "./table-footer"
-import TableHeaderCustomHead from "./table-header-custom-head"
-import TableRowCustom from "./table-row-custom"
-import TableRowNoRecordsFound from "./table-row-no-records-found"
-import useTableData from "./use-create-table-data"
+import TableBodyRowCustom from "./table-body/table-body-row-custom"
+import TableBodyRowNoRecordsFound from "./table-body/table-body-row-no-records-found"
+import TableExtraColumnVisibility from "./table-extras/table-extra-column-visibility"
+import TableExtraDeleteSelected from "./table-extras/table-extra-delete-selected"
+import TableExtraDropdownMenuSettings from "./table-extras/table-extra-dropdown-menu-settings"
+import TableExtraExportButtons from "./table-extras/table-extra-export-buttons"
+import TableExtraGlobalSearchBar from "./table-extras/table-extra-global-search-bar"
+import TableExtraPagination from "./table-extras/table-extra-pagination"
+import TableFooter from "./table-footer/table-footer"
+import TableHeaderCustomHead from "./table-header/table-header-custom-head"
+import useCreateTableData from "./table-utils/use-create-table-data"
 
 // TODO: dropdown column menu needs to have more detailed filtering options ( ge, lt, gte, lte, eq, neq, contains, not contains, etc.)
 // TODO: add a "create new trade button"
 // TODO: make the table header sticky
 // TODO: figure out how to make the entire header surface area a tooltip trigger so when hovering over the header cell, the tooltip is visible and when hovering the header title disspears and only the icons and tooltip are visible
-// TODO: add a button to reduce the padding of the table body cells for "compact, standard, expanded"
 export default function CustomTable() {
-    const { columnOrder, handleDragEnd, rowOrder, sensors, tableConfig } = useTableData()
+    const { columnOrder, handleDragEnd, rowOrder, sensors, tableConfig } = useCreateTableData()
 
     const table = useReactTable<Trade>(tableConfig)
 
@@ -35,13 +35,14 @@ export default function CustomTable() {
         <div className="flex flex-col gap-2 md:p-2">
             {/* Extra table features */}
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-                <div className="flex items-center gap-4 max-sm:gap-2 md:w-5/6">
+                <div className="flex items-center gap-4 max-sm:gap-2 md:w-full">
                     {table.getIsSomeRowsSelected() || table.getIsAllRowsSelected() ? (
                         <TableExtraDeleteSelected table={table} />
                     ) : (
                         <>
                             <TableExtraColumnVisibility columnOrder={columnOrder} table={table} />
                             <TableExtraExportButtons table={table} />
+                            <TableExtraDropdownMenuSettings table={table} />
                         </>
                     )}
 
@@ -73,12 +74,12 @@ export default function CustomTable() {
                             {table.getRowModel().rows.length ? (
                                 <SortableContext items={rowOrder}>
                                     {table.getRowModel().rows.map((row) => (
-                                        <TableRowCustom key={row.id} row={row} />
+                                        <TableBodyRowCustom key={row.id} row={row} table={table} />
                                     ))}
                                 </SortableContext>
                             ) : (
                                 // if no data is found that matches the search, display this message
-                                <TableRowNoRecordsFound table={table} />
+                                <TableBodyRowNoRecordsFound table={table} />
                             )}
                         </TableBody>
 

@@ -4,21 +4,26 @@ import { type CSSProperties, Fragment } from "react"
 
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
-import { flexRender, type Row } from "@tanstack/react-table"
+import { flexRender, type Row, type Table } from "@tanstack/react-table"
+
+import { cn } from "@/lib/utils"
 
 import { TableCell, TableRow } from "@/components/ui/table"
 
-import TableRowDetailView from "./table-row-detail-view"
+import TableBodyRowDetailView from "./table-body-row-detail-view"
 
-type TableRowCustomProps = {
+type TableBodyRowCustomProps = {
+    className?: string
     row: Row<Trade>
+    table: Table<Trade>
 }
 
-export default function TableRowCustom(props: TableRowCustomProps) {
-    const { row } = props
+export default function TableBodyRowCustom(props: TableBodyRowCustomProps) {
+    const { className, row, table } = props
+    const paddingConfig = { lg: "p-4", md: "p-2", sm: "p-1", xl: "p-6" }
+    const padding = table.options.meta?.padding!
 
     // dnd sortable context for the table body cells
-
     const { isDragging, setNodeRef, transform, transition } = useSortable({
         // this is needed for the dnd sortable to work, it needs to know what if its a column or row
         data: { type: "row" },
@@ -49,6 +54,7 @@ export default function TableRowCustom(props: TableRowCustomProps) {
                 {/* the table body cells */}
                 {row.getVisibleCells().map((cell) => (
                     <TableCell
+                        className={cn(paddingConfig[padding], className)}
                         key={cell.id}
                         style={{
                             minWidth: cell.column.columnDef.minSize || 0,
@@ -61,7 +67,7 @@ export default function TableRowCustom(props: TableRowCustomProps) {
             </TableRow>
 
             {/* if the row is expanded, display the row detail view */}
-            {row.getIsExpanded() && <TableRowDetailView row={row} trade={row.original} />}
+            {row.getIsExpanded() && <TableBodyRowDetailView row={row} trade={row.original} />}
         </Fragment>
     )
 }

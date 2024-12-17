@@ -3,7 +3,6 @@ import type { Table } from "@tanstack/react-table"
 import type { ReactNode } from "react"
 
 import { Download, FileJson, Sheet } from "lucide-react"
-import * as XLSX from "xlsx"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -14,6 +13,9 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+
+import downloadTableToCSV from "../table-utils/downloads/download-table-to-csv"
+import downloadTableToJSON from "../table-utils/downloads/download-table-to-json"
 
 type TableExtraExportButtonsProps = {
     table: Table<Trade>
@@ -26,51 +28,14 @@ export default function TableExtraExportButtons(props: TableExtraExportButtonsPr
     const filteredRows = table.getFilteredRowModel().rows
     const trades = filteredRows.map((row) => row.original)
 
-    const handleExportExcel = () => {
-        const fileName = "trades.xlsx"
-
-        // Create a new workbook
-        const wb = XLSX.utils.book_new()
-
-        // Convert trades to worksheet
-        const ws = XLSX.utils.json_to_sheet(trades)
-
-        // Add worksheet to workbook
-        XLSX.utils.book_append_sheet(wb, ws, "Trades")
-
-        // Save workbook as Excel file
-        XLSX.writeFile(wb, fileName)
-    }
-
-    const handleExportJSON = () => {
-        // Create a blob from the JSON data
-        const fileName = "trades.json"
-        const jsonString = JSON.stringify(trades, null, 2)
-        const blob = new Blob([jsonString], { type: "application/json" })
-
-        // Create download link
-        const url = URL.createObjectURL(blob)
-        const link = document.createElement("a")
-        link.href = url
-        link.download = fileName
-
-        // Trigger download
-        document.body.appendChild(link)
-        link.click()
-
-        // Cleanup
-        document.body.removeChild(link)
-        URL.revokeObjectURL(url)
-    }
-
     const exportButtons = [
         {
-            handleDownload: handleExportExcel,
+            handleDownload: () => downloadTableToCSV(trades),
             icon: <Sheet className="h-4 w-4" />,
             label: "Export to CSV",
         },
         {
-            handleDownload: handleExportJSON,
+            handleDownload: () => downloadTableToJSON(trades),
             icon: <FileJson className="h-4 w-4" />,
             label: "Export to JSON",
         },

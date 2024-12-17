@@ -8,12 +8,12 @@ import { cn } from "@/lib/utils"
 
 import { TableCell, TableRow } from "@/components/ui/table"
 
-type TableRowDetailViewProps = {
+type TableBodyRowDetailViewProps = {
     row: Row<Trade>
     trade: Trade
 }
 
-export default function TableRowDetailView(props: TableRowDetailViewProps) {
+export default function TableBodyRowDetailView(props: TableBodyRowDetailViewProps) {
     const { row, trade } = props
 
     const rowDetailViewDataColOne = useMemo(() => {

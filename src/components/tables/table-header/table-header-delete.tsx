@@ -1,6 +1,6 @@
 import { Trash2 } from "lucide-react"
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip"
 
 export default function TableHeaderDelete() {
     return (
