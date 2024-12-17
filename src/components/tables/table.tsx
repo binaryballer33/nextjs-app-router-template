@@ -25,7 +25,7 @@ import useCreateTableData from "./table-utils/use-create-table-data"
 // TODO: make the table header sticky
 // TODO: figure out how to make the entire header surface area a tooltip trigger so when hovering over the header cell, the tooltip is visible and when hovering the header title disspears and only the icons and tooltip are visible
 export default function CustomTable() {
-    const { columnOrder, handleDragEnd, rowOrder, sensors, tableConfig } = useCreateTableData()
+    const { columnOrder, dndContextId, handleDragEnd, rowOrder, sensors, tableConfig } = useCreateTableData()
 
     const table = useReactTable<Trade>(tableConfig)
 
@@ -51,7 +51,12 @@ export default function CustomTable() {
             </div>
 
             {/* dnd context to allow reordering of the table rows and columns */}
-            <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
+            <DndContext
+                collisionDetection={closestCenter}
+                id={dndContextId}
+                onDragEnd={handleDragEnd}
+                sensors={sensors}
+            >
                 <div className="max-h-[525px] min-h-[525px] overflow-x-auto overflow-y-auto rounded-md border">
                     <Table>
                         <TableHeader className="sticky top-0 z-10 bg-background">
