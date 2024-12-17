@@ -13,7 +13,6 @@ import TableExtraDeleteSelected from "./table-extra-delete-selected"
 import TableExtraExportButtons from "./table-extra-export-buttons"
 import TableExtraGlobalSearchBar from "./table-extra-global-search-bar"
 import TableExtraPagination from "./table-extra-pagination"
-import TableExtraRecordsPerPage from "./table-extra-records-per-page"
 import TableFooter from "./table-footer"
 import TableHeaderCustomHead from "./table-header-custom-head"
 import TableRowCustom from "./table-row-custom"
@@ -25,7 +24,6 @@ import useTableData from "./use-create-table-data"
 // TODO: make the table header sticky
 // TODO: figure out how to make the entire header surface area a tooltip trigger so when hovering over the header cell, the tooltip is visible and when hovering the header title disspears and only the icons and tooltip are visible
 // TODO: add a button to reduce the padding of the table body cells for "compact, standard, expanded"
-// TODO: fix css styling so that you can see the cells of the column when you are dragging the column header
 export default function CustomTable() {
     const { columnOrder, handleDragEnd, rowOrder, sensors, tableConfig } = useTableData()
 
@@ -37,7 +35,7 @@ export default function CustomTable() {
         <div className="flex flex-col gap-2 md:p-2">
             {/* Extra table features */}
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-                <div className="flex items-center gap-4 md:w-4/6">
+                <div className="flex items-center gap-4 max-sm:gap-2 md:w-5/6">
                     {table.getIsSomeRowsSelected() || table.getIsAllRowsSelected() ? (
                         <TableExtraDeleteSelected table={table} />
                     ) : (
@@ -49,9 +47,6 @@ export default function CustomTable() {
 
                     <TableExtraGlobalSearchBar table={table} />
                 </div>
-
-                {/* Records per page option selector */}
-                <TableExtraRecordsPerPage table={table} />
             </div>
 
             {/* dnd context to allow reordering of the table rows and columns */}

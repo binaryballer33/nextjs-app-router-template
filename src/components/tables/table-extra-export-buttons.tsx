@@ -80,8 +80,8 @@ export default function TableExtraExportButtons(props: TableExtraExportButtonsPr
         <NavigationMenu className="z-50 w-auto hover:border-b-2 hover:border-primary">
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <NavigationMenuTrigger>
-                        <Download className="h-6 w-6" />
+                    <NavigationMenuTrigger className="max-sm:!p-0">
+                        <Download className="h-6 w-6 max-sm:!w-4" />
                     </NavigationMenuTrigger>
                     <NavigationMenuContent className="min-w-[120px] p-4">
                         <div className="flex flex-col items-center gap-2">

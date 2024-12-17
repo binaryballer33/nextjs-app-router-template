@@ -12,7 +12,7 @@ export default function TableExtraGlobalSearchBar(props: TableExtraGlobalSearchB
 
     return (
         <Input
-            className="ml-2 flex-1"
+            className="flex-1 md:ml-2"
             onChange={(e) => table.setGlobalFilter(e.target.value)}
             placeholder="Search..."
         />

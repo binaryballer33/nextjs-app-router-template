@@ -37,7 +37,7 @@ export default function TableExtraColumnVisibility(props: TableExtraColumnVisibi
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button className="m-2" size="icon" variant="ghost">
+                <Button className="m-2 max-sm:!m-0" size="icon" variant="ghost">
                     <Eye className="h-4 w-4" />
                     <span className="sr-only">Show Column Visibility</span>
                 </Button>

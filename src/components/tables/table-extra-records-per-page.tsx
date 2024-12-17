@@ -14,8 +14,8 @@ export default function TableExtraRecordsPerPage(props: TableExtraRecordsPerPage
     const recordsPerPage = [10, 20, 30, 40, 50, 100]
 
     return (
-        <div className="flex items-center space-x-2">
-            <p className="text-xs font-medium md:text-sm">Rows per page</p>
+        <div className="flex items-center space-x-2 max-sm:w-full max-sm:justify-between ">
+            <p className="text-xs font-medium max-sm:hidden md:text-sm">Rows per page</p>
 
             {/* Select the number of rows per page */}
             <Select
@@ -24,7 +24,7 @@ export default function TableExtraRecordsPerPage(props: TableExtraRecordsPerPage
                 }}
                 value={`${table.getState().pagination.pageSize}`}
             >
-                <SelectTrigger className="h-8 w-[60px] md:w-[70px] ">
+                <SelectTrigger className="h-8 w-[60px] max-sm:!ml-0 md:w-[70px]">
                     <SelectValue placeholder={table.getState().pagination.pageSize} />
                 </SelectTrigger>
                 <SelectContent side="top">
