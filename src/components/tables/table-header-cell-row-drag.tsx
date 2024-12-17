@@ -1,11 +1,11 @@
 import { useSortable } from "@dnd-kit/sortable"
 import { ArrowUpDown } from "lucide-react"
 
-type RowDragHandleCellProps = {
+type TableBodyRowDragProps = {
     rowId: string
 }
 
-export default function RowDragHandleCell(props: RowDragHandleCellProps) {
+export default function TableBodyRowDrag(props: TableBodyRowDragProps) {
     const { rowId } = props
 
     const { attributes, listeners } = useSortable({

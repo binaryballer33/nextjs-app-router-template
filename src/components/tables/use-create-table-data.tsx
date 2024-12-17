@@ -2,9 +2,9 @@
 
 import type { Trade } from "@/types/finance/trade"
 import type { DragEndEvent } from "@dnd-kit/core"
-import type { RowData, TableOptions } from "@tanstack/react-table"
+import type { TableOptions } from "@tanstack/react-table"
 
-import { useMemo, useState } from "react"
+import { useState } from "react"
 
 import { KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core"
 import { arrayMove } from "@dnd-kit/sortable"
@@ -14,11 +14,11 @@ import { fuzzyFilter } from "./table-utils"
 import { trades } from "./trade-data"
 import useCreateTableColumns from "./use-create-table-columns"
 
-// Extend the TableMeta interface from TanStack to add a removeRow function to the table meta
+// Extend TanStack's TableMeta interface
 declare module "@tanstack/table-core" {
-    interface TableMeta<TData extends RowData> {
-        // add a removeRow function to the table meta to delete rows from the table data state
+    interface TableMeta<TData> {
         removeRow: (rowId: string) => void
+        removeRows: (rowIds: string[]) => void
     }
 }
 
@@ -33,9 +33,7 @@ export default function useTableData() {
     const [columnOrder, setColumnOrder] = useState<string[]>(() => columns.map((column) => column.id!))
 
     // row order for dnd row reordering
-    const rowOrder = useMemo(() => {
-        return data.map((row) => row.id)
-    }, [data])
+    const [rowOrder, setRowOrder] = useState<string[]>(() => data.map((row) => row.id))
 
     // sensors for dnd column reordering
     const sensors = useSensors(
@@ -56,19 +54,26 @@ export default function useTableData() {
     // reorder row / column after using dnd
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event
+
         if (!active || !over || active.id === over.id) return
 
+        // check if the active item is a column or a row by checking the type that was assigned using the useSortable hook
         const isColumn = active.data.current?.type === "column"
         const isRow = active.data.current?.type === "row"
 
         if (isColumn) {
             const oldIndex = columnOrder.indexOf(active.id.toString())
             const newIndex = columnOrder.indexOf(over.id.toString())
+
+            // arrayMove is a function that moves an item in an array to a new index, fancy splice from dnd-kit
             setColumnOrder(arrayMove(columnOrder, oldIndex, newIndex))
         } else if (isRow) {
             const oldIndex = rowOrder.indexOf(active.id.toString())
             const newIndex = rowOrder.indexOf(over.id.toString())
-            setData((prev) => arrayMove(prev, oldIndex, newIndex))
+
+            // arrayMove is a function that moves an item in an array to a new index, fancy splice from dnd-kit
+            setData(arrayMove(data, oldIndex, newIndex))
+            setRowOrder(arrayMove(rowOrder, oldIndex, newIndex))
         }
     }
 
@@ -111,6 +116,9 @@ export default function useTableData() {
             removeRow: (rowId: string) => {
                 setData((prev) => prev.filter((row) => row.id !== rowId))
             },
+            removeRows: (rowIds: string[]) => {
+                setData((prev) => prev.filter((row) => !rowIds.includes(row.id)))
+            },
         },
 
         // update the column order for dnd column reordering
@@ -121,14 +129,5 @@ export default function useTableData() {
         },
     }
 
-    return {
-        columnOrder,
-        columns,
-        data,
-        handleDragEnd,
-        rowOrder,
-        sensors,
-        setData,
-        tableConfig,
-    }
+    return { columnOrder, columns, data, handleDragEnd, rowOrder, sensors, tableConfig }
 }

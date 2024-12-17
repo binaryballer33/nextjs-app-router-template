@@ -1,33 +1,24 @@
 import type { Trade } from "@/types/finance/trade"
 import type { Table } from "@tanstack/react-table"
-import type { Dispatch, SetStateAction } from "react"
 
 import { Trash2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-type TableBodyDeleteIconProps = {
-    setData: Dispatch<SetStateAction<Trade[]>>
+type TableExtraDeleteSelectedProps = {
     table: Table<Trade>
 }
 
-export default function TableBodyDeleteIcon(props: TableBodyDeleteIconProps) {
-    const { setData, table } = props
+export default function TableExtraDeleteSelected(props: TableExtraDeleteSelectedProps) {
+    const { table } = props
 
-    // get the selected rows
     const selectedRows = table.getSelectedRowModel().rows
-
-    // if no rows are selected, return null
     if (selectedRows.length === 0) return null
 
-    // handle the deletion of the selected rows
+    // handle the deletion of the selected row(s)
     const handleDeleteSelected = () => {
-        const selectedIds = selectedRows.map((row) => row.original.id)
-
-        // Use setData to update the data
-        setData((prevData) => prevData.filter((row) => !selectedIds.includes(row.id)))
-
-        // Clear selection after delete
+        const selectedIds = selectedRows.map((row) => row.id)
+        table.options.meta?.removeRows(selectedIds)
         table.resetRowSelection()
     }
 

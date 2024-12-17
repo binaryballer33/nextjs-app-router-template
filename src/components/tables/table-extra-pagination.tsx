@@ -10,11 +10,11 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-r
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-type PaginationProps = {
+type TableExtraPaginationProps = {
     table: Table<Trade>
 }
 
-export default function TablePagination(props: PaginationProps) {
+export default function TableExtraPagination(props: TableExtraPaginationProps) {
     const { table } = props
 
     const [inputValue, setInputValue] = useState<string>(String(table.getState().pagination.pageIndex + 1))

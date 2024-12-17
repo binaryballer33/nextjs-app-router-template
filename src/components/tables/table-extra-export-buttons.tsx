@@ -15,11 +15,11 @@ import {
 } from "@/components/ui/navigation-menu"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
-type TableExportButtonsProps = {
+type TableExtraExportButtonsProps = {
     table: Table<Trade>
 }
 
-export default function TableExportButtons(props: TableExportButtonsProps) {
+export default function TableExtraExportButtons(props: TableExtraExportButtonsProps) {
     const { table } = props
 
     // Get all rows that match current filters

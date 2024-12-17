@@ -9,15 +9,15 @@ import { useReactTable } from "@tanstack/react-table"
 import { Table, TableBody, TableHeader, TableRow } from "@/components/ui/table"
 
 import TableBodyCell from "./table-body-cell"
-import TableBodyDeleteIcon from "./table-body-delete-icon"
 import TableBodyNoRecordsFound from "./table-body-no-records-found"
-import TableHeaderExportButtons from "./table-export-buttons"
+import TableExtraColumnVisibility from "./table-extra-column-visibility"
+import TableExtraDeleteSelected from "./table-extra-delete-selected"
+import TableExtraExportButtons from "./table-extra-export-buttons"
+import TableExtraGlobalSearchBar from "./table-extra-global-search-bar"
+import TableExtraPagination from "./table-extra-pagination"
+import TableExtraRecordsPerPage from "./table-extra-records-per-page"
 import TableFooter from "./table-footer"
-import TableGlobalSearchBar from "./table-global-search-bar"
 import TableHeaderCell from "./table-header-cell"
-import TableHeaderColumnVisibilitySelector from "./table-header-column-visibility-selector"
-import TablePagination from "./table-pagination"
-import TableRecordsPerPage from "./table-records-per-page"
 import useTableData from "./use-create-table-data"
 
 // TODO: dropdown column menu needs to have more detailed filtering options ( ge, lt, gte, lte, eq, neq, contains, not contains, etc.)
@@ -27,7 +27,7 @@ import useTableData from "./use-create-table-data"
 // TODO: add a button to reduce the padding of the table body cells for "compact, standard, expanded"
 // TODO: fix css styling so that you can see the cells of the column when you are dragging the column header
 export default function CustomTable() {
-    const { columnOrder, handleDragEnd, rowOrder, sensors, setData, tableConfig } = useTableData()
+    const { columnOrder, handleDragEnd, rowOrder, sensors, tableConfig } = useTableData()
 
     const table = useReactTable<Trade>(tableConfig)
 
@@ -39,19 +39,19 @@ export default function CustomTable() {
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
                 <div className="flex items-center gap-4 md:w-4/6">
                     {table.getIsSomeRowsSelected() || table.getIsAllRowsSelected() ? (
-                        <TableBodyDeleteIcon setData={setData} table={table} />
+                        <TableExtraDeleteSelected table={table} />
                     ) : (
                         <>
-                            <TableHeaderColumnVisibilitySelector columnOrder={columnOrder} table={table} />
-                            <TableHeaderExportButtons table={table} />
+                            <TableExtraColumnVisibility columnOrder={columnOrder} table={table} />
+                            <TableExtraExportButtons table={table} />
                         </>
                     )}
 
-                    <TableGlobalSearchBar table={table} />
+                    <TableExtraGlobalSearchBar table={table} />
                 </div>
 
                 {/* Records per page option selector */}
-                <TableRecordsPerPage table={table} />
+                <TableExtraRecordsPerPage table={table} />
             </div>
 
             {/* Table */}
@@ -94,7 +94,7 @@ export default function CustomTable() {
             </DndContext>
 
             {/* Pagination */}
-            <TablePagination table={table} />
+            <TableExtraPagination table={table} />
         </div>
     )
 }

@@ -3,11 +3,11 @@ import type { Table } from "@tanstack/react-table"
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-type TableRecordsPerPageProps = {
+type TableExtraRecordsPerPageProps = {
     table: Table<Trade>
 }
 
-export default function TableRecordsPerPage(props: TableRecordsPerPageProps) {
+export default function TableExtraRecordsPerPage(props: TableExtraRecordsPerPageProps) {
     const { table } = props
 
     const { pagination } = table.getState()

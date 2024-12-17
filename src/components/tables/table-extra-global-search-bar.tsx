@@ -3,11 +3,11 @@ import type { Table } from "@tanstack/react-table"
 
 import { Input } from "@/components/ui/input"
 
-type TableGlobalSearchBarProps = {
+type TableExtraGlobalSearchBarProps = {
     table: Table<Trade>
 }
 
-export default function TableGlobalSearchBar(props: TableGlobalSearchBarProps) {
+export default function TableExtraGlobalSearchBar(props: TableExtraGlobalSearchBarProps) {
     const { table } = props
 
     return (

@@ -13,12 +13,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 import { convertCamelToTitleCase } from "./table-utils"
 
-type TableHeaderColumnVisibilitySelectorProps = {
+type TableExtraColumnVisibilityProps = {
     columnOrder: string[]
     table: Table<Trade>
 }
 
-export default function TableHeaderColumnVisibilitySelector(props: TableHeaderColumnVisibilitySelectorProps) {
+export default function TableExtraColumnVisibility(props: TableExtraColumnVisibilityProps) {
     const { columnOrder, table } = props
 
     const handleValueChangeAll = (value: string) => {

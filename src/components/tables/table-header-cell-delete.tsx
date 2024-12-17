@@ -5,12 +5,12 @@ import { Trash2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-type TableHeaderCellDeleteIconProps = {
+type TableHeaderCellDeleteProps = {
     row: Row<Trade>
     table: Table<Trade>
 }
 
-export default function TableHeaderCellDeleteIcon(props: TableHeaderCellDeleteIconProps) {
+export default function TableHeaderCellDelete(props: TableHeaderCellDeleteProps) {
     const { row, table } = props
 
     return (
