@@ -8,26 +8,24 @@ import { flexRender, type Row } from "@tanstack/react-table"
 
 import { TableCell, TableRow } from "@/components/ui/table"
 
-import TableBodyDetailView from "./table-body-detail-view"
+import TableRowDetailView from "./table-row-detail-view"
 
-type TableBodyCellProps = {
+type TableRowCustomProps = {
     row: Row<Trade>
 }
 
-export default function TableBodyCell(props: TableBodyCellProps) {
+export default function TableRowCustom(props: TableRowCustomProps) {
     const { row } = props
 
     // dnd sortable context for the table body cells
 
     const { isDragging, setNodeRef, transform, transition } = useSortable({
-        data: {
-            // this is needed for the dnd sortable to work, it needs to know what if its a column or row
-            type: "row",
-        },
+        // this is needed for the dnd sortable to work, it needs to know what if its a column or row
+        data: { type: "row" },
         id: row.id,
     })
 
-    // dnd sortable styles for the table body cells
+    // dnd draggable styles for the table header cell
     const style: CSSProperties = {
         opacity: isDragging ? 0.8 : 1,
         position: "relative",
@@ -63,7 +61,7 @@ export default function TableBodyCell(props: TableBodyCellProps) {
             </TableRow>
 
             {/* if the row is expanded, display the row detail view */}
-            {row.getIsExpanded() && <TableBodyDetailView row={row} trade={row.original} />}
+            {row.getIsExpanded() && <TableRowDetailView row={row} trade={row.original} />}
         </Fragment>
     )
 }

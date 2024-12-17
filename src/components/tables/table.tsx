@@ -8,8 +8,6 @@ import { useReactTable } from "@tanstack/react-table"
 
 import { Table, TableBody, TableHeader, TableRow } from "@/components/ui/table"
 
-import TableBodyCell from "./table-body-cell"
-import TableBodyNoRecordsFound from "./table-body-no-records-found"
 import TableExtraColumnVisibility from "./table-extra-column-visibility"
 import TableExtraDeleteSelected from "./table-extra-delete-selected"
 import TableExtraExportButtons from "./table-extra-export-buttons"
@@ -17,7 +15,9 @@ import TableExtraGlobalSearchBar from "./table-extra-global-search-bar"
 import TableExtraPagination from "./table-extra-pagination"
 import TableExtraRecordsPerPage from "./table-extra-records-per-page"
 import TableFooter from "./table-footer"
-import TableHeaderCell from "./table-header-cell"
+import TableHeaderCustomHead from "./table-header-custom-head"
+import TableRowCustom from "./table-row-custom"
+import TableRowNoRecordsFound from "./table-row-no-records-found"
 import useTableData from "./use-create-table-data"
 
 // TODO: dropdown column menu needs to have more detailed filtering options ( ge, lt, gte, lte, eq, neq, contains, not contains, etc.)
@@ -35,7 +35,7 @@ export default function CustomTable() {
 
     return (
         <div className="flex flex-col gap-2 md:p-2">
-            {/* Table Controls */}
+            {/* Extra table features */}
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
                 <div className="flex items-center gap-4 md:w-4/6">
                     {table.getIsSomeRowsSelected() || table.getIsAllRowsSelected() ? (
@@ -54,7 +54,7 @@ export default function CustomTable() {
                 <TableExtraRecordsPerPage table={table} />
             </div>
 
-            {/* Table */}
+            {/* dnd context to allow reordering of the table rows and columns */}
             <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
                 <div className="max-h-[525px] min-h-[525px] overflow-x-auto overflow-y-auto rounded-md border">
                     <Table>
@@ -66,7 +66,7 @@ export default function CustomTable() {
                                     <SortableContext items={columnOrder}>
                                         {/* Table header cells */}
                                         {headerGroup.headers.map((header) => (
-                                            <TableHeaderCell header={header} key={header.id} table={table} />
+                                            <TableHeaderCustomHead header={header} key={header.id} table={table} />
                                         ))}
                                     </SortableContext>
                                 </TableRow>
@@ -74,20 +74,19 @@ export default function CustomTable() {
                         </TableHeader>
 
                         <TableBody>
-                            {/* TODO: find out if SortableContext should only be wrapped around the table body row */}
-                            {/* dnd sortable context for the table body cells */}
-                            <SortableContext items={rowOrder}>
-                                {/* table body rows */}
-                                {table.getRowModel().rows.length ? (
-                                    table.getRowModel().rows.map((row) => <TableBodyCell key={row.id} row={row} />)
-                                ) : (
-                                    // if no data is found that matches the search, display this message
-                                    <TableBodyNoRecordsFound table={table} />
-                                )}
-                            </SortableContext>
+                            {/* dnd sortable context for the table rows */}
+                            {table.getRowModel().rows.length ? (
+                                <SortableContext items={rowOrder}>
+                                    {table.getRowModel().rows.map((row) => (
+                                        <TableRowCustom key={row.id} row={row} />
+                                    ))}
+                                </SortableContext>
+                            ) : (
+                                // if no data is found that matches the search, display this message
+                                <TableRowNoRecordsFound table={table} />
+                            )}
                         </TableBody>
 
-                        {/* Table footer */}
                         <TableFooter table={table} />
                     </Table>
                 </div>
