@@ -1,28 +1,15 @@
 "use client"
 
 import type { Trade } from "@/types/finance/trade"
-import type { DragEndEvent } from "@dnd-kit/core"
 
-import { Fragment } from "react"
-
-import {
-    closestCenter,
-    DndContext,
-    KeyboardSensor,
-    MouseSensor,
-    TouchSensor,
-    useSensor,
-    useSensors,
-} from "@dnd-kit/core"
-import { restrictToHorizontalAxis } from "@dnd-kit/modifiers"
-import { arrayMove, horizontalListSortingStrategy, SortableContext } from "@dnd-kit/sortable"
+import { closestCenter, DndContext } from "@dnd-kit/core"
+import { SortableContext } from "@dnd-kit/sortable"
 import { useReactTable } from "@tanstack/react-table"
 
 import { Table, TableBody, TableHeader, TableRow } from "@/components/ui/table"
 
 import TableBodyCell from "./table-body-cell"
 import TableBodyDeleteIcon from "./table-body-delete-icon"
-import TableBodyDetailView from "./table-body-detail-view"
 import TableBodyNoRecordsFound from "./table-body-no-records-found"
 import TableHeaderExportButtons from "./table-export-buttons"
 import TableFooter from "./table-footer"
@@ -31,31 +18,20 @@ import TableHeaderCell from "./table-header-cell"
 import TableHeaderColumnVisibilitySelector from "./table-header-column-visibility-selector"
 import TablePagination from "./table-pagination"
 import TableRecordsPerPage from "./table-records-per-page"
-import useTableData from "./use-create-table"
+import useTableData from "./use-create-table-data"
 
 // TODO: dropdown column menu needs to have more detailed filtering options ( ge, lt, gte, lte, eq, neq, contains, not contains, etc.)
 // TODO: add a "create new trade button"
-// TODO: row reordering
 // TODO: make the table header sticky
 // TODO: figure out how to make the entire header surface area a tooltip trigger so when hovering over the header cell, the tooltip is visible and when hovering the header title disspears and only the icons and tooltip are visible
+// TODO: add a button to reduce the padding of the table body cells for "compact, standard, expanded"
+// TODO: fix css styling so that you can see the cells of the column when you are dragging the column header
 export default function CustomTable() {
-    const { columnIds, columnOrder, setColumnOrder, setData, tableConfig } = useTableData()
+    const { columnOrder, handleDragEnd, rowOrder, sensors, setData, tableConfig } = useTableData()
+
     const table = useReactTable<Trade>(tableConfig)
 
-    // reorder columns after drag & drop
-    const handleDragEnd = (event: DragEndEvent) => {
-        const { active, over } = event
-        if (active && over && active.id !== over.id) {
-            setColumnOrder((columnOrderPrev) => {
-                const oldIndex = columnOrderPrev.indexOf(active.id as string)
-                const newIndex = columnOrderPrev.indexOf(over.id as string)
-                return arrayMove(columnOrderPrev, oldIndex, newIndex) // this is just a splice util
-            })
-        }
-    }
-
-    // sensors for DnD column reordering
-    const sensors = useSensors(useSensor(MouseSensor, {}), useSensor(TouchSensor, {}), useSensor(KeyboardSensor, {}))
+    if (!table) return null
 
     return (
         <div className="flex flex-col gap-2 md:p-2">
@@ -66,7 +42,7 @@ export default function CustomTable() {
                         <TableBodyDeleteIcon setData={setData} table={table} />
                     ) : (
                         <>
-                            <TableHeaderColumnVisibilitySelector columnIds={columnIds} table={table} />
+                            <TableHeaderColumnVisibilitySelector columnOrder={columnOrder} table={table} />
                             <TableHeaderExportButtons table={table} />
                         </>
                     )}
@@ -79,12 +55,7 @@ export default function CustomTable() {
             </div>
 
             {/* Table */}
-            <DndContext
-                collisionDetection={closestCenter}
-                modifiers={[restrictToHorizontalAxis]}
-                onDragEnd={handleDragEnd}
-                sensors={sensors}
-            >
+            <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
                 <div className="max-h-[525px] min-h-[525px] overflow-x-auto overflow-y-auto rounded-md border">
                     <Table>
                         <TableHeader className="sticky top-0 z-10 bg-background">
@@ -92,7 +63,7 @@ export default function CustomTable() {
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow className="[&>th]:border-r [&>th]:border-black/10" key={headerGroup.id}>
                                     {/* dnd sortable context for the table header cells */}
-                                    <SortableContext items={columnOrder} strategy={horizontalListSortingStrategy}>
+                                    <SortableContext items={columnOrder}>
                                         {/* Table header cells */}
                                         {headerGroup.headers.map((header) => (
                                             <TableHeaderCell header={header} key={header.id} table={table} />
@@ -103,39 +74,17 @@ export default function CustomTable() {
                         </TableHeader>
 
                         <TableBody>
-                            {/* table body rows */}
-                            {table.getRowModel().rows.length ? (
-                                table.getRowModel().rows.map((row) => (
-                                    <Fragment key={row.id}>
-                                        <TableRow
-                                            className={`
-                                            ${row.index % 2 === 1 ? "bg-black/[.33]" : ""}
-                                            ${row.getIsSelected() ? "bg-primary" : ""}
-                                            hover:bg-black/[.05]
-                                            [&>td]:border-r [&>td]:border-black/10
-                                        `}
-                                        >
-                                            {/* get the table records and display them in the table */}
-                                            {row.getVisibleCells().map((cell) => (
-                                                // dnd sortable context for the table body cells
-                                                <SortableContext
-                                                    items={columnOrder}
-                                                    key={cell.id}
-                                                    strategy={horizontalListSortingStrategy}
-                                                >
-                                                    <TableBodyCell cell={cell} />
-                                                </SortableContext>
-                                            ))}
-                                        </TableRow>
-
-                                        {/* if the row is expanded, display the row detail view */}
-                                        {row.getIsExpanded() && <TableBodyDetailView row={row} trade={row.original} />}
-                                    </Fragment>
-                                ))
-                            ) : (
-                                // if no data is found that matches the search, display this message
-                                <TableBodyNoRecordsFound table={table} />
-                            )}
+                            {/* TODO: find out if SortableContext should only be wrapped around the table body row */}
+                            {/* dnd sortable context for the table body cells */}
+                            <SortableContext items={rowOrder}>
+                                {/* table body rows */}
+                                {table.getRowModel().rows.length ? (
+                                    table.getRowModel().rows.map((row) => <TableBodyCell key={row.id} row={row} />)
+                                ) : (
+                                    // if no data is found that matches the search, display this message
+                                    <TableBodyNoRecordsFound table={table} />
+                                )}
+                            </SortableContext>
                         </TableBody>
 
                         {/* Table footer */}

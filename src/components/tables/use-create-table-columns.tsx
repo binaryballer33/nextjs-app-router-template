@@ -1,66 +1,38 @@
 import type { Trade } from "@/types/finance/trade"
-import type { Dispatch, SetStateAction } from "react"
 
 import { useMemo } from "react"
 
 import { createColumnHelper } from "@tanstack/react-table"
-import { Minus, Plus, Trash2 } from "lucide-react"
 
 import getDayJsDateWithPlugins from "@/lib/helper-functions/dates/get-day-js-date-with-plugins"
 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+
+import RowDragHandleCell from "./table-body-row-drag"
+import TableHeaderCellDeleteIcon from "./table-header-cell-delete"
+import TableHeaderCheckbox from "./table-header-checkbox"
+import TableHeaderCheckboxAll from "./table-header-checkbox-all"
+import TableHeaderDelete from "./table-header-delete"
+import TableHeaderExpand from "./table-header-expand"
 
 const columnHelper = createColumnHelper<Trade>()
 
-export default function useCreateTableColumns(setData: Dispatch<SetStateAction<Trade[]>>) {
+export default function useCreateTableColumns() {
     const columns = useMemo(
         () => [
             columnHelper.display({
-                cell: ({ row }) => (
-                    <div className="flex items-center justify-center">
-                        <Checkbox
-                            checked={row.getIsSelected()}
-                            onCheckedChange={(checked) => row.toggleSelected(!!checked)}
-                        />
-                    </div>
-                ),
-                header: ({ table }) => (
-                    <TooltipProvider delayDuration={100}>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <div>
-                                    <Checkbox
-                                        checked={table.getIsAllRowsSelected()}
-                                        onCheckedChange={(checked) => table.toggleAllRowsSelected(!!checked)}
-                                    />
-                                </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p>Select all</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                ),
+                cell: ({ row }) => <TableHeaderCheckbox row={row} />,
+                header: ({ table }) => <TableHeaderCheckboxAll table={table} />,
                 id: "selection",
             }),
 
             columnHelper.display({
-                cell: ({ row }) =>
-                    row.getCanExpand() ? (
-                        <div className="flex items-center justify-center">
-                            <Button
-                                className="h-8 w-8"
-                                onClick={row.getToggleExpandedHandler()}
-                                size="icon"
-                                variant="ghost"
-                            >
-                                {row.getIsExpanded() ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-                                <span className="sr-only">{row.getIsExpanded() ? "Collapse row" : "Expand row"}</span>
-                            </Button>
-                        </div>
-                    ) : null,
+                cell: ({ row }) => <RowDragHandleCell rowId={row.id} />,
+                id: "drag-handle",
+            }),
+
+            columnHelper.display({
+                cell: ({ row }) => (row.getCanExpand() ? <TableHeaderExpand row={row} /> : null),
                 id: "expand",
             }),
 
@@ -235,37 +207,12 @@ export default function useCreateTableColumns(setData: Dispatch<SetStateAction<T
             }),
 
             columnHelper.display({
-                cell: ({ row }) => (
-                    <div className="flex items-center justify-center">
-                        <Button
-                            className="h-8 w-8 text-destructive hover:text-destructive/90"
-                            onClick={() =>
-                                setData((prevData) => prevData.filter((trade) => trade.id !== row.original.id))
-                            }
-                            size="icon"
-                            variant="ghost"
-                        >
-                            <Trash2 className="h-4 w-4" />
-                            <span className="sr-only">Delete row</span>
-                        </Button>
-                    </div>
-                ),
-                header: () => (
-                    <TooltipProvider delayDuration={100}>
-                        <Tooltip>
-                            <TooltipTrigger>
-                                <Trash2 className="h-4 w-4" />
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p>Delete row</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                ),
+                cell: ({ row, table }) => <TableHeaderCellDeleteIcon row={row} table={table} />,
+                header: () => <TableHeaderDelete />,
                 id: "delete",
             }),
         ],
-        [setData],
+        [],
     )
 
     return { columns }

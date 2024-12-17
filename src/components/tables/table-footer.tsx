@@ -26,7 +26,9 @@ export default function TableFooter({ table }: TableFooterProps) {
                 {/* Expand column */}
                 <TableCell />
 
-                {/* Stats cells */}
+                {/* Drag handle column */}
+                <TableCell />
+
                 <TableCell>
                     <div className="flex items-center space-x-2">
                         <span className="font-medium">Total P&L:</span>
@@ -45,7 +47,6 @@ export default function TableFooter({ table }: TableFooterProps) {
                     </div>
                 </TableCell>
 
-                {/* Expand column */}
                 <TableCell>
                     <div className="flex items-center space-x-2">
                         <span className="font-medium">Trade Count:</span>

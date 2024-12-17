@@ -23,14 +23,20 @@ interface TableHeaderCellProps {
 export default function TableHeaderCell(props: TableHeaderCellProps) {
     const { header, table } = props
 
+    // TODO: put this in the use-create-table-columns.tsx file, there will be a mistake in the future if not added there
+    // TODO: i want the table header cell to take up as little space as possible and grow wide wihen you hover over it so it can include the other features it offers
     // don't show the vertical menu for these columns
-    const hideForColumns = ["selection", "expand", "delete"]
+    const hideForColumns = ["selection", "expand", "delete", "drag-handle"]
 
     const isPinned = header.column.getIsPinned()
     const isSorted = header.column.getIsSorted()
 
     // dnd code for styling the table header cell and handling the column reordering
-    const { attributes, isDragging, listeners, setNodeRef, transform } = useSortable({
+    const { attributes, isDragging, listeners, setNodeRef, transform, transition } = useSortable({
+        data: {
+            // this is needed for the dnd sortable to work, it needs to know what if its a column or row
+            type: "column",
+        },
         id: header.column.id,
     })
 
@@ -39,9 +45,9 @@ export default function TableHeaderCell(props: TableHeaderCellProps) {
         opacity: isDragging ? 0.8 : 1,
         position: "relative",
         transform: CSS.Translate.toString(transform), // translate instead of transform to avoid squishing
-        transition: "width transform 0.2s ease-in-out",
+        transition,
         whiteSpace: "nowrap",
-        width: Math.max(header.getSize(), header.column.columnDef.minSize || 0),
+        width: Math.max(header.column.getSize(), header.column.columnDef.minSize || 0),
         zIndex: isDragging ? 1 : 0,
     }
 
@@ -63,7 +69,6 @@ export default function TableHeaderCell(props: TableHeaderCellProps) {
                     {!hideForColumns.includes(header.column.id) && (
                         <GripVertical
                             className="invisible h-5 w-5 group-hover:visible"
-                            type="button"
                             {...attributes}
                             {...listeners}
                         />

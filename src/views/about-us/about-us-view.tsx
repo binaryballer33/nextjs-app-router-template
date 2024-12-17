@@ -1,12 +1,11 @@
+import { placeholderImage, placeholderImage2 } from "@/lib/constants"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 import { PageHeadingCentered } from "@/components/base/page-heading"
 
 export default function AboutUsView() {
-    const placeholderImage = "https://placehold.co/320x320/000000/FFF"
-    const placeholderImage2 = "https://placehold.co/320x320"
-
     const teamMembers = [
         { image: placeholderImage, name: "Shaquille Rashad Mandy", role: "CEO" },
         { image: placeholderImage, name: "Peter Hernandez", role: "CTO" },

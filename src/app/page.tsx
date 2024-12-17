@@ -6,7 +6,6 @@ import { appMetadata } from "@/lib/config"
 import Container from "@/components/base/container"
 import PageHeading from "@/components/base/page-heading"
 import CustomTable from "@/components/tables/table"
-// import DndShadCnTable from "@/components/tables/test-table-shadcn"
 
 export const metadata = appMetadata.homePage
 

@@ -1,6 +1,7 @@
 import type { Trade } from "@/types/finance/trade"
 import type { Row } from "@tanstack/react-table"
 
+import { placeholderImage } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 
 import { TableCell, TableRow } from "@/components/ui/table"
@@ -18,11 +19,7 @@ export default function TableBodyDetailView(props: TableBodyDetailViewProps) {
             <TableCell colSpan={row.getVisibleCells().length}>
                 <div className="flex h-[150px] gap-4 p-2">
                     <div className="w-[150px]">
-                        <img
-                            alt="Trade preview"
-                            className="h-full w-full object-cover"
-                            src="https://placehold.co/320x320"
-                        />
+                        <img alt="Trade preview" className="h-full w-full object-cover" src={placeholderImage} />
                     </div>
                     <div className="flex w-1/2 items-center gap-4 text-left">
                         <div className="flex flex-col space-y-2">

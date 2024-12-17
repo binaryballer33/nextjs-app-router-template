@@ -14,16 +14,25 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { convertCamelToTitleCase } from "./table-utils"
 
 type TableHeaderColumnVisibilitySelectorProps = {
-    columnIds: string[]
+    columnOrder: string[]
     table: Table<Trade>
 }
 
 export default function TableHeaderColumnVisibilitySelector(props: TableHeaderColumnVisibilitySelectorProps) {
-    const { columnIds, table } = props
+    const { columnOrder, table } = props
 
-    const columnVisibilityState = Object.entries(table.getState().columnVisibility)
-        .filter(([_, value]) => value)
-        .map(([key]) => key)
+    const handleValueChangeAll = (value: string) => {
+        table.toggleAllColumnsVisible(value === "all")
+    }
+
+    const handleValueChangeColumn = (checked: boolean | string, id: string) => {
+        table.setColumnVisibility((prev) => ({
+            ...prev,
+            [id]: !!checked,
+        }))
+    }
+
+    const isChecked = (id: string) => table.getColumn(id)?.getIsVisible()
 
     return (
         <Popover>
@@ -39,14 +48,7 @@ export default function TableHeaderColumnVisibilitySelector(props: TableHeaderCo
                     <RadioGroup
                         className="flex gap-4"
                         defaultValue="all"
-                        onValueChange={(value) => {
-                            table.setColumnVisibility(
-                                columnIds.reduce((acc: { [id: string]: boolean }, val) => {
-                                    acc[val] = value === "all"
-                                    return acc
-                                }, {}),
-                            )
-                        }}
+                        onValueChange={(value) => handleValueChangeAll(value)}
                     >
                         <div className="flex items-center space-x-2">
                             <RadioGroupItem id="all" value="all" />
@@ -59,23 +61,12 @@ export default function TableHeaderColumnVisibilitySelector(props: TableHeaderCo
                     </RadioGroup>
 
                     <div className="space-y-2">
-                        {columnIds.map((id) => (
+                        {columnOrder.map((id) => (
                             <div className="flex items-center space-x-2" key={id}>
                                 <Checkbox
-                                    checked={columnVisibilityState.includes(id)}
+                                    checked={isChecked(id)}
                                     id={id}
-                                    onCheckedChange={(checked) => {
-                                        const newState = checked
-                                            ? [...columnVisibilityState, id]
-                                            : columnVisibilityState.filter((item) => item !== id)
-
-                                        table.setColumnVisibility(
-                                            columnIds.reduce((acc: { [id: string]: boolean }, val) => {
-                                                acc[val] = newState.includes(val)
-                                                return acc
-                                            }, {}),
-                                        )
-                                    }}
+                                    onCheckedChange={(checked) => handleValueChangeColumn(checked, id)}
                                 />
                                 <Label htmlFor={id}>{convertCamelToTitleCase(id)}</Label>
                             </div>

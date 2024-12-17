@@ -7,3 +7,6 @@ export const consoleLineColors = {
 }
 
 export const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+export const placeholderImage = "https://placehold.co/320x320"
+export const placeholderImage2 = "https://placehold.co/320x320/000000/FFF"

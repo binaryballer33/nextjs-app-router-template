@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Settings } from "lucide-react"
 import { toast } from "sonner"
 
+import { placeholderImage } from "@/lib/constants"
 import handleServerResponse from "@/lib/helper-functions/handleServerResponse"
 
 import updateUserAccountSettings from "@/actions/user/update-user-account-settings"
@@ -74,7 +75,7 @@ export default function UserAccountSettingsView() {
                 <Container className="space-y-4" maxWidth="md">
                     <div className="flex items-center space-x-4">
                         <Avatar className="h-24 w-24">
-                            <AvatarImage alt="Profile picture" src={avatar || "https://placehold.co/600x600"} />
+                            <AvatarImage alt="Profile picture" src={avatar || placeholderImage} />
                             <AvatarFallback>SM</AvatarFallback>
                         </Avatar>
                         <Input accept="image/*" id="avatar" onChange={handleAvatarChange} type="file" />
