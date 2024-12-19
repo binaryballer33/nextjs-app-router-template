@@ -17,7 +17,7 @@ export default function TableDemoStats({ table }: TableDemoStatsProps) {
     const averageProfitLoss = tradeCount > 0 ? totalProfitLoss / tradeCount : 0
 
     return (
-        <Accordion className="w-[500px]" collapsible type="single">
+        <Accordion className="md:w-[500px]" collapsible type="single">
             <AccordionItem value="item-1">
                 <AccordionTrigger className="hover:text-xl hover:text-primary data-[state=open]:text-primary">
                     <span className="font-medium">Table Stats</span>
