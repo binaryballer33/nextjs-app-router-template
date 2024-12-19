@@ -1,7 +1,7 @@
 "use client"
 
 import type { Trade } from "@/types/finance/trade"
-import type { Header } from "@tanstack/react-table" // needed for table body level scope DnD setup
+import type { Header, Table } from "@tanstack/react-table" // needed for table body level scope DnD setup
 import { type CSSProperties } from "react"
 
 import { useSortable } from "@dnd-kit/sortable"
@@ -20,12 +20,16 @@ import TableHeaderSortIndicator from "./table-header-sort-indicator"
 type TableHeaderCustomHeadProps = {
     header: Header<Trade, unknown>
     hideForColumns: string[]
+    table: Table<Trade>
 }
 
 export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps) {
-    const { header, hideForColumns } = props
+    const { header, hideForColumns, table } = props
 
     const isPinned = header.column.getIsPinned()
+
+    // Add this function to check if any column is being resized
+    const isAnyColumnResizing = table.getState().columnSizingInfo.isResizingColumn
 
     // dnd code for styling the table header cell and handling the column reordering
     const { attributes, isDragging, listeners, setNodeRef, transform, transition } = useSortable({
@@ -74,7 +78,7 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
 
                             {/* Overlay container for icons - appears on hover */}
                             <div className="absolute left-0 right-0 flex items-center justify-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
-                                {!hideForColumns.includes(header.column.id) && (
+                                {!hideForColumns.includes(header.column.id) && !isAnyColumnResizing && (
                                     <div className="flex w-full items-center justify-between gap-2 px-2 max-sm:gap-1  max-sm:pr-1">
                                         {/* dnd column header reordering button */}
                                         <TableHeaderDragColumn attributes={attributes} listeners={listeners} />

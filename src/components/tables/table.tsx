@@ -76,6 +76,7 @@ export default function CustomTable() {
                                                 header={header}
                                                 hideForColumns={hideForColumns}
                                                 key={header.id}
+                                                table={table}
                                             />
                                         ))}
                                     </SortableContext>
