@@ -1,11 +1,30 @@
-import { ArrowDown, ArrowUp } from "lucide-react"
+import type { Trade } from "@/types/finance/trade"
+import type { Header } from "@tanstack/react-table"
+
+import { ArrowDownAZ, ArrowUpZA } from "lucide-react"
+import { TiSortAlphabetically } from "react-icons/ti"
 
 type TableHeaderSortIndicatorProps = {
-    isSorted: "asc" | "desc" | false
+    header: Header<Trade, any>
 }
 
 export default function TableHeaderSortIndicator(props: TableHeaderSortIndicatorProps) {
-    const { isSorted } = props
+    const { header } = props
 
-    return isSorted === "asc" ? <ArrowDown className="h-5 w-5" /> : <ArrowUp className="h-5 w-5" />
+    const isSorted = header.column.getIsSorted()
+
+    const handleClick = header.column.getToggleSortingHandler()
+
+    const renderSortIndicator = () => {
+        switch (isSorted) {
+            case "asc":
+                return <ArrowDownAZ className="h-5 w-5" onClick={handleClick} />
+            case "desc":
+                return <ArrowUpZA className="h-5 w-5" onClick={handleClick} />
+            default:
+                return <TiSortAlphabetically className="h-5 w-5" onClick={handleClick} />
+        }
+    }
+
+    return renderSortIndicator()
 }

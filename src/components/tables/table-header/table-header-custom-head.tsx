@@ -1,55 +1,30 @@
 "use client"
 
 import type { Trade } from "@/types/finance/trade"
-import type { Header, Table } from "@tanstack/react-table" // needed for table body level scope DnD setup
+import type { Header } from "@tanstack/react-table" // needed for table body level scope DnD setup
 import { type CSSProperties } from "react"
 
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { flexRender } from "@tanstack/react-table"
-import { GripVertical } from "lucide-react"
 
 import { TableHead } from "@/components/ui/table"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
+import TableHeaderDragColumn from "./table-header-drag-column"
 import TableHeaderDropdownMenu from "./table-header-dropdown-menu"
 import TableHeaderResizer from "./table-header-resizer"
 import TableHeaderSortIndicator from "./table-header-sort-indicator"
 
-const createWithTooltip = (trigger: string, tooltipContent: string, delayDuration = 100) => {
-    return (
-        <TooltipProvider delayDuration={delayDuration}>
-            <Tooltip>
-                <TooltipTrigger asChild>
-                    <div className="flex h-full w-full items-center justify-center">
-                        <div className="flex items-center gap-1 text-sm transition-opacity group-hover:opacity-0">
-                            {trigger}
-                        </div>
-                    </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                    <p>{tooltipContent}</p>
-                </TooltipContent>
-            </Tooltip>
-        </TooltipProvider>
-    )
-}
-
 type TableHeaderCustomHeadProps = {
     header: Header<Trade, unknown>
-    table: Table<Trade>
+    hideForColumns: string[]
 }
 
-// TODO: put this in the use-create-table-columns.tsx file, there will be a mistake in the future if not added there
-// TODO: i want the table header cell to take up as little space as possible and grow wide wihen you hover over it so it can include the other features it offers
 export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps) {
-    const { header, table } = props
-
-    // don't show the vertical menu for these columns
-    const hideForColumns = ["selection", "expand", "delete", "drag-row"]
+    const { header, hideForColumns } = props
 
     const isPinned = header.column.getIsPinned()
-    const isSorted = header.column.getIsSorted()
 
     // dnd code for styling the table header cell and handling the column reordering
     const { attributes, isDragging, listeners, setNodeRef, transform, transition } = useSortable({
@@ -79,13 +54,18 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
                             isPinned ? "bg-primary/30" : ""
                         }`}
                         colSpan={header.colSpan}
-                        onClick={header.column.getToggleSortingHandler()}
                         ref={setNodeRef} // for dnd column reordering
                         style={style}
                     >
                         <div className="flex items-center justify-center gap-1">
-                            {/* Column header text - now with hover effect */}
-                            <div className="flex items-center gap-1 text-sm transition-opacity group-hover:opacity-0">
+                            {/* Column header text */}
+                            <div
+                                className={`flex items-center gap-1 text-sm ${
+                                    !hideForColumns.includes(header.column.id)
+                                        ? "transition-opacity group-hover:opacity-0"
+                                        : ""
+                                }`}
+                            >
                                 {header.isPlaceholder
                                     ? null
                                     : flexRender(header.column.columnDef.header, header.getContext())}
@@ -94,21 +74,19 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
                             {/* Overlay container for icons - appears on hover */}
                             <div className="absolute left-0 right-0 flex items-center justify-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
                                 {!hideForColumns.includes(header.column.id) && (
-                                    <>
+                                    <div className="flex w-full items-center justify-between gap-2 pl-2">
                                         {/* Sort direction indicator */}
-                                        <TableHeaderSortIndicator isSorted={isSorted} />
+                                        <TableHeaderSortIndicator header={header} />
 
                                         {/* dnd column header reordering button */}
-                                        <GripVertical className="h-5 w-5" {...attributes} {...listeners} />
+                                        <TableHeaderDragColumn attributes={attributes} listeners={listeners} />
 
                                         {/* Dropdown menu for column actions */}
                                         <TableHeaderDropdownMenu header={header} />
 
                                         {/* Table header resizer */}
-                                        {header.column.getCanResize() && (
-                                            <TableHeaderResizer header={header} table={table} />
-                                        )}
-                                    </>
+                                        <TableHeaderResizer header={header} />
+                                    </div>
                                 )}
                             </div>
                         </div>

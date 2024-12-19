@@ -4,7 +4,7 @@ import type { Trade } from "@/types/finance/trade"
 import type { DragEndEvent } from "@dnd-kit/core"
 import type { TableOptions } from "@tanstack/react-table"
 
-import { useMemo, useState } from "react"
+import { useState } from "react"
 
 import { KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core"
 import { arrayMove } from "@dnd-kit/sortable"
@@ -29,7 +29,7 @@ export default function useCreateTableData() {
     const [data, setData] = useState(trades)
 
     // create the table columns
-    const { columns } = useCreateTableColumns()
+    const { columns, hideForColumns } = useCreateTableColumns()
 
     // get the columnIds for column visibility toggling
     const [columnOrder, setColumnOrder] = useState<string[]>(() => columns.map((column) => column.id!))
@@ -38,9 +38,6 @@ export default function useCreateTableData() {
     const [rowOrder, setRowOrder] = useState<string[]>(() => data.map((row) => row.id))
 
     const [tablePadding, setTablePadding] = useState<"lg" | "md" | "sm" | "xl">("md")
-
-    // Add a stable ID for DnD context to prevent hydration errors and aria describe errors
-    const dndContextId = useMemo(() => "table-dnd-context", [])
 
     // sensors for dnd column reordering
     const sensors = useSensors(
@@ -140,5 +137,5 @@ export default function useCreateTableData() {
         },
     }
 
-    return { columnOrder, columns, data, dndContextId, handleDragEnd, rowOrder, sensors, tableConfig }
+    return { columnOrder, columns, data, handleDragEnd, hideForColumns, rowOrder, sensors, tableConfig }
 }

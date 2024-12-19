@@ -3,11 +3,11 @@ import type { Row } from "@tanstack/react-table"
 
 import { Checkbox } from "@/components/ui/checkbox"
 
-type TableHeaderCellCheckboxProps = {
+type TableBodyRowCheckboxProps = {
     row: Row<Trade>
 }
 
-export default function TableHeaderCellCheckbox(props: TableHeaderCellCheckboxProps) {
+export default function TableBodyRowCheckbox(props: TableBodyRowCheckboxProps) {
     const { row } = props
 
     return (

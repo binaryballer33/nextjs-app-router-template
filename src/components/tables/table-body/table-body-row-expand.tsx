@@ -5,11 +5,11 @@ import { Minus, Plus } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-type TableHeaderCellExpandProps = {
+type TableBodyRowExpandProps = {
     row: Row<Trade>
 }
 
-export default function TableHeaderCellExpand(props: TableHeaderCellExpandProps) {
+export default function TableBodyRowExpand(props: TableBodyRowExpandProps) {
     const { row } = props
 
     return (

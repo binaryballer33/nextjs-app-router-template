@@ -2,6 +2,8 @@
 
 import type { Trade } from "@/types/finance/trade"
 
+import { useMemo } from "react"
+
 import { closestCenter, DndContext } from "@dnd-kit/core"
 import { SortableContext } from "@dnd-kit/sortable"
 import { useReactTable } from "@tanstack/react-table"
@@ -23,11 +25,13 @@ import useCreateTableData from "./table-utils/use-create-table-data"
 // TODO: dropdown column menu needs to have more detailed filtering options ( ge, lt, gte, lte, eq, neq, contains, not contains, etc.)
 // TODO: add a "create new trade button"
 // TODO: make the table header sticky
-// TODO: figure out how to make the entire header surface area a tooltip trigger so when hovering over the header cell, the tooltip is visible and when hovering the header title disspears and only the icons and tooltip are visible
 export default function CustomTable() {
-    const { columnOrder, dndContextId, handleDragEnd, rowOrder, sensors, tableConfig } = useCreateTableData()
+    const { columnOrder, handleDragEnd, hideForColumns, rowOrder, sensors, tableConfig } = useCreateTableData()
 
     const table = useReactTable<Trade>(tableConfig)
+
+    // Add a stable ID for DnD context to prevent hydration errors and aria describe errors
+    const dndContextId = useMemo(() => "table-dnd-context", [])
 
     if (!table) return null
 
@@ -67,7 +71,11 @@ export default function CustomTable() {
                                     <SortableContext items={columnOrder}>
                                         {/* Table header cells */}
                                         {headerGroup.headers.map((header) => (
-                                            <TableHeaderCustomHead header={header} key={header.id} table={table} />
+                                            <TableHeaderCustomHead
+                                                header={header}
+                                                hideForColumns={hideForColumns}
+                                                key={header.id}
+                                            />
                                         ))}
                                     </SortableContext>
                                 </TableRow>
