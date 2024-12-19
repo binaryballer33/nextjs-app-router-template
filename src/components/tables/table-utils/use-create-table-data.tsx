@@ -2,7 +2,7 @@
 
 import type { Trade } from "@/types/finance/trade"
 import type { DragEndEvent } from "@dnd-kit/core"
-import type { TableOptions } from "@tanstack/react-table"
+import type { RowData, TableOptions } from "@tanstack/react-table"
 
 import { useState } from "react"
 
@@ -16,7 +16,7 @@ import fuzzyFilter from "./filters/fuzzy-filter"
 
 // Extend TanStack's TableMeta interface
 declare module "@tanstack/table-core" {
-    interface TableMeta<TData> {
+    interface TableMeta<TData extends RowData> {
         padding: "lg" | "md" | "sm" | "xl"
         removeRow: (rowId: string) => void
         removeRows: (rowIds: string[]) => void

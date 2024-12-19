@@ -12,13 +12,13 @@ import { Table, TableBody, TableHeader, TableRow } from "@/components/ui/table"
 
 import TableBodyRowCustom from "./table-body/table-body-row-custom"
 import TableBodyRowNoRecordsFound from "./table-body/table-body-row-no-records-found"
+import TableDemoStats from "./table-demo-stats"
 import TableExtraColumnVisibility from "./table-extras/table-extra-column-visibility"
 import TableExtraDeleteSelected from "./table-extras/table-extra-delete-selected"
 import TableExtraDropdownMenuSettings from "./table-extras/table-extra-dropdown-menu-settings"
 import TableExtraExportButtons from "./table-extras/table-extra-export-buttons"
 import TableExtraGlobalSearchBar from "./table-extras/table-extra-global-search-bar"
 import TableExtraPagination from "./table-extras/table-extra-pagination"
-import TableFooter from "./table-footer/table-footer"
 import TableHeaderCustomHead from "./table-header/table-header-custom-head"
 import useCreateTableData from "./table-utils/use-create-table-data"
 
@@ -62,7 +62,7 @@ export default function CustomTable() {
                 sensors={sensors}
             >
                 {/* table container */}
-                <div className="max-h-[525px] min-h-[525px] overflow-x-auto overflow-y-auto rounded-md border">
+                <div className="relative max-h-[525px] min-h-[525px] overflow-x-auto overflow-y-auto rounded-md border">
                     <Table>
                         <TableHeader className="sticky top-0 z-10 bg-background">
                             {/* Table header rows */}
@@ -96,14 +96,13 @@ export default function CustomTable() {
                                 <TableBodyRowNoRecordsFound table={table} />
                             )}
                         </TableBody>
-
-                        <TableFooter table={table} />
                     </Table>
                 </div>
             </DndContext>
 
             {/* Pagination */}
             <TableExtraPagination table={table} />
+            <TableDemoStats table={table} />
         </div>
     )
 }

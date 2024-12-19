@@ -84,7 +84,7 @@ export default function useCreateTableColumns() {
                 footer: (props) => props.column.id,
                 header: () => <span>Date</span>,
                 id: "Date",
-                minSize: 100,
+                minSize: 120,
             }),
 
             columnHelper.accessor("type", {
@@ -92,6 +92,7 @@ export default function useCreateTableColumns() {
                 footer: (props) => props.column.id,
                 header: () => <span>Type</span>,
                 id: "Type",
+                minSize: 120,
             }),
 
             columnHelper.accessor("realized", {
@@ -99,6 +100,7 @@ export default function useCreateTableColumns() {
                 footer: (props) => props.column.id,
                 header: () => <span>Realized</span>,
                 id: "Realized",
+                minSize: 120,
             }),
 
             columnHelper.accessor("ticker", {
@@ -106,6 +108,7 @@ export default function useCreateTableColumns() {
                 footer: (props) => props.column.id,
                 header: () => <span>Ticker</span>,
                 id: "Ticker",
+                minSize: 120,
             }),
 
             columnHelper.accessor("strike", {
@@ -113,6 +116,7 @@ export default function useCreateTableColumns() {
                 footer: (props) => props.column.id,
                 header: () => <span>Strike</span>,
                 id: "Strike Price",
+                minSize: 120,
             }),
 
             columnHelper.accessor("contracts", {
@@ -120,6 +124,7 @@ export default function useCreateTableColumns() {
                 footer: (props) => props.column.id,
                 header: () => <span>Contracts</span>,
                 id: "Contracts",
+                minSize: 120,
             }),
 
             columnHelper.accessor("sellToOpen", {
@@ -127,6 +132,7 @@ export default function useCreateTableColumns() {
                 footer: (props) => props.column.id,
                 header: () => <span>STO</span>,
                 id: "Sell To Open",
+                minSize: 120,
             }),
 
             columnHelper.accessor("buyToClose", {
@@ -134,6 +140,7 @@ export default function useCreateTableColumns() {
                 footer: (props) => props.column.id,
                 header: () => <span>BTC</span>,
                 id: "Buy To Close",
+                minSize: 120,
             }),
 
             columnHelper.accessor("profitLoss", {
@@ -145,6 +152,7 @@ export default function useCreateTableColumns() {
                 footer: (props) => props.column.id,
                 header: () => <span>P / L</span>,
                 id: "Profit / Loss",
+                minSize: 120,
             }),
 
             columnHelper.accessor("profitLossPercentage", {
@@ -152,6 +160,7 @@ export default function useCreateTableColumns() {
                 footer: (props) => props.column.id,
                 header: () => <span>P / L %</span>,
                 id: "Profit / Loss %",
+                minSize: 120,
             }),
 
             columnHelper.display({
