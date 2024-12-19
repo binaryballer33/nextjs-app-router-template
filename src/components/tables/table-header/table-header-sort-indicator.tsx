@@ -7,5 +7,5 @@ type TableHeaderSortIndicatorProps = {
 export default function TableHeaderSortIndicator(props: TableHeaderSortIndicatorProps) {
     const { isSorted } = props
 
-    return isSorted && (isSorted === "asc" ? <ArrowDown className="h-4 w-4" /> : <ArrowUp className="h-4 w-4" />)
+    return isSorted === "asc" ? <ArrowDown className="h-5 w-5" /> : <ArrowUp className="h-5 w-5" />
 }

@@ -39,7 +39,7 @@ export default function useCreateTableData() {
 
     const [tablePadding, setTablePadding] = useState<"lg" | "md" | "sm" | "xl">("md")
 
-    // Add a stable ID for DnD context
+    // Add a stable ID for DnD context to prevent hydration errors and aria describe errors
     const dndContextId = useMemo(() => "table-dnd-context", [])
 
     // sensors for dnd column reordering

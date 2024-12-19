@@ -21,19 +21,33 @@ export default function useCreateTableColumns() {
     const columns = useMemo(
         () => [
             columnHelper.display({
-                cell: ({ row }) => <TableHeaderCellCheckbox row={row} />,
-                header: ({ table }) => <TableHeaderCheckboxAll table={table} />,
+                cell: ({ row }) => (
+                    <div className="flex h-full w-full items-center justify-center p-2">
+                        <TableHeaderCellCheckbox row={row} />
+                    </div>
+                ),
+                footer: (props) => props.column.id,
+                header: ({ table }) => (
+                    <div className="flex h-full w-full items-center justify-center p-2">
+                        <TableHeaderCheckboxAll table={table} />
+                    </div>
+                ),
                 id: "selection",
+                maxSize: 50,
             }),
 
             columnHelper.display({
                 cell: ({ row }) => <TableHeaderCellRowDrag rowId={row.id} />,
-                id: "drag-handle",
+                footer: (props) => props.column.id,
+                id: "drag-row",
+                maxSize: 30,
             }),
 
             columnHelper.display({
                 cell: ({ row }) => (row.getCanExpand() ? <TableHeaderCellExpand row={row} /> : null),
+                footer: (props) => props.column.id,
                 id: "expand",
+                maxSize: 30,
             }),
 
             columnHelper.accessor("date", {
@@ -53,123 +67,59 @@ export default function useCreateTableColumns() {
                     )
                 },
                 enableResizing: true,
-                header: () => (
-                    <TooltipProvider delayDuration={100}>
-                        <Tooltip>
-                            <TooltipTrigger>Date</TooltipTrigger>
-                            <TooltipContent>
-                                <p>Date</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                ),
-                id: "date",
+                footer: (props) => props.column.id,
+                header: () => <span>Date</span>,
+                id: "Date",
                 minSize: 100,
             }),
 
             columnHelper.accessor("type", {
                 enableResizing: true,
-                header: () => (
-                    <TooltipProvider delayDuration={100}>
-                        <Tooltip>
-                            <TooltipTrigger>Type</TooltipTrigger>
-                            <TooltipContent>
-                                <p>Type</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                ),
-                id: "type",
+                footer: (props) => props.column.id,
+                header: () => <span>Type</span>,
+                id: "Type",
             }),
 
             columnHelper.accessor("realized", {
                 enableResizing: true,
-                header: () => (
-                    <TooltipProvider delayDuration={100}>
-                        <Tooltip>
-                            <TooltipTrigger>Realized</TooltipTrigger>
-                            <TooltipContent>
-                                <p>Realized</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                ),
-                id: "realized",
+                footer: (props) => props.column.id,
+                header: () => <span>Realized</span>,
+                id: "Realized",
             }),
 
             columnHelper.accessor("ticker", {
                 enableResizing: true,
-                header: () => (
-                    <TooltipProvider delayDuration={100}>
-                        <Tooltip>
-                            <TooltipTrigger>Ticker</TooltipTrigger>
-                            <TooltipContent>
-                                <p>Ticker</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                ),
-                id: "ticker",
+                footer: (props) => props.column.id,
+                header: () => <span>Ticker</span>,
+                id: "Ticker",
             }),
 
             columnHelper.accessor("strike", {
                 enableResizing: true,
-                header: () => (
-                    <TooltipProvider delayDuration={100}>
-                        <Tooltip>
-                            <TooltipTrigger>Strike</TooltipTrigger>
-                            <TooltipContent>
-                                <p>Strike Price</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                ),
-                id: "strike",
+                footer: (props) => props.column.id,
+                header: () => <span>Strike</span>,
+                id: "Strike Price",
             }),
 
             columnHelper.accessor("contracts", {
                 enableResizing: true,
-                header: () => (
-                    <TooltipProvider delayDuration={100}>
-                        <Tooltip>
-                            <TooltipTrigger>Contracts</TooltipTrigger>
-                            <TooltipContent>
-                                <p>Contracts</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                ),
-                id: "contracts",
+                footer: (props) => props.column.id,
+                header: () => <span>Contracts</span>,
+                id: "Contracts",
             }),
 
             columnHelper.accessor("sellToOpen", {
                 enableResizing: true,
-                header: () => (
-                    <TooltipProvider delayDuration={100}>
-                        <Tooltip>
-                            <TooltipTrigger>STO</TooltipTrigger>
-                            <TooltipContent>
-                                <p>Sell To Open</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                ),
-                id: "sellToOpen",
+                footer: (props) => props.column.id,
+                header: () => <span>STO</span>,
+                id: "Sell To Open",
             }),
 
             columnHelper.accessor("buyToClose", {
                 enableResizing: true,
-                header: () => (
-                    <TooltipProvider delayDuration={100}>
-                        <Tooltip>
-                            <TooltipTrigger>BTC</TooltipTrigger>
-                            <TooltipContent>
-                                <p>Buy To Close</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                ),
-                id: "buyToClose",
+                footer: (props) => props.column.id,
+                header: () => <span>BTC</span>,
+                id: "Buy To Close",
             }),
 
             columnHelper.accessor("profitLoss", {
@@ -178,36 +128,21 @@ export default function useCreateTableColumns() {
                     return <div className={profitLoss > 0 ? "text-green-500" : "text-red-500"}>{profitLoss}</div>
                 },
                 enableResizing: true,
-                header: () => (
-                    <TooltipProvider delayDuration={100}>
-                        <Tooltip>
-                            <TooltipTrigger>P & L</TooltipTrigger>
-                            <TooltipContent>
-                                <p>Profit Loss</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                ),
-                id: "profitLoss",
+                footer: (props) => props.column.id,
+                header: () => <span>P / L</span>,
+                id: "Profit / Loss",
             }),
 
             columnHelper.accessor("profitLossPercentage", {
                 enableResizing: true,
-                header: () => (
-                    <TooltipProvider delayDuration={100}>
-                        <Tooltip>
-                            <TooltipTrigger>P & L %</TooltipTrigger>
-                            <TooltipContent>
-                                <p>Profit Loss Percentage</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                ),
-                id: "profitLossPercentage",
+                footer: (props) => props.column.id,
+                header: () => <span>P / L %</span>,
+                id: "Profit / Loss %",
             }),
 
             columnHelper.display({
                 cell: ({ row, table }) => <TableHeaderCellDelete row={row} table={table} />,
+                footer: (props) => props.column.id,
                 header: () => <TableHeaderDelete />,
                 id: "delete",
             }),

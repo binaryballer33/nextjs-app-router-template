@@ -3,7 +3,6 @@ import type { Header } from "@tanstack/react-table"
 
 import { MoreVertical } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 type TableHeaderDropdownMenuProps = {
@@ -19,10 +18,7 @@ export default function TableHeaderDropdownMenu(props: TableHeaderDropdownMenuPr
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button size="icon" variant="ghost">
-                    <MoreVertical className="h-4 w-4" />
-                    <span className="sr-only">Open menu</span>
-                </Button>
+                <MoreVertical className="h-5 w-5" />
             </DropdownMenuTrigger>
 
             <DropdownMenuContent>

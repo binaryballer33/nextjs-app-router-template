@@ -16,5 +16,5 @@ export default function TableBodyRowDrag(props: TableBodyRowDragProps) {
         id: rowId,
     })
 
-    return <ArrowUpDown {...attributes} {...listeners} size={16} />
+    return <ArrowUpDown {...attributes} {...listeners} className="h-4 w-4" />
 }

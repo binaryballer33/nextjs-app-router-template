@@ -10,12 +10,32 @@ import { flexRender } from "@tanstack/react-table"
 import { GripVertical } from "lucide-react"
 
 import { TableHead } from "@/components/ui/table"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 import TableHeaderDropdownMenu from "./table-header-dropdown-menu"
 import TableHeaderResizer from "./table-header-resizer"
 import TableHeaderSortIndicator from "./table-header-sort-indicator"
 
-interface TableHeaderCustomHeadProps {
+const createWithTooltip = (trigger: string, tooltipContent: string, delayDuration = 100) => {
+    return (
+        <TooltipProvider delayDuration={delayDuration}>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <div className="flex h-full w-full items-center justify-center">
+                        <div className="flex items-center gap-1 text-sm transition-opacity group-hover:opacity-0">
+                            {trigger}
+                        </div>
+                    </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>{tooltipContent}</p>
+                </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
+    )
+}
+
+type TableHeaderCustomHeadProps = {
     header: Header<Trade, unknown>
     table: Table<Trade>
 }
@@ -26,7 +46,7 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
     const { header, table } = props
 
     // don't show the vertical menu for these columns
-    const hideForColumns = ["selection", "expand", "delete", "drag-handle"]
+    const hideForColumns = ["selection", "expand", "delete", "drag-row"]
 
     const isPinned = header.column.getIsPinned()
     const isSorted = header.column.getIsSorted()
@@ -51,41 +71,51 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
     }
 
     return (
-        // Table header cell container, displays everything in the header cell
-        <TableHead
-            className={`group relative cursor-pointer whitespace-nowrap bg-accent ${isPinned ? "bg-purple-900" : ""}`}
-            colSpan={header.colSpan}
-            onClick={header.column.getToggleSortingHandler()}
-            ref={setNodeRef} // for dnd column reordering
-            style={style}
-        >
-            <div className="flex items-center justify-center gap-1">
-                {/* Column header text */}
-                <div className="flex items-center gap-1 text-sm">
-                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                </div>
+        <TooltipProvider delayDuration={100}>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <TableHead
+                        className={`group relative cursor-pointer whitespace-nowrap bg-accent ${
+                            isPinned ? "bg-primary/30" : ""
+                        }`}
+                        colSpan={header.colSpan}
+                        onClick={header.column.getToggleSortingHandler()}
+                        ref={setNodeRef} // for dnd column reordering
+                        style={style}
+                    >
+                        <div className="flex items-center justify-center gap-1">
+                            {/* Column header text - now with hover effect */}
+                            <div className="flex items-center gap-1 text-sm transition-opacity group-hover:opacity-0">
+                                {header.isPlaceholder
+                                    ? null
+                                    : flexRender(header.column.columnDef.header, header.getContext())}
+                            </div>
 
-                {/* Sort direction indicator */}
-                <TableHeaderSortIndicator isSorted={isSorted} />
+                            {/* Overlay container for icons - appears on hover */}
+                            <div className="absolute left-0 right-0 flex items-center justify-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+                                {!hideForColumns.includes(header.column.id) && (
+                                    <>
+                                        {/* Sort direction indicator */}
+                                        <TableHeaderSortIndicator isSorted={isSorted} />
 
-                {/* dnd column heaeder reordering button */}
-                {!hideForColumns.includes(header.column.id) && (
-                    <GripVertical className="invisible h-5 w-5 group-hover:visible" {...attributes} {...listeners} />
-                )}
+                                        {/* dnd column header reordering button */}
+                                        <GripVertical className="h-5 w-5" {...attributes} {...listeners} />
 
-                {/* Dropdown menu for column actions */}
-                {!hideForColumns.includes(header.column.id) && (
-                    // div that is hidden by default, but visible when hovering over the header cell
-                    <div className="invisible group-hover:visible">
-                        <TableHeaderDropdownMenu header={header} />
-                    </div>
-                )}
+                                        {/* Dropdown menu for column actions */}
+                                        <TableHeaderDropdownMenu header={header} />
 
-                {/* Table header resizer */}
-                {!hideForColumns.includes(header.column.id) && header.column.getCanResize() && (
-                    <TableHeaderResizer header={header} table={table} />
-                )}
-            </div>
-        </TableHead>
+                                        {/* Table header resizer */}
+                                        {header.column.getCanResize() && (
+                                            <TableHeaderResizer header={header} table={table} />
+                                        )}
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    </TableHead>
+                </TooltipTrigger>
+                <TooltipContent>{header.column.id}</TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
     )
 }
