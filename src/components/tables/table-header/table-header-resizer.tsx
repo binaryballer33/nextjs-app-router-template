@@ -14,10 +14,10 @@ export default function TableHeaderResizer(props: TableHeaderResizerProps) {
                 {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
                 <div
                     className={`
-                absolute right-0 top-0 h-full w-3
-                cursor-col-resize touch-none select-none
-                bg-secondary/50 opacity-100
-            `}
+                        absolute right-0 top-0 h-full w-3
+                        cursor-col-resize touch-none select-none
+                        bg-secondary/50 opacity-100 max-sm:w-1.5
+                    `}
                     onDoubleClick={() => header.column.resetSize()}
                     onMouseDown={header.getResizeHandler()}
                     onTouchStart={header.getResizeHandler()}

@@ -74,12 +74,12 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
                             {/* Overlay container for icons - appears on hover */}
                             <div className="absolute left-0 right-0 flex items-center justify-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
                                 {!hideForColumns.includes(header.column.id) && (
-                                    <div className="flex w-full items-center justify-between gap-2 pl-2">
-                                        {/* Sort direction indicator */}
-                                        <TableHeaderSortIndicator header={header} />
-
+                                    <div className="flex w-full items-center justify-between gap-2 pl-2 max-sm:gap-1  max-sm:pr-1">
                                         {/* dnd column header reordering button */}
                                         <TableHeaderDragColumn attributes={attributes} listeners={listeners} />
+
+                                        {/* Sort direction indicator */}
+                                        <TableHeaderSortIndicator header={header} />
 
                                         {/* Dropdown menu for column actions */}
                                         <TableHeaderDropdownMenu header={header} />
