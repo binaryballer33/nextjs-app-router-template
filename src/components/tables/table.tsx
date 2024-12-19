@@ -24,7 +24,6 @@ import useCreateTableData from "./table-utils/use-create-table-data"
 
 // TODO: dropdown column menu needs to have more detailed filtering options ( ge, lt, gte, lte, eq, neq, contains, not contains, etc.)
 // TODO: add a "create new trade button"
-// TODO: make the table header sticky
 export default function CustomTable() {
     const { columnOrder, handleDragEnd, hideForColumns, rowOrder, sensors, tableConfig } = useCreateTableData()
 
@@ -61,6 +60,7 @@ export default function CustomTable() {
                 onDragEnd={handleDragEnd}
                 sensors={sensors}
             >
+                {/* table container */}
                 <div className="max-h-[525px] min-h-[525px] overflow-x-auto overflow-y-auto rounded-md border">
                     <Table>
                         <TableHeader className="sticky top-0 z-10 bg-background">
