@@ -16,7 +16,7 @@ export default function TableExtraDropdownPaddingSettings(props: TableExtraDropd
 
     return (
         <div className="flex w-full flex-col items-center gap-2">
-            <h5 className="text-lg font-medium hover:text-secondary">Padding</h5>
+            <h5 className="text-md font-medium hover:text-secondary">Padding</h5>
             <div className="flex items-center justify-between gap-2 max-sm:w-[150px] max-sm:overflow-scroll">
                 <Button
                     className="text-sm hover:text-primary"

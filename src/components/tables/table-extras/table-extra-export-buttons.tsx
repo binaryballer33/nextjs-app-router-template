@@ -5,13 +5,6 @@ import type { ReactNode } from "react"
 import { Download, FileJson, Sheet } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuItem,
-    NavigationMenuList,
-    NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 import downloadTableToCSV from "../table-utils/downloads/download-table-to-csv"
@@ -32,37 +25,33 @@ export default function TableExtraExportButtons(props: TableExtraExportButtonsPr
         {
             handleDownload: () => downloadTableToCSV(trades),
             icon: <Sheet className="h-4 w-4" />,
-            label: "Export to CSV",
+            label: "Download CSV",
         },
         {
             handleDownload: () => downloadTableToJSON(trades),
             icon: <FileJson className="h-4 w-4" />,
-            label: "Export to JSON",
+            label: "Download JSON",
         },
     ]
 
     return (
-        <NavigationMenu className="z-50 w-auto hover:border-b-2 hover:border-primary">
-            <NavigationMenuList>
-                <NavigationMenuItem>
-                    <NavigationMenuTrigger className="max-sm:!p-0">
-                        <Download className="h-6 w-6 max-sm:!w-4" />
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent className="min-w-[120px] p-4">
-                        <div className="flex flex-col items-center gap-2">
-                            {exportButtons.map((button) => (
-                                <TableHeaderExportButton
-                                    handleDownload={button.handleDownload}
-                                    icon={button.icon}
-                                    key={button.label}
-                                    label={button.label}
-                                />
-                            ))}
-                        </div>
-                    </NavigationMenuContent>
-                </NavigationMenuItem>
-            </NavigationMenuList>
-        </NavigationMenu>
+        <div className="flex w-full flex-col items-center gap-2">
+            <div className="flex items-center gap-2">
+                <Download className="h-6 w-6 max-sm:!w-4" />
+                <h5 className="text-md font-medium hover:text-secondary">Export</h5>
+            </div>
+
+            <div className="flex w-full items-center justify-center gap-2">
+                {exportButtons.map((button) => (
+                    <TableHeaderExportButton
+                        handleDownload={button.handleDownload}
+                        icon={button.icon}
+                        key={button.label}
+                        label={button.label}
+                    />
+                ))}
+            </div>
+        </div>
     )
 }
 
@@ -76,8 +65,8 @@ function TableHeaderExportButton(props: TableHeaderExportButtonProps) {
     const { handleDownload, icon, label } = props
 
     return (
-        <div className="flex w-[150px] items-center justify-start gap-2 whitespace-nowrap hover:text-primary">
-            <TooltipProvider>
+        <div className="flex items-center justify-start gap-2 whitespace-nowrap hover:text-primary">
+            <TooltipProvider delayDuration={0}>
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button
@@ -92,8 +81,6 @@ function TableHeaderExportButton(props: TableHeaderExportButtonProps) {
                     </TooltipTrigger>
                     <TooltipContent className="whitespace-nowrap">{label}</TooltipContent>
                 </Tooltip>
-
-                <span className="whitespace-nowrap text-xs">{label}</span>
             </TooltipProvider>
         </div>
     )

@@ -10,8 +10,10 @@ import {
     NavigationMenuList,
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
+import { Separator } from "@/components/ui/separator"
 
 import TableExtraDropdownPaddingSettings from "./table-extra-dropdown-padding-settings"
+import TableExtraExportButtons from "./table-extra-export-buttons"
 
 type TableExtraDropdownSettingsProps = {
     table: Table<Trade>
@@ -28,9 +30,11 @@ export default function TableExtraDropdownMenuSettings(props: TableExtraDropdown
                         <Info className="h-6 w-6 max-sm:!w-4" />
                     </NavigationMenuTrigger>
                     <NavigationMenuContent className="min-w-[120px] p-4">
-                        <div className="flex flex-col items-center gap-2">
+                        <div className="flex flex-col items-center gap-4">
                             <TableExtraDropdownPaddingSettings table={table} />
-                            <p>Setting 2</p>
+                            <Separator className="w-full border-t border-secondary" />
+                            <TableExtraExportButtons table={table} />
+                            <Separator className="w-full border-t border-secondary" />
                             <p>Setting 3</p>
                         </div>
                     </NavigationMenuContent>

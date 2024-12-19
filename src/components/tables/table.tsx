@@ -16,7 +16,6 @@ import TableDemoStats from "./table-demo-stats"
 import TableExtraColumnVisibility from "./table-extras/table-extra-column-visibility"
 import TableExtraDeleteSelected from "./table-extras/table-extra-delete-selected"
 import TableExtraDropdownMenuSettings from "./table-extras/table-extra-dropdown-menu-settings"
-import TableExtraExportButtons from "./table-extras/table-extra-export-buttons"
 import TableExtraGlobalSearchBar from "./table-extras/table-extra-global-search-bar"
 import TableExtraPagination from "./table-extras/table-extra-pagination"
 import TableHeaderCustomHead from "./table-header/table-header-custom-head"
@@ -45,7 +44,6 @@ export default function CustomTable() {
                     ) : (
                         <>
                             <TableExtraColumnVisibility columnOrder={columnOrder} table={table} />
-                            <TableExtraExportButtons table={table} />
                             <TableExtraDropdownMenuSettings table={table} />
                         </>
                     )}
