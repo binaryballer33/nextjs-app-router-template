@@ -11,6 +11,7 @@ import { flexRender } from "@tanstack/react-table"
 import { TableHead } from "@/components/ui/table"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
+import TableHeaderColumnFilter from "./table-header-column-filter"
 import TableHeaderDragColumn from "./table-header-drag-column"
 import TableHeaderDropdownMenu from "./table-header-dropdown-menu"
 import TableHeaderResizer from "./table-header-resizer"
@@ -80,6 +81,9 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
 
                                         {/* Sort direction indicator */}
                                         <TableHeaderSortIndicator header={header} />
+
+                                        {/* Column filter */}
+                                        <TableHeaderColumnFilter header={header} />
 
                                         {/* Dropdown menu for column actions */}
                                         <TableHeaderDropdownMenu header={header} />
