@@ -12,6 +12,7 @@ import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedR
 
 import { trades } from "../trade-data"
 import useCreateTableColumns from "../use-create-table-columns"
+import { advancedFilter } from "./filters/advance-filter"
 import fuzzyFilter from "./filters/fuzzy-filter"
 
 // Extend TanStack's TableMeta interface
@@ -92,6 +93,7 @@ export default function useCreateTableData() {
         enableRowSelection: true,
 
         filterFns: {
+            advanced: advancedFilter,
             fuzzy: fuzzyFilter,
         },
 
