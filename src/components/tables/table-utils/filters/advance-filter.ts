@@ -1,5 +1,9 @@
 import type { FilterFn, Row } from "@tanstack/react-table"
 
+import dayjs from "dayjs"
+import { z } from "zod"
+
+// Define all possible filter operations
 export type FilterOperation =
     | "afterDate"
     | "beforeDate"
@@ -13,82 +17,138 @@ export type FilterOperation =
     | "neq"
     | "notContains"
 
-export type ColumnFilter = {
-    endDate?: string
-    operation: FilterOperation
-    value: number | string
+// Zod schema for validating filter values
+const dateValueSchema = z.union([z.string(), z.number(), z.date()])
+const filterValueSchema = z.object({
+    endDate: z.string().optional(),
+    operation: z.enum([
+        "afterDate",
+        "beforeDate",
+        "betweenDates",
+        "contains",
+        "eq",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "neq",
+        "notContains",
+    ]),
+    value: z.union([z.string(), z.number()]),
+})
+
+export type ColumnFilter = z.infer<typeof filterValueSchema>
+
+// Function to handle date comparisons using dayjs
+const handleDateComparison = (value: unknown, filterValue: ColumnFilter): boolean => {
+    // Validate the input value using Zod
+    const parseResult = dateValueSchema.safeParse(value)
+    if (!parseResult.success) return false
+
+    // Convert the row's date value to a dayjs object
+    const rowDateValue = dayjs(parseResult.data)
+
+    // Convert the filter's date value to a dayjs object
+    const filterDate = dayjs(filterValue.value)
+
+    // Check if the date is valid
+    if (!rowDateValue.isValid()) return false
+
+    // Perform the appropriate date comparison
+    switch (filterValue.operation) {
+        case "afterDate":
+            return rowDateValue.isAfter(filterDate) || rowDateValue.isSame(filterDate)
+        case "beforeDate":
+            return rowDateValue.isBefore(filterDate) || rowDateValue.isSame(filterDate)
+        case "betweenDates": {
+            if (!filterValue.endDate) return false
+            const endDateTime = dayjs(filterValue.endDate)
+            return rowDateValue.isAfter(filterDate) && rowDateValue.isBefore(endDateTime)
+        }
+        default:
+            return true
+    }
 }
 
+// Function to handle numeric comparisons
+const handleNumericComparison = (value: unknown, filterValue: ColumnFilter): boolean => {
+    // the value from the row
+    const rowNumValue = Number(value)
+
+    // the value from the filter
+    const numFilterVal = Number(filterValue.value)
+
+    const isNumeric = !Number.isNaN(rowNumValue) && !Number.isNaN(numFilterVal)
+    if (!isNumeric) return false
+
+    // Perform the appropriate numeric comparison
+    switch (filterValue.operation) {
+        case "gt":
+            return rowNumValue > numFilterVal
+        case "lt":
+            return rowNumValue < numFilterVal
+        case "gte":
+            return rowNumValue >= numFilterVal
+        case "lte":
+            return rowNumValue <= numFilterVal
+        case "eq":
+            return rowNumValue === numFilterVal
+        case "neq":
+            return rowNumValue !== numFilterVal
+        default:
+            return false
+    }
+}
+
+// Function to handle string comparisons
+const handleStringComparison = (value: unknown, filterValue: ColumnFilter): boolean => {
+    // the value from the row
+    const rowStringValue = String(value).toLowerCase()
+
+    // the value from the filter
+    const filterVal = String(filterValue.value).toLowerCase()
+
+    // Perform the appropriate string comparison
+    switch (filterValue.operation) {
+        case "contains":
+            return rowStringValue.includes(filterVal)
+        case "notContains":
+            return !rowStringValue.includes(filterVal)
+        default:
+            return false
+    }
+}
+
+// Helper function to check if the operation is a date operation
+const isDateOperation = (operation: FilterOperation) =>
+    operation === "afterDate" || operation === "beforeDate" || operation === "betweenDates"
+
+// Main filter function
 export const advancedFilter: FilterFn<any> = (
     row: Row<any>,
     columnId: string,
     filterValue: ColumnFilter | string,
 ): boolean => {
-    // If no filter value, return true to show all rows
+    // If no filter value, show all rows
     if (!filterValue) return true
 
-    // Handle string filter value (for backward compatibility with default filtering)
-    if (typeof filterValue === "string") {
-        const value = row.getValue(columnId)
-        return String(value).toLowerCase().includes(filterValue.toLowerCase())
+    // Get the value from the row
+    const rowValue = row.getValue(columnId)
+    if (rowValue === undefined || rowValue === null) return false
+
+    // Handle legacy string filter
+    if (typeof filterValue === "string") return String(rowValue).toLowerCase().includes(filterValue.toLowerCase())
+
+    // Validate filter value structure using Zod
+    const parseResult = filterValueSchema.safeParse(filterValue)
+    if (!parseResult.success) return false
+
+    // Handle different types of comparisons
+    if (isDateOperation(filterValue.operation)) return handleDateComparison(rowValue, filterValue)
+
+    if (filterValue.operation === "contains" || filterValue.operation === "notContains") {
+        return handleStringComparison(rowValue, filterValue)
     }
 
-    const value = row.getValue(columnId)
-    const { endDate, operation, value: filterVal } = filterValue
-
-    // Handle null/undefined values
-    if (value === undefined || value === null) {
-        return false
-    }
-
-    // Date operations
-    if (operation === "afterDate" || operation === "beforeDate" || operation === "betweenDates") {
-        const rawValue = value as Date | number | string
-        if (typeof rawValue !== "string" && typeof rawValue !== "number" && !(rawValue instanceof Date)) {
-            return false
-        }
-        const dateValue = new Date(rawValue)
-        const filterDate = new Date(filterVal)
-
-        if (Number.isNaN(dateValue.getTime())) return false
-
-        switch (operation) {
-            case "afterDate":
-                return dateValue >= filterDate
-            case "beforeDate":
-                return dateValue <= filterDate
-            case "betweenDates":
-                if (!endDate) return false
-                const endDateTime = new Date(endDate)
-                return dateValue >= filterDate && dateValue <= endDateTime
-            default:
-                return true
-        }
-    }
-
-    // Convert values to numbers for numeric comparisons if both are numeric
-    const shouldCompareAsNumbers = !Number.isNaN(Number(value)) && !Number.isNaN(Number(filterVal))
-    const numValue = shouldCompareAsNumbers ? Number(value) : value
-    const numFilterVal = shouldCompareAsNumbers ? Number(filterVal) : filterVal
-
-    switch (operation) {
-        case "gt":
-            return shouldCompareAsNumbers && numValue > numFilterVal
-        case "lt":
-            return shouldCompareAsNumbers && numValue < numFilterVal
-        case "gte":
-            return shouldCompareAsNumbers && numValue >= numFilterVal
-        case "lte":
-            return shouldCompareAsNumbers && numValue <= numFilterVal
-        case "eq":
-            return shouldCompareAsNumbers ? numValue === numFilterVal : value === filterVal
-        case "neq":
-            return shouldCompareAsNumbers ? numValue !== numFilterVal : value !== filterVal
-        case "contains":
-            return String(value).toLowerCase().includes(String(filterVal).toLowerCase())
-        case "notContains":
-            return !String(value).toLowerCase().includes(String(filterVal).toLowerCase())
-        default:
-            return true
-    }
+    return handleNumericComparison(rowValue, filterValue)
 }
