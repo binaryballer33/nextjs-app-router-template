@@ -58,6 +58,7 @@ export default function TableBodyRowCustom(props: TableBodyRowCustomProps) {
                         key={cell.id}
                         style={{
                             minWidth: cell.column.columnDef.minSize || 0,
+                            textAlign: "center",
                             width: Math.max(cell.column.getSize(), cell.column.columnDef.minSize || 0),
                         }}
                     >
