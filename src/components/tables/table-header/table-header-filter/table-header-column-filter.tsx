@@ -2,17 +2,17 @@ import type { Trade } from "@/types/finance/trade"
 import type { ColumnFilter, FilterOperation } from "@/types/table/filters"
 import type { Header } from "@tanstack/react-table"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 import { Search } from "lucide-react"
 
 import { useBoolean } from "@/hooks/use-boolean"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+
+import FilterInputs from "./table-header-filter-inputs"
+import FilterOperations from "./table-heeader-filter-operations"
 
 // Define the props for the TableHeaderColumnFilter component
 type TableHeaderColumnFilterProps = {
@@ -50,20 +50,8 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
         operation: "contains" as FilterOperation,
         value: "",
     })
-    const { handleFalse: closeOpen, handleToggle: toggleOpen, value: open } = useBoolean(false)
-    const inputRef = useRef<HTMLInputElement>(null)
 
-    // Focus the input when the popover opens
-    useEffect(() => {
-        if (open) {
-            // Small timeout to ensure DOM is ready
-            const timeoutId = setTimeout(() => {
-                inputRef.current?.focus()
-            }, 0)
-            return () => clearTimeout(timeoutId)
-        }
-        return () => clearTimeout(100)
-    }, [open])
+    const { handleFalse: closeOpen, handleToggle: toggleOpen, value: open } = useBoolean(false)
 
     const handleFilter = useCallback(() => {
         const { endDate, operation, value } = filterState
@@ -132,67 +120,21 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
             <PopoverContent className="w-80">
                 <div className="space-y-4">
                     <h4 className="font-medium leading-none">Filter Based On {header.column.id}</h4>
-                    {/* operation selector */}
-                    <div className="space-y-2">
-                        <RadioGroup
-                            className="grid grid-cols-2 gap-2"
-                            onValueChange={(valueChange) =>
-                                setFilterState((prev) => ({ ...prev, operation: valueChange as FilterOperation }))
-                            }
-                            value={filterState.operation}
-                        >
-                            {/* create the filter operations */}
-                            {filterOperations.map((op) => (
-                                <div className="flex items-center space-x-2" key={op.value}>
-                                    <RadioGroupItem id={op.value} value={op.value} />
-                                    <Label htmlFor={op.value}>{op.label}</Label>
-                                </div>
-                            ))}
-                        </RadioGroup>
-                    </div>
-
-                    {/* input field for the filter value */}
-                    <div className="flex">
-                        <div className="w-full text-center">
-                            <Label>{isDateOperation ? "Date" : "Search Data"}</Label>
-                            <Input
-                                className="w-full"
-                                onChange={(e) => setFilterState((prev) => ({ ...prev, value: e.target.value }))}
-                                onKeyDown={handleKeyDown}
-                                placeholder={isDateOperation ? "Select Date..." : "Search Data..."}
-                                ref={inputRef}
-                                type={
-                                    isDateOperation
-                                        ? "date"
-                                        : typeof convertRowValueToAppropriateType(
-                                              filterState.operation,
-                                              filterState.value,
-                                          )
-                                }
-                                value={filterState.value}
-                            />
-                        </div>
-
-                        {/* input field for the optional end date */}
-                        {filterState.operation === "betweenDates" && (
-                            <div className="w-full text-center">
-                                <Label>End Date</Label>
-                                <Input
-                                    className="w-full"
-                                    onChange={(e) => setFilterState((prev) => ({ ...prev, endDate: e.target.value }))}
-                                    placeholder="Select end date..."
-                                    type="date"
-                                    value={filterState.endDate}
-                                />
-                            </div>
-                        )}
-                    </div>
-
-                    {/* buttons for clearing and applying the filter */}
+                    <FilterOperations
+                        onOperationChange={(operation) => setFilterState((prev) => ({ ...prev, operation }))}
+                        operations={filterOperations}
+                        selectedOperation={filterState.operation}
+                    />
+                    <FilterInputs
+                        filterState={filterState}
+                        isDateOperation={isDateOperation}
+                        onEndDateChange={(endDate) => setFilterState((prev) => ({ ...prev, endDate }))}
+                        onKeyDown={handleKeyDown}
+                        onValueChange={(value) => setFilterState((prev) => ({ ...prev, value }))}
+                        open={open}
+                    />
                     <div className="flex justify-between">
-                        <Button onClick={clearFilter} variant="outline">
-                            Clear
-                        </Button>
+                        <Button onClick={clearFilter}>Clear</Button>
                         <Button onClick={handleApplyFilter}>Apply Filter</Button>
                     </div>
                 </div>
