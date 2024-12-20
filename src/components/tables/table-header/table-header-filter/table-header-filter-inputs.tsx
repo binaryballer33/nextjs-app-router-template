@@ -6,17 +6,19 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 type FilterInputsProps = {
+    closeOpen: () => void
     filterState: { endDate: string; operation: FilterOperation; value: string }
-    isDateOperation: boolean
     onEndDateChange: (endDate: string) => void
-    onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void
     onValueChange: (value: string) => void
     open: boolean
 }
 
 export default function FilterInputs(props: FilterInputsProps) {
-    const { filterState, isDateOperation, onEndDateChange, onKeyDown, onValueChange, open } = props
+    const { closeOpen, filterState, onEndDateChange, onValueChange, open } = props
     const inputRef = useRef<HTMLInputElement>(null)
+
+    // Determine if the current operation is a date operation
+    const isDateOperation = ["afterDate", "beforeDate", "betweenDates"].includes(filterState.operation)
 
     // Focus the input when the popover opens
     useEffect(() => {
@@ -30,6 +32,11 @@ export default function FilterInputs(props: FilterInputsProps) {
         return () => clearTimeout(100)
     }, [open])
 
+    // close the popover menu when the user presses enter
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") closeOpen()
+    }
+
     return (
         <div className="flex">
             <div className="w-full text-center">
@@ -37,7 +44,7 @@ export default function FilterInputs(props: FilterInputsProps) {
                 <Input
                     className="w-full"
                     onChange={(e) => onValueChange(e.target.value)}
-                    onKeyDown={onKeyDown}
+                    onKeyDown={handleKeyDown}
                     placeholder={isDateOperation ? "Select Date..." : "Search Data..."}
                     ref={inputRef}
                     type={isDateOperation ? "date" : "text"}

@@ -19,25 +19,9 @@ type TableHeaderColumnFilterProps = {
     header: Header<Trade, unknown>
 }
 
-// Define the available filter operations
-const filterOperations: { label: string; value: FilterOperation }[] = [
-    { label: "Greater Than", value: "gt" },
-    { label: "Less Than", value: "lt" },
-    { label: "Greater Than or Equal", value: "gte" },
-    { label: "Less Than or Equal", value: "lte" },
-    { label: "Equals", value: "eq" },
-    { label: "Not Equals", value: "neq" },
-    { label: "Contains", value: "contains" },
-    { label: "Does Not Contain", value: "notContains" },
-    { label: "After Date", value: "afterDate" },
-    { label: "Before Date", value: "beforeDate" },
-    { label: "Between Dates", value: "betweenDates" },
-]
-
 // TODO: if a column has a filter, the column header should have a filter icon or something to indicate that the column is in a filtered state
 // TODO: add a "clear all filters" button
 // TODO: figure out a way to still be able to see the column that you are trying to filter when the filter menu opens
-// TODO: when pressing enter the filter menu should apply the filter and close
 // TODO: put a clear filter option in the filter menu and maybe in the information dropdown menu for setting 3
 // TODO:if you are in the filter menu for the date column you should only have options related to dates, before, after, bettween, this rule needs to apply to all columns, they should only have options related to the column type
 // TODO: when selecting a date range after selecting the start date the end date should be focused
@@ -45,13 +29,13 @@ const filterOperations: { label: string; value: FilterOperation }[] = [
 export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterProps) {
     const { header } = props
 
+    // for opening and closing the filter menu
+    const { handleFalse: closeOpen, handleToggle: toggleOpen, value: open } = useBoolean(false)
     const [filterState, setFilterState] = useState({
         endDate: "",
         operation: "contains" as FilterOperation,
         value: "",
     })
-
-    const { handleFalse: closeOpen, handleToggle: toggleOpen, value: open } = useBoolean(false)
 
     const handleFilter = useCallback(() => {
         const { endDate, operation, value } = filterState
@@ -93,20 +77,12 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
         closeOpen()
     }
 
-    // Determine if the current operation is a date operation
-    const isDateOperation = ["afterDate", "beforeDate", "betweenDates"].includes(filterState.operation)
-
     // if its a string operation, return the string value, otherwise return the number value
     const convertRowValueToAppropriateType = (filterOperation: FilterOperation, rowValue: string) => {
         if (["afterDate", "beforeDate", "betweenDates", "contains", "notContains"].includes(filterOperation)) {
             return rowValue
         }
         return Number(rowValue)
-    }
-
-    // close the popover menu when the user presses enter
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") closeOpen()
     }
 
     return (
@@ -120,19 +96,23 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
             <PopoverContent className="w-80">
                 <div className="space-y-4">
                     <h4 className="font-medium leading-none">Filter Based On {header.column.id}</h4>
+
+                    {/* Radio Group for Filter Operations */}
                     <FilterOperations
-                        onOperationChange={(operation) => setFilterState((prev) => ({ ...prev, operation }))}
-                        operations={filterOperations}
-                        selectedOperation={filterState.operation}
-                    />
-                    <FilterInputs
                         filterState={filterState}
-                        isDateOperation={isDateOperation}
+                        onOperationChange={(operation) => setFilterState((prev) => ({ ...prev, operation }))}
+                    />
+
+                    {/* Input Fields For Filtering */}
+                    <FilterInputs
+                        closeOpen={closeOpen}
+                        filterState={filterState}
                         onEndDateChange={(endDate) => setFilterState((prev) => ({ ...prev, endDate }))}
-                        onKeyDown={handleKeyDown}
                         onValueChange={(value) => setFilterState((prev) => ({ ...prev, value }))}
                         open={open}
                     />
+
+                    {/* Buttons for Applying and Clearing Filter */}
                     <div className="flex justify-between">
                         <Button onClick={clearFilter}>Clear</Button>
                         <Button onClick={handleApplyFilter}>Apply Filter</Button>

@@ -22,7 +22,6 @@ import TableHeaderCustomHead from "./table-header/table-header-custom-head"
 import useCreateTableData from "./table-utils/use-create-table-data"
 
 // TODO: make the table resuable and customizable, table height, weight, records per page, default records per page, columns, data, etc
-// TODO: dropdown column menu needs to have more detailed filtering options ( ge, lt, gte, lte, eq, neq, contains, not contains, etc.)
 // TODO: add a "create new trade button"
 export default function CustomTable() {
     const { columnOrder, handleDragEnd, hideForColumns, rowOrder, sensors, tableConfig } = useCreateTableData()

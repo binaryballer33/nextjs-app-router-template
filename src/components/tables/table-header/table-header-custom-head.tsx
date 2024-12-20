@@ -26,6 +26,7 @@ type TableHeaderCustomHeadProps = {
 export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps) {
     const { header, hideForColumns, table } = props
 
+    // get the column pinning and filtering state
     const isPinned = header.column.getIsPinned()
 
     // Add this function to check if any column is being resized
