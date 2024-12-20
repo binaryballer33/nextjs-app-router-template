@@ -44,6 +44,7 @@ const filterOperations: { label: string; value: FilterOperation }[] = [
 // TODO: create a DebouncedInput component that debounces the input and only updates the state after a delay
 export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterProps) {
     const { header } = props
+
     const [filterState, setFilterState] = useState({
         endDate: "",
         operation: "contains" as FilterOperation,
@@ -64,20 +65,10 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
         return () => clearTimeout(100)
     }, [open])
 
-    // Update the filter state when the component mounts or the header changes
-    useEffect(() => {
-        const currentFilter = header.column.getFilterValue() as ColumnFilter
-        if (currentFilter) {
-            setFilterState({
-                endDate: currentFilter.endDate || "",
-                operation: currentFilter.operation,
-                value: String(currentFilter.value),
-            })
-        }
-    }, [header.column])
-
     const handleFilter = useCallback(() => {
         const { endDate, operation, value } = filterState
+
+        // if the value is empty, clear the filter
         if (!value.trim()) {
             header.column.setFilterValue(null)
             return
@@ -90,10 +81,9 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
         }
 
         // Add endDate if the operation is "betweenDates"
-        if (operation === "betweenDates" && endDate) {
-            filterValue.endDate = endDate
-        }
+        if (operation === "betweenDates" && endDate) filterValue.endDate = endDate
 
+        // filter the column based on the filter value
         header.column.setFilterValue(filterValue)
     }, [filterState, header.column])
 
@@ -102,6 +92,7 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
         handleFilter()
     }, [filterState, handleFilter])
 
+    // apply the filter and close the popover menu
     const handleApplyFilter = useCallback(() => {
         handleFilter()
         closeOpen()
@@ -125,6 +116,7 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
         return Number(rowValue)
     }
 
+    // close the popover menu when the user presses enter
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") closeOpen()
     }
