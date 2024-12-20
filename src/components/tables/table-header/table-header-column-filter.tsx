@@ -1,4 +1,5 @@
 import type { Trade } from "@/types/finance/trade"
+import type { ColumnFilter, FilterOperation } from "@/types/table/filters"
 import type { Header } from "@tanstack/react-table"
 
 import { useEffect, useState } from "react"
@@ -10,8 +11,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-
-import type { ColumnFilter, FilterOperation } from "../table-utils/filters/advance-filter"
 
 type TableHeaderColumnFilterProps = {
     header: Header<Trade, unknown>

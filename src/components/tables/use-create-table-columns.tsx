@@ -15,7 +15,7 @@ import TableBodyRowExpand from "@/components/tables/table-body/table-body-row-ex
 import TableHeaderCheckboxAll from "@/components/tables/table-header/table-header-checkbox-all"
 import TableHeaderDelete from "@/components/tables/table-header/table-header-delete"
 
-import { advancedFilter } from "./table-utils/filters/advance-filter"
+import customFilter from "./table-utils/filters/custom-filter/custom-filter"
 
 const columnHelper = createColumnHelper<Trade>()
 
@@ -84,7 +84,7 @@ export default function useCreateTableColumns() {
                 },
                 enableColumnFilter: true,
                 enableResizing: true,
-                filterFn: advancedFilter,
+                filterFn: customFilter,
                 footer: (props) => props.column.id,
                 header: () => <span>Date</span>,
                 id: "Date",
@@ -94,7 +94,7 @@ export default function useCreateTableColumns() {
             columnHelper.accessor("type", {
                 enableColumnFilter: true,
                 enableResizing: true,
-                filterFn: advancedFilter,
+                filterFn: customFilter,
                 footer: (props) => props.column.id,
                 header: () => <span>Type</span>,
                 id: "Type",
@@ -104,7 +104,7 @@ export default function useCreateTableColumns() {
             columnHelper.accessor("realized", {
                 enableColumnFilter: true,
                 enableResizing: true,
-                filterFn: advancedFilter,
+                filterFn: customFilter,
                 footer: (props) => props.column.id,
                 header: () => <span>Realized</span>,
                 id: "Realized",
@@ -114,7 +114,7 @@ export default function useCreateTableColumns() {
             columnHelper.accessor("ticker", {
                 enableColumnFilter: true,
                 enableResizing: true,
-                filterFn: advancedFilter,
+                filterFn: customFilter,
                 footer: (props) => props.column.id,
                 header: () => <span>Ticker</span>,
                 id: "Ticker",
@@ -124,7 +124,7 @@ export default function useCreateTableColumns() {
             columnHelper.accessor("strike", {
                 enableColumnFilter: true,
                 enableResizing: true,
-                filterFn: advancedFilter,
+                filterFn: customFilter,
                 footer: (props) => props.column.id,
                 header: () => <span>Strike</span>,
                 id: "Strike Price",
@@ -134,7 +134,7 @@ export default function useCreateTableColumns() {
             columnHelper.accessor("contracts", {
                 enableColumnFilter: true,
                 enableResizing: true,
-                filterFn: advancedFilter,
+                filterFn: customFilter,
                 footer: (props) => props.column.id,
                 header: () => <span>Contracts</span>,
                 id: "Contracts",
@@ -144,7 +144,7 @@ export default function useCreateTableColumns() {
             columnHelper.accessor("sellToOpen", {
                 enableColumnFilter: true,
                 enableResizing: true,
-                filterFn: advancedFilter,
+                filterFn: customFilter,
                 footer: (props) => props.column.id,
                 header: () => <span>STO</span>,
                 id: "Sell To Open",
@@ -154,7 +154,7 @@ export default function useCreateTableColumns() {
             columnHelper.accessor("buyToClose", {
                 enableColumnFilter: true,
                 enableResizing: true,
-                filterFn: advancedFilter,
+                filterFn: customFilter,
                 footer: (props) => props.column.id,
                 header: () => <span>BTC</span>,
                 id: "Buy To Close",
@@ -168,7 +168,7 @@ export default function useCreateTableColumns() {
                 },
                 enableColumnFilter: true,
                 enableResizing: true,
-                filterFn: advancedFilter,
+                filterFn: customFilter,
                 footer: (props) => props.column.id,
                 header: () => <span>P / L</span>,
                 id: "Profit / Loss",
@@ -178,7 +178,7 @@ export default function useCreateTableColumns() {
             columnHelper.accessor("profitLossPercentage", {
                 enableColumnFilter: true,
                 enableResizing: true,
-                filterFn: advancedFilter,
+                filterFn: customFilter,
                 footer: (props) => props.column.id,
                 header: () => <span>P / L %</span>,
                 id: "Profit / Loss %",
