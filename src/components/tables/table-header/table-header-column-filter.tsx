@@ -6,6 +6,8 @@ import { useCallback, useEffect, useRef, useState } from "react"
 
 import { Search } from "lucide-react"
 
+import { useBoolean } from "@/hooks/use-boolean"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -47,7 +49,7 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
         operation: "contains" as FilterOperation,
         value: "",
     })
-    const [open, setOpen] = useState(false)
+    const { handleFalse: closeOpen, handleToggle: toggleOpen, value: open } = useBoolean(false)
     const inputRef = useRef<HTMLInputElement>(null)
 
     // Focus the input when the popover opens
@@ -100,11 +102,16 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
         handleFilter()
     }, [filterState, handleFilter])
 
+    const handleApplyFilter = useCallback(() => {
+        handleFilter()
+        closeOpen()
+    }, [handleFilter, closeOpen])
+
     // Clear the filter and reset the state
     const clearFilter = () => {
         setFilterState({ endDate: "", operation: "contains", value: "" })
         header.column.setFilterValue(null)
-        setOpen(false)
+        closeOpen()
     }
 
     // Determine if the current operation is a date operation
@@ -118,8 +125,12 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
         return Number(rowValue)
     }
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") closeOpen()
+    }
+
     return (
-        <Popover onOpenChange={setOpen} open={open}>
+        <Popover onOpenChange={toggleOpen} open={open}>
             <PopoverTrigger asChild>
                 <Button className={header.column.getIsFiltered() ? "text-primary" : ""} size="icon" variant="ghost">
                     <Search className="h-4 w-4" />
@@ -149,40 +160,48 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
                     </div>
 
                     {/* input field for the filter value */}
-                    <div className="space-y-2">
-                        <Label>{isDateOperation ? "Start Date" : "Value"}</Label>
-                        <Input
-                            onChange={(e) => setFilterState((prev) => ({ ...prev, value: e.target.value }))}
-                            placeholder={isDateOperation ? "Select date..." : "Filter value..."}
-                            ref={inputRef}
-                            type={
-                                isDateOperation
-                                    ? "date"
-                                    : typeof convertRowValueToAppropriateType(filterState.operation, filterState.value)
-                            }
-                            value={filterState.value}
-                        />
-                    </div>
-
-                    {/* input field for the optional end date */}
-                    {filterState.operation === "betweenDates" && (
-                        <div className="space-y-2">
-                            <Label>End Date</Label>
+                    <div className="flex">
+                        <div className="w-full text-center">
+                            <Label>{isDateOperation ? "Date" : "Search Data"}</Label>
                             <Input
-                                onChange={(e) => setFilterState((prev) => ({ ...prev, endDate: e.target.value }))}
-                                placeholder="Select end date..."
-                                type="date"
-                                value={filterState.endDate}
+                                className="w-full"
+                                onChange={(e) => setFilterState((prev) => ({ ...prev, value: e.target.value }))}
+                                onKeyDown={handleKeyDown}
+                                placeholder={isDateOperation ? "Select Date..." : "Search Data..."}
+                                ref={inputRef}
+                                type={
+                                    isDateOperation
+                                        ? "date"
+                                        : typeof convertRowValueToAppropriateType(
+                                              filterState.operation,
+                                              filterState.value,
+                                          )
+                                }
+                                value={filterState.value}
                             />
                         </div>
-                    )}
+
+                        {/* input field for the optional end date */}
+                        {filterState.operation === "betweenDates" && (
+                            <div className="w-full text-center">
+                                <Label>End Date</Label>
+                                <Input
+                                    className="w-full"
+                                    onChange={(e) => setFilterState((prev) => ({ ...prev, endDate: e.target.value }))}
+                                    placeholder="Select end date..."
+                                    type="date"
+                                    value={filterState.endDate}
+                                />
+                            </div>
+                        )}
+                    </div>
 
                     {/* buttons for clearing and applying the filter */}
                     <div className="flex justify-between">
                         <Button onClick={clearFilter} variant="outline">
                             Clear
                         </Button>
-                        <Button onClick={handleFilter}>Apply Filter</Button>
+                        <Button onClick={handleApplyFilter}>Apply Filter</Button>
                     </div>
                 </div>
             </PopoverContent>
