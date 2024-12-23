@@ -4,8 +4,9 @@ import type { ColumnFilter } from "@/types/table/filters"
 
 import { useEffect, useRef } from "react"
 
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+
+import DebouncedInput from "../../table-utils/debounced-input"
 
 type FilterInputsProps = {
     closeOpen: () => void
@@ -42,27 +43,29 @@ export default function FilterInputs(props: FilterInputsProps) {
     return (
         <div className="flex">
             <div className="w-full text-center">
-                <Label>{isDateOperation ? "Date" : "Search Data"}</Label>
-                <Input
+                <Label htmlFor="filter-input">{isDateOperation ? "Date" : "Search Data"}</Label>
+                <DebouncedInput
                     className="w-full"
-                    onChange={(e) => onValueChange(e.target.value)}
+                    id="filter-input"
+                    onChange={onValueChange}
                     onKeyDown={handleKeyDown}
                     placeholder={isDateOperation ? "Select Date..." : "Search Data..."}
                     ref={inputRef}
                     type={isDateOperation ? "date" : "text"}
-                    value={filterState.value}
+                    value={filterState.value.toString()}
                 />
             </div>
 
             {filterState.operation === "betweenDates" && (
                 <div className="w-full text-center">
-                    <Label>End Date</Label>
-                    <Input
+                    <Label htmlFor="end-date-input">End Date</Label>
+                    <DebouncedInput
                         className="w-full"
-                        onChange={(e) => onEndDateChange(e.target.value)}
+                        id="end-date-input"
+                        onChange={onEndDateChange}
                         placeholder="Select End Date..."
                         type="date"
-                        value={filterState.endDate}
+                        value={filterState.endDate?.toString() ?? ""}
                     />
                 </div>
             )}
