@@ -1,3 +1,5 @@
+"use client"
+
 import type { ColumnFilter, FilterOperation } from "@/types/table/filters"
 
 import { Label } from "@/components/ui/label"

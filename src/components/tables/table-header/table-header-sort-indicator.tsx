@@ -1,3 +1,5 @@
+"use client"
+
 import type { Trade } from "@/types/finance/trade"
 import type { Header } from "@tanstack/react-table"
 

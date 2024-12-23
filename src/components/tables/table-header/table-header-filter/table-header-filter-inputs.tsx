@@ -1,3 +1,5 @@
+"use client"
+
 import type { FilterOperation } from "@/types/table/filters"
 
 import { useEffect, useRef } from "react"

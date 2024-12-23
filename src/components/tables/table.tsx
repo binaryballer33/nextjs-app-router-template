@@ -19,6 +19,7 @@ import TableExtraDropdownMenuSettings from "./table-extras/table-extra-dropdown-
 import TableExtraGlobalSearchBar from "./table-extras/table-extra-global-search-bar"
 import TableExtraPagination from "./table-extras/table-extra-pagination"
 import TableHeaderCustomHead from "./table-header/table-header-custom-head"
+import useResetColumnFilters from "./table-utils/hooks/use-reset-column-filters"
 import useCreateTableData from "./table-utils/use-create-table-data"
 
 // TODO: make the table resuable and customizable, table height, weight, records per page, default records per page, columns, data, etc
@@ -30,6 +31,9 @@ export default function CustomTable() {
 
     // Add a stable ID for DnD context to prevent hydration errors and aria describe errors
     const dndContextId = useMemo(() => "table-dnd-context", [])
+
+    // clear all the table column filters when the table is mounted
+    useResetColumnFilters(table)
 
     if (!table) return null
 

@@ -13,7 +13,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 import TableHeaderDragColumn from "./table-header-drag-column"
 import TableHeaderDropdownMenu from "./table-header-dropdown-menu"
-import TableHeaderColumnFilter from "./table-header-filter/table-header-column-filter"
+import TableHeaderColumnFilter from "./table-header-filter/table-header-column-filter-menu"
 import TableHeaderResizer from "./table-header-resizer"
 import TableHeaderSortIndicator from "./table-header-sort-indicator"
 
@@ -31,6 +31,9 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
 
     // Add this function to check if any column is being resized
     const isAnyColumnResizing = table.getState().columnSizingInfo.isResizingColumn
+
+    // Check if the column is filtered
+    const isFiltered = table.getColumn(header.column.id)?.getIsFiltered()
 
     // dnd code for styling the table header cell and handling the column reordering
     const { attributes, isDragging, listeners, setNodeRef, transform, transition } = useSortable({
@@ -58,7 +61,7 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
                     <TableHead
                         className={`group relative cursor-pointer whitespace-nowrap bg-accent ${
                             isPinned ? "bg-primary/30" : ""
-                        }`}
+                        } ${isFiltered ? "bg-yellow-800" : ""}`}
                         colSpan={header.colSpan}
                         ref={setNodeRef} // for dnd column reordering
                         style={style}
@@ -88,7 +91,7 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
                                         <TableHeaderSortIndicator header={header} />
 
                                         {/* Column filter */}
-                                        <TableHeaderColumnFilter header={header} />
+                                        <TableHeaderColumnFilter header={header} table={table} />
 
                                         {/* Dropdown menu for column actions */}
                                         <TableHeaderDropdownMenu header={header} />

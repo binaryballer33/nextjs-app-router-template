@@ -1,6 +1,8 @@
+"use client"
+
 import type { Trade } from "@/types/finance/trade"
 import type { ColumnFilter, FilterOperation } from "@/types/table/filters"
-import type { Header } from "@tanstack/react-table"
+import type { Header, Table } from "@tanstack/react-table"
 
 import { useCallback, useEffect, useState } from "react"
 
@@ -11,12 +13,14 @@ import { useBoolean } from "@/hooks/use-boolean"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
+import TableResetAllFilters from "../../table-extras/table-reset-all-filters"
 import FilterInputs from "./table-header-filter-inputs"
 import FilterOperations from "./table-heeader-filter-operations"
 
 // Define the props for the TableHeaderColumnFilter component
 type TableHeaderColumnFilterProps = {
     header: Header<Trade, unknown>
+    table: Table<Trade>
 }
 
 // TODO: if a column has a filter, the column header should have a filter icon or something to indicate that the column is in a filtered state
@@ -27,7 +31,7 @@ type TableHeaderColumnFilterProps = {
 // TODO: when selecting a date range after selecting the start date the end date should be focused
 // TODO: create a DebouncedInput component that debounces the input and only updates the state after a delay
 export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterProps) {
-    const { header } = props
+    const { header, table } = props
 
     // for opening and closing the filter menu
     const { handleFalse: closeOpen, handleToggle: toggleOpen, value: open } = useBoolean(false)
@@ -113,7 +117,8 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
                     />
 
                     {/* Buttons for Applying and Clearing Filter */}
-                    <div className="flex justify-between">
+                    <div className="flex gap-2">
+                        <TableResetAllFilters table={table} />
                         <Button onClick={clearFilter}>Clear</Button>
                         <Button onClick={handleApplyFilter}>Apply Filter</Button>
                     </div>
