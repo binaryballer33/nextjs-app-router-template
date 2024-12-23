@@ -13,7 +13,6 @@ import { useBoolean } from "@/hooks/use-boolean"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
-import TableResetAllFilters from "../../table-extras/table-reset-all-filters"
 import FilterInputs from "./table-header-filter-inputs"
 import FilterOperations from "./table-header-filter-operations"
 
@@ -25,7 +24,6 @@ type TableHeaderColumnFilterProps = {
 
 // TODO: figure out a way to still be able to see the column that you are trying to filter when the filter menu opens
 // TODO: when selecting a date range after selecting the start date the end date should be focused
-// TODO: create a DebouncedInput component that debounces the input and only updates the state after a delay
 export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterProps) {
     const { header, table } = props
 
@@ -62,9 +60,15 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
     }, [handleFilter, closeOpen])
 
     // Clear the filter and reset the state
-    const clearFilter = () => {
-        setFilterState({ endDate: "", operation: "contains", value: "" })
+    const handleClearFilter = () => {
         header.column.setFilterValue(null)
+        setFilterState({ endDate: "", operation: "eq", value: "" })
+        closeOpen()
+    }
+
+    const handleResetFilters = () => {
+        table.resetColumnFilters()
+        setFilterState({ endDate: "", operation: "eq", value: "" })
         closeOpen()
     }
 
@@ -99,8 +103,8 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
 
                     {/* Buttons for Applying and Clearing Filter */}
                     <div className="flex gap-2">
-                        <TableResetAllFilters table={table} />
-                        <Button onClick={clearFilter}>Clear</Button>
+                        <Button onClick={handleResetFilters}>X All Filters</Button>
+                        <Button onClick={handleClearFilter}>Clear</Button>
                         <Button onClick={handleApplyFilter}>Apply Filter</Button>
                     </div>
                 </div>

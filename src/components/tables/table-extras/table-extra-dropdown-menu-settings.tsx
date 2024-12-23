@@ -3,6 +3,7 @@ import type { Table } from "@tanstack/react-table"
 
 import { Info } from "lucide-react"
 
+import { Button } from "@/components/ui/button"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -14,7 +15,6 @@ import { Separator } from "@/components/ui/separator"
 
 import TableExtraDropdownPaddingSettings from "./table-extra-dropdown-padding-settings"
 import TableExtraExportButtons from "./table-extra-export-buttons"
-import TableResetAllFilters from "./table-reset-all-filters"
 
 type TableExtraDropdownSettingsProps = {
     table: Table<Trade>
@@ -36,7 +36,7 @@ export default function TableExtraDropdownMenuSettings(props: TableExtraDropdown
                             <Separator className="w-full border-t border-secondary" />
                             <TableExtraExportButtons table={table} />
                             <Separator className="w-full border-t border-secondary" />
-                            <TableResetAllFilters table={table} />
+                            <Button onClick={() => table.resetColumnFilters()}>X All Filters</Button>
                         </div>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
