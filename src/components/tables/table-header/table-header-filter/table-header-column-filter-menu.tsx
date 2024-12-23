@@ -23,10 +23,7 @@ type TableHeaderColumnFilterProps = {
     table: Table<Trade>
 }
 
-// TODO: if a column has a filter, the column header should have a filter icon or something to indicate that the column is in a filtered state
-// TODO: add a "clear all filters" button
 // TODO: figure out a way to still be able to see the column that you are trying to filter when the filter menu opens
-// TODO: put a clear filter option in the filter menu and maybe in the information dropdown menu for setting 3
 // TODO:if you are in the filter menu for the date column you should only have options related to dates, before, after, bettween, this rule needs to apply to all columns, they should only have options related to the column type
 // TODO: when selecting a date range after selecting the start date the end date should be focused
 // TODO: create a DebouncedInput component that debounces the input and only updates the state after a delay
@@ -92,7 +89,7 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
     return (
         <Popover onOpenChange={toggleOpen} open={open}>
             <PopoverTrigger asChild>
-                <Button className={header.column.getIsFiltered() ? "text-primary" : ""} size="icon" variant="ghost">
+                <Button className={header.column.getIsFiltered() ? "bg-primary/50" : ""} size="icon" variant="ghost">
                     <Search className="h-4 w-4" />
                     <span className="sr-only">Filter {header.column.id}</span>
                 </Button>

@@ -61,7 +61,7 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
                     <TableHead
                         className={`group relative cursor-pointer whitespace-nowrap bg-accent ${
                             isPinned ? "bg-primary/30" : ""
-                        } ${isFiltered ? "bg-yellow-800" : ""}`}
+                        } ${isFiltered ? "bg-primary/20" : ""}`}
                         colSpan={header.colSpan}
                         ref={setNodeRef} // for dnd column reordering
                         style={style}
