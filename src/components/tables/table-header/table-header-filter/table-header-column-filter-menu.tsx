@@ -15,7 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 
 import TableResetAllFilters from "../../table-extras/table-reset-all-filters"
 import FilterInputs from "./table-header-filter-inputs"
-import FilterOperations from "./table-heeader-filter-operations"
+import FilterOperations from "./table-header-filter-operations"
 
 // Define the props for the TableHeaderColumnFilter component
 type TableHeaderColumnFilterProps = {
@@ -101,7 +101,9 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
                     {/* Radio Group for Filter Operations */}
                     <FilterOperations
                         filterState={filterState}
+                        header={header}
                         onOperationChange={(operation) => setFilterState((prev) => ({ ...prev, operation }))}
+                        table={table}
                     />
 
                     {/* Input Fields For Filtering */}
