@@ -2,12 +2,13 @@ import type { ColumnFilter } from "@/types/table/filters"
 
 // Function to handle numeric comparisons
 export default function handleNumericComparison(value: unknown, filterValue: ColumnFilter): boolean {
-    // the value from the row
+    // convert the value from the row to a number
     const rowNumValue = Number(value)
 
-    // the value from the filter
+    // convert the value from the filter to a number so we can compare them
     const numFilterVal = Number(filterValue.value)
 
+    // check if the value from the row and the value from the filter are numbers
     const isNumeric = !Number.isNaN(rowNumValue) && !Number.isNaN(numFilterVal)
     if (!isNumeric) return false
 

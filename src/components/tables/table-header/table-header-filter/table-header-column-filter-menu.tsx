@@ -1,7 +1,7 @@
 "use client"
 
 import type { Trade } from "@/types/finance/trade"
-import type { ColumnFilter, FilterOperation } from "@/types/table/filters"
+import type { ColumnFilter } from "@/types/table/filters"
 import type { Header, Table } from "@tanstack/react-table"
 
 import { useCallback, useEffect, useState } from "react"
@@ -24,7 +24,6 @@ type TableHeaderColumnFilterProps = {
 }
 
 // TODO: figure out a way to still be able to see the column that you are trying to filter when the filter menu opens
-// TODO:if you are in the filter menu for the date column you should only have options related to dates, before, after, bettween, this rule needs to apply to all columns, they should only have options related to the column type
 // TODO: when selecting a date range after selecting the start date the end date should be focused
 // TODO: create a DebouncedInput component that debounces the input and only updates the state after a delay
 export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterProps) {
@@ -32,26 +31,17 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
 
     // for opening and closing the filter menu
     const { handleFalse: closeOpen, handleToggle: toggleOpen, value: open } = useBoolean(false)
-    const [filterState, setFilterState] = useState({
+    const [filterState, setFilterState] = useState<ColumnFilter>({
         endDate: "",
-        operation: "contains" as FilterOperation,
+        operation: "eq",
         value: "",
     })
 
     const handleFilter = useCallback(() => {
         const { endDate, operation, value } = filterState
 
-        // if the value is empty, clear the filter
-        if (!value.trim()) {
-            header.column.setFilterValue(null)
-            return
-        }
-
         // Create the filter value object
-        const filterValue: ColumnFilter = {
-            operation,
-            value: convertRowValueToAppropriateType(operation, value),
-        }
+        const filterValue: ColumnFilter = { operation, value }
 
         // Add endDate if the operation is "betweenDates"
         if (operation === "betweenDates" && endDate) filterValue.endDate = endDate
@@ -76,14 +66,6 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
         setFilterState({ endDate: "", operation: "contains", value: "" })
         header.column.setFilterValue(null)
         closeOpen()
-    }
-
-    // if its a string operation, return the string value, otherwise return the number value
-    const convertRowValueToAppropriateType = (filterOperation: FilterOperation, rowValue: string) => {
-        if (["afterDate", "beforeDate", "betweenDates", "contains", "notContains"].includes(filterOperation)) {
-            return rowValue
-        }
-        return Number(rowValue)
     }
 
     return (

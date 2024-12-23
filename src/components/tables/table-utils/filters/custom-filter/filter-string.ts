@@ -14,6 +14,10 @@ export default function handleStringComparison(value: unknown, filterValue: Colu
             return rowStringValue.includes(filterVal)
         case "notContains":
             return !rowStringValue.includes(filterVal)
+        case "eq":
+            return rowStringValue === filterVal
+        case "neq":
+            return rowStringValue !== filterVal
         default:
             return false
     }

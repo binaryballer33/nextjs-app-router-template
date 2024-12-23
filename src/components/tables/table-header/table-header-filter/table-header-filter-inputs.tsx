@@ -1,6 +1,6 @@
 "use client"
 
-import type { FilterOperation } from "@/types/table/filters"
+import type { ColumnFilter } from "@/types/table/filters"
 
 import { useEffect, useRef } from "react"
 
@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label"
 
 type FilterInputsProps = {
     closeOpen: () => void
-    filterState: { endDate: string; operation: FilterOperation; value: string }
+    filterState: ColumnFilter
     onEndDateChange: (endDate: string) => void
     onValueChange: (value: string) => void
     open: boolean

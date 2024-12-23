@@ -3,6 +3,7 @@ import type { FilterOperation } from "@/types/table/filters"
 const filterOperationsMap: Record<string, { label: string; value: FilterOperation }[]> = {
     date: [
         { label: "Contains", value: "contains" },
+        { label: "Does Not Contain", value: "notContains" },
         { label: "Before Date", value: "beforeDate" },
         { label: "After Date", value: "afterDate" },
         { label: "Between Dates", value: "betweenDates" },
@@ -11,6 +12,7 @@ const filterOperationsMap: Record<string, { label: string; value: FilterOperatio
     ],
     default: [
         { label: "Contains", value: "contains" },
+        { label: "Does Not Contain", value: "notContains" },
         { label: "Before Date", value: "beforeDate" },
         { label: "After Date", value: "afterDate" },
         { label: "Between Dates", value: "betweenDates" },
