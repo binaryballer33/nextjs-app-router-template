@@ -20,7 +20,7 @@ import routes from "@/routes/routes"
 import LoginForm from "@/views/login/blocks/login-form"
 import TwoFactorCode from "@/views/login/blocks/two-factor-code"
 
-import Form from "@/components/react-hook-form/form-provider"
+import Form from "@/components/forms/form-provider"
 
 export default function LoginView() {
     const { t } = useTranslation()

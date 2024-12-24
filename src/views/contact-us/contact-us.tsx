@@ -12,9 +12,9 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 
 import { PageHeadingCentered } from "@/components/base/page-heading"
-import Field from "@/components/react-hook-form/fields"
-import Form from "@/components/react-hook-form/form-provider"
-import CustomInput from "@/components/react-hook-form/rhf-custom-input"
+import Field from "@/components/forms/fields"
+import Form from "@/components/forms/form-provider"
+import CustomInput from "@/components/forms/rhf-custom-input"
 
 export default function ContactView() {
     const form = useForm<ContactRequest>({ defaultValues, resolver: zodResolver(ContactRequestSchema) })

@@ -7,7 +7,7 @@ import useRedirectIfStale from "@/hooks/use-redirect-if-stale"
 import routes from "@/routes/routes"
 
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
-import FormLink from "@/components/react-hook-form/form/form-link"
+import FormLink from "@/components/forms/form/form-link"
 
 function SignOutView() {
     const { t } = useTranslation()

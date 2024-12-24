@@ -26,11 +26,11 @@ import { Input } from "@/components/ui/input"
 
 import Container from "@/components/base/container"
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
-import Field from "@/components/react-hook-form/fields"
-import Form from "@/components/react-hook-form/form-provider"
-import FormHead from "@/components/react-hook-form/form/form-head"
-import FormSubmitButton from "@/components/react-hook-form/form/form-submit-button"
-import CustomFormInput from "@/components/react-hook-form/rhf-custom-input"
+import Field from "@/components/forms/fields"
+import Form from "@/components/forms/form-provider"
+import FormHead from "@/components/forms/form/form-head"
+import FormSubmitButton from "@/components/forms/form/form-submit-button"
+import CustomFormInput from "@/components/forms/rhf-custom-input"
 
 export default function UserAccountSettingsView() {
     const { user } = useAuthUser()

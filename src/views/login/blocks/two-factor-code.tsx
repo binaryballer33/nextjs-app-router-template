@@ -4,9 +4,9 @@ import { LogIn } from "lucide-react"
 
 import Container from "@/components/base/container"
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
-import Field from "@/components/react-hook-form/fields"
-import FormHead from "@/components/react-hook-form/form/form-head"
-import FormSubmitButton from "@/components/react-hook-form/form/form-submit-button"
+import Field from "@/components/forms/fields"
+import FormHead from "@/components/forms/form/form-head"
+import FormSubmitButton from "@/components/forms/form/form-submit-button"
 
 type TwoFactorCodeProps = {
     t: TFunction<"translation", undefined>
