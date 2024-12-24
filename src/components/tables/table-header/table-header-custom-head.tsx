@@ -14,7 +14,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import TableHeaderDragColumn from "./table-header-drag-column"
 import TableHeaderDropdownMenu from "./table-header-dropdown-menu"
 import TableHeaderColumnFilter from "./table-header-filter/table-header-column-filter-menu"
-import TableHeaderResizer from "./table-header-resizer"
+// import TableHeaderResizer from "./table-header-resizer"
 import TableHeaderSortIndicator from "./table-header-sort-indicator"
 
 type TableHeaderCustomHeadProps = {
@@ -23,6 +23,7 @@ type TableHeaderCustomHeadProps = {
     table: Table<Trade>
 }
 
+// TODO: Need to Fix the issue where the column filters are changed when the column is resized
 export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps) {
     const { header, hideForColumns, table } = props
 
@@ -34,6 +35,9 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
 
     // Check if the column is filtered
     const isFiltered = table.getColumn(header.column.id)?.getIsFiltered()
+    const filterValue = table.getColumn(header.column.id)?.getFilterValue()
+    const filterBgColor = isFiltered && filterValue ? "bg-primary/20" : ""
+    console.log("filterBgColor", filterBgColor)
 
     // dnd code for styling the table header cell and handling the column reordering
     const { attributes, isDragging, listeners, setNodeRef, transform, transition } = useSortable({
@@ -61,7 +65,7 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
                     <TableHead
                         className={`group relative cursor-pointer whitespace-nowrap bg-accent ${
                             isPinned ? "bg-primary/30" : ""
-                        } ${isFiltered ? "bg-primary/20" : ""}`}
+                        } ${filterBgColor}`}
                         colSpan={header.colSpan}
                         ref={setNodeRef} // for dnd column reordering
                         style={style}
@@ -97,7 +101,7 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
                                         <TableHeaderDropdownMenu header={header} />
 
                                         {/* Table header resizer */}
-                                        <TableHeaderResizer header={header} />
+                                        {/* <TableHeaderResizer header={header} table={table} /> */}
                                     </div>
                                 )}
                             </div>

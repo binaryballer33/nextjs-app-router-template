@@ -8,6 +8,9 @@ export default function handleNumericComparison(value: unknown, filterValue: Col
     // convert the value from the filter to a number so we can compare them
     const numFilterVal = Number(filterValue.value)
 
+    // convert the second value from the filter to a number so we can compare them
+    const numSecondFilterVal = Number(filterValue.secondValue)
+
     // check if the value from the row and the value from the filter are numbers
     const isNumeric = !Number.isNaN(rowNumValue) && !Number.isNaN(numFilterVal)
     if (!isNumeric) return false
@@ -26,6 +29,12 @@ export default function handleNumericComparison(value: unknown, filterValue: Col
             return rowNumValue === numFilterVal
         case "neq":
             return rowNumValue !== numFilterVal
+        case "between":
+            return rowNumValue >= numFilterVal && rowNumValue <= numSecondFilterVal
+        case "contains":
+            return rowNumValue.toString().includes(numFilterVal.toString())
+        case "notContains":
+            return !rowNumValue.toString().includes(numFilterVal.toString())
         default:
             return false
     }

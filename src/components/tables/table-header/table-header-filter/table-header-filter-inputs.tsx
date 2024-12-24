@@ -9,15 +9,16 @@ import { Label } from "@/components/ui/label"
 import DebouncedInput from "../../table-utils/debounced-input"
 
 type FilterInputsProps = {
-    closeOpen: () => void
     filterState: ColumnFilter
+    handleEnterKeyPress: (event: React.KeyboardEvent<HTMLInputElement>) => void
     onEndDateChange: (endDate: string) => void
+    onSecondValueChange: (secondValue: string) => void
     onValueChange: (value: string) => void
     open: boolean
 }
 
 export default function FilterInputs(props: FilterInputsProps) {
-    const { closeOpen, filterState, onEndDateChange, onValueChange, open } = props
+    const { filterState, handleEnterKeyPress, onEndDateChange, onSecondValueChange, onValueChange, open } = props
     const inputRef = useRef<HTMLInputElement>(null)
 
     // Determine if the current operation is a date operation
@@ -35,20 +36,15 @@ export default function FilterInputs(props: FilterInputsProps) {
         return () => clearTimeout(100)
     }, [open])
 
-    // close the popover menu when the user presses enter
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") closeOpen()
-    }
-
     return (
-        <div className="flex">
+        <div className="flex gap-2">
             <div className="w-full text-center">
                 <Label htmlFor="filter-input">{isDateOperation ? "Date" : "Search Data"}</Label>
                 <DebouncedInput
                     className="w-full"
                     id="filter-input"
                     onChange={onValueChange}
-                    onKeyDown={handleKeyDown}
+                    onKeyDown={handleEnterKeyPress}
                     placeholder={isDateOperation ? "Select Date..." : "Search Data..."}
                     ref={inputRef}
                     type={isDateOperation ? "date" : "text"}
@@ -63,9 +59,25 @@ export default function FilterInputs(props: FilterInputsProps) {
                         className="w-full"
                         id="end-date-input"
                         onChange={onEndDateChange}
+                        onKeyDown={handleEnterKeyPress}
                         placeholder="Select End Date..."
                         type="date"
                         value={filterState.endDate?.toString() ?? ""}
+                    />
+                </div>
+            )}
+
+            {filterState.operation === "between" && (
+                <div className="w-full text-center">
+                    <Label htmlFor="second-filter-value-input">Second Value</Label>
+                    <DebouncedInput
+                        className="w-full"
+                        id="second-filter-value-input"
+                        onChange={onSecondValueChange}
+                        onKeyDown={handleEnterKeyPress}
+                        placeholder="Search Data..."
+                        type="text"
+                        value={filterState.secondValue?.toString() ?? ""}
                     />
                 </div>
             )}

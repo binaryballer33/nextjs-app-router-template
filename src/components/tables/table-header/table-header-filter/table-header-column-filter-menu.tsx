@@ -4,7 +4,7 @@ import type { Trade } from "@/types/finance/trade"
 import type { ColumnFilter } from "@/types/table/filters"
 import type { Header, Table } from "@tanstack/react-table"
 
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 
 import { Search } from "lucide-react"
 
@@ -31,27 +31,24 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
     const { handleFalse: closeOpen, handleToggle: toggleOpen, value: open } = useBoolean(false)
     const [filterState, setFilterState] = useState<ColumnFilter>({
         endDate: "",
-        operation: "eq",
+        operation: "contains",
+        secondValue: "",
         value: "",
     })
 
     const handleFilter = useCallback(() => {
-        const { endDate, operation, value } = filterState
+        const { endDate, operation, secondValue, value } = filterState
 
         // Create the filter value object
         const filterValue: ColumnFilter = { operation, value }
 
-        // Add endDate if the operation is "betweenDates"
+        // Add endDate if the operation is "betweenDates" or "between"
         if (operation === "betweenDates" && endDate) filterValue.endDate = endDate
+        if (operation === "between" && secondValue) filterValue.secondValue = secondValue
 
         // filter the column based on the filter value
         header.column.setFilterValue(filterValue)
     }, [filterState, header.column])
-
-    // Apply the filter whenever the filterState changes
-    useEffect(() => {
-        handleFilter()
-    }, [filterState, handleFilter])
 
     // apply the filter and close the popover menu
     const handleApplyFilter = useCallback(() => {
@@ -62,14 +59,22 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
     // Clear the filter and reset the state
     const handleClearFilter = () => {
         header.column.setFilterValue(null)
-        setFilterState({ endDate: "", operation: "eq", value: "" })
+        setFilterState({ endDate: "", operation: "contains", secondValue: "", value: "" })
         closeOpen()
     }
 
-    const handleResetFilters = () => {
+    const handleResetAllFilters = () => {
         table.resetColumnFilters()
-        setFilterState({ endDate: "", operation: "eq", value: "" })
+        setFilterState({ endDate: "", operation: "contains", secondValue: "", value: "" })
         closeOpen()
+    }
+
+    // close the popover menu when the user presses enter
+    const handleEnterKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            handleApplyFilter()
+            closeOpen()
+        }
     }
 
     return (
@@ -94,16 +99,17 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
 
                     {/* Input Fields For Filtering */}
                     <FilterInputs
-                        closeOpen={closeOpen}
                         filterState={filterState}
+                        handleEnterKeyPress={handleEnterKeyPress}
                         onEndDateChange={(endDate) => setFilterState((prev) => ({ ...prev, endDate }))}
+                        onSecondValueChange={(secondValue) => setFilterState((prev) => ({ ...prev, secondValue }))}
                         onValueChange={(value) => setFilterState((prev) => ({ ...prev, value }))}
                         open={open}
                     />
 
                     {/* Buttons for Applying and Clearing Filter */}
                     <div className="flex gap-2">
-                        <Button onClick={handleResetFilters}>X All Filters</Button>
+                        <Button onClick={handleResetAllFilters}>X All Filters</Button>
                         <Button onClick={handleClearFilter}>Clear</Button>
                         <Button onClick={handleApplyFilter}>Apply Filter</Button>
                     </div>

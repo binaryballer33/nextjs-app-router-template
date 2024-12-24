@@ -26,6 +26,7 @@ const filterOperationsMap: Record<string, { label: string; value: FilterOperatio
         { label: "Greater Than or Equal", value: "gte" },
         { label: "Equals", value: "eq" },
         { label: "Not Equals", value: "neq" },
+        { label: "Between", value: "between" },
         { label: "Contains", value: "contains" },
         { label: "Does Not Contain", value: "notContains" },
     ],

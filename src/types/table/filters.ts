@@ -4,6 +4,7 @@ import { z } from "zod"
 export type FilterOperation =
     | "afterDate"
     | "beforeDate"
+    | "between"
     | "betweenDates"
     | "contains"
     | "eq"
@@ -13,7 +14,6 @@ export type FilterOperation =
     | "lte"
     | "neq"
     | "notContains"
-
 // Zod schema for validating filter values
 export const dateValueSchema = z.union([z.string(), z.number(), z.date()])
 
@@ -31,7 +31,9 @@ export const filterValueSchema = z.object({
         "lte",
         "neq",
         "notContains",
+        "between",
     ]),
+    secondValue: z.union([z.string(), z.number()]).optional(),
     value: z.union([z.string(), z.number()]),
 })
 

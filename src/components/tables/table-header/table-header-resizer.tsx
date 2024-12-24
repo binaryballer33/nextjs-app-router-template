@@ -1,16 +1,22 @@
 "use client"
 
 import type { Trade } from "@/types/finance/trade"
-import type { Header } from "@tanstack/react-table"
 
+import { type Header, type Table } from "@tanstack/react-table"
 import { ArrowRightToLine } from "lucide-react"
 
 type TableHeaderResizerProps = {
     header: Header<Trade, any>
+    table: Table<Trade>
 }
 
+// TODO: Fix the issue where the column filters are changed when the column is resized
 export default function TableHeaderResizer(props: TableHeaderResizerProps) {
-    const { header } = props
+    const { header, table } = props
+
+    const handleResizeStart = (event: React.MouseEvent | React.TouchEvent) => {
+        header.getResizeHandler()(event)
+    }
 
     return (
         header.column.getCanResize() && (
@@ -21,8 +27,9 @@ export default function TableHeaderResizer(props: TableHeaderResizerProps) {
                         bg-secondary/50 opacity-100 max-sm:w-1.5
                     `}
                 onDoubleClick={() => header.column.resetSize()}
-                onMouseDown={header.getResizeHandler()}
-                onTouchStart={header.getResizeHandler()}
+                onMouseDown={handleResizeStart}
+                onMouseOver={() => table.resetColumnFilters()}
+                onTouchStart={handleResizeStart}
             />
         )
     )
