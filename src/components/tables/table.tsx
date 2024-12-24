@@ -32,6 +32,7 @@ type CustomTableProps<T> = {
 }
 
 // TODO: add a "create new trade button"
+// TODO: create a row detail view for yugioh cards table
 export default function CustomTable<T>(props: CustomTableProps<T>) {
     const { columns, data, height = "500px", hideForColumns, recordsPerPage, width = "100%" } = props
 

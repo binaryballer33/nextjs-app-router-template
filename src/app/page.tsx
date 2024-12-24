@@ -13,7 +13,7 @@ export default async function HomePage() {
 
     return (
         <HydrationBoundary state={dehydratedState}>
-            <HomeView />
+            <HomeView yugiohCards={yugiohCards} />
         </HydrationBoundary>
     )
 }

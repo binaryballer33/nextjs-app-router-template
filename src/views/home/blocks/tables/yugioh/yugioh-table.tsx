@@ -1,17 +1,24 @@
 "use client"
 
-import { trades } from "@/views/home/blocks/table/trade-data"
-import useCreateTableColumns from "@/views/home/blocks/table/use-create-table-columns"
+import type { YuGiOhCard } from "@/types/yu-gi-oh/yu-gi-oh"
 
 import CustomTable from "@/components/tables/table"
 
-export default function TradesTable() {
+import useCreateTableColumns from "./use-create-yugioh-table-columns"
+
+type YugiohTableProps = {
+    yugiohCards: YuGiOhCard[]
+}
+
+export default function YugiohTable(props: YugiohTableProps) {
+    const { yugiohCards } = props
+
     const { columns, hideForColumns } = useCreateTableColumns()
 
     return (
         <CustomTable
             columns={columns}
-            data={trades}
+            data={yugiohCards}
             hideForColumns={hideForColumns}
             recordsPerPage={[10, 20, 30, 40, 50, 100]}
             width="100%"

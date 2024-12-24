@@ -60,7 +60,9 @@ export default function TableBodyRowCustom(props: TableBodyRowCustomProps) {
                             width: Math.max(cell.column.getSize(), cell.column.columnDef.minSize || 0),
                         }}
                     >
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        <div style={{ maxHeight: "100px", overflow: "auto" }}>
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </div>
                     </TableCell>
                 ))}
             </TableRow>

@@ -18,7 +18,7 @@ import customFilter from "@/components/tables/table-utils/filters/custom-filter/
 
 const columnHelper = createColumnHelper<Trade>()
 
-export default function useCreateTableColumns() {
+export default function useCreateTradeTableColumns() {
     // don't show the header features like sort, filter, drag and drop, etc for these columns
     const hideForColumnsMap = useMemo(
         () => ({
