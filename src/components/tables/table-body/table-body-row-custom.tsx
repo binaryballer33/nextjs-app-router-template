@@ -1,4 +1,6 @@
-import { type CSSProperties, Fragment } from "react"
+import type { ComponentType, CSSProperties } from "react"
+
+import { Fragment } from "react"
 
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
@@ -8,16 +10,15 @@ import { cn } from "@/lib/utils"
 
 import { TableCell, TableRow } from "@/components/ui/table"
 
-import TableBodyRowDetailView from "./table-body-row-detail-view"
-
 type TableBodyRowCustomProps = {
     className?: string
+    expandRowDetailComponent?: ComponentType<{ row: Row<any>; table: Table<any> }>
     row: Row<any>
     table: Table<any>
 }
 
 export default function TableBodyRowCustom(props: TableBodyRowCustomProps) {
-    const { className, row, table } = props
+    const { className, expandRowDetailComponent: ExpandRowDetailComponent, row, table } = props
     const paddingConfig = { lg: "p-4", md: "p-2", sm: "p-1", xl: "p-6" }
     const padding = table.options.meta?.padding!
 
@@ -68,7 +69,7 @@ export default function TableBodyRowCustom(props: TableBodyRowCustomProps) {
             </TableRow>
 
             {/* if the row is expanded, display the row detail view */}
-            {row.getIsExpanded() && <TableBodyRowDetailView row={row} trade={row.original} />}
+            {row.getIsExpanded() && ExpandRowDetailComponent && <ExpandRowDetailComponent row={row} table={table} />}
         </Fragment>
     )
 }

@@ -20,7 +20,7 @@ export default function HomeView(props: HomeViewProps) {
             <PageHeading bottomText="This Is A Sample Page" title="Home Page" />
 
             <Tabs className="w-full" defaultValue="trades">
-                <TabsList className="grid w-full grid-cols-2">
+                <TabsList className="grid w-full grid-cols-2 border">
                     <TabsTrigger value="trades">Trades</TabsTrigger>
                     <TabsTrigger value="yugioh">Yugioh</TabsTrigger>
                 </TabsList>

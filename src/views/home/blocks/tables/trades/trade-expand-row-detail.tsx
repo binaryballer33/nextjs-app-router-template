@@ -8,14 +8,13 @@ import { cn } from "@/lib/utils"
 
 import { TableCell, TableRow } from "@/components/ui/table"
 
-type TableBodyRowDetailViewProps = {
+type TradeExpandRowDetailProps = {
     row: Row<Trade>
-    trade: Trade
 }
 
-// TODO: figure out how to make this generic
-export default function TableBodyRowDetailView(props: TableBodyRowDetailViewProps) {
-    const { row, trade } = props
+export default function TradeExpandRowDetail(props: TradeExpandRowDetailProps) {
+    const { row } = props
+    const trade = row.original // Assuming 'original' contains the trade data
 
     const rowDetailViewDataColOne = useMemo(() => {
         return [

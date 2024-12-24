@@ -9,7 +9,7 @@ import getYuGiOhCardsQuery from "@/actions/yu-gi-oh/queries/get-yu-gi-oh-cards-q
 export async function GET(request: NextRequest) {
     const { searchParams } = request.nextUrl
     const page = parseInt(searchParams.get("page") || "0", 10)
-    const limit = parseInt(searchParams.get("limit") || "50", 10)
+    const limit = parseInt(searchParams.get("limit") || "100", 10)
 
     const yugiohCards = await getYuGiOhCardsQuery(page, limit)
 

@@ -1,6 +1,7 @@
 "use client"
 
-import type { ColumnDef } from "@tanstack/react-table"
+import type { ColumnDef, Table as ReactTable, Row } from "@tanstack/react-table"
+import type { ComponentType } from "react"
 
 import { useMemo } from "react"
 
@@ -25,6 +26,7 @@ import useCreateTableData from "./table-utils/use-create-table-data"
 type CustomTableProps<T> = {
     columns: ColumnDef<T>[]
     data: T[]
+    expandRowDetailComponent?: ComponentType<{ row: Row<T>; table: ReactTable<T> }>
     height?: string
     hideForColumns: string[]
     recordsPerPage?: number[]
@@ -34,7 +36,15 @@ type CustomTableProps<T> = {
 // TODO: add a "create new trade button"
 // TODO: create a row detail view for yugioh cards table
 export default function CustomTable<T>(props: CustomTableProps<T>) {
-    const { columns, data, height = "500px", hideForColumns, recordsPerPage, width = "100%" } = props
+    const {
+        columns,
+        data,
+        expandRowDetailComponent,
+        height = "500px",
+        hideForColumns,
+        recordsPerPage,
+        width = "100%",
+    } = props
 
     // in case the px on the width is forgotten this will add it, also will still allow percentage widths
     const transformedWidth = !width?.endsWith("px") && !width?.endsWith("%") ? `${width}px` : width
@@ -116,7 +126,12 @@ export default function CustomTable<T>(props: CustomTableProps<T>) {
                             {table.getRowModel().rows.length ? (
                                 <SortableContext items={rowOrder}>
                                     {table.getRowModel().rows.map((row) => (
-                                        <TableBodyRowCustom key={row.id} row={row} table={table} />
+                                        <TableBodyRowCustom
+                                            expandRowDetailComponent={expandRowDetailComponent}
+                                            key={row.id}
+                                            row={row}
+                                            table={table}
+                                        />
                                     ))}
                                 </SortableContext>
                             ) : (

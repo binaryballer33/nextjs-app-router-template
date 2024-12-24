@@ -17,6 +17,17 @@ import TableHeaderCheckboxAll from "@/components/tables/table-header/table-heade
 import TableHeaderDelete from "@/components/tables/table-header/table-header-delete"
 import customFilter from "@/components/tables/table-utils/filters/custom-filter/custom-filter"
 
+const createCellTooltip = (tooltipTrigger: string, tooltipContent: string) => {
+    return (
+        <TooltipProvider delayDuration={333}>
+            <Tooltip>
+                <TooltipTrigger className="max-w-[300px]">{tooltipTrigger.slice(0, 100)}</TooltipTrigger>
+                <TooltipContent className="max-w-[300px]">{tooltipContent}</TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
+    )
+}
+
 const columnHelper = createColumnHelper<YuGiOhCard>()
 
 export default function useCreateYugiohTableColumns() {
@@ -129,14 +140,7 @@ export default function useCreateYugiohTableColumns() {
             }),
 
             columnHelper.accessor("desc", {
-                cell: ({ row }) => (
-                    <TooltipProvider delayDuration={333}>
-                        <Tooltip>
-                            <TooltipTrigger className="max-w-[300px]">{row.original.desc.slice(0, 100)}</TooltipTrigger>
-                            <TooltipContent className="max-w-[300px]">{row.original.desc}</TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                ),
+                cell: ({ row }) => createCellTooltip(row.original.desc, row.original.desc),
                 enableColumnFilter: true,
                 enableResizing: true,
                 filterFn: customFilter,
