@@ -1,5 +1,3 @@
-import type { Trade } from "@/types/finance/trade"
-
 import { type CSSProperties, Fragment } from "react"
 
 import { useSortable } from "@dnd-kit/sortable"
@@ -14,8 +12,8 @@ import TableBodyRowDetailView from "./table-body-row-detail-view"
 
 type TableBodyRowCustomProps = {
     className?: string
-    row: Row<Trade>
-    table: Table<Trade>
+    row: Row<any>
+    table: Table<any>
 }
 
 export default function TableBodyRowCustom(props: TableBodyRowCustomProps) {

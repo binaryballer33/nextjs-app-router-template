@@ -1,4 +1,3 @@
-import type { Trade } from "@/types/finance/trade"
 import type { Table } from "@tanstack/react-table"
 
 import { Trash2 } from "lucide-react"
@@ -6,7 +5,7 @@ import { Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 type TableExtraDeleteSelectedProps = {
-    table: Table<Trade>
+    table: Table<any>
 }
 
 export default function TableExtraDeleteSelected(props: TableExtraDeleteSelectedProps) {

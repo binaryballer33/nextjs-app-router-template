@@ -1,4 +1,3 @@
-import type { Trade } from "@/types/finance/trade"
 import type { Row } from "@tanstack/react-table"
 
 import { Minus, Plus } from "lucide-react"
@@ -6,7 +5,7 @@ import { Minus, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 type TableBodyRowExpandProps = {
-    row: Row<Trade>
+    row: Row<any>
 }
 
 export default function TableBodyRowExpand(props: TableBodyRowExpandProps) {

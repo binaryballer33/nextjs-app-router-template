@@ -1,6 +1,5 @@
 "use client"
 
-import type { Trade } from "@/types/finance/trade"
 import type { Header } from "@tanstack/react-table"
 
 import { MoreVertical } from "lucide-react"
@@ -8,7 +7,7 @@ import { MoreVertical } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 type TableHeaderDropdownMenuProps = {
-    header: Header<Trade, any>
+    header: Header<any, any>
 }
 
 export default function TableHeaderDropdownMenu(props: TableHeaderDropdownMenuProps) {

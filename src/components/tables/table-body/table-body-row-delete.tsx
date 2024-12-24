@@ -1,4 +1,3 @@
-import type { Trade } from "@/types/finance/trade"
 import type { Row, Table } from "@tanstack/react-table"
 
 import { Trash2 } from "lucide-react"
@@ -6,8 +5,8 @@ import { Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 type TableBodyRowDeleteProps = {
-    row: Row<Trade>
-    table: Table<Trade>
+    row: Row<any>
+    table: Table<any>
 }
 
 export default function TableBodyRowDelete(props: TableBodyRowDeleteProps) {

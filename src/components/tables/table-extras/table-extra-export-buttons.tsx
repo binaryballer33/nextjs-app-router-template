@@ -1,4 +1,3 @@
-import type { Trade } from "@/types/finance/trade"
 import type { Table } from "@tanstack/react-table"
 import type { ReactNode } from "react"
 
@@ -11,7 +10,7 @@ import downloadTableToCSV from "../table-utils/downloads/download-table-to-csv"
 import downloadTableToJSON from "../table-utils/downloads/download-table-to-json"
 
 type TableExtraExportButtonsProps = {
-    table: Table<Trade>
+    table: Table<any>
 }
 
 export default function TableExtraExportButtons(props: TableExtraExportButtonsProps) {
@@ -19,16 +18,16 @@ export default function TableExtraExportButtons(props: TableExtraExportButtonsPr
 
     // Get all rows that match current filters
     const filteredRows = table.getFilteredRowModel().rows
-    const trades = filteredRows.map((row) => row.original)
+    const data = filteredRows.map((row) => row.original)
 
     const exportButtons = [
         {
-            handleDownload: () => downloadTableToCSV(trades),
+            handleDownload: () => downloadTableToCSV(data),
             icon: <Sheet className="h-4 w-4" />,
             label: "Download CSV",
         },
         {
-            handleDownload: () => downloadTableToJSON(trades),
+            handleDownload: () => downloadTableToJSON(data),
             icon: <FileJson className="h-4 w-4" />,
             label: "Download JSON",
         },

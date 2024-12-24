@@ -1,6 +1,5 @@
 "use client"
 
-import type { Trade } from "@/types/finance/trade"
 import type { ColumnFilter } from "@/types/table/filters"
 import type { Header, Table } from "@tanstack/react-table"
 
@@ -18,8 +17,8 @@ import FilterOperations from "./table-header-filter-operations"
 
 // Define the props for the TableHeaderColumnFilter component
 type TableHeaderColumnFilterProps = {
-    header: Header<Trade, unknown>
-    table: Table<Trade>
+    header: Header<any, unknown>
+    table: Table<any>
 }
 
 // TODO: figure out a way to still be able to see the column that you are trying to filter when the filter menu opens

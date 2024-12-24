@@ -1,6 +1,5 @@
 "use client"
 
-import type { Trade } from "@/types/finance/trade"
 import type { Header, Table } from "@tanstack/react-table" // needed for table body level scope DnD setup
 import { type CSSProperties } from "react"
 
@@ -18,9 +17,9 @@ import TableHeaderColumnFilter from "./table-header-filter/table-header-column-f
 import TableHeaderSortIndicator from "./table-header-sort-indicator"
 
 type TableHeaderCustomHeadProps = {
-    header: Header<Trade, unknown>
+    header: Header<any, unknown>
     hideForColumns: string[]
-    table: Table<Trade>
+    table: Table<any>
 }
 
 // TODO: Need to Fix the issue where the column filters are changed when the column is resized
@@ -37,7 +36,6 @@ export default function TableHeaderCustomHead(props: TableHeaderCustomHeadProps)
     const isFiltered = table.getColumn(header.column.id)?.getIsFiltered()
     const filterValue = table.getColumn(header.column.id)?.getFilterValue()
     const filterBgColor = isFiltered && filterValue ? "bg-primary/20" : ""
-    console.log("filterBgColor", filterBgColor)
 
     // dnd code for styling the table header cell and handling the column reordering
     const { attributes, isDragging, listeners, setNodeRef, transform, transition } = useSortable({

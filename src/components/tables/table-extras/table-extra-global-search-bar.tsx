@@ -1,10 +1,9 @@
-import type { Trade } from "@/types/finance/trade"
 import type { Table } from "@tanstack/react-table"
 
 import { Input } from "@/components/ui/input"
 
 type TableExtraGlobalSearchBarProps = {
-    table: Table<Trade>
+    table: Table<any>
 }
 
 export default function TableExtraGlobalSearchBar(props: TableExtraGlobalSearchBarProps) {

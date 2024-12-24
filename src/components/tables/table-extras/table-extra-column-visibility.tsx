@@ -1,6 +1,5 @@
 "use client"
 
-import type { Trade } from "@/types/finance/trade"
 import type { Table } from "@tanstack/react-table"
 
 import { Eye } from "lucide-react"
@@ -15,7 +14,7 @@ import convertCamelToTitleCase from "../table-utils/typography/convert-camel-to-
 
 type TableExtraColumnVisibilityProps = {
     columnOrder: string[]
-    table: Table<Trade>
+    table: Table<any>
 }
 
 export default function TableExtraColumnVisibility(props: TableExtraColumnVisibilityProps) {

@@ -1,10 +1,9 @@
-import type { Trade } from "@/types/finance/trade"
 import type { Row } from "@tanstack/react-table"
 
 import { Checkbox } from "@/components/ui/checkbox"
 
 type TableBodyRowCheckboxProps = {
-    row: Row<Trade>
+    row: Row<any>
 }
 
 export default function TableBodyRowCheckbox(props: TableBodyRowCheckboxProps) {

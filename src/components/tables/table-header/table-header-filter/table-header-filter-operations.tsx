@@ -1,6 +1,5 @@
 "use client"
 
-import type { Trade } from "@/types/finance/trade"
 import type { ColumnFilter, FilterOperation } from "@/types/table/filters"
 import type { Header, Table } from "@tanstack/react-table"
 
@@ -11,9 +10,9 @@ import filterOperationsMap from "../../table-utils/filters/filter-operations"
 
 type FilterOperationsProps = {
     filterState: ColumnFilter
-    header: Header<Trade, unknown>
+    header: Header<any, unknown>
     onOperationChange: (operation: FilterOperation) => void
-    table: Table<Trade>
+    table: Table<any>
 }
 
 function getColumnType(value: unknown): string {

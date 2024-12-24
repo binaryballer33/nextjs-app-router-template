@@ -1,13 +1,12 @@
 "use client"
 
-import type { Trade } from "@/types/finance/trade"
 import type { Header } from "@tanstack/react-table"
 
 import { ArrowDownAZ, ArrowUpZA } from "lucide-react"
 import { TiSortAlphabetically } from "react-icons/ti"
 
 type TableHeaderSortIndicatorProps = {
-    header: Header<Trade, any>
+    header: Header<any, any>
 }
 
 export default function TableHeaderSortIndicator(props: TableHeaderSortIndicatorProps) {

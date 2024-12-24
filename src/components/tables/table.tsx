@@ -1,6 +1,6 @@
 "use client"
 
-import type { Trade } from "@/types/finance/trade"
+import type { ColumnDef } from "@tanstack/react-table"
 
 import { useMemo } from "react"
 
@@ -22,12 +22,31 @@ import TableHeaderCustomHead from "./table-header/table-header-custom-head"
 import useResetColumnFilters from "./table-utils/hooks/use-reset-column-filters"
 import useCreateTableData from "./table-utils/use-create-table-data"
 
-// TODO: make the table resuable and customizable, table height, weight, records per page, default records per page, columns, data, etc
-// TODO: add a "create new trade button"
-export default function CustomTable() {
-    const { columnOrder, handleDragEnd, hideForColumns, rowOrder, sensors, tableConfig } = useCreateTableData()
+type CustomTableProps<T> = {
+    columns: ColumnDef<T>[]
+    data: T[]
+    height?: string
+    hideForColumns: string[]
+    recordsPerPage?: number[]
+    width?: string
+}
 
-    const table = useReactTable<Trade>(tableConfig)
+// TODO: add a "create new trade button"
+export default function CustomTable<T>(props: CustomTableProps<T>) {
+    const { columns, data, height = "500px", hideForColumns, recordsPerPage, width = "100%" } = props
+
+    // in case the px on the width is forgotten this will add it, also will still allow percentage widths
+    const transformedWidth = !width?.endsWith("px") && !width?.endsWith("%") ? `${width}px` : width
+    const transformedHeight = !height?.endsWith("px") && !height?.endsWith("%") ? `${height}px` : height
+
+    const { columnOrder, handleDragEnd, rowOrder, sensors, tableConfig } = useCreateTableData<T>({
+        columns,
+        data,
+        height: transformedHeight,
+        width: transformedWidth,
+    })
+
+    const table = useReactTable<T>(tableConfig)
 
     // Add a stable ID for DnD context to prevent hydration errors and aria describe errors
     const dndContextId = useMemo(() => "table-dnd-context", [])
@@ -40,8 +59,11 @@ export default function CustomTable() {
     return (
         <div className="flex flex-col gap-2 md:p-2">
             {/* Extra table features */}
-            <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-                <div className="flex items-center gap-4 max-sm:gap-2 md:w-full">
+            <div
+                className="flex flex-col items-center justify-between gap-4 md:flex-row"
+                style={{ maxWidth: transformedWidth, minWidth: "250px" }}
+            >
+                <div className="flex w-full items-center gap-4 max-sm:gap-2">
                     {table.getIsSomeRowsSelected() || table.getIsAllRowsSelected() ? (
                         <TableExtraDeleteSelected table={table} />
                     ) : (
@@ -63,7 +85,10 @@ export default function CustomTable() {
                 sensors={sensors}
             >
                 {/* table container */}
-                <div className="relative max-h-[525px] min-h-[525px] overflow-x-auto overflow-y-auto rounded-md border">
+                <div
+                    className="relative overflow-x-auto overflow-y-auto rounded-md border max-sm:w-full"
+                    style={{ height: transformedHeight, maxWidth: transformedWidth }}
+                >
                     <Table>
                         <TableHeader className="sticky top-0 z-10 bg-background">
                             {/* Table header rows */}
@@ -75,7 +100,7 @@ export default function CustomTable() {
                                         {headerGroup.headers.map((header) => (
                                             <TableHeaderCustomHead
                                                 header={header}
-                                                hideForColumns={hideForColumns}
+                                                hideForColumns={hideForColumns || []}
                                                 key={header.id}
                                                 table={table}
                                             />
@@ -103,7 +128,7 @@ export default function CustomTable() {
             </DndContext>
 
             {/* Pagination */}
-            <TableExtraPagination table={table} />
+            <TableExtraPagination recordsPerPage={recordsPerPage} table={table} />
             <TableDemoStats table={table} />
         </div>
     )

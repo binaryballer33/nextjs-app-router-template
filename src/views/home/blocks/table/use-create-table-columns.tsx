@@ -14,8 +14,7 @@ import TableBodyRowRowDrag from "@/components/tables/table-body/table-body-row-d
 import TableBodyRowExpand from "@/components/tables/table-body/table-body-row-expand"
 import TableHeaderCheckboxAll from "@/components/tables/table-header/table-header-checkbox-all"
 import TableHeaderDelete from "@/components/tables/table-header/table-header-delete"
-
-import customFilter from "./table-utils/filters/custom-filter/custom-filter"
+import customFilter from "@/components/tables/table-utils/filters/custom-filter/custom-filter"
 
 const columnHelper = createColumnHelper<Trade>()
 

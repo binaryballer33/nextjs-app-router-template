@@ -13,6 +13,7 @@ type TableBodyRowDetailViewProps = {
     trade: Trade
 }
 
+// TODO: figure out how to make this generic
 export default function TableBodyRowDetailView(props: TableBodyRowDetailViewProps) {
     const { row, trade } = props
 

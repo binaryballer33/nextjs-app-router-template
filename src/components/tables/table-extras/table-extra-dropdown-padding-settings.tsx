@@ -1,10 +1,9 @@
-import type { Trade } from "@/types/finance/trade"
 import type { Table } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
 
 type TableExtraDropdownPaddingSettingsProps = {
-    table: Table<Trade>
+    table: Table<any>
 }
 
 export default function TableExtraDropdownPaddingSettings(props: TableExtraDropdownPaddingSettingsProps) {

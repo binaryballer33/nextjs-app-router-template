@@ -1,13 +1,11 @@
 "use client"
 
-import type { Trade } from "@/types/finance/trade"
-
 import { type Header, type Table } from "@tanstack/react-table"
 import { ArrowRightToLine } from "lucide-react"
 
 type TableHeaderResizerProps = {
-    header: Header<Trade, any>
-    table: Table<Trade>
+    header: Header<any, any>
+    table: Table<any>
 }
 
 // TODO: Fix the issue where the column filters are changed when the column is resized

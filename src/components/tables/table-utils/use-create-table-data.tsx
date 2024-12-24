@@ -1,8 +1,7 @@
 "use client"
 
-import type { Trade } from "@/types/finance/trade"
 import type { DragEndEvent } from "@dnd-kit/core"
-import type { RowData, TableOptions } from "@tanstack/react-table"
+import type { ColumnDef, RowData, TableOptions } from "@tanstack/react-table"
 
 import { useState } from "react"
 
@@ -10,33 +9,39 @@ import { KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from 
 import { arrayMove } from "@dnd-kit/sortable"
 import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel } from "@tanstack/react-table"
 
-import { trades } from "../trade-data"
-import useCreateTableColumns from "../use-create-table-columns"
 import customFilter from "./filters/custom-filter/custom-filter"
 import fuzzyFilter from "./filters/fuzzy-filter"
 
 // Extend TanStack's TableMeta interface
 declare module "@tanstack/table-core" {
     interface TableMeta<TData extends RowData> {
+        height: string
         padding: "lg" | "md" | "sm" | "xl"
         removeRow: (rowId: string) => void
         removeRows: (rowIds: string[]) => void
         setTablePadding: (padding: "lg" | "md" | "sm" | "xl") => void
+        width: string
     }
 }
 
-export default function useCreateTableData() {
-    // get table row data
-    const [data, setData] = useState(trades)
+type UseCreateTableDataProps<T> = {
+    columns: ColumnDef<T>[]
+    data: T[]
+    height?: string
+    width?: string
+}
 
-    // create the table columns
-    const { columns, hideForColumns } = useCreateTableColumns()
+export default function useCreateTableData<T>(props: UseCreateTableDataProps<T>) {
+    const { columns, data: initialData, height = "500px", width = "100%" } = props
+
+    // get table row data
+    const [data, setData] = useState(initialData)
 
     // get the columnIds for column visibility toggling
     const [columnOrder, setColumnOrder] = useState<string[]>(() => columns.map((column) => column.id!))
 
     // row order for dnd row reordering
-    const [rowOrder, setRowOrder] = useState<string[]>(() => data.map((row) => row.id))
+    const [rowOrder, setRowOrder] = useState<string[]>(() => data.map((_, index) => index.toString()))
 
     const [tablePadding, setTablePadding] = useState<"lg" | "md" | "sm" | "xl">("md")
 
@@ -83,7 +88,7 @@ export default function useCreateTableData() {
     }
 
     // create the table config
-    const tableConfig: TableOptions<Trade> = {
+    const tableConfig: TableOptions<T> = {
         columnResizeDirection: "ltr",
         columnResizeMode: "onChange",
         columns,
@@ -109,7 +114,7 @@ export default function useCreateTableData() {
         getRowCanExpand: () => true,
 
         // get the row id for the table, helps with smooth row reordering with dnd, without it, row dnd is more choppy
-        getRowId: (row) => row.id,
+        getRowId: (_, index) => index.toString(),
 
         // sorting for the table
         getSortedRowModel: getSortedRowModel(),
@@ -119,16 +124,18 @@ export default function useCreateTableData() {
 
         // handle row state deletion
         meta: {
-            padding: tablePadding,
+            height, // height of the table
+            padding: tablePadding, // padding of the table
             removeRow: (rowId: string) => {
-                setData((prev) => prev.filter((row) => row.id !== rowId))
+                setData((prev) => prev.filter((_, index) => index.toString() !== rowId))
             },
             removeRows: (rowIds: string[]) => {
-                setData((prev) => prev.filter((row) => !rowIds.includes(row.id)))
+                setData((prev) => prev.filter((_, index) => !rowIds.includes(index.toString())))
             },
             setTablePadding: (padding: "lg" | "md" | "sm" | "xl") => {
                 setTablePadding(padding)
             },
+            width, // width of the table
         },
 
         // update the column order for dnd column reordering
@@ -139,5 +146,5 @@ export default function useCreateTableData() {
         },
     }
 
-    return { columnOrder, columns, data, handleDragEnd, hideForColumns, rowOrder, sensors, tableConfig }
+    return { columnOrder, columns, data, handleDragEnd, rowOrder, sensors, tableConfig }
 }

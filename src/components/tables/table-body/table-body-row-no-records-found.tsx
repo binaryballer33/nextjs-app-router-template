@@ -1,10 +1,9 @@
-import type { Trade } from "@/types/finance/trade"
 import type { Table } from "@tanstack/react-table"
 
 import { TableCell, TableRow } from "@/components/ui/table"
 
 type TableBodyRowNoRecordsFoundProps = {
-    table: Table<Trade>
+    table: Table<any>
 }
 
 export default function TableBodyRowNoRecordsFound(props: TableBodyRowNoRecordsFoundProps) {

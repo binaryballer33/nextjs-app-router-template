@@ -1,4 +1,3 @@
-import type { Trade } from "@/types/finance/trade"
 import type { Table } from "@tanstack/react-table"
 
 import { Info } from "lucide-react"
@@ -17,7 +16,7 @@ import TableExtraDropdownPaddingSettings from "./table-extra-dropdown-padding-se
 import TableExtraExportButtons from "./table-extra-export-buttons"
 
 type TableExtraDropdownSettingsProps = {
-    table: Table<Trade>
+    table: Table<any>
 }
 
 export default function TableExtraDropdownMenuSettings(props: TableExtraDropdownSettingsProps) {
