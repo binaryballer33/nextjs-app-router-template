@@ -1,12 +1,12 @@
 import type { Table } from "@tanstack/react-table"
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../../../../../components/ui/accordion"
 
 type TableDemoStatsProps = {
     table: Table<any>
 }
 
-export default function TableDemoStats({ table }: TableDemoStatsProps) {
+export default function TradeStats({ table }: TableDemoStatsProps) {
     // Get all rows that match current filters
     const trades = table.getFilteredRowModel().rows.map((row) => row.original)
 

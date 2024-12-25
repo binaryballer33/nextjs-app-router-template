@@ -13,7 +13,6 @@ import { Table, TableBody, TableHeader, TableRow } from "@/components/ui/table"
 
 import TableBodyRowCustom from "./table-body/table-body-row-custom"
 import TableBodyRowNoRecordsFound from "./table-body/table-body-row-no-records-found"
-import TableDemoStats from "./table-demo-stats"
 import TableExtraColumnVisibility from "./table-extras/table-extra-column-visibility"
 import TableExtraDeleteSelected from "./table-extras/table-extra-delete-selected"
 import TableExtraDropdownMenuSettings from "./table-extras/table-extra-dropdown-menu-settings"
@@ -24,16 +23,31 @@ import useResetColumnFilters from "./table-utils/hooks/use-reset-column-filters"
 import useCreateTableData from "./table-utils/use-create-table-data"
 
 type CustomTableProps<T> = {
+    /* columns to display in the table */
     columns: ColumnDef<T>[]
+
+    /* data to display in the table ( the rows ) */
     data: T[]
+
+    /*  optional component to expand the row in order to display more information for that row */
     expandRowDetailComponent?: ComponentType<{ row: Row<T>; table: ReactTable<T> }>
+
+    /* height of the table */
     height?: string
+
+    /* columns to not display header names and header features */
     hideForColumns: string[]
+
+    /* records per page options */
     recordsPerPage?: number[]
+
+    /* optional component to display table stats, this component has access to the table instance */
+    tableStatsComponent?: ComponentType<{ table: ReactTable<T> }>
+
+    /* width of the table */
     width?: string
 }
 
-// TODO: add a "create new trade button"
 export default function CustomTable<T>(props: CustomTableProps<T>) {
     const {
         columns,
@@ -42,6 +56,7 @@ export default function CustomTable<T>(props: CustomTableProps<T>) {
         height = "500px",
         hideForColumns,
         recordsPerPage,
+        tableStatsComponent: TableStatsComponent,
         width = "100%",
     } = props
 
@@ -144,7 +159,9 @@ export default function CustomTable<T>(props: CustomTableProps<T>) {
 
             {/* Pagination */}
             <TableExtraPagination recordsPerPage={recordsPerPage} table={table} />
-            <TableDemoStats table={table} />
+
+            {/* Optional table stats component */}
+            {TableStatsComponent && <TableStatsComponent table={table} />}
         </div>
     )
 }
