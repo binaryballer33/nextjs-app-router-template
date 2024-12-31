@@ -18,9 +18,9 @@ export default function YugiohTable(props: YugiohTableProps) {
 
     return (
         <CustomTable
-            columns={columns}
-            data={yugiohCards}
-            expandRowDetailComponent={YugiohExpandRowDetail}
+            columns={columns as any}
+            data={yugiohCards as any}
+            expandRowDetailComponent={YugiohExpandRowDetail as any}
             hideForColumns={hideForColumns}
             recordsPerPage={[10, 20, 30, 40, 50, 100]}
             width="100%"

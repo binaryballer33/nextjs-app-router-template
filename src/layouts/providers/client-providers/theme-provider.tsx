@@ -4,6 +4,7 @@ import { type ReactNode } from "react"
 
 import "@/i18n/i18n"
 import { ThemeProvider as NextThemesProvider } from "next-themes"
+// @ts-ignore
 import { type ThemeProviderProps as NextThemesProviderProps } from "next-themes/dist/types"
 
 import { Toaster } from "@/components/ui/sonner"

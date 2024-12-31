@@ -19,11 +19,9 @@ const adapter: NextAuthConfig["adapter"] = {
      * the user will be created in the database using the prisma adapter
      * if I want to make any changes to the user object before it is created, here is the last chance
      */
+    // @ts-ignore
     async createUser(user: AdapterUser) {
         try {
-            // TODO: figure out how to create user without image, prisma will throw an error without it
-            // this field isn't in my user model and prisma will throw an error, it comes from the oauth provider
-            // delete user.image
             return await prismaAdapter.createUser!(user)
         } catch (error) {
             console.error(`Error While Creating User: ${error}`)
