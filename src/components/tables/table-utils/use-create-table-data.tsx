@@ -15,23 +15,42 @@ import fuzzyFilter from "./filters/fuzzy-filter"
 // Extend TanStack's TableMeta interface
 declare module "@tanstack/table-core" {
     interface TableMeta<TData extends RowData> {
+        /* table height */
         height: string
+
+        /* table padding */
         padding: "lg" | "md" | "sm" | "xl"
-        removeRow: (rowId: string) => void
-        removeRows: (rowIds: string[]) => void
+
+        /* remove a row from the table */
+        removeRow: (rowId: number | string) => void
+
+        /* remove multiple rows from the table */
+        removeRows: (rowIds: (number | string)[]) => void
+
+        /* set the table padding */
         setTablePadding: (padding: "lg" | "md" | "sm" | "xl") => void
+
+        /* table width */
         width: string
     }
 }
 
 type RowWithId = {
-    id: string
+    /* row id used for dnd row reordering */
+    id: number | string
 }
 
 type UseCreateTableDataProps<T extends RowWithId> = {
+    /* table columns */
     columns: ColumnDef<T>[]
+
+    /* table rows (data) */
     data: T[]
+
+    /* table height */
     height?: string
+
+    /* table width */
     width?: string
 }
 
@@ -118,7 +137,7 @@ export default function useCreateTableData<T extends RowWithId>(props: UseCreate
         getRowCanExpand: () => true,
 
         // get the row id for the table, helps with smooth row reordering with dnd, without it, row dnd is more choppy
-        getRowId: (row) => row.id,
+        getRowId: (row) => row.id.toString(),
 
         // sorting for the table
         getSortedRowModel: getSortedRowModel(),
@@ -128,20 +147,20 @@ export default function useCreateTableData<T extends RowWithId>(props: UseCreate
 
         // handle row state deletion
         meta: {
-            height, // height of the table
-            padding: tablePadding, // padding of the table
-            removeRow: (rowId: string) => {
+            height,
+            padding: tablePadding,
+            removeRow: (rowId: number | string) => {
                 console.log("removeRow", rowId)
                 setData((prev) => prev.filter((row) => row.id !== rowId))
             },
-            removeRows: (rowIds: string[]) => {
+            removeRows: (rowIds: (number | string)[]) => {
                 console.log("removeRows", rowIds)
                 setData((prev) => prev.filter((row) => !rowIds.includes(row.id)))
             },
             setTablePadding: (padding: "lg" | "md" | "sm" | "xl") => {
                 setTablePadding(padding)
             },
-            width, // width of the table
+            width,
         },
 
         // update the column order for dnd column reordering
