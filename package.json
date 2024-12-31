@@ -10,7 +10,7 @@
     "scripts": {
         "dev": "NODE_OPTIONS='--inspect=8133' next dev -p 8133",
         "start": "next start -p 8133",
-        "build": "next build",
+        "build": "prisma generate && next build",
         "rm:all": "rm -rf node_modules .next out dist build package-lock.json yarn.lock bun.lockb",
         "re:dev": "npm run rm:all && bun install && npm run dev",
         "re:start": "npm run rm:all && bun install && npm run start",
