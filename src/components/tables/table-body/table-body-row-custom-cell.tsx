@@ -1,4 +1,3 @@
-import type { Trade } from "@/types/finance/trade"
 import type { Cell } from "@tanstack/react-table"
 
 import { flexRender } from "@tanstack/react-table"
@@ -6,7 +5,7 @@ import { flexRender } from "@tanstack/react-table"
 import { TableCell } from "@/components/ui/table"
 
 type TableBodyRowCustomCellProps = {
-    cell: Cell<Trade, unknown>
+    cell: Cell<any, unknown>
 }
 
 export default function TableBodyRowCustomCell(props: TableBodyRowCustomCellProps) {

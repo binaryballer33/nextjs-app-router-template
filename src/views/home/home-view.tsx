@@ -1,4 +1,5 @@
 import type { YuGiOhCard } from "@/types/yu-gi-oh/yu-gi-oh"
+import type { Trade } from "@prisma/client"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -9,11 +10,12 @@ import TradeTable from "./blocks/tables/trades/trade-table"
 import YugiohTable from "./blocks/tables/yugioh/yugioh-table"
 
 type HomeViewProps = {
+    trades: Trade[]
     yugiohCards: YuGiOhCard[]
 }
 
 export default function HomeView(props: HomeViewProps) {
-    const { yugiohCards } = props
+    const { trades, yugiohCards } = props
 
     return (
         <Container maxWidth="xl">
@@ -26,7 +28,7 @@ export default function HomeView(props: HomeViewProps) {
                 </TabsList>
 
                 <TabsContent value="trades">
-                    <TradeTable />
+                    <TradeTable trades={trades} />
                 </TabsContent>
 
                 <TabsContent value="yugioh">

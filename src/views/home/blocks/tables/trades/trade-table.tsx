@@ -1,6 +1,7 @@
 "use client"
 
-import { trades } from "@/views/home/blocks/tables/trades/trade-data"
+import type { Trade } from "@prisma/client"
+import type { ColumnDef } from "@tanstack/react-table"
 
 import CustomTable from "@/components/tables/table"
 
@@ -8,12 +9,18 @@ import TradeExpandRowDetail from "./trade-expand-row-detail"
 import TradeStats from "./trade-stats"
 import useCreateTradeTableColumns from "./use-create-trade-table-columns"
 
-export default function TradeTable() {
+type TradeTableProps = {
+    trades: Trade[]
+}
+
+export default function TradeTable(props: TradeTableProps) {
+    const { trades } = props
+
     const { columns, hideForColumns } = useCreateTradeTableColumns()
 
     return (
         <CustomTable
-            columns={columns}
+            columns={columns as ColumnDef<Trade>[]}
             data={trades}
             expandRowDetailComponent={TradeExpandRowDetail}
             hideForColumns={hideForColumns}

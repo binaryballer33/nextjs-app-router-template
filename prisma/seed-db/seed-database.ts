@@ -9,10 +9,12 @@ import { hash } from "bcryptjs"
 
 import prisma from "@/lib/database/prisma"
 
+import { trades } from "./trades"
+
 import CartItemUncheckedCreateInput = Prisma.CartItemUncheckedCreateInput
 
-const cardDataFilePath = "src/mocks/yugioh-cards.json"
-const cards = JSON.parse(fs.readFileSync(cardDataFilePath, "utf-8"))
+const cardsFilePath = "prisma/seed-db/yugioh-cards.json"
+const cards = JSON.parse(fs.readFileSync(cardsFilePath, "utf-8"))
 const outlookUserId = randomUUID()
 const gmailUserId = randomUUID()
 
@@ -27,8 +29,23 @@ async function dropTables() {
     await prisma.account.deleteMany({})
     await prisma.verificationToken.deleteMany({})
     await prisma.passwordResetToken.deleteMany({})
+    await prisma.trade.deleteMany({})
 
     console.log("Dropped Tables Successfully\n")
+}
+
+async function batchCreateTrades() {
+    console.log("Attempting To Create Trades")
+
+    try {
+        const result = await prisma.trade.createMany({
+            data: trades,
+            skipDuplicates: true,
+        })
+        console.log(`Successfully Inserted ${result.count} Records To Trades Table\n`)
+    } catch (error) {
+        console.error("Error inserting records to trades table", error)
+    }
 }
 
 async function batchCreateYuGiOhCards(yugiohCards: YuGiOhCard[]) {
@@ -165,6 +182,7 @@ async function seedDatabase() {
 
         await batchCreateYuGiOhCards(cards)
         await createUsers()
+        await batchCreateTrades()
 
         // sometime the seed will not fully work because all the yugioh cards or users are not created yet
         await new Promise((resolve) => setTimeout(resolve, 3000))

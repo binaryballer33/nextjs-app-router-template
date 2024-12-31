@@ -1,8 +1,6 @@
-import type { Trade } from "@/types/finance/trade"
-
-export default function downloadTableToJSON(trades: Trade[]) {
+export default function downloadTableToJSON(trades: any[]) {
     // Create a blob from the JSON data
-    const fileName = "trades.json"
+    const fileName = "data.json"
     const jsonString = JSON.stringify(trades, null, 2)
     const blob = new Blob([jsonString], { type: "application/json" })
 

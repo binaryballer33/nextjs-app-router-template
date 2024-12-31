@@ -1,4 +1,4 @@
-import type { Trade } from "@/types/finance/trade"
+import type { Trade } from "@prisma/client"
 
 import { useMemo } from "react"
 
@@ -67,15 +67,14 @@ export default function useCreateTradeTableColumns() {
 
             columnHelper.accessor("date", {
                 cell: ({ row }) => {
-                    const { date } = row.original
-                    const dayjsDate = getDayJsDateWithPlugins(date).format("ddd, MMM D, YYYY")
+                    const dayjsDate = getDayJsDateWithPlugins(row.original.date)
 
                     return (
                         <TooltipProvider delayDuration={500}>
                             <Tooltip>
-                                <TooltipTrigger>{date.toString()}</TooltipTrigger>
+                                <TooltipTrigger>{dayjsDate.format("MM-DD-YYYY")}</TooltipTrigger>
                                 <TooltipContent>
-                                    <p>{dayjsDate}</p>
+                                    <p>{dayjsDate.format("ddd, MMM D, YYYY")}</p>
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>

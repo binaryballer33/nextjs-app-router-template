@@ -24,14 +24,18 @@ declare module "@tanstack/table-core" {
     }
 }
 
-type UseCreateTableDataProps<T> = {
+type RowWithId = {
+    id: string
+}
+
+type UseCreateTableDataProps<T extends RowWithId> = {
     columns: ColumnDef<T>[]
     data: T[]
     height?: string
     width?: string
 }
 
-export default function useCreateTableData<T>(props: UseCreateTableDataProps<T>) {
+export default function useCreateTableData<T extends RowWithId>(props: UseCreateTableDataProps<T>) {
     const { columns, data: initialData, height = "500px", width = "100%" } = props
 
     // get table row data
@@ -41,7 +45,7 @@ export default function useCreateTableData<T>(props: UseCreateTableDataProps<T>)
     const [columnOrder, setColumnOrder] = useState<string[]>(() => columns.map((column) => column.id!))
 
     // row order for dnd row reordering
-    const [rowOrder, setRowOrder] = useState<string[]>(() => data.map((_, index) => index.toString()))
+    const [rowOrder, setRowOrder] = useState<string[]>(() => data.map((row) => row.id.toString()))
 
     const [tablePadding, setTablePadding] = useState<"lg" | "md" | "sm" | "xl">("md")
 
@@ -114,7 +118,7 @@ export default function useCreateTableData<T>(props: UseCreateTableDataProps<T>)
         getRowCanExpand: () => true,
 
         // get the row id for the table, helps with smooth row reordering with dnd, without it, row dnd is more choppy
-        getRowId: (_, index) => index.toString(),
+        getRowId: (row) => row.id,
 
         // sorting for the table
         getSortedRowModel: getSortedRowModel(),
@@ -127,10 +131,12 @@ export default function useCreateTableData<T>(props: UseCreateTableDataProps<T>)
             height, // height of the table
             padding: tablePadding, // padding of the table
             removeRow: (rowId: string) => {
-                setData((prev) => prev.filter((_, index) => index.toString() !== rowId))
+                console.log("removeRow", rowId)
+                setData((prev) => prev.filter((row) => row.id !== rowId))
             },
             removeRows: (rowIds: string[]) => {
-                setData((prev) => prev.filter((_, index) => !rowIds.includes(index.toString())))
+                console.log("removeRows", rowIds)
+                setData((prev) => prev.filter((row) => !rowIds.includes(row.id)))
             },
             setTablePadding: (padding: "lg" | "md" | "sm" | "xl") => {
                 setTablePadding(padding)

@@ -1,9 +1,7 @@
-import type { Trade } from "@/types/finance/trade"
-
 import * as XLSX from "xlsx"
 
-export default function downloadTableToCSV(trades: Trade[]) {
-    const fileName = "trades.xlsx"
+export default function downloadTableToCSV(trades: any[]) {
+    const fileName = "data.xlsx"
 
     // Create a new workbook
     const wb = XLSX.utils.book_new()

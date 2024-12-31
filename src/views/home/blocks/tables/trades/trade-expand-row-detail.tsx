@@ -1,4 +1,4 @@
-import type { Trade } from "@/types/finance/trade"
+import type { Trade } from "@prisma/client"
 import type { Row } from "@tanstack/react-table"
 
 import { useMemo } from "react"

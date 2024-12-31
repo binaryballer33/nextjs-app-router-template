@@ -9,11 +9,11 @@ export const metadata = appMetadata.homePage
 
 // TODO: improve performance later with tools like chrome dev tool lighthouse, use unlighthouse and chrome extension webvitals
 export default async function HomePage() {
-    const { dehydratedState, yugiohCards = [] } = await prefetchHomePageDataDehydrateState()
+    const { dehydratedState, trades = [], yugiohCards = [] } = await prefetchHomePageDataDehydrateState()
 
     return (
         <HydrationBoundary state={dehydratedState}>
-            <HomeView yugiohCards={yugiohCards} />
+            <HomeView trades={trades} yugiohCards={yugiohCards} />
         </HydrationBoundary>
     )
 }

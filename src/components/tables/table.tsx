@@ -22,6 +22,10 @@ import TableHeaderCustomHead from "./table-header/table-header-custom-head"
 import useResetColumnFilters from "./table-utils/hooks/use-reset-column-filters"
 import useCreateTableData from "./table-utils/use-create-table-data"
 
+type RowWithId = {
+    id: string
+}
+
 type CustomTableProps<T> = {
     /* columns to display in the table */
     columns: ColumnDef<T>[]
@@ -29,7 +33,7 @@ type CustomTableProps<T> = {
     /* data to display in the table ( the rows ) */
     data: T[]
 
-    /*  optional component to expand the row in order to display more information for that row */
+    /* optional component to expand the row in order to display more information for that row */
     expandRowDetailComponent?: ComponentType<{ row: Row<T>; table: ReactTable<T> }>
 
     /* height of the table */
@@ -48,7 +52,7 @@ type CustomTableProps<T> = {
     width?: string
 }
 
-export default function CustomTable<T>(props: CustomTableProps<T>) {
+export default function CustomTable<T extends RowWithId>(props: CustomTableProps<T>) {
     const {
         columns,
         data,
