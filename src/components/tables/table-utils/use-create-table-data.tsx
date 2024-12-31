@@ -22,10 +22,10 @@ declare module "@tanstack/table-core" {
         padding: "lg" | "md" | "sm" | "xl"
 
         /* remove a row from the table */
-        removeRow: (rowId: number | string) => void
+        removeRow: (rowId: TData extends { id: infer U } ? U : never) => void
 
         /* remove multiple rows from the table */
-        removeRows: (rowIds: (number | string)[]) => void
+        removeRows: (rowIds: Array<TData extends { id: infer U } ? U : never>) => void
 
         /* set the table padding */
         setTablePadding: (padding: "lg" | "md" | "sm" | "xl") => void
