@@ -22,3 +22,5 @@ prisma/seed-db/yugioh-cards.json
 src/components/ui/*
 src/lib/utils.ts
 
+
+README.md

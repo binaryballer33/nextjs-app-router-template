@@ -1,4 +1,4 @@
-# Next JS App Router Mui Starter Template
+# Next JS App Router Starter Template
 
 ## Template Project Tech Stack
 
@@ -28,7 +28,7 @@
 -   Pagination
 -   Internationalization ( i18next ) - Multilanguage Support
 -   Fully Responsive On Desktop, Tablet And Mobile
--   Advance MUI Components
+-   Advance React Components
     -   Light And Dark Themes
     -   Count Up
     -   Accordions
@@ -45,7 +45,7 @@
     -   Drag And Drop ( Work In Progress )
     -   File Uploads ( Work In Progress )
     -   Maps ( react-map-gl and mapbox-gl Work In Progress )
-    -   Paginated Tables And Grids ( Changing To Mui-Data-Grid Work In Progress )
+    -   Paginated Tables And Grids
 
 ## Getting Started With The Package
 
@@ -104,7 +104,7 @@ created in the project unlike mjs or js files
 
 `npm install -g tsx`
 
-`tsx prisma/seed-database.ts `
+`tsx prisma/seed-db/seed-database.ts `
 
 ### Install Dependencies
 

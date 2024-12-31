@@ -40,3 +40,6 @@ src/components/ui
 src/components/ui/**/*
 src/hooks/use-toast.ts
 src/lib/utils.ts
+
+# README.md
+README.md
