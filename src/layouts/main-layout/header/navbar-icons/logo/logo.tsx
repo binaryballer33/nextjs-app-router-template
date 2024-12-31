@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 
+import { placeholderImage } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 
 import useCheckPathname from "@/hooks/use-check-pathname"
@@ -17,8 +18,6 @@ export default function Logo(props: LogoProps) {
     const { className, src } = props
 
     const { isLinkActive } = useCheckPathname()
-
-    const placeholderImage = "https://placehold.co/320x320"
 
     return (
         <Link className="mr-4" href={routes.home}>

@@ -121,6 +121,32 @@ model YugiohCard {
   @@map("yugioh_cards")
 }
 
+enum TradeRealized {
+  GAIN
+  LOSS
+}
+
+enum TradeType {
+  SELL_CALL
+  SELL_PUT
+}
+
+model Trade {
+  id                   String        @id @default(cuid())
+  contracts            Int
+  profitLoss           Float
+  profitLossPercentage Float
+  buyToClose           Float
+  sellToOpen           Float
+  strike               Float
+  ticker               String
+  date                 DateTime
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+  type                 TradeType
+  realized             TradeRealized
+}
+
 model SavedCards {
   id           String     @id @default(uuid())
   userId       String

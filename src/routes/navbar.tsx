@@ -3,6 +3,7 @@ import type { NavBarItemWithIcon } from "@/types/navbar-item"
 import { useTranslation } from "react-i18next"
 
 import {
+    DollarSign,
     HelpCircle,
     Home,
     LogIn,
@@ -113,9 +114,9 @@ export const dropdownItems: NavBarItemWithIcon[] = [
         icon: Home,
         route: routes.faq,
         subMenu: [
-            { icon: Home, route: routes.payment, separator: true, title: "Service 3.1" },
-            { icon: Home, route: routes.pricing, title: "Service 3.2" },
-            { icon: Home, route: routes.services, title: "Service 3.3" },
+            { icon: Home, route: routes.home, separator: true, title: "Service 3.1" },
+            { icon: Home, route: routes.about, title: "Service 3.2" },
+            { icon: Home, route: routes.faq, title: "Service 3.3" },
         ],
         title: "Service 3",
     },
@@ -126,6 +127,7 @@ export const navigationItems: NavBarItemWithIcon[] = [
     { icon: MessageCircleWarning, route: routes.about, title: "About" },
     { icon: HelpCircle, route: routes.faq, title: "FAQs" },
     { icon: Phone, route: routes.contact, title: "Contact" },
+    { icon: DollarSign, route: routes.pricing, title: "Pricing" },
 ]
 
 export const notLoggedInAuthItems: NavBarItemWithIcon[] = [

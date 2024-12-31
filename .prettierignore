@@ -15,7 +15,8 @@ jsconfig.json
 public
 **/out/*
 
-src/mocks/yugioh-cards.json
+# Prisma
+prisma/seed-db/yugioh-cards.json
 
 # UI Components
 src/components/ui/*

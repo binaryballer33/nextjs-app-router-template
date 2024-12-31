@@ -3,8 +3,8 @@ import type { Metadata } from "next"
 const APP_NAME = "Next MUI Template"
 
 type AppMetadata = {
-    aboutUs: Metadata
-    contactUs: Metadata
+    about: Metadata
+    contact: Metadata
     faq: Metadata
     forgotPassword: Metadata
     homePage: Metadata
@@ -19,13 +19,13 @@ type AppMetadata = {
 
 // eslint-disable-next-line import/prefer-default-export
 export const appMetadata: AppMetadata = {
-    aboutUs: {
-        description: "About Us Page For The App",
-        title: `About Us | ${APP_NAME}`,
+    about: {
+        description: "About Page For The App",
+        title: `About | ${APP_NAME}`,
     },
-    contactUs: {
-        description: "Contact Us Page For The App",
-        title: `Contact Us | ${APP_NAME}`,
+    contact: {
+        description: "Contact Page For The App",
+        title: `Contact | ${APP_NAME}`,
     },
     faq: {
         description: "Frequently Asked Questions Page For The App",

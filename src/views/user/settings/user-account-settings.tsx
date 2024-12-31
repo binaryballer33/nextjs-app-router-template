@@ -12,22 +12,25 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Settings } from "lucide-react"
 import { toast } from "sonner"
 
+import { placeholderImage } from "@/lib/constants"
 import handleServerResponse from "@/lib/helper-functions/handleServerResponse"
 
 import updateUserAccountSettings from "@/actions/user/update-user-account-settings"
 
 import useAuthUser from "@/hooks/useAuthUser"
 
+import routes from "@/routes/routes"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
 
 import Container from "@/components/base/container"
 import FlexCenteredFullScreenContainer from "@/components/base/flex-box/flex-center-full-screen-container"
-import Field from "@/components/react-hook-form/fields"
-import Form from "@/components/react-hook-form/form-provider"
-import FormHead from "@/components/react-hook-form/form/form-head"
-import FormSubmitButton from "@/components/react-hook-form/form/form-submit-button"
-import CustomFormInput from "@/components/react-hook-form/rhf-custom-input"
+import Field from "@/components/forms/fields"
+import Form from "@/components/forms/form-provider"
+import FormHead from "@/components/forms/form/form-head"
+import FormSubmitButton from "@/components/forms/form/form-submit-button"
+import CustomFormInput from "@/components/forms/rhf-custom-input"
 
 export default function UserAccountSettingsView() {
     const { user } = useAuthUser()
@@ -47,7 +50,7 @@ export default function UserAccountSettingsView() {
 
     const onSubmit = form.handleSubmit(async (formData) => {
         const response = await updateUserAccountSettings(user?.id, formData)
-        await handleServerResponse({ response, toast })
+        await handleServerResponse({ redirectTo: routes.user.profile, response, toast })
     })
 
     const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +75,7 @@ export default function UserAccountSettingsView() {
                 <Container className="space-y-4" maxWidth="md">
                     <div className="flex items-center space-x-4">
                         <Avatar className="h-24 w-24">
-                            <AvatarImage alt="Profile picture" src={avatar || "https://placehold.co/600x600"} />
+                            <AvatarImage alt="Profile picture" src={avatar || placeholderImage} />
                             <AvatarFallback>SM</AvatarFallback>
                         </Avatar>
                         <Input accept="image/*" id="avatar" onChange={handleAvatarChange} type="file" />
