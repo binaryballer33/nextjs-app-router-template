@@ -10,7 +10,6 @@ type LayoutProps = {
 export default function Providers({ children }: LayoutProps) {
     return (
         <ClientProvidersLayout>
-            {/* @ts-expect-error Async Server Component */}
             <ServerProvidersLayout>{children}</ServerProvidersLayout>
         </ClientProvidersLayout>
     )
