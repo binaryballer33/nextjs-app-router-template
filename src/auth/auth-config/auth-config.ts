@@ -6,7 +6,7 @@ import callbacks from "@/auth/auth-config/callbacks"
 import events from "@/auth/auth-config/events"
 import providers from "@/auth/auth-config/providers"
 
-import { NODE_ENV } from "@/lib/secrets"
+import { BACKEND_BASE_URL, NODE_ENV } from "@/lib/secrets"
 
 import routes from "@/routes/routes"
 
@@ -23,7 +23,7 @@ const pages: Partial<PagesOptions> = {
 const logger: Partial<LoggerInstance> = {
     // can also get metadata from the debug callback
     debug(code) {
-        console.debug("Next Auth  Logger: Logging Console Debug", { code })
+        console.debug("Next Auth Logger: Logging Console Debug", { code })
     },
     error(error: Error) {
         console.error("Next Auth Logger: Logging Console Error", { error })
@@ -36,6 +36,16 @@ const logger: Partial<LoggerInstance> = {
 const authConfig: NextAuthConfig = {
     adapter, // next auth uses this to perform crud operations on the user and account tables
     callbacks, // allow you to modify the sign-in process, json web token and session object
+    cookies: {
+        sessionToken: {
+            name: `next-auth.session-token`,
+            options: {
+                domain: BACKEND_BASE_URL,
+                path: "/",
+                secure: true,
+            },
+        },
+    },
     debug,
     events, // auth events like sign-in, sign out, create/update user, link account, etc
     logger, // get information from next auth authentication flow

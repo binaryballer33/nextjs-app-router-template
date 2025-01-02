@@ -5,3 +5,5 @@ export const GOOGLE_CLIENT_SECRET = process.env.AUTH_GOOGLE_SECRET!
 export const FACEBOOK_CLIENT_ID = process.env.AUTH_FACEBOOK_ID!
 export const FACEBOOK_CLIENT_SECRET = process.env.AUTH_FACEBOOK_SECRET!
 export const RESEND_API_KEY = process.env.RESEND_API_KEY!
+export const AUTH_URL = process.env.AUTH_URL!
+export const AUTH_SECRET = process.env.AUTH_SECRET!

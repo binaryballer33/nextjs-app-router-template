@@ -7,6 +7,10 @@ export interface Env {
     AUTH_GOOGLE_ID?: string
     AUTH_GOOGLE_SECRET?: string
 
+    // Next Auth
+    AUTH_SECRET?: string
+    AUTH_URL?: string
+
     // Database
     DATABASE_URL?: string
 
