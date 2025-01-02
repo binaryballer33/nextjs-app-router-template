@@ -5,10 +5,10 @@ import type { Trade } from "@prisma/client"
 
 import createQueryClient from "@/api/query-client-server-component"
 import QUERY_KEYS from "@/api/query-keys"
-import { getYuGiOhCards } from "@/api/yu-gi-oh/queries/get-all-yu-gi-oh-cards"
 import { dehydrate } from "@tanstack/react-query"
 
 import getTrades from "@/actions/trades/queries/get-trades"
+import getYugiohCards from "@/actions/yu-gi-oh/queries/get-yu-gi-oh-cards"
 
 /*
  * Prefetch data for all tabs on server component, so that the data is available immediately no hydration required
@@ -20,7 +20,7 @@ export default async function prefetchHomePageDataDehydrateState() {
 
     // prefetch all yu-gi-oh cards and store the data in the cache
     await queryClient.prefetchQuery({
-        queryFn: getYuGiOhCards,
+        queryFn: async () => (await getYugiohCards()) ?? [],
         queryKey: QUERY_KEYS.YU_GI_OH_CARDS,
     })
 

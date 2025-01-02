@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/database/prisma"
 
-export default async function getYuGiOhCardByIdQuery(id: number) {
+export default async function getYugiohCardById(id: number) {
     try {
         return await prisma.yugiohCard.findUnique({
             where: {

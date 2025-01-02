@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/database/prisma"
 
-export default async function getYuGiOhCardsQuery(page = 0, limit = 50) {
+export default async function getYugiohCards(page = 0, limit = 100) {
     const skipPreviousRecords = page * limit
 
     try {
