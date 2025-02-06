@@ -19,7 +19,7 @@
         "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
         "format": "prettier --check \"**/*.{js,jsx,ts,tsx,mdx}\" --cache",
         "format:fix": "prettier --write \"**/*.{js,jsx,ts,tsx,mdx}\" --cache",
-        "seed-database": "tsx prisma/seed-db/seed-database.ts",
+        "seed-database": "prisma generate && prisma db push && tsx prisma/seed-db/seed-database.ts",
         "view-database": "prisma studio",
         "prepare": "husky"
     },

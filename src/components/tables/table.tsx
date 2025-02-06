@@ -52,6 +52,7 @@ type CustomTableProps<T> = {
     width?: string
 }
 
+// TODO: fix filter for date columns, a recent commit broke the filter for date columns
 export default function CustomTable<T extends RowWithId>(props: CustomTableProps<T>) {
     const {
         columns,
