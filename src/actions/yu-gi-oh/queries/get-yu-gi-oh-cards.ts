@@ -7,9 +7,6 @@ export default async function getYugiohCards(page = 0, limit = 100) {
 
     try {
         return await prisma.yugiohCard.findMany({
-            orderBy: {
-                name: "desc",
-            },
             skip: skipPreviousRecords,
             take: limit,
         })

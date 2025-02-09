@@ -3,7 +3,7 @@
 import type { DragEndEvent } from "@dnd-kit/core"
 import type { ColumnDef, RowData, TableOptions } from "@tanstack/react-table"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core"
 import { arrayMove } from "@dnd-kit/sortable"
@@ -60,6 +60,12 @@ export default function useCreateTableData<T extends RowWithId>(props: UseCreate
     // get table row data
     const [data, setData] = useState(initialData)
 
+    // Update data when initialData changes
+    useEffect(() => {
+        setData(initialData)
+        setRowOrder(initialData.map((row) => row.id.toString()))
+    }, [initialData])
+
     // get the columnIds for column visibility toggling
     const [columnOrder, setColumnOrder] = useState<string[]>(() => columns.map((column) => column.id!))
 
@@ -110,6 +116,15 @@ export default function useCreateTableData<T extends RowWithId>(props: UseCreate
         }
     }
 
+    /*
+     if the data is updated from the outside, update the data and row order
+     this is used to update the data when the user fetches more data from the server and appends it to the existing data
+    */
+    const updateData = (newData: T[]) => {
+        setData(newData)
+        setRowOrder(newData.map((row) => row.id.toString()))
+    }
+
     // create the table config
     const tableConfig: TableOptions<T> = {
         columnResizeDirection: "ltr",
@@ -150,16 +165,14 @@ export default function useCreateTableData<T extends RowWithId>(props: UseCreate
             height,
             padding: tablePadding,
             removeRow: (rowId: number | string) => {
-                console.log("removeRow", rowId)
-                setData((prev) => prev.filter((row) => row.id !== rowId))
+                const newData = data.filter((row) => row.id !== rowId)
+                updateData(newData)
             },
             removeRows: (rowIds: (number | string)[]) => {
-                console.log("removeRows", rowIds)
-                setData((prev) => prev.filter((row) => !rowIds.includes(row.id)))
+                const newData = data.filter((row) => !rowIds.includes(row.id))
+                updateData(newData)
             },
-            setTablePadding: (padding: "lg" | "md" | "sm" | "xl") => {
-                setTablePadding(padding)
-            },
+            setTablePadding,
             width,
         },
 
@@ -171,5 +184,13 @@ export default function useCreateTableData<T extends RowWithId>(props: UseCreate
         },
     }
 
-    return { columnOrder, columns, data, handleDragEnd, rowOrder, sensors, tableConfig }
+    return {
+        columnOrder,
+        columns,
+        data,
+        handleDragEnd,
+        rowOrder,
+        sensors,
+        tableConfig,
+    }
 }

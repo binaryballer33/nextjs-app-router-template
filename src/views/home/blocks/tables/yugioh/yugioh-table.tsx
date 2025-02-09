@@ -1,14 +1,14 @@
 "use client"
 
-import type { YuGiOhCard } from "@/types/yu-gi-oh/yu-gi-oh"
+import type { YugiohCard } from "@prisma/client"
 
 import CustomTable from "@/components/tables/table"
 
 import useCreateTableColumns from "./use-create-yugioh-table-columns"
 import YugiohExpandRowDetail from "./yugioh-expand-row-detail"
 
-type YugiohTableProps = {
-    yugiohCards: YuGiOhCard[]
+interface YugiohTableProps {
+    yugiohCards: YugiohCard[]
 }
 
 export default function YugiohTable(props: YugiohTableProps) {
