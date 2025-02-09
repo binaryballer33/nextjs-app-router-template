@@ -36,6 +36,9 @@ type CustomTableProps<T> = {
     /* optional component to expand the row in order to display more information for that row */
     expandRowDetailComponent?: ComponentType<{ row: Row<T>; table: ReactTable<T> }>
 
+    /* optional component to display when you have alot of data and you are using an infinite query for fetching more data */
+    fetchMoreDataComponent?: ComponentType
+
     /* height of the table */
     height?: string
 
@@ -58,6 +61,7 @@ export default function CustomTable<T extends RowWithId>(props: CustomTableProps
         columns,
         data,
         expandRowDetailComponent,
+        fetchMoreDataComponent: FetchMoreDataComponent,
         height = "500px",
         hideForColumns,
         recordsPerPage,
@@ -98,12 +102,18 @@ export default function CustomTable<T extends RowWithId>(props: CustomTableProps
                         <TableExtraDeleteSelected table={table} />
                     ) : (
                         <>
+                            {/* Table Column Visibility */}
                             <TableExtraColumnVisibility columnOrder={columnOrder} table={table} />
+
+                            {/* Table Dropdown Menu Settings */}
                             <TableExtraDropdownMenuSettings table={table} />
                         </>
                     )}
-
+                    {/* Table Global Search Bar */}
                     <TableExtraGlobalSearchBar table={table} />
+
+                    {/* Optional fetch more data component used for infinite queries */}
+                    {FetchMoreDataComponent && <FetchMoreDataComponent />}
                 </div>
             </div>
 
