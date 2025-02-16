@@ -41,7 +41,7 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
         // Create the filter value object
         const filterValue: ColumnFilter = { operation, value }
 
-        // Add endDate if the operation is "betweenDates" or "between"
+        // Add second input if the operation is "betweenDates" or "between"
         if (operation === "betweenDates" && endDate) filterValue.endDate = endDate
         if (operation === "between" && secondValue) filterValue.secondValue = secondValue
 
@@ -107,10 +107,10 @@ export default function TableHeaderColumnFilter(props: TableHeaderColumnFilterPr
                     />
 
                     {/* Buttons for Applying and Clearing Filter */}
-                    <div className="flex gap-2">
-                        <Button onClick={handleResetAllFilters}>X All Filters</Button>
-                        <Button onClick={handleClearFilter}>Clear</Button>
+                    <div className="flex gap-2 overflow-x-auto">
                         <Button onClick={handleApplyFilter}>Apply Filter</Button>
+                        <Button onClick={handleClearFilter}>Clear</Button>
+                        <Button onClick={handleResetAllFilters}>Clear All Filters</Button>
                     </div>
                 </div>
             </PopoverContent>

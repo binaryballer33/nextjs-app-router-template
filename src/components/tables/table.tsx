@@ -55,7 +55,7 @@ type CustomTableProps<T> = {
     width?: string
 }
 
-// TODO: fix filter for date columns, a recent commit broke the filter for date columns
+// TODO: fix yugioh cards not being deleted when the delete button is clicked, think it has to do with the row id not being unique or it being a number, or number converted to a string
 export default function CustomTable<T extends RowWithId>(props: CustomTableProps<T>) {
     const {
         columns,

@@ -21,9 +21,6 @@ export default function FilterInputs(props: FilterInputsProps) {
     const { filterState, handleEnterKeyPress, onEndDateChange, onSecondValueChange, onValueChange, open } = props
     const inputRef = useRef<HTMLInputElement>(null)
 
-    // Determine if the current operation is a date operation
-    const isDateOperation = ["afterDate", "beforeDate", "betweenDates"].includes(filterState.operation)
-
     // Focus the input when the popover opens
     useEffect(() => {
         if (open) {
@@ -39,15 +36,15 @@ export default function FilterInputs(props: FilterInputsProps) {
     return (
         <div className="flex gap-2">
             <div className="w-full text-center">
-                <Label htmlFor="filter-input">{isDateOperation ? "Date" : "Search Data"}</Label>
+                <Label htmlFor="filter-input">Search Data</Label>
                 <DebouncedInput
                     className="w-full"
                     id="filter-input"
                     onChange={onValueChange}
                     onKeyDown={handleEnterKeyPress}
-                    placeholder={isDateOperation ? "Select Date..." : "Search Data..."}
+                    placeholder="Search Data..."
                     ref={inputRef}
-                    type={isDateOperation ? "date" : "text"}
+                    type="text"
                     value={filterState.value.toString()}
                 />
             </div>
@@ -61,7 +58,7 @@ export default function FilterInputs(props: FilterInputsProps) {
                         onChange={onEndDateChange}
                         onKeyDown={handleEnterKeyPress}
                         placeholder="Select End Date..."
-                        type="date"
+                        type="text"
                         value={filterState.endDate?.toString() ?? ""}
                     />
                 </div>

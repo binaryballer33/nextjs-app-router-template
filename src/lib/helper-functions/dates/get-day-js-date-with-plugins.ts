@@ -32,7 +32,7 @@ export const formatStr = {
 }
 
 /* get a dayjs date with the plugins from a regular Date instance or string */
-export default function getDayJsDateWithPlugins(date: Date | string, format?: string) {
+export default function getDayJsDateWithPlugins(date: Date | number | string, format?: string) {
     return dayjs(date, format)
 }
 

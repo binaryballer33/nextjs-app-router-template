@@ -6,6 +6,7 @@ import type { Header, Table } from "@tanstack/react-table"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
+import getColumnType from "../../table-utils/filters/custom-filter/get-column-type"
 import filterOperationsMap from "../../table-utils/filters/filter-operations"
 
 type FilterOperationsProps = {
@@ -13,13 +14,6 @@ type FilterOperationsProps = {
     header: Header<any, unknown>
     onOperationChange: (operation: FilterOperation) => void
     table: Table<any>
-}
-
-function getColumnType(value: unknown): string {
-    if (typeof value === "string" && !Number.isNaN(Date.parse(value))) return "date"
-    if (typeof value === "number" || !Number.isNaN(Number(value))) return "number"
-    if (typeof value === "string") return "string"
-    return "default"
 }
 
 export default function FilterOperations(props: FilterOperationsProps) {
